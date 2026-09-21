@@ -1,0 +1,11 @@
+﻿# 依賴與快取（不下載原始掃描檔、不下載 Overture 原始 GeoJSON）
+node_modules/
+.cache/
+dist/
+shots/
+*.log
+.DS_Store
+
+# 由 scripts/optimize-models.mjs 產生，檔案不大（每個 2–3 MB）故一併提交
+# 若不想提交可取消下面這行的註解
+# public/models/*.glb

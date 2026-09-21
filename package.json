@@ -1,0 +1,33 @@
+{
+  "name": "macau-memory-3d",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "澳門記憶 · 3D 立體澳門地圖（OSM + 開放海拔 DEM + 博物館文物 3D 模型）",
+  "scripts": {
+    "data:osm": "node scripts/fetch-osm.mjs",
+    "data:dem": "node scripts/fetch-terrain.mjs && node scripts/clean-dem.mjs",
+    "data:poi": "node scripts/build-attractions.mjs",
+    "data": "npm run data:overture && npm run data:dem && npm run data:cop30 && npm run data:geocode && npm run data:poi && npm run data:merge",
+    "models": "node scripts/optimize-models.mjs",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "data:overture": "node scripts/fetch-overture.mjs",
+    "data:cop30": "node scripts/fetch-opentopography.mjs COP30 GTiff && node scripts/process-dem-cop30.mjs",
+    "data:merge": "node scripts/merge-building-heights.mjs",
+    "data:geocode": "node scripts/geocode-attractions.mjs",
+    "verify": "node scripts/verify-positions.mjs"
+  },
+  "dependencies": {
+    "@gltf-transform/cli": "^4.5.0",
+    "geotiff": "^3.0.5",
+    "maplibre-gl": "^6.10.0",
+    "opencc-js": "^1.4.2",
+    "three": "^0.186.0",
+    "vite": "^8.3.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.11.0"
+  }
+}

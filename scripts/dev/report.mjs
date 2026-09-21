@@ -1,0 +1,11 @@
+﻿import fs from "node:fs";
+const a = JSON.parse(fs.readFileSync("public/data/attractions.json", "utf8"));
+const m = JSON.parse(fs.readFileSync("public/models/manifest.json", "utf8"));
+const s = JSON.parse(fs.readFileSync("public/data/macau-stats.json", "utf8"));
+console.log("景點:", a.attractions.length, "| 博物館:", a.museums.length, "| 文物:", a.museums.reduce((n, x) => n + x.artifacts.length, 0));
+console.log("圖資統計:", JSON.stringify(s.counts));
+console.log("高程:", a.elevation.stats.maxMeters, "m 最高 /", a.elevation.stats.landAreaKm2, "km² 陸域 / 平均", a.elevation.stats.meanMeters, "m");
+for (const [k, v] of Object.entries(m.models)) console.log("模型", k, "| 高精度", v.full ? (v.full.bytes / 1048576).toFixed(2) + "MB " + v.full.triangles.toLocaleString() + "面" : "-", "| LOD", v.lod ? (v.lod.bytes / 1048576).toFixed(2) + "MB" : "-", "| 尺寸", v.dimensionsMeters?.map((x) => (x * 100).toFixed(0) + "cm").join("×"));
+const c = a.attractions.map((x) => x.coords);
+console.log("座標範圍: lon", Math.min(...c.map((x) => x[0])).toFixed(3), "-", Math.max(...c.map((x) => x[0])).toFixed(3), "| lat", Math.min(...c.map((x) => x[1])).toFixed(3), "-", Math.max(...c.map((x) => x[1])).toFixed(3));
+console.log("已校正座標景點:", a.attractions.filter((x) => x.osmMatched).length, "/", a.attractions.length);

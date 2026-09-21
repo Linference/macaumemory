@@ -1,0 +1,187 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="以 OpenStreetMap、開放海拔資料與博物館文物三維模型建構的澳門 3D 立體地圖" />
+    <title>澳門立體誌 · 3D 立體澳門地圖</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Cpath d='M4 21l7-11 4.5 6.5L19 12l9 9z' fill='%23d8b45a'/%3E%3Ccircle cx='24' cy='8' r='3' fill='%23e8e2d6'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <!-- 載入畫面 -->
+    <div id="boot">
+      <div class="boot-card">
+        <div class="boot-mark">
+          <svg viewBox="0 0 32 32" width="40" height="40" aria-hidden="true">
+            <path d="M4 21l7-11 4.5 6.5L19 12l9 9z" fill="currentColor" />
+            <circle cx="24" cy="8" r="3" fill="currentColor" opacity=".8" />
+          </svg>
+        </div>
+        <h1>澳門立體誌</h1>
+        <p class="boot-sub">3D 立體澳門地圖 · 開放資料 × 博物館文物</p>
+        <div class="boot-bar"><i></i></div>
+        <p class="boot-status" id="boot-status">正在載入地理資料…</p>
+      </div>
+    </div>
+
+    <!-- 頂部標題 -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+            <path d="M4 21l7-11 4.5 6.5L19 12l9 9z" fill="currentColor" />
+            <circle cx="24" cy="8" r="3" fill="currentColor" opacity=".75" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>澳門立體誌</strong>
+          <small>3D Macau Atlas</small>
+        </span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="btn-lang" title="繁體 / 简体">繁</button>
+        <button class="icon-btn" id="btn-list" title="景點列表">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-layers" title="圖層與地形（L）">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M12 3 2.8 7.6 12 12.2l9.2-4.6z" fill="currentColor"/>
+            <path d="M4.6 11.4 12 15.1l7.4-3.7 2.2 1.1L12 17.3 2.4 12.5z" fill="currentColor" opacity=".6"/>
+            <path d="M4.6 15.6 12 19.3l7.4-3.7 2.2 1.1L12 21.5 2.4 16.7z" fill="currentColor" opacity=".35"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="btn-locate" title="我的位置">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.2" fill="currentColor"/>
+            <path d="M12 1.6v3.4M12 19v3.4M1.6 12h3.4M19 12h3.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/>
+            <circle cx="12" cy="12" r="7.4" stroke="currentColor" stroke-width="1.5" fill="none" opacity=".55"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="btn-fullscreen" title="全螢幕（F）">
+          <svg id="fs-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path id="fs-path" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="btn-help" title="操作說明">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 17h.01M12 14c0-2 3-2.4 3-5a3 3 0 1 0-6 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- 圖層控制 -->
+    <section class="controls" id="controls">
+      <h4>圖層 · 地形</h4>
+      <label class="sw"><input type="checkbox" id="tg-buildings" checked /><span>三維建築</span></label>
+      <label class="sw"><input type="checkbox" id="tg-terrain" checked /><span>地勢起伏</span></label>
+      <label class="sw"><input type="checkbox" id="tg-hillshade" checked /><span>山體陰影</span></label>
+      <label class="sw"><input type="checkbox" id="tg-contours" /><span>等高線</span></label>
+      <label class="sw"><input type="checkbox" id="tg-roads" checked /><span>道路 / 輕軌</span></label>
+      <label class="sw"><input type="checkbox" id="tg-raster" checked /><span>水體 / 綠地</span></label>
+      <label class="sw"><input type="checkbox" id="tg-boundary" checked /><span>行政邊界</span></label>
+      <label class="sw"><input type="checkbox" id="tg-labels" checked /><span>地名標籤</span></label>
+      <label class="sw"><input type="checkbox" id="tg-pois" checked /><span>周邊設施</span></label>
+      <div class="poi-chips" id="poi-chips"></div>
+      <div class="range-row">
+        <span>起伏倍率</span>
+        <input type="range" id="rg-exagg" min="1" max="3" step="0.1" value="1.5" />
+        <output id="out-exagg">1.5×</output>
+      </div>
+      <button class="ghost-btn" id="btn-recenter">回到澳門</button>
+      <button class="ghost-btn" id="btn-reset-view">重設視角</button>
+      <button class="ghost-btn" id="btn-edit-mode">✎ 校正標記位置</button>
+    </section>
+
+    <!-- 位置校正工具列 -->
+    <div class="editbar" id="editbar">
+      <span class="editbar-tip" data-t="拖曳標記到正確位置（可縮放地圖後再拖），完成後按「匯出校正檔」把檔案傳給我就會寫回資料。</span>
+      <span class="editbar-count" id="editbar-count">已修正 0 處</span>
+      <button class="btn" id="btn-export-fixes" data-t="匯出校正檔">匯出校正檔</button>
+      <button class="btn sec" id="btn-clear-fixes" data-t="清除全部修正">清除全部修正</button>
+      <button class="btn sec" id="btn-exit-edit" data-t="結束校正">結束校正</button>
+    </div>
+    <!-- 景點側欄 -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <input type="search" id="search" placeholder="搜尋景點、博物館…" autocomplete="off" />
+        <button class="icon-btn sm" id="btn-sidebar-close" title="收起">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="list" id="list"></div>
+      <div class="sidebar-foot" id="sidebar-foot"></div>
+    </aside>
+
+    <!-- 詳情面板 -->
+    <section class="detail" id="detail" aria-hidden="true">
+      <button class="detail-close" id="detail-close" title="關閉">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="detail-body" id="detail-body"></div>
+    </section>
+
+    <!-- 右下角狀態 -->
+    <div class="hud" id="hud">
+      <div class="hud-row"><span class="hud-k">座標</span><span class="hud-v" id="hud-coord">—</span></div>
+      <div class="hud-row"><span class="hud-k">海拔</span><span class="hud-v" id="hud-elev">—</span></div>
+      <div class="hud-row"><span class="hud-k">比例</span><span class="hud-v" id="hud-scale">—</span></div>
+      <div class="hud-row" id="hud-gps-row" style="display:none"><span class="hud-k">定位精度</span><span class="hud-v" id="hud-gps">—</span></div>
+    </div>
+
+    <!-- 版權 -->
+    <footer class="credits">
+      <button class="credits-toggle" id="credits-toggle">資料來源</button>
+      <div class="credits-body" id="credits-body"></div>
+    </footer>
+
+    <!-- 三維模型檢視器 -->
+    <div class="viewer" id="viewer" aria-hidden="true">
+      <div class="viewer-panel">
+        <header class="viewer-head">
+          <div class="viewer-title">
+            <h2 id="viewer-name">—</h2>
+            <p id="viewer-meta">—</p>
+          </div>
+          <button class="icon-btn" id="viewer-close" title="關閉">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <div class="viewer-main">
+        <div class="viewer-stage">
+          <canvas id="viewer-canvas"></canvas>
+          <div class="viewer-loading" id="viewer-loading">
+            <div class="ring"></div>
+            <p id="viewer-loading-text">正在載入三維模型…</p>
+            <div class="bar"><i id="viewer-bar"></i></div>
+          </div>
+          <div class="viewer-badge" id="viewer-badge"></div>
+          <div class="viewer-tools">
+            <button class="tool-btn" id="tool-rotate" title="自動旋轉">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="tool-btn" id="tool-reset" title="重設視角">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4v4M12 4L9 7M12 4l3 3M4 12h4M4 12l3-3M4 12l3 3M20 12h-4M20 12l-3-3M20 12l-3 3M12 20v-4M12 20l-3-3M12 20l3-3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+            </button>
+            <button class="tool-btn" id="tool-wire" title="線框模式">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l8 5v8l-8 5-8-5V8zM4 8l8 5 8-5M12 13v8" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="tool-btn" id="tool-full" title="全螢幕">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <aside class="viewer-side"><div class="viewer-side-inner" id="viewer-facts"></div></aside>
+        </div>
+      </div>
+    </div>
+
+    <button class="recenter-fab" id="recenter-fab" title="回到澳門">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg>
+      <span>回到澳門</span>
+    </button>
+    <div class="toast" id="toast"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

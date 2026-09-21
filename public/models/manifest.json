@@ -1,0 +1,447 @@
+{
+ "generated": "2026-09-21T10:30:07.401Z",
+ "pipeline": "gltf-transform: weld → simplify(meshoptimizer) → textureCompress(webp) → quantize → meshopt",
+ "models": {
+  "tang-sancai-camel": {
+   "id": "tang-sancai-camel",
+   "titleZh": "唐三彩雙峰駱駝俑",
+   "titleEn": "Sancai-glazed Bactrian Camel",
+   "full": {
+    "triangles": 330000,
+    "vertices": 217132,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.3809107630484475,
+      1.0351070833802822e-8,
+      -0.15329206329223122
+     ],
+     "max": [
+      0.33968476345471277,
+      0.9735201276980343,
+      0.18519820685302057
+     ]
+    },
+    "dims": [
+     0.721,
+     0.974,
+     0.338
+    ],
+    "bytes": 2851132,
+    "file": "tang-sancai-camel.glb",
+    "sourceTriangles": null
+   },
+   "lod": {
+    "triangles": 52500,
+    "vertices": 45154,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.3808355989323968,
+      1.0352862622742265e-8,
+      -0.1531828041505295
+     ],
+     "max": [
+      0.33960557602513974,
+      0.9734721438364836,
+      0.18517194730363537
+     ]
+    },
+    "dims": [
+     0.72,
+     0.973,
+     0.338
+    ],
+    "bytes": 646084,
+    "file": "tang-sancai-camel.lod.glb",
+    "sourceTriangles": null
+   },
+   "source": "高精度掃描（使用者提供）",
+   "dimensionsMeters": [
+    0.721,
+    0.974,
+    0.338
+   ],
+   "kind": "artifact",
+   "realWorldScale": true
+  },
+  "yongle-blue-white-flask": {
+   "id": "yongle-blue-white-flask",
+   "titleZh": "明永樂 青花輪花紋綬帶耳葫蘆扁瓶",
+   "titleEn": "Yongle Blue-and-White Gourd Flask",
+   "full": {
+    "triangles": 330000,
+    "vertices": 200054,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.3049982996755776,
+      0.000019584435284047963,
+      -0.2899230370616035
+     ],
+     "max": [
+      0.27622430642186974,
+      0.6125294616542662,
+      0.5878041118783428
+     ]
+    },
+    "dims": [
+     0.581,
+     0.613,
+     0.878
+    ],
+    "bytes": 2501940,
+    "file": "yongle-blue-white-flask.glb",
+    "sourceTriangles": null
+   },
+   "lod": {
+    "triangles": 52500,
+    "vertices": 44812,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.30497942332187566,
+      0.000026476289215038307,
+      -0.289866024750559
+     ],
+     "max": [
+      0.2762054300681678,
+      0.6124965685039924,
+      0.5878041118783954
+     ]
+    },
+    "dims": [
+     0.581,
+     0.612,
+     0.878
+    ],
+    "bytes": 609500,
+    "file": "yongle-blue-white-flask.lod.glb",
+    "sourceTriangles": null
+   },
+   "source": "高精度掃描（使用者提供）",
+   "dimensionsMeters": [
+    0.581,
+    0.613,
+    0.878
+   ],
+   "kind": "artifact",
+   "realWorldScale": true
+  },
+  "parisian": {
+   "id": "parisian",
+   "titleZh": "澳門巴黎人（巴黎鐵塔）",
+   "titleEn": "The Parisian Macao",
+   "full": {
+    "triangles": 266421,
+    "vertices": 238594,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.38795915026723965,
+      -0.29437956933838133,
+      -0.490020751953125
+     ],
+     "max": [
+      0.38576188464223965,
+      0.29776702051025633,
+      0.491607666015625
+     ]
+    },
+    "dims": [
+     0.774,
+     0.592,
+     0.982
+    ],
+    "bytes": 3280908,
+    "file": "parisian.glb",
+    "sourceTriangles": null
+   },
+   "lod": {
+    "triangles": 149087,
+    "vertices": 142834,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.3879613715393679,
+      -0.2942011792997301,
+      -0.488067626953125
+     ],
+     "max": [
+      0.3845128852112429,
+      0.2907526929716051,
+      0.48895263671875
+     ]
+    },
+    "dims": [
+     0.772,
+     0.585,
+     0.977
+    ],
+    "bytes": 1605264,
+    "file": "parisian.lod.glb",
+    "sourceTriangles": null
+   },
+   "source": "AI 三維生成（使用者提供）",
+   "dimensionsMeters": [
+    0.774,
+    0.592,
+    0.982
+   ],
+   "kind": "building",
+   "realWorldScale": false
+  },
+  "macau-science-center": {
+   "id": "macau-science-center",
+   "titleZh": "澳門科學館",
+   "titleEn": "Macao Science Center",
+   "full": {
+    "triangles": 265554,
+    "vertices": 236137,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.3917746331274307,
+      -0.19637403314404012,
+      -0.488983154296875
+     ],
+     "max": [
+      0.3923239495336807,
+      0.3939295751362276,
+      0.4884033203125
+     ]
+    },
+    "dims": [
+     0.784,
+     0.59,
+     0.977
+    ],
+    "bytes": 2539152,
+    "file": "macau-science-center.glb",
+    "sourceTriangles": null
+   },
+   "lod": {
+    "triangles": 172648,
+    "vertices": 154702,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.3916300734824016,
+      -0.19529209619519122,
+      -0.488983154296875
+     ],
+     "max": [
+      0.3922709426230266,
+      0.3935495424842537,
+      0.486968994140625
+     ]
+    },
+    "dims": [
+     0.784,
+     0.589,
+     0.976
+    ],
+    "bytes": 1562464,
+    "file": "macau-science-center.lod.glb",
+    "sourceTriangles": null
+   },
+   "source": "AI 三維生成（使用者提供）",
+   "dimensionsMeters": [
+    0.784,
+    0.59,
+    0.977
+   ],
+   "kind": "building",
+   "realWorldScale": false
+  },
+  "macau-tower": {
+   "id": "macau-tower",
+   "titleZh": "澳門旅遊塔",
+   "titleEn": "Macau Tower",
+   "full": {
+    "triangles": 270407,
+    "vertices": 226548,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.491424560546875,
+      -0.21400959898395416,
+      -0.4371288645441023
+     ],
+     "max": [
+      0.49053955078125,
+      0.38792927671832916,
+      0.4371898997003523
+     ]
+    },
+    "dims": [
+     0.982,
+     0.602,
+     0.874
+    ],
+    "bytes": 2429240,
+    "file": "macau-tower.glb",
+    "sourceTriangles": null
+   },
+   "lod": {
+    "triangles": 145935,
+    "vertices": 131209,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.491241455078125,
+      -0.2140134026214267,
+      -0.4369710541027606
+     ],
+     "max": [
+      0.49053955078125,
+      0.3879330803558017,
+      0.4371846771496356
+     ]
+    },
+    "dims": [
+     0.982,
+     0.602,
+     0.874
+    ],
+    "bytes": 1305012,
+    "file": "macau-tower.lod.glb",
+    "sourceTriangles": null
+   },
+   "source": "AI 三維生成（使用者提供）",
+   "dimensionsMeters": [
+    0.982,
+    0.602,
+    0.874
+   ],
+   "kind": "building",
+   "realWorldScale": false
+  },
+  "galaxy-macau": {
+   "id": "galaxy-macau",
+   "titleZh": "澳門銀河",
+   "titleEn": "Galaxy Macao",
+   "full": {
+    "triangles": 264673,
+    "vertices": 178140,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.489593505859375,
+      0.00007743252190656191,
+      -0.35174012772786
+     ],
+     "max": [
+      0.489593505859375,
+      0.41429024325934344,
+      0.351892715618485
+     ]
+    },
+    "dims": [
+     0.979,
+     0.414,
+     0.704
+    ],
+    "bytes": 2837340,
+    "file": "galaxy-macau.glb",
+    "sourceTriangles": null
+   },
+   "lod": {
+    "triangles": 56705,
+    "vertices": 47595,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.489532470703125,
+      0.00014883268340432076,
+      -0.3512197470000663
+     ],
+     "max": [
+      0.489593505859375,
+      0.4140967727853457,
+      0.3518911337188163
+     ]
+    },
+    "dims": [
+     0.979,
+     0.414,
+     0.703
+    ],
+    "bytes": 745040,
+    "file": "galaxy-macau.lod.glb",
+    "sourceTriangles": null
+   },
+   "source": "AI 三維生成（使用者提供）",
+   "dimensionsMeters": [
+    0.979,
+    0.414,
+    0.704
+   ],
+   "kind": "building",
+   "realWorldScale": false
+  },
+  "londoner-macao": {
+   "id": "londoner-macao",
+   "titleZh": "澳門倫敦人",
+   "titleEn": "The Londoner Macao",
+   "full": {
+    "triangles": 266408,
+    "vertices": 165710,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.4906158447265625,
+      0.00007584410278085874,
+      -0.22367054152889626
+     ],
+     "max": [
+      0.4907073974609375,
+      0.32606551331909417,
+      0.22367054152889626
+     ]
+    },
+    "dims": [
+     0.981,
+     0.326,
+     0.447
+    ],
+    "bytes": 2388896,
+    "file": "londoner-macao.glb",
+    "sourceTriangles": null
+   },
+   "lod": {
+    "triangles": 57086,
+    "vertices": 42390,
+    "primitives": 1,
+    "bounds": {
+     "min": [
+      -0.4906158447265625,
+      0.000059447202799794985,
+      -0.2234744534929209
+     ],
+     "max": [
+      0.4907073974609375,
+      0.3259293223284502,
+      0.2236270413835459
+     ]
+    },
+    "dims": [
+     0.981,
+     0.326,
+     0.447
+    ],
+    "bytes": 623984,
+    "file": "londoner-macao.lod.glb",
+    "sourceTriangles": null
+   },
+   "source": "AI 三維生成（使用者提供）",
+   "dimensionsMeters": [
+    0.981,
+    0.326,
+    0.447
+   ],
+   "kind": "building",
+   "realWorldScale": false
+  }
+ }
+}

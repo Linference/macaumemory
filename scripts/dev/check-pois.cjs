@@ -1,0 +1,10 @@
+﻿const fs = require("fs");
+const l = JSON.parse(fs.readFileSync("public/data/macau-pois-lite.geojson", "utf8"));
+const g = {};
+for (const f of l.features) g[f.properties.g] = (g[f.properties.g] ?? 0) + 1;
+console.log("總數:", l.features.length);
+console.log("分組:", JSON.stringify(g));
+const single = l.features.filter((f) => (f.properties.k ?? "").length <= 2).length;
+console.log("單字母類別殘留:", single);
+const zhuhai = l.features.filter((f) => /珠海|横琴|橫琴|拱北|香洲|Zhuhai|Hengqin/i.test(f.properties.n)).length;
+console.log("疑似珠海/橫琴:", zhuhai);
