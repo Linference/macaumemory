@@ -11,7 +11,7 @@ import { ModelViewer } from "./viewer.js";
 import { setLang, getLang, T } from "./i18n.js";
 
 const $ = (sel) => document.querySelector(sel);
-const HOME = { center: [113.5515, 22.1862], zoom: 12.7, pitch: 52, bearing: -14 };
+const HOME = { center: [113.5515, 22.1862], zoom: 13.5, pitch: 52, bearing: -14 };
 
 const state = {
   data: null,
@@ -44,14 +44,13 @@ const map = new maplibregl.Map({
   container: "map",
   style: buildStyle(),
   center: HOME.center,
-  zoom: HOME.zoom - 1.6,
+  zoom: HOME.zoom,
   pitch: HOME.pitch + 8,
   bearing: HOME.bearing,
-  minZoom: 11.6,
+  minZoom: 12.4, // 實際值會在 applyCameraLimits() 依視窗大小調整
   maxZoom: 19,
   maxPitch: 85,
-  // 只做「軟限制」：範圍放大到珠江口一帶，避免低縮放時被鎖住無法左右平移
-  maxBounds: [[112.95, 21.65], [114.25, 22.85]],
+
   canvasContextAttributes: { antialias: true },
   attributionControl: false,
   dragRotate: true,
@@ -101,6 +100,7 @@ function onMapReady() {
   if (appReady) return;
   appReady = true;
   boot("正在設定地形與圖層…", 62);
+  applyCameraLimits();
   try { map.setSky({ "sky-color": "#0a141f", "horizon-color": "#2b4557", "fog-color": "#0d1a25", "sky-horizon-blend": 0.55, "horizon-fog-blend": 0.5, "fog-ground-blend": 0.18 }); } catch (e) { console.warn(e); }
   try { map.setTerrain({ source: "dem", exaggeration: 1.5 }); } catch (e) { console.warn("terrain:", e); }
   markerLayer.setData(attractions);
@@ -418,7 +418,7 @@ function toggleControls(force) {
 }
 $("#btn-layers").addEventListener("click", () => toggleControls());
 // 回到澳門：地圖中心離開澳門資料範圍時自動出現
-const HOME_BOX = { west: 113.46, east: 113.69, south: 22.04, north: 22.30 };
+const HOME_BOX = { west: 113.452, east: 113.668, south: 22.052, north: 22.278 };
 function checkOutside() {
   const c = map.getCenter();
   const outside = c.lng < HOME_BOX.west || c.lng > HOME_BOX.east || c.lat < HOME_BOX.south || c.lat > HOME_BOX.north;
@@ -482,6 +482,34 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "f" || e.key === "F") { e.preventDefault(); toggleFullscreen(); }
 });
 window.__toggleFullscreen = toggleFullscreen;
+
+
+// ---------------------------------------------------------------- 相機範圍限制
+// 可平移範圍＝澳門特別行政區＋約 6 公里緩衝（與 DEM 圖磚覆蓋 113.455–113.665 / 22.055–22.275 一致）
+const HOME_REGION = { center: [113.5600, 22.1650], lonSpan: 0.21, latSpan: 0.22 };
+const M_PER_DEG_LON = 102400, M_PER_DEG_LAT = 110800;
+function applyCameraLimits() {
+  const canvas = map.getCanvas();
+  const w = canvas.clientWidth || window.innerWidth;
+  const h = canvas.clientHeight || window.innerHeight;
+  const cosLat = Math.cos((HOME_REGION.center[1] * Math.PI) / 180);
+  const regionW = HOME_REGION.lonSpan * M_PER_DEG_LON;
+  const regionH = HOME_REGION.latSpan * M_PER_DEG_LAT;
+  const mppAtZ0 = 156543.03392 * cosLat;              // z=0 時每像素公尺數
+  // 讓「最小縮放時的可視範圍」約為範圍的 72%，保留左右／上下平移的空間
+  const zW = Math.log2((mppAtZ0 * w) / (0.72 * regionW));
+  const zH = Math.log2((mppAtZ0 * h) / (0.72 * regionH));
+  const zMin = Math.min(15, Math.max(12.2, Math.max(zW, zH)));
+  map.setMinZoom(zMin);
+  HOME.zoom = Math.max(13.4, Math.min(14.4, zMin + 0.12)); // 開場視角跟著微調
+  map.setMaxBounds([
+    [HOME_REGION.center[0] - HOME_REGION.lonSpan / 2, HOME_REGION.center[1] - HOME_REGION.latSpan / 2],
+    [HOME_REGION.center[0] + HOME_REGION.lonSpan / 2, HOME_REGION.center[1] + HOME_REGION.latSpan / 2],
+  ]);
+  return zMin;
+}
+map.on("load", applyCameraLimits);
+window.addEventListener("resize", () => { applyCameraLimits(); });
 
 // ---------------------------------------------------------------- 個人定位
 const myLocation = new MyLocation(map, {
