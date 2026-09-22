@@ -44,7 +44,7 @@ export function buildStyle() {
     sources: {
       dem: {
         type: "raster-dem",
-        tiles: [`${location.origin}/dem/{z}/{x}/{y}.png`],
+        tiles: ["dem/{z}/{x}/{y}.png"],
         encoding: "terrarium",
         tileSize: 256,
         minzoom: 10,
@@ -52,20 +52,20 @@ export function buildStyle() {
       },
       "dem-hillshade": {
         type: "raster-dem",
-        tiles: [`${location.origin}/dem/{z}/{x}/{y}.png`],
+        tiles: ["dem/{z}/{x}/{y}.png"],
         encoding: "terrarium",
         tileSize: 256,
         minzoom: 10,
         maxzoom: 15,
       },
-      buildings: { type: "geojson", data: "/data/macau-buildings.geojson" },
-      roads: { type: "geojson", data: "/data/macau-roads.geojson" },
-      rail: { type: "geojson", data: "/data/macau-rail.geojson" },
-      landuse: { type: "geojson", data: "/data/macau-landuse.geojson" },
-      water: { type: "geojson", data: "/data/macau-water.geojson" },
-      waterways: { type: "geojson", data: "/data/macau-waterways.geojson" },
-      coastline: { type: "geojson", data: "/data/macau-coastline.geojson" },
-      boundary: { type: "geojson", data: "/data/macau-boundary.geojson" },
+      buildings: { type: "geojson", data: "data/macau-buildings.geojson" },
+      roads: { type: "geojson", data: "data/macau-roads.geojson" },
+      rail: { type: "geojson", data: "data/macau-rail.geojson" },
+      landuse: { type: "geojson", data: "data/macau-landuse.geojson" },
+      water: { type: "geojson", data: "data/macau-water.geojson" },
+      waterways: { type: "geojson", data: "data/macau-waterways.geojson" },
+      coastline: { type: "geojson", data: "data/macau-coastline.geojson" },
+      boundary: { type: "geojson", data: "data/macau-boundary.geojson" },
     },
     sky: {
       "sky-color": "#0a141f",
@@ -137,7 +137,7 @@ export function buildStyle() {
 // 等高線（4.3 MB）改為第一次開啟圖層時才載入，避免拖慢啟動
 export function addContourLayers(map) {
   if (map.getSource("contours")) return;
-  map.addSource("contours", { type: "geojson", data: "/data/macau-dem-contours.geojson" });
+  map.addSource("contours", { type: "geojson", data: "data/macau-dem-contours.geojson" });
   const before = map.getLayer("buildings") ? "buildings" : undefined;
   map.addLayer({
     id: "contour",

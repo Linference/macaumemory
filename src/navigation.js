@@ -23,7 +23,7 @@ export class NavigationController {
     this.onStatus("正在建立路網（約 2 萬條道路）…");
     const [{ Router }, roads] = await Promise.all([
       import("./routing.js"),
-      fetch("/data/macau-roads.geojson").then((r) => r.json()),
+      fetch("data/macau-roads.geojson").then((r) => r.json()),
     ]);
     this.router = new Router(roads.features ?? []);
     this.router.graph(this.mode);

@@ -11,6 +11,13 @@ import { MarkerLayer } from "./markers.js";
 import { ModelViewer } from "./viewer.js";
 import { setLang, getLang, T } from "./i18n.js";
 
+// 明確指定 MapLibre worker 位址：使用 .js 版本（避免 .mjs 被伺服器給錯 MIME 而無法載入）
+try {
+  maplibregl.setWorkerUrl(new URL("assets/maplibre-gl-worker.js", document.baseURI).href);
+} catch (e) {
+  console.warn("setWorkerUrl:", e);
+}
+
 const $ = (sel) => document.querySelector(sel);
 const HOME = { center: [113.5515, 22.1862], zoom: 13.5, pitch: 52, bearing: -14 };
 
@@ -33,8 +40,8 @@ main().catch((err) => {
 async function main() {
 boot("正在載入地理資料…", 8);
 const [data, manifest] = await Promise.all([
-  fetch("/data/attractions.json").then((r) => r.json()),
-  fetch("/models/manifest.json").then((r) => r.json()).catch(() => ({ models: {} })),
+  fetch("data/attractions.json").then((r) => r.json()),
+  fetch("models/manifest.json").then((r) => r.json()).catch(() => ({ models: {} })),
 ]);
 state.data = data;
 state.manifest = manifest;
@@ -329,7 +336,7 @@ function openModelFor(item, modelId, { title, subtitle, description, facts } = {
     dimensions: model.dimensionsMeters,
     triangles: model.full?.triangles,
     sizes: { full: model.full?.bytes },
-    files: { full: `/models/${model.full.file}`, lod: model.lod ? `/models/${model.lod.file}` : null },
+    files: { full: `models/${model.full.file}`, lod: model.lod ? `models/${model.lod.file}` : null },
     kind: model.kind ?? "artifact",
     realWorldScale: model.realWorldScale !== false,
     source: isBuilding ? T("模型來源：使用者提供之 AI 三維生成檔（非實測比例）") : T("模型來源：高精度掃描檔（1:1 尺度）"),
@@ -665,7 +672,7 @@ async function setupLabelsAndPois() {
     },
   });
   try {
-    const labels = await fetch("/data/macau-labels.geojson").then((r) => r.json());
+    const labels = await fetch("data/macau-labels.geojson").then((r) => r.json());
     labelLayer.setData(labels.features ?? []);
   } catch (e) { console.warn("labels:", e); }
 

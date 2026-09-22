@@ -17,7 +17,7 @@ export const POI_GROUPS = [
 ];
 
 export class PoiLayer {
-  constructor(map, { url = "/data/macau-pois-lite.geojson" } = {}) {
+  constructor(map, { url = "data/macau-pois-lite.geojson" } = {}) {
     this.map = map;
     this.url = url;
     this.loaded = false;

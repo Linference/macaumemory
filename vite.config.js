@@ -27,7 +27,7 @@ function maplibreWorkerPlugin() {
     name: "maplibre-worker-files",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const hit = WORKER_FILES.find((f) => (req.url || "").includes(f));
+        const hit = WORKER_FILES.find((f) => (req.url || "").includes(f.replace(/\.mjs$/, "")));
         if (!hit) return next();
         res.setHeader("Content-Type", "text/javascript; charset=utf-8");
         res.end(readFileSync(path.join(MAPLIBRE_DIST, hit)));
@@ -49,11 +49,19 @@ function maplibreWorkerPlugin() {
       for (const f of WORKER_FILES) {
         this.emitFile({ type: "asset", fileName: `assets/${f}`, source: readFileSync(path.join(MAPLIBRE_DIST, f)) });
       }
+      // 另外輸出 .js 版本：部分靜態伺服器（含 GitHub Pages）對 .mjs 會給
+      // application/octet-stream，瀏覽器會拒絕載入 module worker。
+      // 這裡把 worker 內對 shared 的匯入一併改成 .js。
+      const worker = readFileSync(path.join(MAPLIBRE_DIST, "maplibre-gl-worker.mjs"), "utf8")
+        .replace(/maplibre-gl-shared\.mjs/g, "maplibre-gl-shared.js");
+      this.emitFile({ type: "asset", fileName: "assets/maplibre-gl-worker.js", source: worker });
+      this.emitFile({ type: "asset", fileName: "assets/maplibre-gl-shared.js", source: readFileSync(path.join(MAPLIBRE_DIST, "maplibre-gl-shared.mjs")) });
     },
   };
 }
 
 export default defineConfig({
+  base: "./",
   server: { host: "127.0.0.1", port: 5173, strictPort: false },
   preview: { host: "127.0.0.1", port: 4173, strictPort: false },
   optimizeDeps: { exclude: ["maplibre-gl"] },
