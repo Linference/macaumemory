@@ -112,6 +112,19 @@ npm run verify      # 檢查景點座標是否落在建築物／水域（QA）
 
 ---
 
+## 部署（GitHub Pages）
+
+已內建 GitHub Actions：推送 `main` 即自動 `npm ci → npm run build → 部署 dist`。
+
+1. 到 **Settings → Pages → Build and deployment → Source** 選 **GitHub Actions**
+2. 推送後約 1–2 分鐘即可在網址看到（自訂網域請於 Pages 設定 Custom domain 並開啟 Enforce HTTPS）
+3. 產物包含 `public/` 全部圖資、地形與模型（約 76 MB），**完全靜態、離線可跑、無需伺服器**
+
+> 站台以自訂網域根目錄提供服務，因此程式中的絕對路徑（`/data/…`、`/dem/…`、`/models/…`）可直接運作。
+> 若改用 `帳號.github.io/專案名/` 子路徑，請把 `vite.config.js` 加上 `base: "/專案名/"` 並將程式內路徑改為相對路徑。
+
+---
+
 ## 資料來源與授權
 
 | 資料 | 來源 | 授權 |
