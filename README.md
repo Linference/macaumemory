@@ -141,10 +141,37 @@ repo 內已有 `CNAME`（`macaumemory.com`），請到網域註冊商的 DNS 加
 
 ---
 
+## AI 導覽助理（DeepSeek）
+
+右下角「**問 AI**」→ 串流對話，回答會**連動地圖**：
+
+- 問「大三巴有什麼必看？」→ 回答後自動 `[[goto:ruins-st-paul]]`，地圖飛到該景點並開啟介紹
+- 問「我要怎麼去澳門旅遊塔？」→ 回答後自動 `[[route:macau-tower]]`，**直接啟動導航**規劃最快路線
+- 系統提示會帶入本圖 61 個景點清單、目前選中景點與使用者位置，所以能算距離、排行程
+
+**API Key 安全**（重要）：
+- 金鑰只存在**你的瀏覽器 localStorage**，或本機 `public/ai-local.json`（已加入 `.gitignore`，不會被提交）
+- 本站為公開網站，**請勿把金鑰寫進程式碼或提交到 Git**；若要做成公開服務，建議用 Cloudflare Worker 代理（可參考 `worker/bus-proxy.js` 的寫法）
+- DeepSeek API 允許瀏覽器直呼（CORS 開放），因此靜態網站也能運作；模型可切換 `deepseek-chat`（快）／`deepseek-reasoner`（推理強）
+
+---
+
+## 巴士站與即時報站
+
+- **已內建 830 個巴士站**（OpenStreetMap，822 個有站名、669 個已對應路線號），圖層面板可開啟「巴士站（OSM）」，點站點會列出經過的路線
+- **即時到站**：澳門官方（DSAT「巴士報站」）與 data.gov.mo 的實時服務**沒有開放跨網域（CORS）**，靜態網站無法直呼；本專案提供可插拔設定：
+  1. 圖層面板 →「🚌 設定即時報站 API」
+  2. 填入任一可回傳 JSON 的網址，網址可用 `{stop}`（站點 ID）、`{name}`（站名）佔位
+  3. 回傳格式：`[{"route":"9A","eta":"3 分鐘"}]`（也支援 `route_no`／`min`／`t` 等常見欄位）
+- 附 **Cloudflare Worker 代理範本** `worker/bus-proxy.js`：幫你加上 CORS、把 API Key 留在伺服器端
+
+---
+
 ## 資料來源與授權
 
 | 資料 | 來源 | 授權 |
 | --- | --- | --- |
+| 巴士站與路線 | OpenStreetMap 貢獻者，經 Overpass API | ODbL 1.0 |
 | 建築、道路、土地利用、水體、POI、行政邊界 | [Overture Maps Foundation](https://overturemaps.org)（含 OpenStreetMap 與 Microsoft ML 建築足跡） | ODbL 1.0／Overture 授權，需標示 © OpenStreetMap contributors |
 | 海拔 | **Copernicus DEM GLO-30**，經 [OpenTopography](https://opentopography.org) Global DEM API | © DLR e.V. 2010-2014 / © Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the EU and ESA |
 | 即時地形圖磚 | Terrain Tiles（AWS Open Data / Mapzen，terrarium 編碼） | Public domain / CC-BY |

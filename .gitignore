@@ -9,3 +9,6 @@ shots/
 # 由 scripts/optimize-models.mjs 產生，檔案不大（每個 2–3 MB）故一併提交
 # 若不想提交可取消下面這行的註解
 # public/models/*.glb
+
+# 本機 DeepSeek 金鑰（切勿提交）
+public/ai-local.json

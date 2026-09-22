@@ -66,6 +66,7 @@ export function buildStyle() {
       waterways: { type: "geojson", data: "data/macau-waterways.geojson" },
       coastline: { type: "geojson", data: "data/macau-coastline.geojson" },
       boundary: { type: "geojson", data: "data/macau-boundary.geojson" },
+      bus: { type: "geojson", data: "data/macau-bus.geojson" },
     },
     sky: {
       "sky-color": "#0a141f",
@@ -125,6 +126,11 @@ export function buildStyle() {
       } },
       { id: "rail", type: "line", source: "rail", filter: ["match", ["get", "c"], ["light_rail", "rail", "subway", "tram", "monorail", "narrow_gauge"], true, false], paint: { "line-color": "#7fd3ff", "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.8, 16, 3], "line-opacity": 0.85, "line-dasharray": [3, 2] } },
 
+      { id: "bus-stop", type: "circle", source: "bus", minzoom: 14, layout: { visibility: "none" }, paint: {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 2.6, 17, 5.5],
+        "circle-color": "#7ee787", "circle-stroke-color": "#0b1117", "circle-stroke-width": 1.2,
+        "circle-opacity": 0.95,
+      } },
       { id: "boundary-fill", type: "fill", source: "boundary", filter: ["==", ["get", "k"], "sar"], paint: { "fill-color": COLORS.gold, "fill-opacity": 0.045 } },
       { id: "boundary-line", type: "line", source: "boundary", filter: ["==", ["get", "k"], "sar"], paint: { "line-color": COLORS.gold, "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.8, 16, 2.2], "line-opacity": 0.75, "line-dasharray": [3, 1.6] } },
     ],

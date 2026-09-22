@@ -82,6 +82,8 @@
       <label class="sw"><input type="checkbox" id="tg-boundary" checked /><span>行政邊界</span></label>
       <label class="sw"><input type="checkbox" id="tg-labels" checked /><span>地名標籤</span></label>
       <label class="sw"><input type="checkbox" id="tg-pois" checked /><span>周邊設施</span></label>
+      <label class="sw"><input type="checkbox" id="tg-bus" /><span>巴士站（OSM）</span></label>
+      <button class="ghost-btn" id="btn-bus-api" style="margin-top:6px">🚌 設定即時報站 API</button>
       <div class="poi-chips" id="poi-chips"></div>
       <div class="range-row">
         <span>起伏倍率</span>
@@ -197,6 +199,56 @@
         <button class="btn sec nav-btn" id="nav-stop">結束</button>
       </div>
       <div class="nav-steps" id="nav-steps"></div>
+    </section>
+    <!-- AI 導覽助理 -->
+    <button class="ai-fab" id="ai-fab" title="問 AI 導覽助理">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.6l1.9 5.1 5.1 1.9-5.1 1.9L12 16.6l-1.9-5.1L5 9.6l5.1-1.9z" fill="currentColor"/><path d="M18.6 15.2l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" fill="currentColor" opacity=".7"/></svg>
+      <span>問 AI</span>
+    </button>
+    <section class="ai-panel" id="ai-panel" aria-hidden="true">
+      <header class="ai-head">
+        <span class="ai-dot"></span>
+        <div class="ai-title">
+          <strong>澳門導覽 AI</strong>
+          <small id="ai-sub">DeepSeek · 可問景點、路線、美食</small>
+        </div>
+        <button class="icon-btn sm" id="ai-settings" title="設定 API Key">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 13.7H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 10 3.1V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
+        </button>
+        <button class="icon-btn sm" id="ai-close" title="關閉">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+      <div class="ai-msgs" id="ai-msgs"></div>
+      <div class="ai-chips" id="ai-chips"></div>
+      <div class="ai-input">
+        <textarea id="ai-text" rows="1" placeholder="問我澳門的任何事…（Enter 送出、Shift+Enter 換行）"></textarea>
+        <button class="ai-send" id="ai-send" title="送出">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3.5 20.5 21 12 3.5 3.5 3.5 10l12 2-12 2z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="ai-setup" id="bus-setup">
+        <p><b>即時巴士報站 API</b></p>
+        <p class="ai-note">澳門官方實時報站沒有公開且允許跨網域的 API。若你有 <b>data.gov.mo</b> 的 API Key，或自建了代理（例如 Cloudflare Worker，範本見 <code>worker/bus-proxy.js</code>），把可回傳 JSON 的網址填在這裡，網址中用 <code>{stop}</code> 代表站點 ID、<code>{name}</code> 代表站名。</p>
+        <input type="text" id="bus-api-url" placeholder="https://your-worker.workers.dev/?stop={stop}" />
+        <div class="ai-setup-row">
+          <input type="password" id="bus-api-key" placeholder="API Key / Token（可留空）" />
+          <button class="btn" id="bus-api-save">儲存</button>
+        </div>
+        <p class="ai-note">回傳格式支援：<code>[{"route":"9A","eta":"3 分鐘"}]</code> 或含 <code>eta</code>/<code>min</code>/<code>route</code> 欄位的陣列。設定只存在你的瀏覽器。</p>
+      </div>
+      <div class="ai-setup" id="ai-setup">
+        <p><b>設定 DeepSeek API Key</b>（只存在你的瀏覽器，不會上傳到本站）</p>
+        <input type="password" id="ai-key" placeholder="sk-..." autocomplete="off" />
+        <div class="ai-setup-row">
+          <select id="ai-model">
+            <option value="deepseek-chat">deepseek-chat（快、便宜）</option>
+            <option value="deepseek-reasoner">deepseek-reasoner（推理強）</option>
+          </select>
+          <button class="btn" id="ai-save">儲存並開始</button>
+        </div>
+        <p class="ai-note">⚠️ 金鑰只儲存在此瀏覽器的 localStorage。本站為公開網站，請勿把金鑰寫進程式碼或提交到 Git。</p>
+      </div>
     </section>
     <div class="toast" id="toast"></div>
     <script type="module" src="/src/main.js"></script>

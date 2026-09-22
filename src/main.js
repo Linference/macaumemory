@@ -6,6 +6,7 @@ import { LabelLayer } from "./labels.js";
 import { PoiLayer, POI_GROUPS, POI_DEFAULT_OFF } from "./pois.js";
 import { MyLocation, distanceMeters, bearingLabel, formatDistance } from "./geolocate.js";
 import { NavigationController } from "./navigation.js";
+import { AiChat } from "./chat.js";
 import { iconSvg } from "./icons.js";
 import { MarkerLayer } from "./markers.js";
 import { ModelViewer } from "./viewer.js";
@@ -371,6 +372,62 @@ $("#tool-full").addEventListener("click", async () => {
 });
 $("#tool-rotate").classList.add("on");
 
+// ---------------------------------------------------------------- 巴士站與即時報站
+const BUS_URL_KEY = "macau.bus.api.url";
+const BUS_KEY_KEY = "macau.bus.api.key";
+function busApiConfig() {
+  return { url: localStorage.getItem(BUS_URL_KEY) ?? "", key: localStorage.getItem(BUS_KEY_KEY) ?? "" };
+}
+function openBusSetup(on) {
+  const el = $("#bus-setup");
+  if (!el) return;
+  el.classList.toggle("on", on);
+  if (on) { $("#bus-api-url").value = busApiConfig().url; $("#bus-api-key").value = busApiConfig().key; }
+}
+/** 解析常見的報站回傳格式 → [{route, eta}] */
+function parseArrivals(data) {
+  const arr = Array.isArray(data) ? data : (data?.data ?? data?.arrivals ?? data?.list ?? []);
+  if (!Array.isArray(arr)) return [];
+  return arr.slice(0, 12).map((x) => {
+    const route = x.route ?? x.routeNo ?? x.route_no ?? x.l ?? x.line ?? "?";
+    let eta = x.eta ?? x.time ?? x.arrival ?? x.t ?? x.min ?? null;
+    if (typeof eta === "number") eta = eta <= 0 ? "即將到站" : `${eta} 分鐘`;
+    return { route: String(route), eta: eta == null ? "—" : String(eta) };
+  });
+}
+async function loadArrivals(stop) {
+  const { url, key } = busApiConfig();
+  if (!url) return null;
+  const target = url.replace("{stop}", encodeURIComponent(stop.properties.id ?? "")).replace("{name}", encodeURIComponent(stop.properties.n ?? ""));
+  const headers = key ? { Authorization: `Bearer ${key}` } : {};
+  const res = await fetch(target, { headers });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return parseArrivals(await res.json());
+}
+function showBusStop(stop) {
+  const p = stop.properties;
+  const routes = (p.r ?? "").split(",").filter(Boolean);
+  const html = `<div style="font-size:13px;line-height:1.6;min-width:150px">
+    <b>${p.n ?? "未命名站點"}</b>
+    ${routes.length ? `<div style="margin-top:5px;font-size:11.5px;color:#9aa6b2">${T("路線")}</div><div style="margin-top:3px;display:flex;flex-wrap:wrap;gap:4px">${routes.map((r) => `<span style="background:rgba(126,231,135,.15);border:1px solid rgba(126,231,135,.35);color:#b7f0bd;border-radius:6px;padding:1px 6px;font-size:11.5px">${r}</span>`).join("")}</div>` : `<div style="margin-top:4px;font-size:11.5px;color:#7f8b98">${T("此站尚未對應路線資料")}</div>`}
+    <div id="bus-live" style="margin-top:8px;font-size:11.5px;color:#9aa6b2">${busApiConfig().url ? T("載入即時到站…") : T("未設定即時報站 API")}</div>
+  </div>`;
+  const popup = new maplibregl.Popup({ closeButton: true, offset: 12, maxWidth: "260px" })
+    .setLngLat(stop.geometry.coordinates).setHTML(html).addTo(map);
+  if (busApiConfig().url) {
+    loadArrivals(stop).then((list) => {
+      const el = document.getElementById("bus-live");
+      if (!el) return;
+      if (!list || !list.length) { el.textContent = T("目前沒有到站資料"); return; }
+      el.innerHTML = `<div style="color:#9aa6b2;font-size:11.5px;margin-bottom:3px">${T("即時到站")}</div>` +
+        list.map((x) => `<div style="display:flex;justify-content:space-between;gap:10px"><b style="color:#b7f0bd">${x.route}</b><span>${x.eta}</span></div>`).join("");
+    }).catch((e) => {
+      const el = document.getElementById("bus-live");
+      if (el) el.textContent = T("報站 API 失敗：") + e.message;
+    });
+  }
+}
+
 // ---------------------------------------------------------------- 圖層開關
 const layerToggles = [
   ["#tg-buildings", ["buildings"]],
@@ -408,6 +465,21 @@ $("#tg-pois").addEventListener("change", async (e) => {
   for (const el of chips.querySelectorAll(".poi-chip")) el.classList.toggle("off", !e.target.checked);
   if (poiLayer) { for (const g of POI_GROUPS) poiLayer.setGroup(g.id, e.target.checked); await poiLayer.setVisible(e.target.checked); }
 });
+
+$("#tg-bus").addEventListener("change", (e) => {
+  if (map.getLayer("bus-stop")) map.setLayoutProperty("bus-stop", "visibility", e.target.checked ? "visible" : "none");
+});
+$("#btn-bus-api").addEventListener("click", () => openBusSetup(!$("#bus-setup").classList.contains("on")));
+$("#bus-api-save").addEventListener("click", () => {
+  const u = $("#bus-api-url").value.trim();
+  localStorage.setItem(BUS_URL_KEY, u);
+  localStorage.setItem(BUS_KEY_KEY, $("#bus-api-key").value.trim());
+  openBusSetup(false);
+  toast(u ? T("已儲存報站 API 設定") : T("已清除報站 API 設定"));
+});
+map.on("click", "bus-stop", (e) => { const f = e.features?.[0]; if (f) showBusStop(f); });
+map.on("mouseenter", "bus-stop", () => { if (map.getLayer("bus-stop") && map.getLayoutProperty("bus-stop", "visibility") !== "none") map.getCanvas().style.cursor = "pointer"; });
+map.on("mouseleave", "bus-stop", () => { map.getCanvas().style.cursor = ""; });
 
 $("#tg-terrain").addEventListener("change", (e) => {
   map.setTerrain(e.target.checked ? { source: "dem", exaggeration: +$("#rg-exagg").value } : null);
@@ -521,6 +593,115 @@ function applyCameraLimits() {
 }
 map.on("load", applyCameraLimits);
 window.addEventListener("resize", () => { applyCameraLimits(); });
+
+// ---------------------------------------------------------------- AI 導覽助理
+const ai = new AiChat({
+  getContext: () => ({
+    attractions: attractions.map((a) => ({ id: a.id, zh: T(a.zh), cat: T(state.categories[a.cat]?.zh ?? a.cat), tag: a.tag ? T(a.tag) : null, brief: a.brief })),
+    selected: state.selected ? { id: state.selected.id, zh: T(state.selected.zh) } : null,
+    position: myLocation.position?.coords ?? null,
+  }),
+  onCommand: (cmd) => {
+    const target = byId.get(cmd.id);
+    if (!target) return;
+    if (cmd.type === "route") { navStartFor(target); }
+    else { select(target, { fly: true }); }
+  },
+  onError: (e) => {
+    if (e.code === "nokey") { openAiSetup(true); toast(T("請先設定 DeepSeek API Key")); }
+    else toast(T("AI 錯誤：") + e.message);
+  },
+});
+const AI_CHIPS = [
+  "大三巴有什麼必看？",
+  "推薦一條世界遺產步行路線",
+  "半日遊怎麼安排？",
+  "附近有什麼美食？",
+  "帶小朋友可以去哪？",
+];
+function renderAiChips() {
+  $("#ai-chips").innerHTML = AI_CHIPS.map((c) => `<button class="ai-chip">${T(c)}</button>`).join("");
+  for (const el of $("#ai-chips").querySelectorAll(".ai-chip")) {
+    el.addEventListener("click", () => sendAi(el.textContent));
+  }
+}
+function addAiMsg(role, text) {
+  const el = document.createElement("div");
+  el.className = `ai-msg ${role}`;
+  el.innerHTML = renderAiText(text);
+  $("#ai-msgs").appendChild(el);
+  $("#ai-msgs").scrollTop = $("#ai-msgs").scrollHeight;
+  return el;
+}
+// 極簡 Markdown：粗體、換行、條列
+function renderAiText(text) {
+  const esc = String(text).replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
+  return esc
+    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
+    .replace(/^- (.+)$/gm, "・$1")
+    .replace(/\n/g, "<br>");
+}
+function openAiSetup(on) {
+  $("#ai-setup").classList.toggle("on", on);
+  if (on) { $("#ai-key").value = ""; $("#ai-model").value = ai.model; $("#ai-key").focus(); }
+}
+async function sendAi(text) {
+  const t = (text ?? $("#ai-text").value).trim();
+  if (!t) return;
+  if (!ai.ready) { openAiSetup(true); toast(T("請先設定 DeepSeek API Key")); return; }
+  $("#ai-text").value = "";
+  $("#ai-text").style.height = "auto";
+  addAiMsg("user", t);
+  const bubble = addAiMsg("ai", "");
+  bubble.classList.add("typing");
+  $("#ai-send").disabled = true;
+  const res = await ai.send(t, (partial) => {
+    bubble.innerHTML = renderAiText(partial);
+    $("#ai-msgs").scrollTop = $("#ai-msgs").scrollHeight;
+  });
+  bubble.classList.remove("typing");
+  $("#ai-send").disabled = false;
+  if (!res) { bubble.innerHTML = renderAiText(T("（回覆失敗，請檢查 API Key 或稍後再試）")); return; }
+  if (res.commands.length) {
+    const cmd = res.commands[0];
+    const target = byId.get(cmd.id);
+    if (target) bubble.insertAdjacentHTML("beforeend", `<br><span class="ai-cmd">${cmd.type === "route" ? T("🧭 已為你規劃路線：") : T("📍 已在地圖上標出：")}${T(target.zh)}</span>`);
+  }
+}
+$("#ai-fab").addEventListener("click", async () => {
+  const on = !$("#ai-panel").classList.contains("on");
+  $("#ai-panel").classList.toggle("on", on);
+  $("#ai-panel").setAttribute("aria-hidden", String(!on));
+  if (on) {
+    if (!ai.ready) await ai.init();
+    $("#ai-sub").textContent = ai.ready
+      ? `DeepSeek · ${ai.model}${ai.source === "local" ? "（本機金鑰）" : ""}`
+      : T("尚未設定 API Key");
+    if (!ai.ready) openAiSetup(true);
+    else if (!$("#ai-msgs").children.length) addAiMsg("ai", T("你好！我是澳門導覽助理 🧭\n可以問我景點介紹、步行路線、美食或行程安排；如果我推薦某個景點，還會直接在地圖上標出來。"));
+    $("#ai-text").focus();
+  }
+});
+$("#ai-close").addEventListener("click", () => { $("#ai-panel").classList.remove("on"); $("#ai-panel").setAttribute("aria-hidden", "true"); });
+$("#ai-settings").addEventListener("click", () => openAiSetup(true));
+$("#ai-save").addEventListener("click", () => {
+  const k = $("#ai-key").value.trim();
+  if (!k) { toast(T("請輸入 API Key")); return; }
+  ai.setKey(k, { remember: true });
+  ai.setModel($("#ai-model").value);
+  openAiSetup(false);
+  $("#ai-sub").textContent = `DeepSeek · ${ai.model}`;
+  toast(T("已儲存 API Key（僅存在此瀏覽器）"));
+});
+$("#ai-send").addEventListener("click", () => sendAi());
+$("#ai-text").addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendAi(); }
+});
+$("#ai-text").addEventListener("input", (e) => {
+  e.target.style.height = "auto";
+  e.target.style.height = Math.min(108, e.target.scrollHeight) + "px";
+});
+renderAiChips();
 
 // ---------------------------------------------------------------- 導航
 const nav = new NavigationController(map, {

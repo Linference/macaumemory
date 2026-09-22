@@ -17,7 +17,8 @@
     "data:cop30": "node scripts/fetch-opentopography.mjs COP30 GTiff && node scripts/process-dem-cop30.mjs",
     "data:merge": "node scripts/merge-building-heights.mjs",
     "data:geocode": "node scripts/geocode-attractions.mjs",
-    "verify": "node scripts/verify-positions.mjs"
+    "verify": "node scripts/verify-positions.mjs",
+    "data:bus": "node scripts/fetch-bus.mjs"
   },
   "dependencies": {
     "@gltf-transform/cli": "^4.5.0",
