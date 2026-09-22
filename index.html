@@ -200,6 +200,22 @@
       </div>
       <div class="nav-steps" id="nav-steps"></div>
     </section>
+    <!-- 數位人導覽員 -->
+    <div class="dh-card" id="dh-card">
+      <div class="dh-bubble" id="dh-bubble"></div>
+      <div class="dh-stage"><canvas id="dh-canvas"></canvas></div>
+      <div class="dh-bar">
+        <button class="dh-btn" id="dh-mic" title="語音對話（說給我聽）">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-5a3.5 3.5 0 1 0-7 0v5A3.5 3.5 0 0 0 12 15z" fill="currentColor"/><path d="M5.5 11.5v.5a6.5 6.5 0 0 0 13 0v-.5M12 18.5V22" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <button class="dh-btn" id="dh-speak" title="自動朗讀回覆">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M4 9.5h3l4-3.2v11.4l-4-3.2H4z" fill="currentColor"/><path d="M15 8.5a5 5 0 0 1 0 7M17.6 6a8.4 8.4 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <button class="dh-btn" id="dh-chat" title="開啟 AI 對話">
+          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M4 5.5h16v10H9l-5 4z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
     <!-- AI 導覽助理 -->
     <button class="ai-fab" id="ai-fab" title="問 AI 導覽助理">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.6l1.9 5.1 5.1 1.9-5.1 1.9L12 16.6l-1.9-5.1L5 9.6l5.1-1.9z" fill="currentColor"/><path d="M18.6 15.2l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" fill="currentColor" opacity=".7"/></svg>
@@ -223,6 +239,9 @@
       <div class="ai-chips" id="ai-chips"></div>
       <div class="ai-input">
         <textarea id="ai-text" rows="1" placeholder="問我澳門的任何事…（Enter 送出、Shift+Enter 換行）"></textarea>
+        <button class="ai-send ai-mic" id="ai-mic" title="語音輸入（按一下開始／停止）">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-5a3.5 3.5 0 1 0-7 0v5A3.5 3.5 0 0 0 12 15z" fill="currentColor"/><path d="M5.5 11.5v.5a6.5 6.5 0 0 0 13 0v-.5M12 18.5V22" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+        </button>
         <button class="ai-send" id="ai-send" title="送出">
           <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3.5 20.5 21 12 3.5 3.5 3.5 10l12 2-12 2z" fill="currentColor"/></svg>
         </button>
