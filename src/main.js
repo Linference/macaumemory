@@ -5,6 +5,7 @@ import { buildStyle, addContourLayers } from "./map-style.js";
 import { LabelLayer } from "./labels.js";
 import { PoiLayer, POI_GROUPS, POI_DEFAULT_OFF } from "./pois.js";
 import { MyLocation, distanceMeters, bearingLabel, formatDistance } from "./geolocate.js";
+import { NavigationController } from "./navigation.js";
 import { iconSvg } from "./icons.js";
 import { MarkerLayer } from "./markers.js";
 import { ModelViewer } from "./viewer.js";
@@ -228,6 +229,7 @@ function openDetail(a) {
   const actions = [];
   const hasModel = !!(a.model && state.manifest.models?.[a.model]);
   if (hasModel) actions.push(`<button class="btn" data-act="model">${T("🧊 查看三維模型")}</button>`);
+  if (a.coords) actions.push(`<button class="btn" data-act="nav">${T("🧭 導航到這裡")}</button>`);
   actions.push(`<button class="btn sec" data-act="locate">${T("在地圖上定位")}</button>`);
   if (a.museumId && artifacts.length) actions.push(`<button class="btn" data-act="scroll-artifacts">${T("查看館藏文物")} (${artifacts.length})</button>`);
   if (a.website) actions.push(`<button class="btn sec" data-act="site">${T("官方網站")}</button>`);
@@ -272,6 +274,7 @@ function openDetail(a) {
   $("#detail").setAttribute("aria-hidden", "false");
 
   $("#detail-body").querySelector('[data-act="model"]')?.addEventListener("click", () => openModelFor(a, a.model));
+  $("#detail-body").querySelector('[data-act="nav"]')?.addEventListener("click", () => navStartFor(a));
   $("#detail-body").querySelector('[data-act="model-card"]')?.addEventListener("click", () => openModelFor(a, a.model));
   $("#detail-body").querySelector('[data-act="locate"]')?.addEventListener("click", () => {
     map.flyTo({ center: a.coords, zoom: 16.4, pitch: 62, duration: 1400, essential: true });
@@ -437,6 +440,7 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "s" || e.key === "S") { e.preventDefault(); $("#sidebar").classList.toggle("open"); }
   if (e.key === "Escape") {
     if (viewer.isOpen) return;
+    if (nav.route) { nav.stop(); return; }
     $("#detail").classList.remove("open");
     toggleControls(false);
   }
@@ -510,6 +514,48 @@ function applyCameraLimits() {
 }
 map.on("load", applyCameraLimits);
 window.addEventListener("resize", () => { applyCameraLimits(); });
+
+// ---------------------------------------------------------------- 導航
+const nav = new NavigationController(map, {
+  onStatus: (msg) => { if (msg) toast(T(msg)); },
+  onState: (s) => renderNav(s),
+});
+function navStartFor(a) {
+  const from = myLocation.position?.coords ?? [map.getCenter().lng, map.getCenter().lat];
+  if (!myLocation.position) toast(T("未開啟定位，將以目前地圖中心作為起點"));
+  nav.start({ name: T(a.zh), coords: a.coords }, from).then((r) => {
+    if (r) $("#detail").classList.remove("open");
+  });
+}
+function renderNav(s) {
+  const bar = $("#navbar");
+  if (!s.active) { bar.classList.remove("on"); bar.setAttribute("aria-hidden", "true"); return; }
+  bar.classList.add("on");
+  bar.setAttribute("aria-hidden", "false");
+  const r = s.route;
+  const mins = Math.max(1, Math.round(r.timeS / 60));
+  $("#nav-dest").textContent = `${T("前往")} ${s.destination.name}`;
+  $("#nav-eta").innerHTML = s.phase === "searching"
+    ? `<span style="color:var(--accent)">${T("正在搜尋最快道路…")}</span>`
+    : `${formatDistance(r.distM)} · ${s.mode === "walk" ? T("步行") : T("開車")} ${T("約")} ${mins} ${T("分鐘")} · ${T("即時路況不計")}`;
+  for (const el of $("#nav-modes").querySelectorAll(".nav-mode")) el.classList.toggle("on", el.dataset.mode === s.mode);
+  if (s.phase !== "searching") {
+    const ico = { left: "↰", right: "↱", straight: "↑", start: "◎" };
+    $("#nav-steps").innerHTML = r.steps.map((st, i) => `<div class="nav-step ${i === 0 ? "hi" : ""}">
+      <span class="st-ico">${ico[st.turn] ?? "↑"}</span>
+      <span class="st-name">${st.name}</span>
+      <span class="st-len">${formatDistance(st.len)}</span></div>`).join("");
+  }
+}
+$("#nav-stop").addEventListener("click", () => { nav.stop(); toast(T("已結束導航")); });
+$("#nav-steps-btn").addEventListener("click", () => $("#nav-steps").classList.toggle("on"));
+for (const el of $("#nav-modes").querySelectorAll(".nav-mode")) {
+  el.addEventListener("click", () => {
+    if (!nav.destination) return;
+    nav.mode = el.dataset.mode;
+    nav.start(nav.destination, nav.startCoord, el.dataset.mode);
+  });
+}
 
 // ---------------------------------------------------------------- 個人定位
 const myLocation = new MyLocation(map, {

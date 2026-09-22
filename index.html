@@ -181,6 +181,23 @@
       <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg>
       <span>回到澳門</span>
     </button>
+    <!-- 導航列 -->
+    <section class="navbar" id="navbar" aria-hidden="true">
+      <div class="nav-head">
+        <span class="nav-pin">🧭</span>
+        <div class="nav-info">
+          <div class="nav-dest" id="nav-dest">—</div>
+          <div class="nav-eta" id="nav-eta">—</div>
+        </div>
+        <div class="nav-modes" id="nav-modes">
+          <button class="nav-mode" data-mode="walk">🚶 步行</button>
+          <button class="nav-mode" data-mode="car">🚗 開車</button>
+        </div>
+        <button class="btn sec nav-btn" id="nav-steps-btn">路線指引</button>
+        <button class="btn sec nav-btn" id="nav-stop">結束</button>
+      </div>
+      <div class="nav-steps" id="nav-steps"></div>
+    </section>
     <div class="toast" id="toast"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
