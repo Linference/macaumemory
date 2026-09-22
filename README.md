@@ -120,7 +120,23 @@ npm run verify      # 檢查景點座標是否落在建築物／水域（QA）
 2. 推送後約 1–2 分鐘即可在網址看到（自訂網域請於 Pages 設定 Custom domain 並開啟 Enforce HTTPS）
 3. 產物包含 `public/` 全部圖資、地形與模型（約 76 MB），**完全靜態、離線可跑、無需伺服器**
 
-> 站台以自訂網域根目錄提供服務，因此程式中的絕對路徑（`/data/…`、`/dem/…`、`/models/…`）可直接運作。
+### 自訂網域 DNS 設定（macaumemory.com）
+
+repo 內已有 `CNAME`（`macaumemory.com`），請到網域註冊商的 DNS 加上以下記錄，GitHub 才會簽發 TLS 憑證：
+
+| 類型 | 名稱 | 值 |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153`、`185.199.109.153`、`185.199.110.153`、`185.199.111.153` |
+| AAAA（可選） | `@` | `2606:50c0:8000::153`、`2606:50c0:8001::153`、`2606:50c0:8002::153`、`2606:50c0:8003::153` |
+| CNAME（可選） | `www` | `linference.github.io` |
+
+設好後在 **Settings → Pages** 勾選 **Enforce HTTPS**（憑證約 10–30 分鐘簽發）。
+若暫時不想用自訂網域，移除 `CNAME` 後即可改用 `https://linference.github.io/macaumemory/`（已驗證可用）。
+
+> 程式已改為**相對路徑**，因此根目錄（自訂網域）與子路徑（`帳號.github.io/專案名/`）都能運作；
+> MapLibre worker 另提供 `.js` 版本並以 `setWorkerUrl()` 指定，避免部分伺服器對 `.mjs` 回傳
+> `application/octet-stream` 而導致 module worker 被瀏覽器拒絕。
+
 > 若改用 `帳號.github.io/專案名/` 子路徑，請把 `vite.config.js` 加上 `base: "/專案名/"` 並將程式內路徑改為相對路徑。
 
 ---
