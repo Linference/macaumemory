@@ -97,7 +97,7 @@
 
     <!-- 位置校正工具列 -->
     <div class="editbar" id="editbar">
-      <span class="editbar-tip" data-t="拖曳標記到正確位置（可縮放地圖後再拖），完成後按「匯出校正檔」把檔案傳給我就會寫回資料。</span>
+      <span class="editbar-tip" data-t="拖曳標記到正確位置（可縮放地圖後再拖），完成後按「匯出校正檔」把檔案傳給我就會寫回資料。"</span>
       <span class="editbar-count" id="editbar-count">已修正 0 處</span>
       <button class="btn" id="btn-export-fixes" data-t="匯出校正檔">匯出校正檔</button>
       <button class="btn sec" id="btn-clear-fixes" data-t="清除全部修正">清除全部修正</button>
@@ -200,22 +200,6 @@
       </div>
       <div class="nav-steps" id="nav-steps"></div>
     </section>
-    <!-- 數位人導覽員 -->
-    <div class="dh-card" id="dh-card">
-      <div class="dh-bubble" id="dh-bubble"></div>
-      <div class="dh-stage"><canvas id="dh-canvas"></canvas></div>
-      <div class="dh-bar">
-        <button class="dh-btn" id="dh-mic" title="語音對話（說給我聽）">
-          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M12 15a3.5 3.5 0 0 0 3.5-3.5v-5a3.5 3.5 0 1 0-7 0v5A3.5 3.5 0 0 0 12 15z" fill="currentColor"/><path d="M5.5 11.5v.5a6.5 6.5 0 0 0 13 0v-.5M12 18.5V22" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
-        </button>
-        <button class="dh-btn" id="dh-speak" title="自動朗讀回覆">
-          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M4 9.5h3l4-3.2v11.4l-4-3.2H4z" fill="currentColor"/><path d="M15 8.5a5 5 0 0 1 0 7M17.6 6a8.4 8.4 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
-        </button>
-        <button class="dh-btn" id="dh-chat" title="開啟 AI 對話">
-          <svg viewBox="0 0 24 24" width="15" height="15"><path d="M4 5.5h16v10H9l-5 4z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-    </div>
     <!-- AI 導覽助理 -->
     <button class="ai-fab" id="ai-fab" title="問 AI 導覽助理">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.6l1.9 5.1 5.1 1.9-5.1 1.9L12 16.6l-1.9-5.1L5 9.6l5.1-1.9z" fill="currentColor"/><path d="M18.6 15.2l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" fill="currentColor" opacity=".7"/></svg>
@@ -228,6 +212,9 @@
           <strong>澳門導覽 AI</strong>
           <small id="ai-sub">DeepSeek · 可問景點、路線、美食</small>
         </div>
+        <button class="icon-btn sm" id="ai-speak" title="自動朗讀回覆（語音合成）">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 9.5h3l4-3.2v11.4l-4-3.2H4z" fill="currentColor"/><path d="M15 8.5a5 5 0 0 1 0 7M17.6 6a8.4 8.4 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+        </button>
         <button class="icon-btn sm" id="ai-settings" title="設定 API Key">
           <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 13.7H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 10 3.1V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>
         </button>

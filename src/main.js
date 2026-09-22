@@ -8,7 +8,6 @@ import { MyLocation, distanceMeters, bearingLabel, formatDistance } from "./geol
 import { NavigationController } from "./navigation.js";
 import { AiChat } from "./chat.js";
 import { Speaker, Listener, speechSupported } from "./speech.js";
-import { DigitalHuman } from "./avatar.js";
 import { iconSvg } from "./icons.js";
 import { MarkerLayer } from "./markers.js";
 import { ModelViewer } from "./viewer.js";
@@ -596,54 +595,35 @@ function applyCameraLimits() {
 map.on("load", applyCameraLimits);
 window.addEventListener("resize", () => { applyCameraLimits(); });
 
-// ---------------------------------------------------------------- 數位人 + 語音
-const dh = new DigitalHuman({ canvas: $("#dh-canvas"), bubbleEl: $("#dh-bubble") });
+// ---------------------------------------------------------------- 語音（朗讀與語音輸入）
 const speaker = new Speaker({
-  onStart: () => { dh.setState("talking"); dh.say($("#dh-bubble").textContent || "…", { ms: 6000 }); },
-  onProgress: (e) => { if (e.kind === "boundary") dh.talkTick(1); },
-  onEnd: () => { if (dh.state === "talking") dh.setState("idle"); },
   onError: (msg) => toast(T(msg)),
 });
 let autoSpeak = localStorage.getItem("macau.ai.speak") === "1";
 const listener = new Listener({
   onPartial: (t) => { $("#ai-text").value = t; },
   onFinal: (t) => { $("#ai-text").value = t; sendAi(t, { fromVoice: true }); },
-  onError: (msg) => { toast(T(msg)); dh.setState("idle"); $("#ai-mic")?.classList.remove("on", "listening"); },
-  onStateChange: (on) => {
-    $("#ai-mic")?.classList.toggle("on", on);
-    $("#dh-mic")?.classList.toggle("listening", on);
-    dh.setState(on ? "listening" : "idle");
-    if (on) dh.say(T("我在聽…請說"), { ms: 4000 });
-  },
+  onError: (msg) => { toast(T(msg)); $("#ai-mic")?.classList.remove("on"); },
+  onStateChange: (on) => $("#ai-mic")?.classList.toggle("on", on),
 });
 async function toggleVoiceInput() {
   if (!listener.supported) { toast(T("此瀏覽器不支援語音識別，建議用 Chrome 或 Edge；仍可直接打字")); return; }
   if (speaker.speaking) speaker.stop();
   if (listener.active) { listener.stop(); return; }
-  if (!$("#ai-panel").classList.contains("on")) { $("#ai-fab").click(); }
+  if (!$("#ai-panel").classList.contains("on")) $("#ai-fab").click();
   if (!ai.ready) { toast(T("請先設定 API Key 再使用語音對話")); return; }
   listener.start({ lang: "zh-TW" });
 }
-function updateSpeakBtn() {
-  for (const sel of ["#dh-speak"]) $(sel)?.classList.toggle("on", autoSpeak);
-}
-$("#dh-mic").addEventListener("click", toggleVoiceInput);
+function updateSpeakBtn() { $("#ai-speak")?.classList.toggle("on", autoSpeak); $("#ai-speak")?.setAttribute("title", T(autoSpeak ? "自動朗讀：開" : "自動朗讀：關")); }
 $("#ai-mic").addEventListener("click", toggleVoiceInput);
-$("#dh-speak").addEventListener("click", () => {
+$("#ai-speak").addEventListener("click", () => {
   autoSpeak = !autoSpeak;
   localStorage.setItem("macau.ai.speak", autoSpeak ? "1" : "0");
   updateSpeakBtn();
   if (!autoSpeak) speaker.stop();
-  toast(autoSpeak ? T("已開啟自動朗讀") : T("已關閉自動朗讀"));
-  dh.say(autoSpeak ? T("好的，我會把回答唸出來 🔊") : T("已關閉朗讀"), { ms: 2200 });
+  toast(autoSpeak ? T("已開啟自動朗讀（會把回答唸出來）") : T("已關閉自動朗讀"));
 });
-$("#dh-chat").addEventListener("click", () => $("#ai-fab").click());
-$("#dh-card").addEventListener("click", (e) => { if (e.target.id === "dh-canvas") $("#ai-fab").click(); });
 updateSpeakBtn();
-dh.init().then(() => {
-  dh.setState("idle");
-  dh.say(T("你好，我是導覽員小澳 🧭 可以問我景點、路線或美食"), { ms: 5200 });
-}).catch((e) => console.warn("avatar:", e));
 
 // ---------------------------------------------------------------- AI 導覽助理
 const ai = new AiChat({
@@ -655,8 +635,6 @@ const ai = new AiChat({
   onCommand: (cmd) => {
     const target = byId.get(cmd.id);
     if (!target) return;
-    dh.setState("happy");
-    dh.say(cmd.type === "route" ? `${T("帶你過去")} ${T(target.zh)} 🧭` : `${T("找到了")}：${T(target.zh)} 📍`, { ms: 3400 });
     if (cmd.type === "route") { navStartFor(target); }
     else { select(target, { fly: true }); }
   },
@@ -715,8 +693,6 @@ async function sendAi(text, { fromVoice = false } = {}) {
   const bubble = addAiMsg("ai", "");
   bubble.classList.add("typing");
   $("#ai-send").disabled = true;
-  dh.setState("thinking");
-  dh.say(fromVoice ? T("收到，正在查資料…") : T("讓我想想…"), { ms: 3000 });
   const res = await ai.send(t, ({ content, reasoning }) => {
     bubble.innerHTML =
       (reasoning ? `<div class="ai-think-box"><b>思考過程</b>${renderAiText(reasoning)}</div>` : "") +
@@ -733,15 +709,9 @@ async function sendAi(text, { fromVoice = false } = {}) {
   if (res.reasoning && !res.text) {
     bubble.innerHTML = `<div class="ai-think-box"><b>思考過程（未產生最終回答）</b>${renderAiText(res.reasoning)}</div>`;
   }
-  // 朗讀 + 數位人動畫
+  // 自動朗讀
   const spoken = res.text || res.reasoning || "";
-  if (spoken) {
-    dh.say(spoken.replace(/\s+/g, " ").slice(0, 120) + (spoken.length > 120 ? "…" : ""), { ms: Math.min(14000, 4200 + spoken.length * 90) });
-    if (autoSpeak) speaker.speak(spoken);
-    else { dh.setState("happy"); setTimeout(() => { if (dh.state === "happy") dh.setState("idle"); }, 1600); }
-  } else {
-    dh.setState("idle");
-  }
+  if (autoSpeak && spoken) speaker.speak(spoken);
   if (res.commands.length) {
     const cmd = res.commands[0];
     const target = byId.get(cmd.id);
@@ -1026,7 +996,7 @@ function showHelp() {
     <h2 class="d-title">${T("澳門立體誌")}</h2>
     <div class="d-sub">${T("以開放資料建構的 3D 立體澳門地圖")}</div>
     <div class="d-detail">
-      <p>${T("· 左下角數位人「小澳」：按 🎤 用說的問問題（語音識別），開啟 🔊 會把 AI 回答朗讀出來（語音合成）；點對話圖示可開啟 AI 對話。")}</p>
+      <p>${T("· AI 對話框中：按 🎤 用說的問問題（語音識別），按 🔊 開啟自動朗讀（語音合成），回答會逐句唸出。")}</p>
       <p>${T("· 快捷鍵：L 開關圖層面板、S 開關景點清單、F 全螢幕、Esc 關閉面板。地圖可自由平移，離開澳門範圍時左下會出現「回到澳門」。")}</p>
       <p>${T("· 拖曳可平移地圖，右鍵拖曳（或兩指）可旋轉與傾斜視角，滾輪縮放。")}</p>
       <p>${T("· 點擊地圖上的金色標記，可查看該景點的介紹與三維模型。標記右上角有「3D」者代表設有文物模型。")}</p>
