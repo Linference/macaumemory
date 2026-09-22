@@ -327,3 +327,9 @@ canvas:focus { outline: none; }
 .ai-setup-row select { flex: 1; }
 .ai-note { font-size: 11px !important; color: #7f8b98 !important; }
 @media (max-width: 640px) { .ai-fab { bottom: 92px; } .ai-panel { height: calc(100vh - 90px); } }
+
+.ai-think-box { margin-bottom: 8px; padding: 8px 10px; border-radius: 9px; background: rgba(111,178,210,.07); border: 1px dashed rgba(111,178,210,.28); font-size: 11.5px; line-height: 1.7; color: #8fa6b8; white-space: pre-wrap; }
+.ai-think-box b { color: #6fb2d2; font-weight: 500; display: block; margin-bottom: 3px; font-size: 11px; letter-spacing: .06em; }
+.ai-check { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--ink-dim); cursor: pointer; }
+.ai-check input { accent-color: var(--gold); }
+.ai-msg.ai .ai-answer { white-space: pre-wrap; }

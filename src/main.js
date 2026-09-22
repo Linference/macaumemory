@@ -643,7 +643,13 @@ function renderAiText(text) {
 }
 function openAiSetup(on) {
   $("#ai-setup").classList.toggle("on", on);
-  if (on) { $("#ai-key").value = ""; $("#ai-model").value = ai.model; $("#ai-key").focus(); }
+  if (on) {
+    $("#ai-key").value = "";
+    $("#ai-key").placeholder = ai.ready && ai.source === "user" ? "（已儲存，留空即沿用）" : "sk-...";
+    $("#ai-model").value = ai.model;
+    if ($("#ai-think")) $("#ai-think").checked = ai.thinking;
+    $("#ai-key").focus();
+  }
 }
 async function sendAi(text) {
   const t = (text ?? $("#ai-text").value).trim();
@@ -655,13 +661,22 @@ async function sendAi(text) {
   const bubble = addAiMsg("ai", "");
   bubble.classList.add("typing");
   $("#ai-send").disabled = true;
-  const res = await ai.send(t, (partial) => {
-    bubble.innerHTML = renderAiText(partial);
+  const res = await ai.send(t, ({ content, reasoning }) => {
+    bubble.innerHTML =
+      (reasoning ? `<div class="ai-think-box"><b>思考過程</b>${renderAiText(reasoning)}</div>` : "") +
+      `<div class="ai-answer">${renderAiText(content)}</div>`;
     $("#ai-msgs").scrollTop = $("#ai-msgs").scrollHeight;
   });
   bubble.classList.remove("typing");
   $("#ai-send").disabled = false;
-  if (!res) { bubble.innerHTML = renderAiText(T("（回覆失敗，請檢查 API Key 或稍後再試）")); return; }
+  if (!res) {
+    bubble.classList.remove("typing");
+    bubble.innerHTML = `<div class="ai-answer">${renderAiText(T("（沒有回覆）請在設定中確認 API Key 與模型名稱是否正確。"))}</div>`;
+    return;
+  }
+  if (res.reasoning && !res.text) {
+    bubble.innerHTML = `<div class="ai-think-box"><b>思考過程（未產生最終回答）</b>${renderAiText(res.reasoning)}</div>`;
+  }
   if (res.commands.length) {
     const cmd = res.commands[0];
     const target = byId.get(cmd.id);
@@ -674,8 +689,16 @@ $("#ai-fab").addEventListener("click", async () => {
   $("#ai-panel").setAttribute("aria-hidden", String(!on));
   if (on) {
     if (!ai.ready) await ai.init();
+    if (ai.ready) {
+      const models = await ai.listModels();
+      const sel = $("#ai-model");
+      if (sel && models.length) {
+        sel.innerHTML = models.map((id) => `<option value="${id}">${id}</option>`).join("");
+        sel.value = ai.model;
+      }
+    }
     $("#ai-sub").textContent = ai.ready
-      ? `DeepSeek · ${ai.model}${ai.source === "local" ? "（本機金鑰）" : ""}`
+      ? `DeepSeek · ${ai.model}${ai.thinking ? "（深度思考）" : ""}${ai.source === "local" ? " · 本機金鑰" : ""}`
       : T("尚未設定 API Key");
     if (!ai.ready) openAiSetup(true);
     else if (!$("#ai-msgs").children.length) addAiMsg("ai", T("你好！我是澳門導覽助理 🧭\n可以問我景點介紹、步行路線、美食或行程安排；如果我推薦某個景點，還會直接在地圖上標出來。"));
@@ -684,14 +707,21 @@ $("#ai-fab").addEventListener("click", async () => {
 });
 $("#ai-close").addEventListener("click", () => { $("#ai-panel").classList.remove("on"); $("#ai-panel").setAttribute("aria-hidden", "true"); });
 $("#ai-settings").addEventListener("click", () => openAiSetup(true));
-$("#ai-save").addEventListener("click", () => {
+$("#ai-save").addEventListener("click", async () => {
   const k = $("#ai-key").value.trim();
-  if (!k) { toast(T("請輸入 API Key")); return; }
-  ai.setKey(k, { remember: true });
+  if (!k && !ai.ready) { toast(T("請輸入 API Key")); return; }
+  if (k) ai.setKey(k, { remember: true });   // 留空＝沿用已儲存的金鑰
   ai.setModel($("#ai-model").value);
+  ai.setThinking($("#ai-think")?.checked ?? false);
   openAiSetup(false);
-  $("#ai-sub").textContent = `DeepSeek · ${ai.model}`;
-  toast(T("已儲存 API Key（僅存在此瀏覽器）"));
+  if (ai.ready) await ai.listModels();       // 重新取得此帳號可用的模型
+  const sel = $("#ai-model");
+  if (sel && ai.availableModels?.length) {
+    sel.innerHTML = ai.availableModels.map((id) => `<option value="${id}">${id}</option>`).join("");
+    sel.value = ai.model;
+  }
+  $("#ai-sub").textContent = `DeepSeek · ${ai.model}${ai.thinking ? "（深度思考）" : ""}${ai.source === "local" ? " · 本機金鑰" : ""}`;
+  toast(k ? T("已儲存設定（金鑰只存在此瀏覽器）") : T("已更新模型設定"));
 });
 $("#ai-send").addEventListener("click", () => sendAi());
 $("#ai-text").addEventListener("keydown", (e) => {

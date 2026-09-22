@@ -150,9 +150,13 @@ repo 內已有 `CNAME`（`macaumemory.com`），請到網域註冊商的 DNS 加
 - 系統提示會帶入本圖 61 個景點清單、目前選中景點與使用者位置，所以能算距離、排行程
 
 **API Key 安全**（重要）：
+- 預設模型 **`deepseek-flash`**（會自動向 `/models` 取得此帳號可用清單，例如 `deepseek-flash`／`deepseek-v4-pro`）；
+  可勾選「**深度思考模式**」，開啟後會先顯示思考過程再給答案
+- 新型號預設會先輸出思考內容（`reasoning_content`）而吃掉 token，本專案以 `thinking: {type:"disabled"}` 控制，
+  並同時解析 `reasoning_content` 與 `content`，避免出現「按了卻沒有回覆」
 - 金鑰只存在**你的瀏覽器 localStorage**，或本機 `public/ai-local.json`（已加入 `.gitignore`，不會被提交）
 - 本站為公開網站，**請勿把金鑰寫進程式碼或提交到 Git**；若要做成公開服務，建議用 Cloudflare Worker 代理（可參考 `worker/bus-proxy.js` 的寫法）
-- DeepSeek API 允許瀏覽器直呼（CORS 開放），因此靜態網站也能運作；模型可切換 `deepseek-chat`（快）／`deepseek-reasoner`（推理強）
+- DeepSeek API 允許瀏覽器直呼（CORS 開放），因此靜態網站也能運作；若更換金鑰或模型，在設定面板留空金鑰即可沿用舊金鑰
 
 ---
 

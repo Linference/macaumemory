@@ -242,11 +242,12 @@
         <input type="password" id="ai-key" placeholder="sk-..." autocomplete="off" />
         <div class="ai-setup-row">
           <select id="ai-model">
-            <option value="deepseek-chat">deepseek-chat（快、便宜）</option>
-            <option value="deepseek-reasoner">deepseek-reasoner（推理強）</option>
+            <option value="deepseek-flash">deepseek-flash（快速）</option>
+            <option value="deepseek-v4-pro">deepseek-v4-pro（更強）</option>
           </select>
           <button class="btn" id="ai-save">儲存並開始</button>
         </div>
+        <label class="ai-check"><input type="checkbox" id="ai-think" /> <span>深度思考模式（較慢、會先顯示思考過程）</span></label>
         <p class="ai-note">⚠️ 金鑰只儲存在此瀏覽器的 localStorage。本站為公開網站，請勿把金鑰寫進程式碼或提交到 Git。</p>
       </div>
     </section>
