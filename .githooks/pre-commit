@@ -1,0 +1,15 @@
+#!/bin/sh
+# 提交前自動掃描金鑰，避免 API key 再次進入公開倉庫。
+# 本倉庫曾兩度把金鑰（OpenTopography、DeepSeek）提交進版控，故加上這道防線。
+# 安裝：git config core.hooksPath .githooks
+# 略過（真的必要時）：git commit --no-verify
+if command -v node >/dev/null 2>&1; then
+  node scripts/check-secrets.mjs || {
+    echo ""
+    echo "✗ 偵測到疑似金鑰，提交已中止。請改用環境變數，並作廢已洩漏的金鑰。"
+    echo "  若確認是誤判，可用：git commit --no-verify"
+    exit 1
+  }
+else
+  echo "（略過金鑰掃描：找不到 node）"
+fi

@@ -1,4 +1,12 @@
-﻿import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer-core";
+// ⚠️ 金鑰只從環境變數讀取。本檔曾硬編一組 DeepSeek 金鑰並隨版控公開，
+//    該金鑰應視為已洩漏並作廢（DeepSeek 平台 → API keys → 刪除後重建）。
+//    用法：$env:DEEPSEEK_API_KEY="sk-..."; node scripts/dev/test-live-ai.mjs
+const KEY = process.env.DEEPSEEK_API_KEY;
+if (!KEY) {
+  console.error("✗ 缺少 DEEPSEEK_API_KEY 環境變數（勿把金鑰寫進檔案或提交）");
+  process.exit(1);
+}
 const CHROME = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const browser = await puppeteer.launch({ executablePath: CHROME, headless: true, args: ["--no-sandbox","--disable-dev-shm-usage","--use-gl=angle","--use-angle=swiftshader","--enable-unsafe-swiftshader","--hide-scrollbars"], defaultViewport: { width: 1500, height: 920 } });
@@ -15,7 +23,7 @@ console.log("線上首次開啟:", JSON.stringify(await page.evaluate(() => ({
   setupShown: document.querySelector("#ai-setup").classList.contains("on"),
 }))));
 // 輸入金鑰
-await page.evaluate(() => { document.querySelector("#ai-key").value = "sk-5aba169001644a47897a3e6f93820d46"; });
+await page.evaluate((k) => { document.querySelector("#ai-key").value = k; }, KEY);
 await page.click("#ai-save");
 await wait(3500);
 console.log("儲存後:", JSON.stringify(await page.evaluate(() => ({

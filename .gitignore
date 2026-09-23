@@ -41,3 +41,8 @@ tools/yolo-dataset/live-*.jpg
 tools/poster/out/_qr.pdf
 tools/**/_probe*.py
 tools/**/_calibrate*.py
+
+# 環境變數檔（金鑰只放這裡或系統環境變數）
+.env
+.env.*
+!.env.example
