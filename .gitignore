@@ -1,4 +1,4 @@
-﻿# 依賴與快取（不下載原始掃描檔、不下載 Overture 原始 GeoJSON）
+# 依賴與快取（不下載原始掃描檔、不下載 Overture 原始 GeoJSON）
 node_modules/
 .cache/
 dist/
@@ -12,3 +12,32 @@ shots/
 
 # 本機 DeepSeek 金鑰（切勿提交）
 public/ai-local.json
+
+# 舊會話記憶摘要（本機分析用，不進版控；結論已整理進 MEMORY.md）
+.dsh_memory/
+
+# YOLO 訓練資料集的圖片與訓練輸出（量大，不進版控）
+# 但保留 ATTRIBUTION.csv（授權標註）與 data.yaml（類別定義），這兩份要跟著提交
+datasets/**/images/
+datasets/**/labels/
+datasets/**/runs/
+datasets/**/out/
+
+# Commons 實拍照片本體（授權標註 photos-src/cc/ATTRIBUTION.csv 會提交）
+photos-src/cc/*/
+
+# 模型權重（第三方下載檔，不進版控）
+*.pt
+*.onnx
+
+# Python 快取
+__pycache__/
+*.pyc
+
+# 即時偵測的暫存輸出
+tools/yolo-dataset/live-*.jpg
+
+
+tools/poster/out/_qr.pdf
+tools/**/_probe*.py
+tools/**/_calibrate*.py

@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #0a0e13;
   --panel: rgba(13, 18, 24, 0.92);
   --panel-2: rgba(20, 27, 36, 0.94);
@@ -291,6 +291,20 @@ canvas:focus { outline: none; }
   background: linear-gradient(135deg, rgba(111,178,210,.22), rgba(216,180,90,.22)); border: 1px solid var(--gold); color: var(--gold);
   backdrop-filter: blur(14px); box-shadow: var(--shadow); transition: transform .18s, box-shadow .18s; }
 .ai-fab:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(0,0,0,.5); }
+.ai-fab-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(216,180,90,.7); }
+.ai-head-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--gold); flex: none;
+  box-shadow: 0 0 0 3px rgba(216,180,90,.12); }
+/* 吉祥物歡迎頁（未開始對話時顯示） */
+.ai-hero { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px 6px 8px; text-align: center; }
+.ai-hero img { width: min(190px, 58%); border-radius: 12px; filter: drop-shadow(0 14px 28px rgba(0,0,0,.5)); }
+.ai-hero-say { font-size: 13px; line-height: 1.8; color: #dbe4ec; background: rgba(255,255,255,.05);
+  border: 1px solid var(--line-soft); border-radius: 14px 14px 14px 4px; padding: 11px 14px; max-width: 94%; margin: 0; }
+.ai-hero-hint { font-size: 11px; color: var(--ink-dim); margin: 0; letter-spacing: .04em; }
+/* 對話列：阿獅的訊息帶頭像 */
+.ai-msg-row { display: flex; gap: 8px; align-items: flex-end; max-width: 100%; }
+.ai-msg-row.user { justify-content: flex-end; }
+.ai-msg-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); flex: none; }
+.ai-msg-row .ai-msg { max-width: calc(100% - 40px); }
 .ai-panel { position: fixed; right: 16px; bottom: 16px; z-index: 45; width: min(400px, calc(100vw - 32px)); height: min(600px, calc(100vh - 120px));
   display: none; flex-direction: column; background: rgba(11,16,22,.97); border: 1px solid var(--line); border-radius: 16px;
   backdrop-filter: blur(18px); box-shadow: var(--shadow); overflow: hidden; }

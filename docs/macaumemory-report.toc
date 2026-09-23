@@ -1,0 +1,44 @@
+\contentsline {section}{\numberline {1}作品概述}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}問題背景：澳門建築的紀錄困境}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}我們的做法}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}研究問題}{4}{subsection.1.3}%
+\contentsline {section}{\numberline {2}系統總覽}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}三層架構}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}系統規模}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}技術棧}{6}{subsection.2.3}%
+\contentsline {section}{\numberline {3}方法}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}建築記憶點：從一張照片到一個永久編號}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}評測資料集設計}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}自訓澳門建築偵測器}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}隱私處理：兩級模糊}{7}{subsection.3.4}%
+\contentsline {section}{\numberline {4}實驗與結果}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}受控渲染集：同環境多視角}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}真實照片集：真實世界的表現}{8}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}跨域比較：渲染圖不能代表真實照片}{9}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}誤判來源分析：地理先驗為什麼關鍵}{9}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}零樣本分類：一個被我們自己推翻的結論}{9}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}自訓澳門建築偵測器}{10}{subsection.4.6}%
+\contentsline {subsubsection}{\numberline {4.6.1}獨立驗收}{11}{subsubsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.7}隱私處理實測}{11}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}系統功能實作清單}{12}{subsection.4.8}%
+\contentsline {section}{\numberline {5}討論}{13}{section.5}%
+\contentsline {subsection}{\numberline {5.1}三個創新點與對應證據}{13}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}與現有方案的比較}{14}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}技術難點與我們的解法}{14}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}為什麼不用 YOLO 做建築分類？}{14}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}研究誠信：我們主動修正的四個錯誤}{14}{subsection.5.5}%
+\contentsline {section}{\numberline {6}限制與不足}{15}{section.6}%
+\contentsline {subsection}{\numberline {6.1}資料層面的不足}{15}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}方法層面的不足}{15}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}系統層面的不足}{16}{subsection.6.3}%
+\contentsline {section}{\numberline {7}未來工作}{16}{section.7}%
+\contentsline {section}{\numberline {8}結論}{16}{section.8}%
+\contentsline {section}{\numberline {A}重現指令}{16}{appendix.A}%
+\contentsline {section}{\numberline {B}資料來源與授權}{17}{appendix.B}%
+\contentsline {section}{\numberline {C}檔案結構（節錄）}{17}{appendix.C}%
+\contentsline {section}{\numberline {D}技術問答速查}{18}{appendix.D}%
+\contentsline {section}{\numberline {E}展板、資料集與作品素材}{18}{appendix.E}%
+\contentsline {subsection}{\numberline {E.1}真實照片集：20 棟澳門建築}{18}{subsection.E.1}%
+\contentsline {subsection}{\numberline {E.2}自訓資料集的自動預標註}{19}{subsection.E.2}%
+\contentsline {subsection}{\numberline {E.3}作品交付清單}{20}{subsection.E.3}%
+\contentsline {subsection}{\numberline {E.4}A0 展板}{21}{subsection.E.4}%

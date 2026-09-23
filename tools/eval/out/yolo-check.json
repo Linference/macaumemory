@@ -1,0 +1,1294 @@
+{
+ "generated": "2026-09-23T11:00:56",
+ "source": "both",
+ "n_photos": 107,
+ "weights": "yolo11n.pt",
+ "conf": 0.35,
+ "face_detectors": {
+  "yolo_face": true,
+  "yunet": false,
+  "haar": false
+ },
+ "face_model": ".cache/models/face/yolov11n-face.pt（YOLO 人臉）＋ yolo11n.pt（COCO person）",
+ "note": "實拍照片來自 Wikimedia Commons（授權見 photos-src/cc/ATTRIBUTION.csv）；3D 渲染圖對 YOLO 屬分布外，故以實拍照片作為主要證據",
+ "summary": {
+  "photos_with_objects": 45,
+  "faces_blurred": 28,
+  "persons_blurred": 205,
+  "method_usage": {
+   "none": 62,
+   "yolo-person": 31,
+   "yolo-face+yolo-person": 13,
+   "yolo-face": 1
+  }
+ },
+ "results": [
+  {
+   "place": "MM-0001",
+   "file": "public/photos/MM-0001_20260923-084444.jpg",
+   "objects": {
+    "refrigerator": 1
+   },
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 2.27
+  },
+  {
+   "place": "MM-0001",
+   "file": "public/photos/MM-0001_20260923-084444-2.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.09
+  },
+  {
+   "place": "MM-0002",
+   "file": "public/photos/MM-0002_20260923-084445.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "MM-0003",
+   "file": "public/photos/MM-0003_20260923-084445.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "MM-0003",
+   "file": "public/photos/MM-0003_20260923-084445-2.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.13
+  },
+  {
+   "place": "MM-0004",
+   "file": "public/photos/MM-0004_20260923-084445.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "a-ma-temple",
+   "file": "photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_01.JPG",
+   "objects": {
+    "person": 9
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 9,
+   "faces": 0,
+   "persons": 9,
+   "seconds": 0.11
+  },
+  {
+   "place": "a-ma-temple",
+   "file": "photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_2_32043656663_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "a-ma-temple",
+   "file": "photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_3_32858244395_.jpg",
+   "objects": {
+    "person": 4
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 5,
+   "faces": 1,
+   "persons": 4,
+   "seconds": 0.05
+  },
+  {
+   "place": "a-ma-temple",
+   "file": "photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_7_32734287651_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.08
+  },
+  {
+   "place": "a-ma-temple",
+   "file": "photos-src/cc/a-ma-temple/A_Ma_temple_Macau_-_panoramio.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "cathedral-macau",
+   "file": "photos-src/cc/cathedral-macau/Igreja_da_Sé_2011a.JPG",
+   "objects": {
+    "person": 3
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 3,
+   "faces": 0,
+   "persons": 3,
+   "seconds": 0.12
+  },
+  {
+   "place": "cathedral-macau",
+   "file": "photos-src/cc/cathedral-macau/Igreja_da_Sé_2011b.JPG",
+   "objects": {
+    "person": 7
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 7,
+   "faces": 0,
+   "persons": 7,
+   "seconds": 0.06
+  },
+  {
+   "place": "cathedral-macau",
+   "file": "photos-src/cc/cathedral-macau/Igreja_da_Sé_2011c.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "cathedral-macau",
+   "file": "photos-src/cc/cathedral-macau/Igreja_da_Sé_2011d.JPG",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 2,
+   "faces": 0,
+   "persons": 2,
+   "seconds": 0.13
+  },
+  {
+   "place": "cathedral-macau",
+   "file": "photos-src/cc/cathedral-macau/Mocathedral.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.1
+  },
+  {
+   "place": "coloane-village",
+   "file": "photos-src/cc/coloane-village/Coloane_Village_Macau_2051973505_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "coloane-village",
+   "file": "photos-src/cc/coloane-village/Coloane_Village_Macau_2051977943_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.08
+  },
+  {
+   "place": "coloane-village",
+   "file": "photos-src/cc/coloane-village/Coloane_Village_Macau_2052759250_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "coloane-village",
+   "file": "photos-src/cc/coloane-village/Coloane_Village_Macau_2052761544_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.08
+  },
+  {
+   "place": "coloane-village",
+   "file": "photos-src/cc/coloane-village/Coloane_Village_Macau_2052762780_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "grand-lisboa",
+   "file": "photos-src/cc/grand-lisboa/Casino_Lisboa_Grand_Lisboa_Macau.JPG",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 2,
+   "faces": 0,
+   "persons": 2,
+   "seconds": 0.06
+  },
+  {
+   "place": "grand-lisboa",
+   "file": "photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5234406089_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "grand-lisboa",
+   "file": "photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5234409413_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "grand-lisboa",
+   "file": "photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5234996532_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.09
+  },
+  {
+   "place": "grand-lisboa",
+   "file": "photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5235000286_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "guiuan-village",
+   "file": "photos-src/cc/guiuan-village/Macau_Taipa-Village.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.06
+  },
+  {
+   "place": "guiuan-village",
+   "file": "photos-src/cc/guiuan-village/Taipa_Old_City_Overview_-_panoramio.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.14
+  },
+  {
+   "place": "guiuan-village",
+   "file": "photos-src/cc/guiuan-village/Taipa_Old_Town_decoration_01-02-2023_1_.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.07
+  },
+  {
+   "place": "guiuan-village",
+   "file": "photos-src/cc/guiuan-village/Taipa_Old_Town_decoration_01-02-2023_2_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "guiuan-village",
+   "file": "photos-src/cc/guiuan-village/Taipa_Village_03-02-2023_1_.jpg",
+   "objects": {
+    "person": 12
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 16,
+   "faces": 4,
+   "persons": 12,
+   "seconds": 0.06
+  },
+  {
+   "place": "kun-iam-temple",
+   "file": "photos-src/cc/kun-iam-temple/Kun_Iam_Temple_04.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "kun-iam-temple",
+   "file": "photos-src/cc/kun-iam-temple/Kun_Iam_Temple_05.JPG",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 2,
+   "faces": 0,
+   "persons": 2,
+   "seconds": 0.07
+  },
+  {
+   "place": "kun-iam-temple",
+   "file": "photos-src/cc/kun-iam-temple/Kun_Iam_Temple_11.JPG",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.06
+  },
+  {
+   "place": "kun-iam-temple",
+   "file": "photos-src/cc/kun-iam-temple/Kun_Iam_Temple_Macau_01.JPG",
+   "objects": {
+    "person": 4
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 4,
+   "faces": 0,
+   "persons": 4,
+   "seconds": 0.06
+  },
+  {
+   "place": "kun-iam-temple",
+   "file": "photos-src/cc/kun-iam-temple/Kun_Iam_Temple_Macau_02.JPG",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.07
+  },
+  {
+   "place": "lai-chi-vun",
+   "file": "photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyard.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.05
+  },
+  {
+   "place": "lai-chi-vun",
+   "file": "photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_03-07-2023_1_.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.05
+  },
+  {
+   "place": "lai-chi-vun",
+   "file": "photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_03-07-2023_4_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "lai-chi-vun",
+   "file": "photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_baord_03-07-2023.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "lai-chi-vun",
+   "file": "photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_entry_03-07-2023.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "leal-senado",
+   "file": "photos-src/cc/leal-senado/Chinese_New_Year_decorations_on_Leal_Senado_20150207.jpg",
+   "objects": {
+    "person": 15
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 16,
+   "faces": 1,
+   "persons": 15,
+   "seconds": 0.07
+  },
+  {
+   "place": "leal-senado",
+   "file": "photos-src/cc/leal-senado/Leal_Senado_Building.JPG",
+   "objects": {
+    "person": 11
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 11,
+   "faces": 0,
+   "persons": 11,
+   "seconds": 0.06
+  },
+  {
+   "place": "leal-senado",
+   "file": "photos-src/cc/leal-senado/Leal_Senado_Macau_5239491313_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "leal-senado",
+   "file": "photos-src/cc/leal-senado/Leal_Senado_Macau_5239499023_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "leal-senado",
+   "file": "photos-src/cc/leal-senado/Macao_Edificio_do_Leal_Senado.jpg",
+   "objects": {
+    "person": 3
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 3,
+   "faces": 0,
+   "persons": 3,
+   "seconds": 0.06
+  },
+  {
+   "place": "macau-tower",
+   "file": "photos-src/cc/macau-tower/Macau_Tower_58.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.07
+  },
+  {
+   "place": "macau-tower",
+   "file": "photos-src/cc/macau-tower/Macau_Tower_CE_Centre.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "macau-tower",
+   "file": "photos-src/cc/macau-tower/Macau_Tower_edit1.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "macau-tower",
+   "file": "photos-src/cc/macau-tower/Macau_tower_sky.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.1
+  },
+  {
+   "place": "macau-tower",
+   "file": "photos-src/cc/macau-tower/Nightview_of_mtower.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "mandarins-house",
+   "file": "photos-src/cc/mandarins-house/MacaoMandarinsHouse.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "mandarins-house",
+   "file": "photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_2_.jpg",
+   "objects": {
+    "person": 6
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 7,
+   "faces": 1,
+   "persons": 6,
+   "seconds": 0.07
+  },
+  {
+   "place": "mandarins-house",
+   "file": "photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_32_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "mandarins-house",
+   "file": "photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_4_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "mandarins-house",
+   "file": "photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_6_.jpg",
+   "objects": {
+    "person": 3
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 3,
+   "faces": 0,
+   "persons": 3,
+   "seconds": 0.05
+  },
+  {
+   "place": "moorish-barracks",
+   "file": "photos-src/cc/moorish-barracks/Moorish_Barracks.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.06
+  },
+  {
+   "place": "moorish-barracks",
+   "file": "photos-src/cc/moorish-barracks/Moorish_Barracks_01.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "moorish-barracks",
+   "file": "photos-src/cc/moorish-barracks/Moorish_Barracks_02.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "moorish-barracks",
+   "file": "photos-src/cc/moorish-barracks/Quartel_dos_Mouros.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "moorish-barracks",
+   "file": "photos-src/cc/moorish-barracks/Quartel_dos_Mouros_.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "red-market",
+   "file": "photos-src/cc/red-market/Macau_Red_Market_澳門紅市場_-_panoramio.jpg",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 3,
+   "faces": 1,
+   "persons": 2,
+   "seconds": 0.05
+  },
+  {
+   "place": "red-market",
+   "file": "photos-src/cc/red-market/Red_Market_2016.jpg",
+   "objects": {
+    "person": 7
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 7,
+   "faces": 0,
+   "persons": 7,
+   "seconds": 0.06
+  },
+  {
+   "place": "red-market",
+   "file": "photos-src/cc/red-market/Red_Market_Library_inside_08-08-2023_1_.jpg",
+   "objects": {
+    "person": 3
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 3,
+   "faces": 0,
+   "persons": 3,
+   "seconds": 0.06
+  },
+  {
+   "place": "red-market",
+   "file": "photos-src/cc/red-market/Red_Market_Library_inside_08-08-2023_3_.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.08
+  },
+  {
+   "place": "red-market",
+   "file": "photos-src/cc/red-market/Red_Market_Macau_-_interior.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.07
+  },
+  {
+   "place": "rua-da-felicidade",
+   "file": "photos-src/cc/rua-da-felicidade/_Rua_da_Felicidade_at_night.jpg",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 2,
+   "faces": 0,
+   "persons": 2,
+   "seconds": 0.07
+  },
+  {
+   "place": "rua-da-felicidade",
+   "file": "photos-src/cc/rua-da-felicidade/Macau_Rua_da_Felicidade_Mo707_1a.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "rua-da-felicidade",
+   "file": "photos-src/cc/rua-da-felicidade/Macau_Rua_da_Felicidade_Mo707_2a.jpg",
+   "objects": {
+    "person": 3
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 3,
+   "faces": 0,
+   "persons": 3,
+   "seconds": 0.05
+  },
+  {
+   "place": "rua-da-felicidade",
+   "file": "photos-src/cc/rua-da-felicidade/MC_Macau_Peninsula_1359pm_old_zone_福隆新街_Rua_da_Felicidade_No_ef0b94.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "rua-da-felicidade",
+   "file": "photos-src/cc/rua-da-felicidade/MC_Macau_Peninsula_1359pm_old_zone_福隆新街_Rua_da_Felicidade_November_202.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "ruins-st-paul",
+   "file": "photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_01.jpg",
+   "objects": {
+    "person": 4
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 5,
+   "faces": 1,
+   "persons": 4,
+   "seconds": 0.13
+  },
+  {
+   "place": "ruins-st-paul",
+   "file": "photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_02.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "ruins-st-paul",
+   "file": "photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_04.jpg",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 2,
+   "faces": 0,
+   "persons": 2,
+   "seconds": 0.06
+  },
+  {
+   "place": "ruins-st-paul",
+   "file": "photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_07.jpg",
+   "objects": {
+    "person": 3
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 5,
+   "faces": 1,
+   "persons": 4,
+   "seconds": 0.08
+  },
+  {
+   "place": "ruins-st-paul",
+   "file": "photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_08.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "ruins-st-paul",
+   "file": "photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_10.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "yolo-face",
+   "blurred": 1,
+   "faces": 1,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "senado-square",
+   "file": "photos-src/cc/senado-square/Centre_of_Makau.jpg",
+   "objects": {
+    "person": 8
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 8,
+   "faces": 0,
+   "persons": 8,
+   "seconds": 0.06
+  },
+  {
+   "place": "senado-square",
+   "file": "photos-src/cc/senado-square/Macau_Senate_Square_at_Night.jpg",
+   "objects": {
+    "person": 10
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 11,
+   "faces": 1,
+   "persons": 10,
+   "seconds": 0.06
+  },
+  {
+   "place": "senado-square",
+   "file": "photos-src/cc/senado-square/Senado_Square_01.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "senado-square",
+   "file": "photos-src/cc/senado-square/Senado_Square_in_Macau01.jpg",
+   "objects": {
+    "person": 6
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 6,
+   "faces": 0,
+   "persons": 6,
+   "seconds": 0.06
+  },
+  {
+   "place": "senado-square",
+   "file": "photos-src/cc/senado-square/Senado_Square_YF_ST.jpg",
+   "objects": {
+    "person": 12
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 14,
+   "faces": 2,
+   "persons": 12,
+   "seconds": 0.07
+  },
+  {
+   "place": "st-dominic-church",
+   "file": "photos-src/cc/st-dominic-church/Door_of_Igreja_de_São_Domingos_Macau_-_20101117.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.08
+  },
+  {
+   "place": "st-dominic-church",
+   "file": "photos-src/cc/st-dominic-church/Macau_IMG_5365.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "st-dominic-church",
+   "file": "photos-src/cc/st-dominic-church/St._Dominics_Church_Macau_6993785827_.jpg",
+   "objects": {
+    "person": 9
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 9,
+   "faces": 0,
+   "persons": 9,
+   "seconds": 0.06
+  },
+  {
+   "place": "st-dominic-church",
+   "file": "photos-src/cc/st-dominic-church/St_Dominic_Church_Macau_2051968047_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "st-dominic-church",
+   "file": "photos-src/cc/st-dominic-church/St_Dominic_Church_Macau_2052755676_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.08
+  },
+  {
+   "place": "st-lawrence-church",
+   "file": "photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawre_1509f5.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "st-lawrence-church",
+   "file": "photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawre_7c8115.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "st-lawrence-church",
+   "file": "photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawre_99f328.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "st-lawrence-church",
+   "file": "photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawrence_s_Chur.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "st-lawrence-church",
+   "file": "photos-src/cc/st-lawrence-church/St._Lawrence_s_Church_Macau_01.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "st-paul-street",
+   "file": "photos-src/cc/st-paul-street/Macau_balconies_大三巴街_Rua_de_São_Paulo_30895757316_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.05
+  },
+  {
+   "place": "st-paul-street",
+   "file": "photos-src/cc/st-paul-street/Macau_street_scene_2.jpg",
+   "objects": {
+    "person": 8
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 14,
+   "faces": 6,
+   "persons": 8,
+   "seconds": 0.14
+  },
+  {
+   "place": "st-paul-street",
+   "file": "photos-src/cc/st-paul-street/Rua_da_Ressurreição_Macau_09-02-2023.jpg",
+   "objects": {
+    "person": 9
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 11,
+   "faces": 2,
+   "persons": 9,
+   "seconds": 0.08
+  },
+  {
+   "place": "st-paul-street",
+   "file": "photos-src/cc/st-paul-street/Rua_de_D._Belchior_Carneiro_09-02-2023.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "st-paul-street",
+   "file": "photos-src/cc/st-paul-street/Rua_de_São_Paulo_09-02-2023.jpg",
+   "objects": {
+    "person": 10
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 15,
+   "faces": 5,
+   "persons": 10,
+   "seconds": 0.07
+  },
+  {
+   "place": "taipa-houses",
+   "file": "photos-src/cc/taipa-houses/Taipa_Houses_Museum_01.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "taipa-houses",
+   "file": "photos-src/cc/taipa-houses/Taipa_Houses_Museum_02.JPG",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "taipa-houses",
+   "file": "photos-src/cc/taipa-houses/Taipa_Houses_Museum_凼仔住宅式博物館_-_panoramio.jpg",
+   "objects": {
+    "person": 8
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 8,
+   "faces": 0,
+   "persons": 8,
+   "seconds": 0.06
+  },
+  {
+   "place": "taipa-houses",
+   "file": "photos-src/cc/taipa-houses/Taipa_Houses_Museum_龍環葡韻住宅式博物館_-_panoramio.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  },
+  {
+   "place": "taipa-houses",
+   "file": "photos-src/cc/taipa-houses/龍環葡韻住宅式博物館_Taipa_Houses_Museum_-_panoramio.jpg",
+   "objects": {
+    "person": 1
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 1,
+   "faces": 0,
+   "persons": 1,
+   "seconds": 0.06
+  },
+  {
+   "place": "the-venetian",
+   "file": "photos-src/cc/the-venetian/Macau_Venetian_Macao_McDonalds_Shop_a.jpg",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-face+yolo-person",
+   "blurred": 3,
+   "faces": 1,
+   "persons": 2,
+   "seconds": 0.07
+  },
+  {
+   "place": "the-venetian",
+   "file": "photos-src/cc/the-venetian/The_Venetian_Macao_Resort_Hotel_澳門威尼斯人渡假酒店_-_panoramio.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "the-venetian",
+   "file": "photos-src/cc/the-venetian/The_Venetian_Macao_澳門威尼斯人_-_panoramio.jpg",
+   "objects": {
+    "person": 2
+   },
+   "error": null,
+   "privacy_method": "yolo-person",
+   "blurred": 2,
+   "faces": 0,
+   "persons": 2,
+   "seconds": 0.06
+  },
+  {
+   "place": "the-venetian",
+   "file": "photos-src/cc/the-venetian/The_Venetian_Macao_澳門威尼斯人_-_panoramio_1_.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.06
+  },
+  {
+   "place": "the-venetian",
+   "file": "photos-src/cc/the-venetian/Venetian_Macau.jpg",
+   "objects": {},
+   "error": null,
+   "privacy_method": "none",
+   "blurred": 0,
+   "faces": 0,
+   "persons": 0,
+   "seconds": 0.07
+  }
+ ]
+}

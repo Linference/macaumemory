@@ -1,0 +1,248 @@
+﻿file,building_id,building_zh,class_id,tier,note
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az000_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=0 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az000_el42_d072_overcast.png,galaxy-macau,澳門銀河,casino_hotel,render-cond,GLB 多視角渲染 az=0 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az030_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=30 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az045_el07_d128_sunset.png,galaxy-macau,澳門銀河,casino_hotel,render-cond2,GLB 多視角渲染 az=45 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az060_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=60 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az090_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=90 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az090_el42_d072_overcast.png,galaxy-macau,澳門銀河,casino_hotel,render-cond,GLB 多視角渲染 az=90 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az120_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=120 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az135_el07_d128_sunset.png,galaxy-macau,澳門銀河,casino_hotel,render-cond2,GLB 多視角渲染 az=135 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az150_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=150 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az180_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=180 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az180_el42_d072_overcast.png,galaxy-macau,澳門銀河,casino_hotel,render-cond,GLB 多視角渲染 az=180 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az210_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=210 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az225_el07_d128_sunset.png,galaxy-macau,澳門銀河,casino_hotel,render-cond2,GLB 多視角渲染 az=225 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az240_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=240 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az270_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=270 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az270_el42_d072_overcast.png,galaxy-macau,澳門銀河,casino_hotel,render-cond,GLB 多視角渲染 az=270 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az300_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=300 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az315_el07_d128_sunset.png,galaxy-macau,澳門銀河,casino_hotel,render-cond2,GLB 多視角渲染 az=315 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/galaxy-macau/galaxy-macau__az330_el20_d100_studio.png,galaxy-macau,澳門銀河,casino_hotel,render-base,GLB 多視角渲染 az=330 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az000_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=0 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az000_el42_d072_overcast.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond,GLB 多視角渲染 az=0 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az030_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=30 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az045_el07_d128_sunset.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond2,GLB 多視角渲染 az=45 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az060_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=60 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az090_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=90 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az090_el42_d072_overcast.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond,GLB 多視角渲染 az=90 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az120_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=120 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az135_el07_d128_sunset.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond2,GLB 多視角渲染 az=135 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az150_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=150 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az180_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=180 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az180_el42_d072_overcast.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond,GLB 多視角渲染 az=180 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az210_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=210 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az225_el07_d128_sunset.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond2,GLB 多視角渲染 az=225 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az240_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=240 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az270_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=270 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az270_el42_d072_overcast.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond,GLB 多視角渲染 az=270 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az300_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=300 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az315_el07_d128_sunset.png,londoner-macao,澳門倫敦人,casino_hotel,render-cond2,GLB 多視角渲染 az=315 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/londoner-macao/londoner-macao__az330_el20_d100_studio.png,londoner-macao,澳門倫敦人,casino_hotel,render-base,GLB 多視角渲染 az=330 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az000_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=0 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az000_el42_d072_overcast.png,macau-science-center,澳門科學館,civic,render-cond,GLB 多視角渲染 az=0 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az030_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=30 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az045_el07_d128_sunset.png,macau-science-center,澳門科學館,civic,render-cond2,GLB 多視角渲染 az=45 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az060_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=60 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az090_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=90 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az090_el42_d072_overcast.png,macau-science-center,澳門科學館,civic,render-cond,GLB 多視角渲染 az=90 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az120_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=120 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az135_el07_d128_sunset.png,macau-science-center,澳門科學館,civic,render-cond2,GLB 多視角渲染 az=135 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az150_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=150 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az180_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=180 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az180_el42_d072_overcast.png,macau-science-center,澳門科學館,civic,render-cond,GLB 多視角渲染 az=180 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az210_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=210 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az225_el07_d128_sunset.png,macau-science-center,澳門科學館,civic,render-cond2,GLB 多視角渲染 az=225 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az240_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=240 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az270_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=270 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az270_el42_d072_overcast.png,macau-science-center,澳門科學館,civic,render-cond,GLB 多視角渲染 az=270 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az300_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=300 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az315_el07_d128_sunset.png,macau-science-center,澳門科學館,civic,render-cond2,GLB 多視角渲染 az=315 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-science-center/macau-science-center__az330_el20_d100_studio.png,macau-science-center,澳門科學館,civic,render-base,GLB 多視角渲染 az=330 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az000_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=0 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az000_el42_d072_overcast.png,macau-tower,澳門旅遊塔,civic,render-cond,GLB 多視角渲染 az=0 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az030_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=30 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az045_el07_d128_sunset.png,macau-tower,澳門旅遊塔,civic,render-cond2,GLB 多視角渲染 az=45 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az060_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=60 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az090_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=90 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az090_el42_d072_overcast.png,macau-tower,澳門旅遊塔,civic,render-cond,GLB 多視角渲染 az=90 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az120_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=120 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az135_el07_d128_sunset.png,macau-tower,澳門旅遊塔,civic,render-cond2,GLB 多視角渲染 az=135 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az150_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=150 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az180_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=180 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az180_el42_d072_overcast.png,macau-tower,澳門旅遊塔,civic,render-cond,GLB 多視角渲染 az=180 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az210_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=210 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az225_el07_d128_sunset.png,macau-tower,澳門旅遊塔,civic,render-cond2,GLB 多視角渲染 az=225 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az240_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=240 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az270_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=270 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az270_el42_d072_overcast.png,macau-tower,澳門旅遊塔,civic,render-cond,GLB 多視角渲染 az=270 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az300_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=300 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/macau-tower/macau-tower__az315_el07_d128_sunset.png,macau-tower,澳門旅遊塔,civic,render-cond2,GLB 多視角渲染 az=315 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/macau-tower/macau-tower__az330_el20_d100_studio.png,macau-tower,澳門旅遊塔,civic,render-base,GLB 多視角渲染 az=330 el=20 dist=1.0 bg=studio @512px
+tools/eval/dataset/renders/parisian/parisian__az000_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=0 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az000_el42_d072_overcast.png,parisian,澳門巴黎人,casino_hotel,render-cond,GLB 多視角渲染 az=0 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/parisian/parisian__az030_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=30 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az045_el07_d128_sunset.png,parisian,澳門巴黎人,casino_hotel,render-cond2,GLB 多視角渲染 az=45 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/parisian/parisian__az060_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=60 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az090_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=90 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az090_el42_d072_overcast.png,parisian,澳門巴黎人,casino_hotel,render-cond,GLB 多視角渲染 az=90 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/parisian/parisian__az120_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=120 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az135_el07_d128_sunset.png,parisian,澳門巴黎人,casino_hotel,render-cond2,GLB 多視角渲染 az=135 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/parisian/parisian__az150_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=150 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az180_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=180 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az180_el42_d072_overcast.png,parisian,澳門巴黎人,casino_hotel,render-cond,GLB 多視角渲染 az=180 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/parisian/parisian__az210_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=210 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az225_el07_d128_sunset.png,parisian,澳門巴黎人,casino_hotel,render-cond2,GLB 多視角渲染 az=225 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/parisian/parisian__az240_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=240 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az270_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=270 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az270_el42_d072_overcast.png,parisian,澳門巴黎人,casino_hotel,render-cond,GLB 多視角渲染 az=270 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/parisian/parisian__az300_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=300 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/parisian/parisian__az315_el07_d128_sunset.png,parisian,澳門巴黎人,casino_hotel,render-cond2,GLB 多視角渲染 az=315 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/parisian/parisian__az330_el20_d100_studio.png,parisian,澳門巴黎人,casino_hotel,render-base,GLB 多視角渲染 az=330 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az000_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=0 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az000_el42_d072_overcast.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond,GLB 多視角渲染 az=0 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az030_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=30 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az045_el07_d128_sunset.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond2,GLB 多視角渲染 az=45 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az060_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=60 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az090_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=90 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az090_el42_d072_overcast.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond,GLB 多視角渲染 az=90 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az120_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=120 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az135_el07_d128_sunset.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond2,GLB 多視角渲染 az=135 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az150_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=150 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az180_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=180 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az180_el42_d072_overcast.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond,GLB 多視角渲染 az=180 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az210_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=210 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az225_el07_d128_sunset.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond2,GLB 多視角渲染 az=225 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az240_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=240 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az270_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=270 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az270_el42_d072_overcast.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond,GLB 多視角渲染 az=270 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az300_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=300 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az315_el07_d128_sunset.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-cond2,GLB 多視角渲染 az=315 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/tang-sancai-camel/tang-sancai-camel__az330_el20_d100_studio.png,tang-sancai-camel,唐三彩雙峰駱駝俑,artifact,render-base,GLB 多視角渲染 az=330 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az000_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=0 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az000_el42_d072_overcast.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond,GLB 多視角渲染 az=0 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az030_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=30 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az045_el07_d128_sunset.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond2,GLB 多視角渲染 az=45 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az060_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=60 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az090_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=90 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az090_el42_d072_overcast.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond,GLB 多視角渲染 az=90 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az120_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=120 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az135_el07_d128_sunset.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond2,GLB 多視角渲染 az=135 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az150_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=150 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az180_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=180 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az180_el42_d072_overcast.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond,GLB 多視角渲染 az=180 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az210_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=210 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az225_el07_d128_sunset.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond2,GLB 多視角渲染 az=225 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az240_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=240 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az270_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=270 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az270_el42_d072_overcast.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond,GLB 多視角渲染 az=270 el=42 dist=0.72 bg=overcast @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az300_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=300 el=20 dist=1.0 bg=studio @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az315_el07_d128_sunset.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-cond2,GLB 多視角渲染 az=315 el=7 dist=1.28 bg=sunset @640px
+tools/eval/dataset/renders/yongle-blue-white-flask/yongle-blue-white-flask__az330_el20_d100_studio.png,yongle-blue-white-flask,明永樂青花葫蘆扁瓶,artifact,render-base,GLB 多視角渲染 az=330 el=20 dist=1.0 bg=studio @640px
+photos-src/demo/大三巴牌坊-demo.jpg,ruins-st-paul,大三巴牌坊,monument,demo-map,3D 地圖截圖（大三巴無 GLB 模型）
+photos-src/demo/大三巴牌坊-demo2.jpg,ruins-st-paul,大三巴牌坊,monument,demo-crop,同一張截圖裁切＋調亮（洩漏對照，主實驗排除）
+photos-src/demo/澳門旅遊塔-demo.jpg,macau-tower,澳門旅遊塔,civic,demo-map,3D 地圖截圖
+photos-src/demo/澳門旅遊塔-demo2.jpg,macau-tower,澳門旅遊塔,civic,demo-crop,同一張截圖裁切（洩漏對照，主實驗排除）
+photos-src/demo/澳門科學館-demo.jpg,macau-science-center,澳門科學館,civic,demo-map,3D 地圖截圖
+photos-src/demo/澳門巴黎人-demo.jpg,parisian,澳門巴黎人,casino_hotel,demo-map,3D 地圖截圖
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_10.jpg,ruins-st-paul,大三巴牌坊,monument,real-cc,Commons · CC BY-SA 4.0 · Ank Kumar · 2016-05-18
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_01.jpg,ruins-st-paul,大三巴牌坊,monument,real-cc,Commons · CC BY-SA 4.0 · Ank Kumar · 2016-05-18
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_02.jpg,ruins-st-paul,大三巴牌坊,monument,real-cc,Commons · CC BY-SA 4.0 · Ank Kumar · 2016-05-18
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_04.jpg,ruins-st-paul,大三巴牌坊,monument,real-cc,Commons · CC BY-SA 4.0 · Ank Kumar · 2016-05-18
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_07.jpg,ruins-st-paul,大三巴牌坊,monument,real-cc,Commons · CC BY-SA 4.0 · Ank Kumar · 2016-05-18
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_08.jpg,ruins-st-paul,大三巴牌坊,monument,real-cc,Commons · CC BY-SA 4.0 · Ank Kumar · 2016-05-18
+photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_01.JPG,a-ma-temple,媽閣廟,temple,real-cc,Commons · Public domain · Abasaa · 2011-12-10
+photos-src/cc/a-ma-temple/A_Ma_temple_Macau_-_panoramio.jpg,a-ma-temple,媽閣廟,temple,real-cc,Commons · CC BY 3.0 · Boonchai C · Taken on 9
+photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_2_32043656663_.jpg,a-ma-temple,媽閣廟,temple,real-cc,"Commons · CC BY 2.0 · Richard Mortel from Riyadh, Saud · Taken on 3"
+photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_3_32858244395_.jpg,a-ma-temple,媽閣廟,temple,real-cc,"Commons · CC BY 2.0 · Richard Mortel from Riyadh, Saud · Taken on 3"
+photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_7_32734287651_.jpg,a-ma-temple,媽閣廟,temple,real-cc,"Commons · CC BY 2.0 · Richard Mortel from Riyadh, Saud · Taken on 3"
+photos-src/cc/kun-iam-temple/Kun_Iam_Temple_Macau_01.JPG,kun-iam-temple,觀音堂,temple,real-cc,Commons · Public domain · Abasaa · 2011-12-10
+photos-src/cc/kun-iam-temple/Kun_Iam_Temple_Macau_02.JPG,kun-iam-temple,觀音堂,temple,real-cc,Commons · Public domain · Abasaa · 2011-12-10
+photos-src/cc/kun-iam-temple/Kun_Iam_Temple_04.JPG,kun-iam-temple,觀音堂,temple,real-cc,Commons · CC BY-SA 3.0 · Marius Hoch · 2013-08-05
+photos-src/cc/kun-iam-temple/Kun_Iam_Temple_05.JPG,kun-iam-temple,觀音堂,temple,real-cc,Commons · CC BY-SA 3.0 · Marius Hoch · 2013-08-05
+photos-src/cc/kun-iam-temple/Kun_Iam_Temple_11.JPG,kun-iam-temple,觀音堂,temple,real-cc,Commons · CC BY-SA 3.0 · Marius Hoch · 2013-08-05
+photos-src/cc/st-dominic-church/Macau_IMG_5365.JPG,st-dominic-church,玫瑰堂,church,real-cc,Commons · CC BY-SA 3.0 · deror_avi · 2010-11-06
+photos-src/cc/st-dominic-church/Door_of_Igreja_de_São_Domingos_Macau_-_20101117.jpg,st-dominic-church,玫瑰堂,church,real-cc,Commons · CC BY-SA 3.0 · Jacklee. · 2010-11-17
+photos-src/cc/st-dominic-church/St._Dominics_Church_Macau_6993785827_.jpg,st-dominic-church,玫瑰堂,church,real-cc,"Commons · CC BY 2.0 · Michal Osmenda from Brussels, Be · 2012-03-11"
+photos-src/cc/st-dominic-church/St_Dominic_Church_Macau_2052755676_.jpg,st-dominic-church,玫瑰堂,church,real-cc,Commons · CC BY 2.0 · yeowatzup · 2007-11-10
+photos-src/cc/st-dominic-church/St_Dominic_Church_Macau_2051968047_.jpg,st-dominic-church,玫瑰堂,church,real-cc,Commons · CC BY 2.0 · yeowatzup · 2007-11-10
+photos-src/cc/st-lawrence-church/St._Lawrence_s_Church_Macau_01.JPG,st-lawrence-church,聖老楞佐堂,church,real-cc,Commons · Public domain · Abasaa · 2014-11-15
+photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawrence_s_Chur.jpg,st-lawrence-church,聖老楞佐堂,church,real-cc,Commons · CC BY-SA 4.0 · Kismoah HGOA2 · 2019-11-14
+photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawre_99f328.jpg,st-lawrence-church,聖老楞佐堂,church,real-cc,Commons · CC BY-SA 4.0 · Kismoah HGOA2 · 2019-11-14
+photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawre_7c8115.jpg,st-lawrence-church,聖老楞佐堂,church,real-cc,Commons · CC BY-SA 4.0 · Kismoah HGOA2 · 2019-11-14
+photos-src/cc/st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawre_1509f5.jpg,st-lawrence-church,聖老楞佐堂,church,real-cc,Commons · CC BY-SA 4.0 · Kismoah HGOA2 · 2019-11-14
+photos-src/cc/cathedral-macau/Mocathedral.JPG,cathedral-macau,主教座堂,church,real-cc,Commons · CC BY-SA 3.0 · No machine-readable author provi · 16 August 
+photos-src/cc/cathedral-macau/Igreja_da_Sé_2011c.JPG,cathedral-macau,主教座堂,church,real-cc,Commons · CC0 · Jssfrk · 2011-05-17
+photos-src/cc/cathedral-macau/Igreja_da_Sé_2011b.JPG,cathedral-macau,主教座堂,church,real-cc,Commons · CC0 · Jssfrk · 2011-05-17
+photos-src/cc/cathedral-macau/Igreja_da_Sé_2011a.JPG,cathedral-macau,主教座堂,church,real-cc,Commons · CC0 · Jssfrk · 2011-05-17
+photos-src/cc/cathedral-macau/Igreja_da_Sé_2011d.JPG,cathedral-macau,主教座堂,church,real-cc,Commons · CC0 · Jssfrk · 2011-05-17
+photos-src/cc/mandarins-house/MacaoMandarinsHouse.jpg,mandarins-house,鄭家大屋,portuguese,real-cc,Commons · CC BY-SA 4.0 · Niels Elgaard Larsen - User: (WT · 2011-09-26
+photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_2_.jpg,mandarins-house,鄭家大屋,portuguese,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-24
+photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_4_.jpg,mandarins-house,鄭家大屋,portuguese,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-24
+photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_6_.jpg,mandarins-house,鄭家大屋,portuguese,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-24
+photos-src/cc/mandarins-house/Mandarin_s_House_24-02-2023_32_.jpg,mandarins-house,鄭家大屋,portuguese,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-24
+photos-src/cc/taipa-houses/Taipa_Houses_Museum_01.JPG,taipa-houses,龍環葡韻,portuguese,real-cc,Commons · Public domain · Abasaa · 2011-12-10
+photos-src/cc/taipa-houses/Taipa_Houses_Museum_02.JPG,taipa-houses,龍環葡韻,portuguese,real-cc,Commons · Public domain · Abasaa · 2011-12-10
+photos-src/cc/taipa-houses/Taipa_Houses_Museum_龍環葡韻住宅式博物館_-_panoramio.jpg,taipa-houses,龍環葡韻,portuguese,real-cc,Commons · CC BY 3.0 · lienyuan lee · Taken on 1
+photos-src/cc/taipa-houses/龍環葡韻住宅式博物館_Taipa_Houses_Museum_-_panoramio.jpg,taipa-houses,龍環葡韻,portuguese,real-cc,Commons · CC BY 3.0 · lienyuan lee · Taken on 1
+photos-src/cc/taipa-houses/Taipa_Houses_Museum_凼仔住宅式博物館_-_panoramio.jpg,taipa-houses,龍環葡韻,portuguese,real-cc,Commons · CC BY 3.0 · lienyuan lee · Taken on 1
+photos-src/cc/moorish-barracks/Moorish_Barracks.jpg,moorish-barracks,港務局大樓,portuguese,real-cc,Commons · CC BY-SA 3.0 · No machine-readable author provi · 19 Septemb
+photos-src/cc/moorish-barracks/Quartel_dos_Mouros_.JPG,moorish-barracks,港務局大樓,portuguese,real-cc,Commons · Public domain ·  · 
+photos-src/cc/moorish-barracks/Quartel_dos_Mouros.JPG,moorish-barracks,港務局大樓,portuguese,real-cc,Commons · Public domain ·  · 
+photos-src/cc/moorish-barracks/Moorish_Barracks_01.JPG,moorish-barracks,港務局大樓,portuguese,real-cc,Commons · Public domain · Abasaa · 2011-12-10
+photos-src/cc/moorish-barracks/Moorish_Barracks_02.JPG,moorish-barracks,港務局大樓,portuguese,real-cc,Commons · Public domain · Abasaa · 2011-12-10
+photos-src/cc/leal-senado/Leal_Senado_Building.JPG,leal-senado,市政署大樓,civic,real-cc,Commons · CC BY-SA 3.0 ·  · 
+photos-src/cc/leal-senado/Macao_Edificio_do_Leal_Senado.jpg,leal-senado,市政署大樓,civic,real-cc,Commons · CC BY 3.0 · WiNG · 2008-06-29
+photos-src/cc/leal-senado/Leal_Senado_Macau_5239499023_.jpg,leal-senado,市政署大樓,civic,real-cc,Commons · CC BY 2.0 · yeowatzup · 2010-11-10
+photos-src/cc/leal-senado/Leal_Senado_Macau_5239491313_.jpg,leal-senado,市政署大樓,civic,real-cc,Commons · CC BY 2.0 · yeowatzup · 2010-11-10
+photos-src/cc/leal-senado/Chinese_New_Year_decorations_on_Leal_Senado_20150207.jpg,leal-senado,市政署大樓,civic,real-cc,Commons · CC BY-SA 2.0 · Wei-Te Wong · 2015-02-07
+photos-src/cc/rua-da-felicidade/Macau_Rua_da_Felicidade_Mo707_1a.jpg,rua-da-felicidade,福隆新街,tong_lau,real-cc,Commons · CC BY-SA 3.0 · Mo707 · 2007-07-25
+photos-src/cc/rua-da-felicidade/Macau_Rua_da_Felicidade_Mo707_2a.jpg,rua-da-felicidade,福隆新街,tong_lau,real-cc,Commons · CC BY-SA 3.0 · Mo707 · 2007-07-25
+photos-src/cc/rua-da-felicidade/_Rua_da_Felicidade_at_night.jpg,rua-da-felicidade,福隆新街,tong_lau,real-cc,Commons · CC BY-SA 4.0 · Pauloleong2002 · 2019-08-04
+photos-src/cc/rua-da-felicidade/MC_Macau_Peninsula_1359pm_old_zone_福隆新街_Rua_da_Felicidade_November_202.jpg,rua-da-felicidade,福隆新街,tong_lau,real-cc,Commons · CC0 · Kamfutiam Georgez · 2023-11-13
+photos-src/cc/rua-da-felicidade/MC_Macau_Peninsula_1359pm_old_zone_福隆新街_Rua_da_Felicidade_No_ef0b94.jpg,rua-da-felicidade,福隆新街,tong_lau,real-cc,Commons · CC0 · Kamfutiam Georgez · 2023-11-13
+photos-src/cc/red-market/Red_Market_2016.jpg,red-market,紅街市,market,real-cc,Commons · CC BY-SA 3.0 · Doraemon.tvb · 2016-08-24
+photos-src/cc/red-market/Macau_Red_Market_澳門紅市場_-_panoramio.jpg,red-market,紅街市,market,real-cc,Commons · CC BY 3.0 · lienyuan lee · Taken on 1
+photos-src/cc/red-market/Red_Market_Macau_-_interior.jpg,red-market,紅街市,market,real-cc,Commons · CC0 · Mx. Granger · 2018-12-14
+photos-src/cc/red-market/Red_Market_Library_inside_08-08-2023_3_.jpg,red-market,紅街市,market,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-08-08
+photos-src/cc/red-market/Red_Market_Library_inside_08-08-2023_1_.jpg,red-market,紅街市,market,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-08-08
+photos-src/cc/coloane-village/Coloane_Village_Macau_2052762780_.jpg,coloane-village,路環市區,village,real-cc,Commons · CC BY 2.0 · yeowatzup · 2007-11-10
+photos-src/cc/coloane-village/Coloane_Village_Macau_2051977943_.jpg,coloane-village,路環市區,village,real-cc,Commons · CC BY 2.0 · yeowatzup · 2007-11-10
+photos-src/cc/coloane-village/Coloane_Village_Macau_2051973505_.jpg,coloane-village,路環市區,village,real-cc,Commons · CC BY 2.0 · yeowatzup · 2007-11-10
+photos-src/cc/coloane-village/Coloane_Village_Macau_2052761544_.jpg,coloane-village,路環市區,village,real-cc,Commons · CC BY 2.0 · yeowatzup · 2007-11-10
+photos-src/cc/coloane-village/Coloane_Village_Macau_2052759250_.jpg,coloane-village,路環市區,village,real-cc,Commons · CC BY 2.0 · yeowatzup · 2007-11-10
+photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyard.jpg,lai-chi-vun,荔枝碗船廠,industrial,real-cc,Commons · CC BY-SA 4.0 · Macau government · 2014-04-03
+photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_entry_03-07-2023.jpg,lai-chi-vun,荔枝碗船廠,industrial,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-07-03
+photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_baord_03-07-2023.jpg,lai-chi-vun,荔枝碗船廠,industrial,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-07-03
+photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_03-07-2023_1_.jpg,lai-chi-vun,荔枝碗船廠,industrial,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-07-03
+photos-src/cc/lai-chi-vun/Lai_Chi_Vun_Shipyards_03-07-2023_4_.jpg,lai-chi-vun,荔枝碗船廠,industrial,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-07-03
+photos-src/cc/macau-tower/Nightview_of_mtower.jpg,macau-tower,澳門旅遊塔,civic,real-cc,Commons · CC BY-SA 3.0 · Iidxplus · 2005-03-19
+photos-src/cc/macau-tower/Macau_Tower_edit1.JPG,macau-tower,澳門旅遊塔,civic,real-cc,Commons · Public domain · Original image Macanese馬交人 Edite · 2003-12-29
+photos-src/cc/macau-tower/Macau_Tower_58.jpg,macau-tower,澳門旅遊塔,civic,real-cc,Commons · Public domain · 投稿者 · 2010-08-10
+photos-src/cc/macau-tower/Macau_tower_sky.jpg,macau-tower,澳門旅遊塔,civic,real-cc,Commons · CC BY-SA 3.0 · Ninjakeg · 2008-02-20
+photos-src/cc/macau-tower/Macau_Tower_CE_Centre.jpg,macau-tower,澳門旅遊塔,civic,real-cc,Commons · CC BY-SA 3.0 · Whhalbert · 2010-07-10
+photos-src/cc/grand-lisboa/Casino_Lisboa_Grand_Lisboa_Macau.JPG,grand-lisboa,葡京酒店,casino_hotel,real-cc,Commons · CC BY-SA 3.0 · 螺钉 · 2011-03-12
+photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5234409413_.jpg,grand-lisboa,葡京酒店,casino_hotel,real-cc,Commons · CC BY 2.0 · Rob Young from United Kingdom · 15 Novembe
+photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5235000286_.jpg,grand-lisboa,葡京酒店,casino_hotel,real-cc,Commons · CC BY 2.0 · Rob Young from United Kingdom · 15 Novembe
+photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5234996532_.jpg,grand-lisboa,葡京酒店,casino_hotel,real-cc,Commons · CC BY 2.0 · Rob Young from United Kingdom · 2010-11-15
+photos-src/cc/grand-lisboa/Grand_Lisboa_Macau_5234406089_.jpg,grand-lisboa,葡京酒店,casino_hotel,real-cc,Commons · CC BY 2.0 · Rob Young from United Kingdom · 15 Novembe
+photos-src/cc/the-venetian/Macau_Venetian_Macao_McDonalds_Shop_a.jpg,the-venetian,威尼斯人,casino_hotel,real-cc,Commons · CC BY-SA 3.0 · MacVT · 2007-12-23
+photos-src/cc/the-venetian/Venetian_Macau.jpg,the-venetian,威尼斯人,casino_hotel,real-cc,Commons · CC BY-SA 2.0 · Jimmy Yao (vixyao) on Flickr · 2007-11-29
+photos-src/cc/the-venetian/The_Venetian_Macao_澳門威尼斯人_-_panoramio.jpg,the-venetian,威尼斯人,casino_hotel,real-cc,Commons · CC BY 3.0 · lienyuan lee · Taken on 1
+photos-src/cc/the-venetian/The_Venetian_Macao_澳門威尼斯人_-_panoramio_1_.jpg,the-venetian,威尼斯人,casino_hotel,real-cc,Commons · CC BY 3.0 · lienyuan lee · Taken on 1
+photos-src/cc/the-venetian/The_Venetian_Macao_Resort_Hotel_澳門威尼斯人渡假酒店_-_panoramio.jpg,the-venetian,威尼斯人,casino_hotel,real-cc,Commons · CC BY 3.0 · lienyuan lee · Taken on 1
+photos-src/cc/senado-square/Senado_Square_01.jpg,senado-square,議事亭前地,street,real-cc,Commons · CC BY-SA 2.5 · No machine-readable author provi · 16 August 
+photos-src/cc/senado-square/Senado_Square_YF_ST.jpg,senado-square,議事亭前地,street,real-cc,Commons · CC BY-SA 2.5 · No machine-readable author provi · 16 August 
+photos-src/cc/senado-square/Macau_Senate_Square_at_Night.jpg,senado-square,議事亭前地,street,real-cc,Commons · Public domain · The Red Hat of Pat Ferrick at En · 1 April 20
+photos-src/cc/senado-square/Senado_Square_in_Macau01.jpg,senado-square,議事亭前地,street,real-cc,Commons · CC BY-SA 3.0 · Kounosu · 2008-12-23
+photos-src/cc/senado-square/Centre_of_Makau.jpg,senado-square,議事亭前地,street,real-cc,Commons · CC BY 2.5 · Андрей Суриков / Andrey Surikov. · 25 ноября 
+photos-src/cc/st-paul-street/Macau_street_scene_2.jpg,st-paul-street,大三巴街景,street,real-cc,Commons · CC BY-SA 3.0 · KTo288 · 2008-05
+photos-src/cc/st-paul-street/Macau_balconies_大三巴街_Rua_de_São_Paulo_30895757316_.jpg,st-paul-street,大三巴街景,street,real-cc,Commons · CC BY-SA 2.0 · Joybot · 2016-11-11
+photos-src/cc/st-paul-street/Rua_de_São_Paulo_09-02-2023.jpg,st-paul-street,大三巴街景,street,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-09
+photos-src/cc/st-paul-street/Rua_da_Ressurreição_Macau_09-02-2023.jpg,st-paul-street,大三巴街景,street,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-09
+photos-src/cc/st-paul-street/Rua_de_D._Belchior_Carneiro_09-02-2023.jpg,st-paul-street,大三巴街景,street,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-09
+photos-src/cc/guiuan-village/Macau_Taipa-Village.jpg,guiuan-village,氹仔舊城區,tong_lau,real-cc,Commons · CC BY-SA 4.0 · User: (WT-shared) Rene at  wts w · 16 March 2
+photos-src/cc/guiuan-village/Taipa_Old_City_Overview_-_panoramio.jpg,guiuan-village,氹仔舊城區,tong_lau,real-cc,Commons · CC BY-SA 3.0 · calvinstkm · Taken on 1
+photos-src/cc/guiuan-village/Taipa_Old_Town_decoration_01-02-2023_1_.jpg,guiuan-village,氹仔舊城區,tong_lau,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-01
+photos-src/cc/guiuan-village/Taipa_Old_Town_decoration_01-02-2023_2_.jpg,guiuan-village,氹仔舊城區,tong_lau,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-01
+photos-src/cc/guiuan-village/Taipa_Village_03-02-2023_1_.jpg,guiuan-village,氹仔舊城區,tong_lau,real-cc,Commons · CC BY-SA 4.0 · LN9267 · 2023-02-03

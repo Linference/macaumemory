@@ -1,4 +1,4 @@
-﻿import * as maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./styles.css";
 import { buildStyle, addContourLayers } from "./map-style.js";
@@ -735,11 +735,12 @@ const ai = new AiChat({
   },
 });
 const AI_CHIPS = [
+  "什麼是建築記憶點？",
   "大三巴有什麼必看？",
   "推薦一條世界遺產步行路線",
+  "邊棟樓最似葡式建築？",
   "半日遊怎麼安排？",
   "附近有什麼美食？",
-  "帶小朋友可以去哪？",
 ];
 function renderAiChips() {
   $("#ai-chips").innerHTML = AI_CHIPS.map((c) => `<button class="ai-chip">${T(c)}</button>`).join("");
@@ -748,12 +749,25 @@ function renderAiChips() {
   }
 }
 function addAiMsg(role, text) {
+  const msgs = $("#ai-msgs");
+  const row = document.createElement("div");
+  row.className = `ai-msg-row ${role}`;
+  if (role === "ai") {
+    const av = document.createElement("img");
+    av.className = "ai-msg-avatar";
+    av.src = "mascot/ashih-avatar.jpg";
+    av.alt = "阿獅";
+    row.appendChild(av);
+  }
   const el = document.createElement("div");
   el.className = `ai-msg ${role}`;
   el.innerHTML = renderAiText(text);
-  $("#ai-msgs").appendChild(el);
-  $("#ai-msgs").scrollTop = $("#ai-msgs").scrollHeight;
-  return el;
+  row.appendChild(el);
+  const hero = msgs.querySelector(".ai-hero");
+  if (hero) hero.remove();          // 一開始對話就收起吉祥物歡迎頁
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  return el;                        // 回傳泡泡本體，維持原有串流／typing 邏輯
 }
 // 極簡 Markdown：粗體、換行、條列
 function renderAiText(text) {
@@ -824,10 +838,10 @@ $("#ai-fab").addEventListener("click", async () => {
       }
     }
     $("#ai-sub").textContent = ai.ready
-      ? `DeepSeek · ${ai.model}${ai.thinking ? "（深度思考）" : ""}${ai.source === "local" ? " · 本機金鑰" : ""}`
-      : T("尚未設定 API Key");
+      ? `大三巴石獅寶寶 · ${ai.model}${ai.thinking ? "（深度思考）" : ""}${ai.source === "local" ? " · 本機金鑰" : ""}`
+      : T("大三巴石獅寶寶 · 尚未設定 API Key");
     if (!ai.ready) openAiSetup(true);
-    else if (!$("#ai-msgs").children.length) addAiMsg("ai", T("你好！我是澳門導覽助理 🧭\n可以問我景點介紹、步行路線、美食或行程安排；如果我推薦某個景點，還會直接在地圖上標出來。"));
+    // 歡迎訊息就是面板裡的吉祥物歡迎頁（#ai-hero），開始對話後會自動收起
     $("#ai-text").focus();
   }
 });

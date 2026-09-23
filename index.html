@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-Hant">
   <head>
     <meta charset="utf-8" />
@@ -203,16 +203,16 @@
       <div class="nav-steps" id="nav-steps"></div>
     </section>
     <!-- AI 導覽助理 -->
-    <button class="ai-fab" id="ai-fab" title="問 AI 導覽助理">
-      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2.6l1.9 5.1 5.1 1.9-5.1 1.9L12 16.6l-1.9-5.1L5 9.6l5.1-1.9z" fill="currentColor"/><path d="M18.6 15.2l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9z" fill="currentColor" opacity=".7"/></svg>
-      <span>問 AI</span>
+    <button class="ai-fab" id="ai-fab" title="問阿獅（AI 導覽）">
+      <img class="ai-fab-avatar" src="mascot/ashih-avatar.jpg" alt="阿獅">
+      <span>問阿獅</span>
     </button>
     <section class="ai-panel" id="ai-panel" aria-hidden="true">
       <header class="ai-head">
-        <span class="ai-dot"></span>
+        <img class="ai-head-avatar" src="mascot/ashih-avatar.jpg" alt="阿獅">
         <div class="ai-title">
-          <strong>澳門導覽 AI</strong>
-          <small id="ai-sub">DeepSeek · 可問景點、路線、美食</small>
+          <strong>阿獅</strong>
+          <small id="ai-sub">大三巴石獅寶寶 · 帶你認澳門建築</small>
         </div>
         <button class="icon-btn sm" id="ai-speak" title="自動朗讀回覆（語音合成）">
           <svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 9.5h3l4-3.2v11.4l-4-3.2H4z" fill="currentColor"/><path d="M15 8.5a5 5 0 0 1 0 7M17.6 6a8.4 8.4 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
@@ -224,7 +224,13 @@
           <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
       </header>
-      <div class="ai-msgs" id="ai-msgs"></div>
+      <div class="ai-msgs" id="ai-msgs">
+        <div class="ai-hero" id="ai-hero">
+          <img src="mascot/ashih-front.jpg" alt="阿獅">
+          <p class="ai-hero-say">我係阿獅，大三巴石獅寶寶。<br>問我澳門嘅建築、路線、美食，或者影張相我幫你認下係邊棟！</p>
+          <p class="ai-hero-hint">由 DeepSeek 驅動 · 可語音對話</p>
+        </div>
+      </div>
       <div class="ai-chips" id="ai-chips"></div>
       <div class="ai-input">
         <textarea id="ai-text" rows="1" placeholder="問我澳門的任何事…（Enter 送出、Shift+Enter 換行）"></textarea>

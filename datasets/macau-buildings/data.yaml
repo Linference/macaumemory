@@ -1,0 +1,17 @@
+path: datasets/macau-buildings
+train: images/train
+val: images/val
+
+nc: 11
+names:
+  0: portuguese
+  1: temple
+  2: church
+  3: tong_lau
+  4: residential_tower
+  5: casino_hotel
+  6: civic
+  7: industrial
+  8: village
+  9: monument
+  10: market

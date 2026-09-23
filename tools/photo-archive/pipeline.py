@@ -193,12 +193,46 @@ class Detector:
         self.model = YOLO(weights)
         self.cv2 = None
         self.cascade = None
+        self.cascade_ok = False
+        self.yunet = None
+        self.yunet_ok = False
+        self.face_model = None
+        self.face_ok = False
+        face_dir = ROOT / ".cache" / "models" / "face"
         try:
             import cv2
             self.cv2 = cv2
-            self.cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+            # ① YOLO 人臉模型（yolo11n-face）——本機的主力（OpenCV 5 已移除 Haar 且讀不了 YuNet）
+            fw = face_dir / "yolov11n-face.pt"
+            if fw.exists():
+                try:
+                    self.face_model = YOLO(str(fw))
+                    self.face_ok = True
+                except Exception as e:
+                    log(f"    [privacy] YOLO 人臉模型載入失敗：{e}")
+
+            # ② YuNet（舊環境可用；OpenCV 5 的 ONNX 解析器讀不了 2023mar 模型）
+            onnx = face_dir / "face_detection_yunet_2023mar.onnx"
+            if onnx.exists() and onnx.stat().st_size > 10000 and hasattr(cv2, "FaceDetectorYN_create"):
+                try:
+                    self.yunet = cv2.FaceDetectorYN_create(str(onnx), "", (320, 320), 0.85, 0.3, 5000)
+                    self.yunet_ok = True
+                except Exception as e:
+                    log(f"    [privacy] YuNet 不可用（{str(e)[:60]}…）")
+
+            # ③ Haar 級聯（OpenCV 4 可用；5.0 已移除 CascadeClassifier）
+            for xml in (face_dir / "haarcascade_frontalface_default.xml",
+                        Path(getattr(getattr(cv2, "data", None), "haarcascades", "") or "") / "haarcascade_frontalface_default.xml"):
+                if xml.exists() and hasattr(cv2, "CascadeClassifier"):
+                    c = cv2.CascadeClassifier(str(xml))
+                    if not c.empty():
+                        self.cascade, self.cascade_ok = c, True
+                        break
         except Exception:
             pass
+        log(f"    [privacy] 人臉偵測：YOLO-face={self.face_ok} YuNet={self.yunet_ok} Haar={self.cascade_ok}；"
+            f"人物偵測（YOLO person）＝一律可用")
 
     def detect(self, img):
         import numpy as np
@@ -210,7 +244,7 @@ class Detector:
         return counts
 
     def blur_faces(self, img):
-        if not self.cascade:
+        if not self.cascade_ok:
             return img, 0
         import numpy as np
         arr = self.cv2.cvtColor(np.array(img.convert("RGB")), self.cv2.COLOR_RGB2BGR)
@@ -221,6 +255,86 @@ class Detector:
             k = max(5, (w // 3) | 1)
             arr[y0:y1, x0:x1] = self.cv2.GaussianBlur(arr[y0:y1, x0:x1], (k, k), 0)
         return Image.fromarray(self.cv2.cvtColor(arr, self.cv2.COLOR_BGR2RGB)), len(faces)
+
+    def blur_persons(self, img, conf=0.35):
+        """用 YOLO 的 person 類別（COCO id=0）模糊整個人物區域。回傳 (影像, 數量)。"""
+        return self._blur_boxes(img, self.model, conf=conf, classes=[0])
+
+    def _blur_boxes(self, img, model, conf=0.35, classes=None):
+        """用指定 YOLO 模型偵測並高斯模糊框選區域。"""
+        if self.cv2 is None:
+            return img, 0
+        import numpy as np
+        arr = np.array(img.convert("RGB"))
+        res = model.predict(arr, verbose=False, conf=conf, classes=classes)[0]
+        n = 0
+        for b in res.boxes:
+            x0, y0, x1, y1 = (int(v) for v in b.xyxy[0].tolist())
+            pad = 6
+            x0, y0 = max(0, x0 - pad), max(0, y0 - pad)
+            x1, y1 = min(arr.shape[1], x1 + pad), min(arr.shape[0], y1 + pad)
+            if x1 <= x0 or y1 <= y0:
+                continue
+            k = max(11, ((x1 - x0) // 6) | 1)
+            if k % 2 == 0:
+                k += 1
+            arr[y0:y1, x0:x1] = self.cv2.GaussianBlur(arr[y0:y1, x0:x1], (k, k), 0)
+            n += 1
+        return Image.fromarray(arr), n
+
+    def blur_yolo_faces(self, img, conf=0.35):
+        """用 yolo11n-face 模糊人臉。回傳 (影像, 人臉數)。"""
+        if not self.face_ok:
+            return img, 0
+        return self._blur_boxes(img, self.face_model, conf=conf)
+
+    def blur_yunet(self, img, score=0.85):
+        """YuNet 人臉偵測 + 高斯模糊。回傳 (影像, 人臉數)。"""
+        if not self.yunet_ok:
+            return img, 0
+        import numpy as np
+        arr = np.array(img.convert("RGB"))
+        h, w = arr.shape[:2]
+        self.yunet.setInputSize((w, h))
+        _, faces = self.yunet.detect(arr)
+        n = 0
+        if faces is not None:
+            for f in faces:
+                x, y, fw, fh = (int(v) for v in f[:4])
+                p = int(fw * 0.25)
+                x0, y0 = max(0, x - p), max(0, y - p)
+                x1, y1 = min(w, x + fw + p), min(h, y + fh + p)
+                if x1 <= x0 or y1 <= y0:
+                    continue
+                k = max(11, ((x1 - x0) // 3) | 1)
+                if k % 2 == 0:
+                    k += 1
+                arr[y0:y1, x0:x1] = self.cv2.GaussianBlur(arr[y0:y1, x0:x1], (k, k), 0)
+                n += 1
+        return Image.fromarray(arr), n
+
+    def blur_privacy(self, img, conf=0.35):
+        """回傳 (影像, 總模糊數, 方法字串, 明細 dict)。
+
+        隱私採「寧可過度」策略：先模糊偵測到的人臉，再把整個人物區域也模糊——
+        因為背對鏡頭、戴帽、戴口罩的人臉偵測不到，但人物框仍能保護。
+        """
+        detail = {"faces": 0, "persons": 0}
+        out = img
+        if self.face_ok:
+            out, detail["faces"] = self.blur_yolo_faces(out, conf=conf)
+        elif self.cascade_ok:
+            out, detail["faces"] = self.blur_faces(out)
+        elif self.yunet_ok:
+            out, detail["faces"] = self.blur_yunet(out)
+        if self.cv2 is not None:
+            out, detail["persons"] = self.blur_persons(out, conf=conf)
+        methods = []
+        if detail["faces"]:
+            methods.append("yolo-face" if self.face_ok else ("haar-face" if self.cascade_ok else "yunet-face"))
+        if detail["persons"]:
+            methods.append("yolo-person")
+        return out, detail["faces"] + detail["persons"], "+".join(methods) or "none", detail
 
 
 # ---------------------------------------------------------------- 參考資料
@@ -497,8 +611,12 @@ def main() -> int:
         web = raw.copy()
         web.thumbnail((MAX_SIDE, MAX_SIDE), Image.LANCZOS)
         faces = 0
+        privacy = {"method": "skipped", "count": 0, "reason": "未加 --blur-faces"}
         if det and args.blur_faces:
-            web, faces = det.blur_faces(web)
+            web, faces, method, detail = det.blur_privacy(web)
+            privacy = {"method": method, "count": faces, "faces": detail["faces"],
+                       "persons": detail["persons"], "reason": "已執行"}
+            log(f"    隱私處理：{method}，人臉 {detail['faces']}、人物 {detail['persons']}")
         web.convert("RGB").save(OUT_PHOTOS / f"{out_name}.jpg", "JPEG", quality=82, optimize=True)
         th = raw.copy()
         th.thumbnail((THUMB_SIDE, THUMB_SIDE), Image.LANCZOS)
@@ -508,6 +626,7 @@ def main() -> int:
             "file": f"photos/{out_name}.jpg", "thumb": f"photos/thumb/{out_name}.jpg",
             "orig": path.name, "taken": exif.get("taken"), "device": " ".join(x for x in [exif.get("make"), exif.get("model")] if x) or None,
             "credit": man.get("credit") or None, "geoSource": geo_src, "facesBlurred": faces,
+            "privacyBlur": privacy,
             "similarity": round(sim, 3) if sim >= 0 else None, "decision": decision, "objects": objects or None,
         }
 
