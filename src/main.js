@@ -349,7 +349,12 @@ function openModelFor(item, modelId, { title, subtitle, description, facts } = {
     dimensions: model.dimensionsMeters,
     triangles: model.full?.triangles,
     sizes: { full: model.full?.bytes },
-    files: { full: `models/${model.full.file}`, lod: model.lod ? `models/${model.lod.file}` : null },
+    // 加版本查詢字串：模型檔名固定不變，若不帶版本，瀏覽器會一直用快取的舊模型
+    files: (() => {
+      const v = (state.manifest.generated ?? "").slice(0, 19).replace(/[:T]/g, "");
+      const q = v ? `?v=${v}` : "";
+      return { full: `models/${model.full.file}${q}`, lod: model.lod ? `models/${model.lod.file}${q}` : null };
+    })(),
     kind: model.kind ?? "artifact",
     realWorldScale: model.realWorldScale !== false,
     source: isBuilding ? T("模型來源：使用者提供之 AI 三維生成檔（非實測比例）") : T("模型來源：高精度掃描檔（1:1 尺度）"),
