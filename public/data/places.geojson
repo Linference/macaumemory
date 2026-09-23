@@ -1,0 +1,361 @@
+{
+ "type": "FeatureCollection",
+ "name": "澳門記憶 · 建築記憶點",
+ "generated": "2026-09-23T08:44:45",
+ "taxonomy": {
+  "portuguese": {
+   "zh": "葡式殖民建築",
+   "color": "#c96b4a"
+  },
+  "temple": {
+   "zh": "中式廟宇",
+   "color": "#d8a13a"
+  },
+  "church": {
+   "zh": "天主教教堂",
+   "color": "#7f8fd0"
+  },
+  "tong_lau": {
+   "zh": "騎樓與唐樓",
+   "color": "#b08a5a"
+  },
+  "residential_tower": {
+   "zh": "現代高層住宅",
+   "color": "#8fa0ad"
+  },
+  "casino_hotel": {
+   "zh": "酒店與娛樂場",
+   "color": "#c9a227"
+  },
+  "civic": {
+   "zh": "公共建築",
+   "color": "#6f9bbf"
+  },
+  "industrial": {
+   "zh": "工業與倉庫",
+   "color": "#7c8894"
+  },
+  "village": {
+   "zh": "圍里與村落民居",
+   "color": "#8fae76"
+  },
+  "monument": {
+   "zh": "牌坊與紀念物",
+   "color": "#d8b45a"
+  },
+  "market": {
+   "zh": "街市與市集",
+   "color": "#c98b5a"
+  },
+  "street": {
+   "zh": "街景與其他",
+   "color": "#9aa6b2"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "MM-0001",
+    "zh": "大三巴牌坊",
+    "cls": "monument",
+    "clsZh": "牌坊與紀念物",
+    "color": "#d8b45a",
+    "conf": 0.72,
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「大三巴牌坊」；CLIP 傾向 現代高層住宅50%",
+    "clipTop": [
+     [
+      "residential_tower",
+      0.5
+     ],
+     [
+      "street",
+      0.0
+     ],
+     [
+      "industrial",
+      0.0
+     ]
+    ],
+    "caption": "大三巴牌坊原為17世紀聖保祿學院天主之母教堂的正面石壁，1835年大火後僅存此立面，是澳門最具代表性的地標。其立面融合巴洛克風格與東方裝飾元素，分為五層，雕刻包含聖母、耶穌會聖人、中國獅子及菊花等圖案，見證天主教在遠東的傳播與中西文化交融。",
+    "tags": [
+     "大三巴牌坊",
+     "聖保祿學院",
+     "巴洛克建築",
+     "中西文化交融",
+     "澳門地標"
+    ],
+    "style": "巴洛克風格（含東方裝飾元素）",
+    "cover": "photos/MM-0001_20260923-084444.jpg",
+    "coverThumb": "photos/thumb/MM-0001_20260923-084444.jpg",
+    "photos": [
+     {
+      "file": "photos/MM-0001_20260923-084444.jpg",
+      "thumb": "photos/thumb/MM-0001_20260923-084444.jpg",
+      "orig": "大三巴牌坊-demo.jpg",
+      "taken": null,
+      "device": null,
+      "credit": "本專案 3D 模型截圖（測試素材，非實拍）",
+      "geoSource": "name:大三巴牌坊",
+      "facesBlurred": 0,
+      "similarity": null,
+      "decision": "new",
+      "objects": {
+       "refrigerator": 1
+      }
+     },
+     {
+      "file": "photos/MM-0001_20260923-084444-2.jpg",
+      "thumb": "photos/thumb/MM-0001_20260923-084444-2.jpg",
+      "orig": "大三巴牌坊-demo2.jpg",
+      "taken": null,
+      "device": null,
+      "credit": null,
+      "geoSource": "name:大三巴牌坊",
+      "facesBlurred": 0,
+      "similarity": 0.903,
+      "decision": "merge",
+      "objects": null
+     }
+    ],
+    "photoCount": 2,
+    "nearId": "ruins-st-paul",
+    "nearZh": "大三巴牌坊",
+    "building": "大三巴牌坊 Ruínas de São Paulo",
+    "firstSeen": "2026-09-23T08:44:44.758042",
+    "lastSeen": "2026-09-23T08:44:44.969920",
+    "needsReview": false,
+    "geoSource": "name:大三巴牌坊"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.540839,
+     22.197458
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "MM-0002",
+    "zh": "澳門巴黎人",
+    "cls": "casino_hotel",
+    "clsZh": "酒店與娛樂場",
+    "color": "#c9a227",
+    "conf": 0.72,
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「澳門巴黎人」；CLIP 無明顯傾向",
+    "clipTop": [
+     [
+      "residential_tower",
+      0.162
+     ],
+     [
+      "street",
+      0.061
+     ],
+     [
+      "casino_hotel",
+      0.058
+     ]
+    ],
+    "caption": "澳門巴黎人於2016年開幕，以二分之一比例複製巴黎艾菲爾鐵塔為標誌，屬路氹城大型綜合度假村建築群。其法式古典立面與夜間燈光秀，延續澳門以博彩娛樂帶動旅遊的發展模式，也反映殖民歷史後期以來澳門對歐陸文化符號的挪用與再造。",
+    "tags": [
+     "澳門巴黎人",
+     "艾菲爾鐵塔",
+     "路氹城",
+     "綜合度假村",
+     "法式風格"
+    ],
+    "style": "新古典主義／主題式複刻建築",
+    "cover": "photos/MM-0002_20260923-084445.jpg",
+    "coverThumb": "photos/thumb/MM-0002_20260923-084445.jpg",
+    "photos": [
+     {
+      "file": "photos/MM-0002_20260923-084445.jpg",
+      "thumb": "photos/thumb/MM-0002_20260923-084445.jpg",
+      "orig": "澳門巴黎人-demo.jpg",
+      "taken": null,
+      "device": null,
+      "credit": "本專案 3D 模型截圖（測試素材，非實拍）",
+      "geoSource": "name:澳門巴黎人",
+      "facesBlurred": 0,
+      "similarity": null,
+      "decision": "new",
+      "objects": null
+     }
+    ],
+    "photoCount": 1,
+    "nearId": "parisian",
+    "nearZh": "澳門巴黎人",
+    "building": null,
+    "firstSeen": "2026-09-23T08:44:45.134894",
+    "lastSeen": "2026-09-23T08:44:45.134894",
+    "needsReview": false,
+    "geoSource": "name:澳門巴黎人"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.560718,
+     22.143676
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "MM-0003",
+    "zh": "澳門旅遊塔",
+    "cls": "civic",
+    "clsZh": "公共建築",
+    "color": "#6f9bbf",
+    "conf": 0.72,
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「澳門旅遊塔」；CLIP 無明顯傾向",
+    "clipTop": [
+     [
+      "industrial",
+      0.2
+     ],
+     [
+      "residential_tower",
+      0.118
+     ],
+     [
+      "temple",
+      0.071
+     ]
+    ],
+    "caption": "澳門旅遊塔於2001年啟用，由建築師高登·莫勒（Gordon Moller）設計，總高338米，是澳門最具標誌性的現代地標之一。其簡潔的混凝土塔身與觀景層設計體現了當代高層建築的工程美學，並與珠江口景觀相互呼應。該塔不僅是旅遊與會展設施，也象徵澳門回歸後城市現代化與國際化的發展方向。",
+    "tags": [
+     "澳門旅遊塔",
+     "現代建築",
+     "地標",
+     "觀景塔",
+     "澳門回歸"
+    ],
+    "style": "現代主義／高層建築",
+    "cover": "photos/MM-0003_20260923-084445.jpg",
+    "coverThumb": "photos/thumb/MM-0003_20260923-084445.jpg",
+    "photos": [
+     {
+      "file": "photos/MM-0003_20260923-084445.jpg",
+      "thumb": "photos/thumb/MM-0003_20260923-084445.jpg",
+      "orig": "澳門旅遊塔-demo.jpg",
+      "taken": null,
+      "device": null,
+      "credit": "本專案 3D 模型截圖（測試素材，非實拍）",
+      "geoSource": "name:澳門旅遊塔",
+      "facesBlurred": 0,
+      "similarity": null,
+      "decision": "new",
+      "objects": null
+     },
+     {
+      "file": "photos/MM-0003_20260923-084445-2.jpg",
+      "thumb": "photos/thumb/MM-0003_20260923-084445-2.jpg",
+      "orig": "澳門旅遊塔-demo2.jpg",
+      "taken": null,
+      "device": null,
+      "credit": null,
+      "geoSource": "name:澳門旅遊塔",
+      "facesBlurred": 0,
+      "similarity": 0.946,
+      "decision": "merge",
+      "objects": {
+       "tv": 1
+      }
+     }
+    ],
+    "photoCount": 2,
+    "nearId": "macau-tower",
+    "nearZh": "澳門旅遊塔",
+    "building": "澳門旅遊塔 Macau Tower",
+    "firstSeen": "2026-09-23T08:44:45.264516",
+    "lastSeen": "2026-09-23T08:44:45.443876",
+    "needsReview": false,
+    "geoSource": "name:澳門旅遊塔"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.5368,
+     22.179819
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "MM-0004",
+    "zh": "澳門科學館",
+    "cls": "civic",
+    "clsZh": "公共建築",
+    "color": "#6f9bbf",
+    "conf": 0.72,
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「澳門科學館」；CLIP 無明顯傾向",
+    "clipTop": [
+     [
+      "industrial",
+      0.19
+     ],
+     [
+      "temple",
+      0.109
+     ],
+     [
+      "monument",
+      0.066
+     ]
+    ],
+    "caption": "澳門科學館由貝聿銘事務所設計，於2009年開幕，以流線弧形量體與幾何切割聞名，展現現代主義與地域氣候回應的融合。其選址於孫逸仙大馬路旁填海地段，與澳門漁人碼頭、文化中心共構新口岸濱海文化帶，象徵澳門回歸後推動科普教育與城市現代化的企圖。建築設有天文館與互動展廳，是澳門少數以當代建築語彙詮釋公共性的地標。",
+    "tags": [
+     "貝聿銘",
+     "現代主義",
+     "科學館",
+     "新口岸",
+     "科普教育"
+    ],
+    "style": "現代主義",
+    "cover": "photos/MM-0004_20260923-084445.jpg",
+    "coverThumb": "photos/thumb/MM-0004_20260923-084445.jpg",
+    "photos": [
+     {
+      "file": "photos/MM-0004_20260923-084445.jpg",
+      "thumb": "photos/thumb/MM-0004_20260923-084445.jpg",
+      "orig": "澳門科學館-demo.jpg",
+      "taken": null,
+      "device": null,
+      "credit": "本專案 3D 模型截圖（測試素材，非實拍）",
+      "geoSource": "name:澳門科學館",
+      "facesBlurred": 0,
+      "similarity": null,
+      "decision": "new",
+      "objects": {
+       "laptop": 1
+      }
+     }
+    ],
+    "photoCount": 1,
+    "nearId": "macau-science-center",
+    "nearZh": "澳門科學館",
+    "building": "澳門科學館 Centro de Ciência de Macau",
+    "firstSeen": "2026-09-23T08:44:45.579567",
+    "lastSeen": "2026-09-23T08:44:45.579567",
+    "needsReview": false,
+    "geoSource": "name:澳門科學館"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.556965,
+     22.186193
+    ]
+   }
+  }
+ ]
+}
