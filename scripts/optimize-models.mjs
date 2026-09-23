@@ -1,4 +1,4 @@
-﻿// 將兩個高精度掃描 GLB（各 150 萬面）優化成適合網頁即時瀏覽的版本
+// 將兩個高精度掃描 GLB（各 150 萬面）優化成適合網頁即時瀏覽的版本
 //  - 簡化網格 (meshoptimizer)、量化、EXT_meshopt_compression 壓縮
 //  - 貼圖轉 WebP 並縮圖
 //  - 同時產生低解析度 LOD，先顯示 LOD 再換上高精度模型
@@ -82,10 +82,15 @@ const io = new NodeIO()
 
 async function localSrc(m) {
   const local = path.join(SRC_DIR, m.base + ".glb");
-  if (!fs.existsSync(local) || process.env.REFRESH) {
+  // 來源快取已存在就直接用：REFRESH 只重跑「優化」步驟，不再從原始路徑複製
+  // （原始檔可能位於唯讀的附件目錄，複製會 EPERM；要強制重取來源請設 REFRESH_SRC=1）
+  const hasLocal = fs.existsSync(local) && fs.statSync(local).size > 1024;
+  if (!hasLocal || process.env.REFRESH_SRC) {
     if (!fs.existsSync(m.src)) throw new Error(`找不到來源檔：${m.src}`);
     console.log(`  複製來源 → ${path.relative(process.cwd(), local)}`);
     fs.copyFileSync(m.src, local);
+  } else {
+    console.log(`  ↳ 使用既有來源快取 ${path.basename(local)}（${(fs.statSync(local).size / 1048576).toFixed(1)} MB）`);
   }
   return local;
 }
@@ -150,8 +155,11 @@ const existing = fs.existsSync(existingFile) ? JSON.parse(fs.readFileSync(existi
 const manifest = { generated: new Date().toISOString(), pipeline: "gltf-transform: weld → simplify(meshoptimizer) → textureCompress(webp) → quantize → meshopt", models: {} };
 for (const m of MODELS) {
   const isBuilding = m.kind === "building";
-  const full = await buildOne(m, { suffix: "", ratio: isBuilding ? 0.14 : 0.22, error: isBuilding ? 0.002 : 0.0015, texSize: 2048, quality: 88, label: "高精度" });
-  const lod = await buildOne(m, { suffix: ".lod", ratio: isBuilding ? 0.03 : 0.035, error: 0.005, texSize: 1024, quality: 80, label: "快速預覽 LOD" });
+  // 幾何保留比例：原始模型 53~77 MB（數十萬面），上線版本要在「檔案大小」與「近看是否見稜角」之間取捨。
+  // 原本 0.14（建築）／0.22（文物）近看明顯低多邊形；提高到 0.40／0.50 後面數約 2.3~2.9 倍，
+  // 仍遠小於原始檔，但稜角感大幅降低。LOD 由 0.03 提到 0.12，讓首次載入的預覽不再是一團。
+  const full = await buildOne(m, { suffix: "", ratio: isBuilding ? 0.40 : 0.50, error: isBuilding ? 0.001 : 0.0008, texSize: 2048, quality: 90, label: "高精度" });
+  const lod = await buildOne(m, { suffix: ".lod", ratio: isBuilding ? 0.12 : 0.14, error: 0.003, texSize: 1024, quality: 82, label: "快速預覽 LOD" });
   const prev = existing.models?.[m.id] ?? manifest.models[m.id];
   manifest.models[m.id] = {
     id: m.id,

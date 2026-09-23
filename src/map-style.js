@@ -1,4 +1,4 @@
-﻿// MapLibre 樣式：以 OpenStreetMap 向量圖資 + 開放 DEM 構成 3D 立體澳門
+// MapLibre 樣式：以 OpenStreetMap 向量圖資 + 開放 DEM 構成 3D 立體澳門
 export const COLORS = {
   sea: "#0a1a26",
   land: "#232a2e",
@@ -6,10 +6,15 @@ export const COLORS = {
   accent: "#6fb2d2",
 };
 
-// 建築高度：有實際資料用實際值，沒有則依類型推估（並在圖層中以顏色區分）
+// 建築高度：優先序為 ①實測高度 h（OSM／Overture，7,158 棟）
+//   ②樓層數 lv × 3.2（Overture num_floors／OSM building:levels）
+//   ③面積推估高度（由 scripts/build-buildings.mjs 以冪律模型 h≈k_type·面積^0.25 產生，
+//      在 7,157 棟實測建築上做 80/20 驗證：MAE 14.6 m，優於類型固定值的 21.4 m）
+//   ④最後才退回類型固定值（舊資料相容用）
 export const BUILDING_HEIGHT = [
   "coalesce",
   ["get", "h"],
+  ["*", ["get", "lv"], 3.2],
   ["match", ["get", "t"],
     ["house", "detached", "bungalow", "static_caravan", "cabin"], 6.5,
     ["garage", "garages", "shed", "hut", "carport", "garage_boxes", "roof"], 3.4,
@@ -35,6 +40,12 @@ export const BUILDING_COLOR = [
   ["construction", "ruins"], "#7d8a95",
   ["yes"], "#bdb3a2",
   "#b8ae9c",
+];
+
+// 沒有類型資料的建築（多為 ML 推估足跡）依高度給色，讓天際線有層次而不是一片同色
+export const BUILDING_COLOR_BY_HEIGHT = [
+  "interpolate", ["linear"], ["get", "h"],
+  0, "#a79d8b", 12, "#b2a895", 30, "#bdb3a0", 60, "#c9c0ae", 120, "#d6cebe", 250, "#e3ddd0",
 ];
 
 export function buildStyle() {
@@ -76,7 +87,7 @@ export function buildStyle() {
       "horizon-fog-blend": 0.5,
       "fog-ground-blend": 0.16,
     },
-    light: { anchor: "map", position: [1.3, 205, 42], intensity: 0.42, color: "#fff3dd" },
+    light: { anchor: "map", position: [1.35, 178, 38], intensity: 0.55, color: "#fff3dd" },
     layers: [
       { id: "bg", type: "background", paint: { "background-color": COLORS.land } },
       { id: "hillshade", type: "hillshade", source: "dem-hillshade", paint: { "hillshade-exaggeration": 0.42, "hillshade-shadow-color": "#000000", "hillshade-highlight-color": "rgba(255,240,214,0.42)", "hillshade-accent-color": "#1b2a33" } },
@@ -103,11 +114,17 @@ export function buildStyle() {
 
 
       { id: "buildings", type: "fill-extrusion", source: "buildings", paint: {
-        "fill-extrusion-color": BUILDING_COLOR,
+        "fill-extrusion-color": ["case", ["has", "t"], BUILDING_COLOR, BUILDING_COLOR_BY_HEIGHT],
         "fill-extrusion-height": BUILDING_HEIGHT,
         "fill-extrusion-base": ["coalesce", ["get", "mh"], 0],
-        "fill-extrusion-opacity": 0.94,
+        "fill-extrusion-opacity": 0.96,
         "fill-extrusion-vertical-gradient": true,
+      } },
+      // 建築輪廓：拉近時畫出邊線，讓密集街區的界線清楚（純視覺，不影響資料）
+      { id: "building-outline", type: "line", source: "buildings", minzoom: 14.5, paint: {
+        "line-color": "#0c1218",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 14.5, 0.25, 16, 0.6, 18, 1.1],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 14.5, 0.18, 16, 0.34, 18, 0.5],
       } },
 
       { id: "road-casing", type: "line", source: "roads", filter: ["all", ["!", ["has", "b"]], ["match", ["get", "c"], ["motorway", "trunk", "primary", "secondary", "tertiary", "motorway_link", "trunk_link", "primary_link"], true, false]], layout: { "line-cap": "round", "line-join": "round" }, paint: { "line-color": "#10161c", "line-width": ["interpolate", ["exponential", 1.4], ["zoom"], 11, 1.2, 14, 3.2, 17, 9], "line-opacity": 0.5 } },
