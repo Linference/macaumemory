@@ -82,7 +82,8 @@ export class MarkerLayer {
       el.innerHTML = `
         <span class="marker-pin">${iconSvg(cat.icon, 14)}</span>
         <span class="marker-label">${T(a.zh)}</span>
-        ${(a.modelCount ?? a.artifactCount) ? `<span class="marker-badge">3D</span>` : ""}`;
+        ${(a.modelCount ?? a.artifactCount) ? `<span class="marker-badge">3D</span>` : ""}
+        ${a.photoCount ? `<span class="marker-photo">📷${a.photoCount}</span>` : ""}`;
       el.addEventListener("click", (e) => {
         e.stopPropagation();
         if (this.dragging) return;

@@ -83,6 +83,8 @@
       <label class="sw"><input type="checkbox" id="tg-labels" checked /><span>地名標籤</span></label>
       <label class="sw"><input type="checkbox" id="tg-pois" checked /><span>周邊設施</span></label>
       <label class="sw"><input type="checkbox" id="tg-bus" /><span>巴士站（OSM）</span></label>
+      <label class="sw"><input type="checkbox" id="tg-photos" /><span id="lb-photos">實景照片</span></label>
+      <div class="poi-chips" id="photo-chips"></div>
       <button class="ghost-btn" id="btn-bus-api" style="margin-top:6px">🚌 設定即時報站 API</button>
       <div class="poi-chips" id="poi-chips"></div>
       <div class="range-row">
@@ -257,6 +259,14 @@
         <p class="ai-note">⚠️ 金鑰只儲存在此瀏覽器的 localStorage。本站為公開網站，請勿把金鑰寫進程式碼或提交到 Git。</p>
       </div>
     </section>
+    <!-- 照片大圖檢視 -->
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <div class="lb-panel">
+        <button class="lb-close" id="lb-close" title="關閉">✕</button>
+        <div class="lb-img"><img id="lb-img" alt="" /></div>
+        <div class="lb-info" id="lb-info"></div>
+      </div>
+    </div>
     <div class="toast" id="toast"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

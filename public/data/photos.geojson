@@ -1,0 +1,305 @@
+{
+ "type": "FeatureCollection",
+ "name": "澳門特色建築照片檔案",
+ "generated": "2026-09-23T08:36:35",
+ "taxonomy": {
+  "portuguese": {
+   "zh": "葡式殖民建築",
+   "color": "#c96b4a"
+  },
+  "temple": {
+   "zh": "中式廟宇",
+   "color": "#d8a13a"
+  },
+  "church": {
+   "zh": "天主教教堂",
+   "color": "#7f8fd0"
+  },
+  "tong_lau": {
+   "zh": "騎樓與唐樓",
+   "color": "#b08a5a"
+  },
+  "residential_tower": {
+   "zh": "現代高層住宅",
+   "color": "#8fa0ad"
+  },
+  "casino_hotel": {
+   "zh": "酒店與娛樂場",
+   "color": "#c9a227"
+  },
+  "civic": {
+   "zh": "公共建築",
+   "color": "#6f9bbf"
+  },
+  "industrial": {
+   "zh": "工業與倉庫",
+   "color": "#7c8894"
+  },
+  "village": {
+   "zh": "圍里與村落民居",
+   "color": "#8fae76"
+  },
+  "monument": {
+   "zh": "牌坊與紀念物",
+   "color": "#d8b45a"
+  },
+  "market": {
+   "zh": "街市與市集",
+   "color": "#c98b5a"
+  },
+  "street": {
+   "zh": "街景與其他",
+   "color": "#9aa6b2"
+  }
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "大三巴牌坊-demo-b07c3e8543",
+    "file": "photos/大三巴牌坊-demo-b07c3e8543.jpg",
+    "thumb": "photos/thumb/大三巴牌坊-demo-b07c3e8543.jpg",
+    "cls": "monument",
+    "clsZh": "牌坊與紀念物",
+    "color": "#d8b45a",
+    "conf": 0.72,
+    "top": [
+     [
+      "monument",
+      0.72
+     ]
+    ],
+    "caption": "大三巴牌坊是聖保祿學院天主之母教堂的前壁遺跡，建於17世紀，為遠東第一所西式大學的教堂正面。其立面融合巴洛克風格與東方裝飾元素，雕刻精美，象徵天主教在澳門的傳播與中西文化交融。1835年大火後僅存此石壁，已成為澳門最具代表性的歷史地標。",
+    "tags": [
+     "大三巴牌坊",
+     "聖保祿學院",
+     "巴洛克",
+     "澳門地標",
+     "中西文化交融"
+    ],
+    "lat": 22.197458,
+    "lon": 113.540839,
+    "alt": null,
+    "style": "葡式巴洛克",
+    "taken": null,
+    "device": "",
+    "nearId": "ruins-st-paul",
+    "nearZh": "大三巴牌坊",
+    "nearDist": 0,
+    "building": "大三巴牌坊 Ruínas de São Paulo",
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「大三巴牌坊」；CLIP 認為是 現代高層住宅50%（僅供參考）",
+    "geoSource": "name:大三巴牌坊",
+    "clipTop": [
+     [
+      "residential_tower",
+      0.5
+     ],
+     [
+      "street",
+      0.0
+     ],
+     [
+      "industrial",
+      0.0
+     ]
+    ],
+    "manual": false,
+    "credit": "本專案 3D 模型截圖（測試素材，非實拍）"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.540839,
+     22.197458
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "澳門巴黎人-demo-96b655bbde",
+    "file": "photos/澳門巴黎人-demo-96b655bbde.jpg",
+    "thumb": "photos/thumb/澳門巴黎人-demo-96b655bbde.jpg",
+    "cls": "casino_hotel",
+    "clsZh": "酒店與娛樂場",
+    "color": "#c9a227",
+    "conf": 0.72,
+    "top": [
+     [
+      "casino_hotel",
+      0.72
+     ]
+    ],
+    "caption": "澳門巴黎人位於路氹城填海區，是2016年開幕的大型綜合度假村，以二分之一比例複製巴黎艾菲爾鐵塔為標誌。其法式古典風格立面與鐵塔並非歷史遺產，而是澳門博彩旅遊業在回歸後走向主題化、巨型化的產物，反映路氹城從水域到娛樂場叢集的都市變遷。",
+    "tags": [
+     "澳門巴黎人",
+     "路氹城",
+     "艾菲爾鐵塔",
+     "綜合度假村",
+     "博彩旅遊"
+    ],
+    "lat": 22.143676,
+    "lon": 113.560718,
+    "alt": null,
+    "style": "現代主義（附法式古典復刻裝飾）",
+    "taken": null,
+    "device": "",
+    "nearId": "parisian",
+    "nearZh": "澳門巴黎人",
+    "nearDist": 0,
+    "building": null,
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「澳門巴黎人」；CLIP 影像分類無明顯傾向",
+    "geoSource": "name:澳門巴黎人",
+    "clipTop": [
+     [
+      "residential_tower",
+      0.162
+     ],
+     [
+      "street",
+      0.061
+     ],
+     [
+      "casino_hotel",
+      0.058
+     ]
+    ],
+    "manual": false,
+    "credit": "本專案 3D 模型截圖（測試素材，非實拍）"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.560718,
+     22.143676
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "澳門旅遊塔-demo-5c3835d5c2",
+    "file": "photos/澳門旅遊塔-demo-5c3835d5c2.jpg",
+    "thumb": "photos/thumb/澳門旅遊塔-demo-5c3835d5c2.jpg",
+    "cls": "civic",
+    "clsZh": "公共建築",
+    "color": "#6f9bbf",
+    "conf": 0.72,
+    "top": [
+     [
+      "civic",
+      0.72
+     ]
+    ],
+    "caption": "澳門旅遊塔於2001年啟用，由建築師高登·莫勒（Gordon Moller）設計，屬晚期現代主義的高聳地標建築，塔高338米，是澳門回歸後首批大型現代化建設之一。其觀景台與冒險活動設施體現了澳門從葡治時期歷史城區邁向國際旅遊休閒中心的轉型，與珠江口對岸的現代天際線相互呼應。",
+    "tags": [
+     "澳門旅遊塔",
+     "現代主義",
+     "地標建築",
+     "回歸後建設",
+     "觀景塔"
+    ],
+    "lat": 22.179819,
+    "lon": 113.5368,
+    "alt": null,
+    "style": "現代主義",
+    "taken": null,
+    "device": "",
+    "nearId": "macau-tower",
+    "nearZh": "澳門旅遊塔",
+    "nearDist": 0,
+    "building": "澳門旅遊塔 Macau Tower",
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「澳門旅遊塔」；CLIP 影像分類無明顯傾向",
+    "geoSource": "name:澳門旅遊塔",
+    "clipTop": [
+     [
+      "industrial",
+      0.2
+     ],
+     [
+      "residential_tower",
+      0.118
+     ],
+     [
+      "temple",
+      0.071
+     ]
+    ],
+    "manual": false,
+    "credit": "本專案 3D 模型截圖（測試素材，非實拍）"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.5368,
+     22.179819
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "id": "澳門科學館-demo-f0f30ea0ae",
+    "file": "photos/澳門科學館-demo-f0f30ea0ae.jpg",
+    "thumb": "photos/thumb/澳門科學館-demo-f0f30ea0ae.jpg",
+    "cls": "civic",
+    "clsZh": "公共建築",
+    "color": "#6f9bbf",
+    "conf": 0.72,
+    "top": [
+     [
+      "civic",
+      0.72
+     ]
+    ],
+    "caption": "此處為澳門科學館，由貝聿銘事務所設計，約2010年落成，屬現代主義風格。建築以弧形量體與幾何切割聞名，呼應澳門作為中西文化交匯的當代面貌，並與鄰近的漁人碼頭、文化中心構成新口岸濱海文化帶。",
+    "tags": [
+     "澳門科學館",
+     "貝聿銘",
+     "現代主義",
+     "新口岸",
+     "文化地標"
+    ],
+    "lat": 22.186193,
+    "lon": 113.556965,
+    "alt": null,
+    "style": "現代主義",
+    "taken": null,
+    "device": "",
+    "nearId": "macau-science-center",
+    "nearZh": "澳門科學館",
+    "nearDist": 0,
+    "building": "澳門科學館 Centro de Ciência de Macau",
+    "clsSource": "location",
+    "clsWhy": "緊鄰景點「澳門科學館」；CLIP 影像分類無明顯傾向",
+    "geoSource": "name:澳門科學館",
+    "clipTop": [
+     [
+      "industrial",
+      0.19
+     ],
+     [
+      "temple",
+      0.109
+     ],
+     [
+      "monument",
+      0.066
+     ]
+    ],
+    "manual": false,
+    "credit": "本專案 3D 模型截圖（測試素材，非實拍）"
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     113.556965,
+     22.186193
+    ]
+   }
+  }
+ ]
+}
