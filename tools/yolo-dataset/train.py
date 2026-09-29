@@ -31,12 +31,21 @@ KEEP = ROOT / ".cache" / "models" / "yolo" / "macau-buildings-best.pt"
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="yolo11n.pt", help="yolo11n.pt（快）／yolo11s.pt（準）")
-    ap.add_argument("--epochs", type=int, default=100)
-    ap.add_argument("--imgsz", type=int, default=640)
-    ap.add_argument("--batch", type=int, default=16)
+    ap.add_argument("--model", default="yolo11n.pt",
+                    help="yolo11n.pt（快）／yolo11s.pt（準，建議）／yolo11m.pt（最準、較慢）")
+    ap.add_argument("--epochs", type=int, default=150)
+    ap.add_argument("--imgsz", type=int, default=768, help="建築細節多，768 通常比 640 準")
+    ap.add_argument("--batch", type=int, default=12, help="8 GB 顯卡在 768 解析度下建議 8～12")
     ap.add_argument("--device", default="0", help="0=GPU，cpu=CPU")
     ap.add_argument("--name", default="train")
+    ap.add_argument("--warm-start", default=None,
+                    help="從既有權重暖啟動（自訓練迭代用），例如 .cache/models/yolo/macau-buildings-best.pt")
+    ap.add_argument("--patience", type=int, default=40, help="幾輪沒進步就早停")
+    ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--mixup", type=float, default=0.1)
+    ap.add_argument("--erasing", type=float, default=0.2)
+    ap.add_argument("--no-cache", action="store_true", help="關閉影像快取（記憶體不足時用）")
+    ap.add_argument("--resume", action="store_true")
     args = ap.parse_args()
 
     if not DATA.exists():
@@ -47,14 +56,22 @@ def main():
         raise SystemExit("images/train 是空的，請先跑 prelabel.py")
     print(f"[data] train {n_train} 張、val {n_val} 張；{DATA.relative_to(ROOT)}")
 
-    model = YOLO(args.model)
+    # 暖啟動：從先前訓練好的權重繼續學（自訓練迭代；比從 COCO 預訓練重來更快收斂）
+    start = args.warm_start or args.model
+    if args.warm_start and not (ROOT / args.warm_start).exists() and not Path(args.warm_start).exists():
+        raise SystemExit(f"找不到暖啟動權重：{args.warm_start}")
+    print(f"[model] {start}{'（暖啟動）' if args.warm_start else ''} · imgsz {args.imgsz} · batch {args.batch} · epochs {args.epochs}")
+
+    model = YOLO(start)
     model.train(
         data=str(DATA), epochs=args.epochs, imgsz=args.imgsz, batch=args.batch,
         device=args.device, project=str(RUNS), name=args.name, exist_ok=True,
-        # 小資料集常用的增強
-        mosaic=1.0, degrees=8.0, translate=0.1, scale=0.5, fliplr=0.5,
-        hsv_h=0.015, hsv_s=0.5, hsv_v=0.4, close_mosaic=10,
-        patience=30, plots=True, verbose=True,
+        resume=args.resume, seed=args.seed,
+        # 建築偵測的增強：尺度變化（遠近）與水平翻轉最有幫助，mixup/erasing 少量即可
+        mosaic=1.0, close_mosaic=15, degrees=10.0, translate=0.12, scale=0.6, shear=2.0,
+        fliplr=0.5, flipud=0.0, hsv_h=0.015, hsv_s=0.5, hsv_v=0.4,
+        mixup=args.mixup, erasing=args.erasing, cos_lr=True,
+        cache=not args.no_cache, patience=args.patience, plots=True, verbose=True,
     )
 
     best = RUNS / args.name / "weights" / "best.pt"
@@ -62,6 +79,7 @@ def main():
     metrics = YOLO(str(best)).val(data=str(DATA), imgsz=args.imgsz, device=args.device)
     print(f"  mAP50    = {metrics.box.map50:.3f}")
     print(f"  mAP50-95 = {metrics.box.map:.3f}")
+    print(f"  P = {metrics.box.mp:.3f}  R = {metrics.box.mr:.3f}")
     per_class = getattr(metrics.box, "ap_class_index", None)
     if per_class is not None:
         names = metrics.names
@@ -73,6 +91,7 @@ def main():
     print(f"\n[out] best.pt → {best.relative_to(ROOT)}")
     print(f"[out] 另存一份 → {KEEP.relative_to(ROOT)}（管線可直接載入）")
     print("[next] 用法：det = YOLO('.cache/models/yolo/macau-buildings-best.pt'); det.predict(照片)")
+    print("[next] 想再提升：python tools/yolo-dataset/refine_labels.py --apply 後重訓（自訓練迭代）")
 
 
 if __name__ == "__main__":

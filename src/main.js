@@ -121,7 +121,7 @@ function onMapReady() {
   renderSidebarFoot();
   renderCredits();
   boot("準備就緒", 100);
-  const restored = applyHash();
+  const restored = applyQuery() || applyHash();
   setTimeout(() => {
     $("#boot").classList.add("gone");
     // 由網址還原時不再覆蓋鏡頭
@@ -544,6 +544,10 @@ window.addEventListener("keydown", (e) => {
 $("#btn-list").addEventListener("click", () => $("#sidebar").classList.toggle("open"));
 $("#btn-sidebar-close").addEventListener("click", () => $("#sidebar").classList.remove("open"));
 $("#btn-help").addEventListener("click", () => showHelp());
+$("#btn-recognize").addEventListener("click", () => {
+  // 建築辨識示範頁：獨立頁面（上傳照片 → YOLO + DINOv2 → Top-3 候選 → 開三維模型）
+  window.open(new URL("recognize.html", document.baseURI).href, "_blank", "noopener");
+});
 
 // ---------------------------------------------------------------- 全螢幕
 const FS_ENTER = "M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5";
@@ -1078,6 +1082,40 @@ function readHash() {
   const [nav, spot] = h.split("/spot/");
   const [z, lat, lng] = nav.split("/").map(Number);
   return { z: isFinite(z) ? z : null, lat: isFinite(lat) ? lat : null, lng: isFinite(lng) ? lng : null, spot: spot || null };
+}
+
+/**
+ * 查詢字串深連結：?spot=<景點 id>&lat=&lng=&zoom=
+ * 主要給「建築辨識」頁用——在那邊認出建築後點「在地圖上開啟」會帶 ?spot= 過來。
+ * 若同時有 lat/lng（例如直接指定座標）也一併套用。
+ */
+function applyQuery() {
+  let q;
+  try { q = new URLSearchParams(location.search); } catch { return false; }
+  const spot = q.get("spot");
+  const lat = Number(q.get("lat"));
+  const lng = Number(q.get("lng"));
+  const zoom = Number(q.get("zoom"));
+  if (!spot && !(isFinite(lat) && isFinite(lng))) return false;
+  hashLock = true;
+  if (isFinite(lat) && isFinite(lng)) {
+    map.jumpTo({ center: [lng, lat], zoom: isFinite(zoom) ? zoom : HOME.zoom, pitch: HOME.pitch, bearing: HOME.bearing });
+  }
+  if (spot) {
+    const a = byId.get(spot);
+    if (a) {
+      if (!(isFinite(lat) && isFinite(lng))) {
+        map.jumpTo({ center: a.coords, zoom: Math.max(HOME.zoom, 15.6), pitch: HOME.pitch, bearing: HOME.bearing });
+      }
+      setTimeout(() => select(a, { fly: false }), 500);
+    } else {
+      console.warn("[deep-link] 找不到景點 id:", spot);
+    }
+  }
+  // 清掉查詢字串，避免之後的操作一直被它覆蓋
+  try { history.replaceState(null, "", location.pathname + location.hash); } catch { /* ignore */ }
+  setTimeout(() => { hashLock = false; }, 1600);
+  return true;
 }
 function applyHash() {
   const s = readHash();

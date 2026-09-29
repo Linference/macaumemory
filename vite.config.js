@@ -1,4 +1,4 @@
-﻿import { defineConfig } from "vite";
+import { defineConfig } from "vite";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
@@ -62,9 +62,49 @@ function maplibreWorkerPlugin() {
 
 export default defineConfig({
   base: "./",
-  server: { host: "127.0.0.1", port: 5173, strictPort: false },
+  worker: { format: "es" },
+  server: {
+    host: "127.0.0.1",
+    port: 5173,
+    strictPort: false,
+    // Vite 預設會監視整個專案目錄，但這個專案有大量「與前端無關」的內容：
+    // Python 工具（tools/，執行時會建立並鎖定暫存檔）、模型快取（.cache/）、
+    // 訓練資料集（datasets/）。任何一個被鎖住的檔案都會讓監視器以 EBUSY
+    // 結束整個 dev server——實際發生過兩次：public/ort/ 的 WASM 下載中、
+    // 以及 tools/recognize/ 的 Python 暫存檔。
+    // 前端只關心 src/、index.html、public/，其餘一律不監視。
+    watch: {
+      ignored: [
+        "**/tools/**",
+        "**/.cache/**",
+        "**/datasets/**",
+        "**/public/ort/**",
+        "**/*.wasm",
+        "**/*.onnx",
+        "**/*.tmp",
+        "**/*.tmpdir/**",
+      ],
+    },
+  },
   preview: { host: "127.0.0.1", port: 4173, strictPort: false },
-  optimizeDeps: { exclude: ["maplibre-gl"] },
+  // 這兩個套件都必須「排除預打包」：
+  //   · maplibre-gl 自己用 import.meta.url 找 worker
+  //   · @sqlite.org/sqlite-wasm 的 ESM 外殼也用 import.meta.url 推導 sqlite3.wasm 的位置，
+  //     被 optimizeDeps 併進 .vite/deps 之後相對路徑就斷了（官方 README 明講要 exclude）
+  optimizeDeps: { exclude: ["maplibre-gl", "@sqlite.org/sqlite-wasm"] },
   plugins: [maplibreWorkerPlugin()],
-  build: { target: "es2022", outDir: "dist", assetsInlineLimit: 0, chunkSizeWarningLimit: 3000 },
+  build: {
+    target: "es2022",
+    outDir: "dist",
+    assetsInlineLimit: 0,
+    chunkSizeWarningLimit: 3000,
+    // 多頁建置：Vite 預設只把 index.html 當 entry，recognize.html（建築標註與查重頁）
+    // 不會出現在 dist/，部署後那一頁會直接 404。兩個 entry 都要明確列出。
+    rollupOptions: {
+      input: {
+        main: path.resolve("index.html"),
+        recognize: path.resolve("recognize.html"),
+      },
+    },
+  },
 });

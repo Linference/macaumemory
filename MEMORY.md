@@ -296,3 +296,37 @@ industrial 0.670、village 0.650、tong_lau 0.404、casino_hotel 0.318、civic 0
 - 實拍照片到位後：把結果（一）換成實拍版圖表、圖帶加入學生實拍照。
 
 
+
+### 已完成：建築普查建檔（資料庫 ＋ GPS 精準定位 ＋ 建檔表單）
+
+產品定位從「辨識這是哪一棟名建築」改成**普查建檔**：拍照 → 判類型 → 取 GPS → 給編號 → 入庫。
+「標記為新發現」原本只是查重 < 0.48 時的次要分支，現在升為**每次辨識後都顯示的主流程**。
+
+| 檔案 | 作用 |
+|---|---|
+| `src/recognize/db.js` | SQLite（**@sqlite.org/sqlite-wasm**）：schema、`MM-YYYY-NNNN` 配號、R-Tree 空間查重、統計、匯出 JSON／`.sqlite` |
+| `src/recognize/geo-math.js` | 純地理計算（haversine、R-Tree 查詢框、精度圈、1/accuracy² 加權、最終精度估計） |
+| `src/recognize/geolocate.js` | 多次取樣的狀態機：停止條件、來源判定、每一種失敗的中文訊息與補救建議 |
+| `src/recognize/minimap.js` | 手動定位用的 MapLibre 小地圖（精度圈、可拖曳標記、街道／景點名、選用建築輪廓） |
+| `src/recognize/survey.js` | 建檔表單（類型／GPS／編號／名稱／備註／查重提示／存檔） |
+| `src/recognize/ledger.js` | 「③ 普查資料庫」面板：總筆數、依類型統計、記錄列表、匯出、localStorage 鏡射 |
+
+- **為什麼不用 sql.js**：實測 `sql.js@1.14.2` 的 WASM **沒有編進 R-Tree**（`CREATE VIRTUAL TABLE … USING rtree`
+  → `no such module: rtree`），而普查的核心需求就是 R-Tree 查重；官方 `@sqlite.org/sqlite-wasm@3.53.4`
+  的 `compile_options` 有 `ENABLE_RTREE`（另有 FTS5／JSON／OPFS VFS，第二階段持久化可直接沿用）。
+- **WASM 在 Vite 的載入方式**（先前踩過 `Cannot import non-asset file … inside /public` 的白屏）：
+  套件在 `node_modules`，用 Vite 的資產寫法 `import url from "@sqlite.org/sqlite-wasm/sqlite3.wasm?url"`
+  再交給 `initSqlite({ locateFile })`；**不要放 `public/` 再 import**，也不要讓套件自己用
+  `import.meta.url` 猜（打包後會 404）。`vite.config.js` 的 `optimizeDeps.exclude` 必須含這個套件。
+  dev（`/node_modules/.../sqlite3.wasm`）與 build（`assets/sqlite3-<hash>.wasm`）都已實測。
+- **筆電沒有 GPS 晶片**是設計前提：一律顯示 accuracy；精度 >30 公尺 → 「此裝置可能沒有 GPS 晶片（筆電常見）」
+  並**自動展開手動定位**（直接載入建築輪廓讓人對位）；樣本離散 >50 公尺 → 「讀數跳動過大」。
+  最終精度**保守**：讀數完全一致時就回報最佳單次精度，不除以 √n 假裝變準。手動座標 `geo_source='manual'`、
+  `accuracy_m=NULL`，原 GPS 讀數留在 `geo_note`。
+- **第一階段不做 OPFS 持久化**：資料庫在記憶體，靠匯出 `.sqlite`／JSON 保存（每筆同時鏡射到
+  localStorage `macau-memory.pending-discoveries`）。持久化介面已預留：`openDb({ persistence })`
+  換一個有三個非同步方法的 adapter 即可，其餘程式碼不用動。
+- 測試：`tools/recognize/browser-check-survey.mjs`（新 E2E，用 CDP `Emulation.setGeolocationOverride`
+  造出理想／精度差 120 公尺／讀數跳動三種情境，並用 Python 內建 sqlite3 驗證匯出的 `.sqlite` 可攜）、
+  `check-survey-db.mjs`、`check-survey-geo.mjs`、`check-exported-sqlite.py`；
+  既有 `browser-check.mjs`、`browser-check-discover.mjs` 的斷言配合新流程調整（改動理由寫在檔案開頭）。

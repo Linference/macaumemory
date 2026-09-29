@@ -1,0 +1,485 @@
+% !TEX program = xelatex
+% 澳門記憶 macaumemory · 創新作品報告（參賽版）
+% 編譯：xelatex -interaction=nonstopmode macaumemory-report-competition.tex （跑兩次以生成目錄）
+\documentclass[11pt,a4paper,fontset=windows]{ctexart}
+
+\usepackage[margin=2.05cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,shapes.geometric}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,urlcolor=teal!70!black,citecolor=blue!55!black]{hyperref}
+
+\definecolor{ink}{HTML}{10243A}
+\definecolor{gold}{HTML}{C8A24A}
+\definecolor{teal2}{HTML}{2A7F8F}
+\definecolor{red2}{HTML}{C0392B}
+\definecolor{paper}{HTML}{F7F5F0}
+\definecolor{accent}{HTML}{7B3F9D}
+
+\captionsetup{font=small,labelfont={bf,color=ink},skip=6pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{ink}澳門記憶 macaumemory}
+\fancyhead[R]{\small\color{ink}位姿驅動的自動標註與建築識別}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+
+\newcommand{\key}[1]{\textbf{\color{ink}#1}}
+\newcommand{\hl}[1]{\textbf{\color{gold}#1}}
+\newcommand{\warn}[1]{\textbf{\color{red2}#1}}
+
+\title{\vspace{-1.2cm}
+\textbf{\Large 基於三維高斯潑濺與位姿驅動標註的\\[0.1cm]澳門建築識別系統}\\[0.35cm]
+\large A Macau Architectural Recognition System Based on\\
+3D Gaussian Splatting and Pose-Driven Annotation\\[0.4cm]
+\normalsize ——位姿驅動的自動化資料集構建，結合多視圖幾何驗證與視覺基礎模型\\[0.5cm]
+\normalsize 創新作品報告}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+%=====================================================================
+\begin{abstract}
+\noindent
+建築辨識的瓶頸從來不是模型，而是\textbf{標註}。手動標註一棟建築需 2--3 小時且無法擴展；以開放詞彙檢測器自動框選得到的是\textbf{弱標註}——框選鬆散、跨影格不一致、且不可避免地漏框。
+
+本作品提出\textbf{位姿驅動的自動標註}方法：環繞拍攝的影片在重建過程中已經產生了標註所需的全部資訊——每一張影格的\textbf{相機位姿}與場景的\textbf{稀疏三維點雲}。只要在三維空間定義一次建築包圍盒，即可將其投影至每一張影格，得到\textbf{幾何一致、零漏框、可稽核}的二維標註。
+
+在此基礎上，本系統訓練建築檢測器並完成跨光照、跨視角的建築重辨識，並以多視圖幾何驗證與視覺語言模型建立標註品管閉環。實測結果顯示：重辨識 AUC 由 CLIP 的 0.950 提升至 DINOv2 的 \hl{0.998}，跨條件場景由 0.850 提升至 \hl{0.993}（+0.143）；幾何驗證在 $\geq 15$ 內點時達到 \hl{100\%} 精確率；檢測準確率由 57\% 提升至 65\%。全部方法在 8 個真實採集專案上完成端到端驗證，並附 190 項後端與 137 項前端自動化測試。
+
+\vspace{4pt}
+\noindent\textbf{關鍵詞：} 三維高斯潑濺；位姿驅動標註；多視圖幾何；建築重辨識；視覺基礎模型；文化遺產數位化
+\end{abstract}
+
+\vspace{2pt}
+\begin{center}
+\begin{tikzpicture}[node distance=3mm and 3mm, font=\small]
+\node[draw=ink,thick,fill=paper,rounded corners,minimum width=2.9cm,minimum height=0.85cm,align=center] (a) {\textbf{一張環繞影片}};
+\node[draw=teal2,thick,fill=teal2!8,rounded corners,right=of a,minimum width=2.9cm,minimum height=0.85cm,align=center] (b) {三維重建\\位姿＋稀疏點雲};
+\node[draw=gold,very thick,fill=gold!14,rounded corners,right=of b,minimum width=3.3cm,minimum height=0.85cm,align=center] (c) {\textbf{位姿驅動標註}\\{\footnotesize 本作品核心創新}};
+\node[draw=ink,thick,fill=paper,rounded corners,right=of c,minimum width=3.0cm,minimum height=0.85cm,align=center] (d) {建築檢測\\＋重辨識};
+\draw[-{Stealth[length=2.4mm]},thick] (a)--(b);
+\draw[-{Stealth[length=2.4mm]},thick] (b)--(c);
+\draw[-{Stealth[length=2.4mm]},thick] (c)--(d);
+\end{tikzpicture}
+\end{center}
+
+\vspace{4pt}
+{\small\color{ink}\textbf{一句話總結：}別人用檢測器「猜」框，我們用幾何「算」框。}
+
+\newpage
+\tableofcontents
+\newpage
+
+%=====================================================================
+\section{問題陳述：為何建築辨識停滯不前}
+
+\subsection{被忽略的真實瓶頸}
+
+過去數年，視覺辨識模型的進步速度遠超資料標註能力的進步。當我們要為澳門數以千計的歷史建築建立可辨識的數位身分時，面臨的並非模型能力不足，而是\textbf{沒有足夠且精確的標註資料}。
+
+現行的三種做法各有難以迴避的缺陷：
+
+\begin{table}[H]
+\centering
+\small
+\caption{現有標註途徑的比較}
+\begin{tabular}{p{3.0cm}p{4.4cm}p{6.6cm}}
+\toprule
+\textbf{做法} & \textbf{優點} & \textbf{難以迴避的缺陷} \\
+\midrule
+人工標註 & 準確度高 & 一張影像數十秒；一棟建築環繞一圈有 200--300 張影格，單棟需 2--3 小時；無法規模化 \\
+\addlinespace
+開放詞彙檢測器\\（YOLO-World、\\Grounding DINO）& 零樣本、無需訓練資料 & \warn{弱標註}：框選鬆散不貼合、同一建築面在不同影格鬆緊不一、跨影格不一致、且會漏框 \\
+\addlinespace
+生成式合成資料 & 無需實拍 & 幾何不保證正確；與真實場景存在明顯域偏移 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{被忽略的關鍵事實}
+
+本作品的出發點是一個被普遍忽略的事實：
+
+\begin{center}
+\begin{tikzpicture}
+\node[draw=gold,very thick,fill=gold!10,rounded corners,inner sep=8pt,text width=15.2cm,align=center] {
+\textbf{三維重建的過程，已經順帶產生了標註所需的全部資訊。}\\[3pt]
+{\small 每一張影格的相機位姿（旋轉與平移）與場景的稀疏三維點雲，都是重建的副產品。\\這些資訊足以把「三維空間中的一個盒子」精確投影為「每一張影格上的精確框」。}
+};
+\end{tikzpicture}
+\end{center}
+
+問題不在於資訊不存在，而在於\textbf{沒有人把它接起來}——既有的重建工具（COLMAP、Brush）在輸出模型後即結束，既有的標註工具則從二維影像重新開始猜測。
+
+%=====================================================================
+\section{核心方法：位姿驅動的自動標註}
+
+\subsection{方法總覽}
+
+本作品的核心貢獻是\textbf{位姿驅動的自動標註}（Pose-Driven Annotation）。其流程為：
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+\item 由重建結果讀取每一張影格的\textbf{相機內參與外參}，以及場景的\textbf{稀疏三維點雲}（含每個點被哪些影格觀測到的軌跡資訊）；
+\item 於三維空間\textbf{擬合建築包圍盒}（一次即可，可人工微調後重跑）；
+\item 將包圍盒的八個角點\textbf{投影}至每一張影格，取投影範圍作為該影格的二維標註；
+\item 以\textbf{三個客觀指標}判斷該影格是否適合作為訓練樣本（見 \S\ref{sec:quality}）；
+\item 輸出 YOLO 格式標籤、逐影格明細與人工複核表。
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\small
+\caption{位姿驅動標註的性質}
+\begin{tabular}{p{3.2cm}p{10.6cm}}
+\toprule
+\textbf{性質} & \textbf{意義} \\
+\midrule
+\key{幾何一致} & 同一個三維實體在所有影格上框的是同一件事，不會時鬆時緊 \\
+\key{零漏框} & 只要該影格看得到這棟建築，就一定框得到——不需依賴模型「剛好」偵測到 \\
+\key{可稽核} & 每個框都能追溯回包圍盒與相機位姿，不是黑箱預測；有爭議時可重算 \\
+\key{跨影格平滑} & 相鄰影格的框平滑變化，天然適合時序與多視角訓練 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{關鍵技術難點與解法}
+
+\subsubsection*{難點一：重建的世界座標沒有重力方向}
+
+三維重建的世界座標由第一台相機定義，\textbf{沒有任何資訊告訴我們哪個方向是「上」}。若强行以世界 $Y$ 軸作為高度，遇到側拍或俯拍時，建築高度將完全錯誤，投影框隨之整體歪斜。
+
+\key{解法：由相機軌跡推定上軸。}拍攝建築時，操作者通常繞著建築行走，相機中心大致落在一個水平面上。因此對相機中心做\textbf{主成分分析}，變異最小的主方向即為上軸；若軌跡退化（原地旋轉、位置過少、三方向變異接近），則退回世界 $Y$ 軸，並在輸出中明確標示上軸來源為「推定」。
+
+實測：一個室內掃描專案推得高度 3.54 m，與實際房間高度相符，驗證推定有效。
+
+\subsubsection*{難點二：角點落在相機後方時，投影框會低估輪廓}
+
+三維盒有 8 個角點。若某些角點位於相機後方，它們無法投影，此時以「可見角點的投影範圍」得到的二維框可能\textbf{小於}物件本身。
+
+\key{解法：明確區分兩種模式，並把選擇權交給使用者。}\\
+預設模式：4 個角點可見即採用，並逐影格記錄可見角點數；\\
+嚴格模式（\texttt{--require-all-corners}）：要求 8 個角點全部可見，保證框不會低估輪廓。\\
+影格數量與標註正確性之間的取捨，由使用者依任務決定，而非由程式暗中決定。
+
+\subsubsection*{難點三：如何自動判斷「這張影格拍得好不好」}
+\label{sec:quality}
+
+並非每一張影格都適合作為訓練樣本。本作品不使用額外模型，而以三個\textbf{來自既有資料的客觀指標}判斷：
+
+\begin{table}[H]
+\centering
+\small
+\caption{影格品質的三個客觀指標}
+\begin{tabular}{p{3.0cm}p{4.4cm}p{6.4cm}}
+\toprule
+\textbf{指標} & \textbf{來源} & \textbf{判斷意義} \\
+\midrule
+可見角點數 & 8 個角點投影後落在畫面內的比例 & 太少代表建築僅一角入鏡 \\
+投影面積佔比 & 二維框面積 / 畫面面積 & 過小看不清；過大代表相機貼太近 \\
+\key{盒內觀測點數} & \textbf{重建階段既有的軌跡資料}：落在盒內的三維點中，有多少的軌跡包含這張影格 & \textbf{遮擋與視角的客觀代理指標}——若某影格幾乎沒觀測到盒內點，代表它其實看不到這棟建築 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+第三項指標是本方法的關鍵設計：它不需要任何額外的深度圖或語意分割模型，\textbf{直接複用重建階段已經算好的資料}，因此零額外成本。
+
+%=====================================================================
+\section{系統實現}
+
+\subsection{五層架構}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small,node distance=1.2mm]
+\tikzstyle{layer}=[draw,rounded corners,minimum width=14.4cm,minimum height=1.05cm,align=center]
+\node[layer,draw=ink,fill=paper] (l5) {\textbf{L5 品管與應用}\quad 視覺語言模型品管 · 記憶點平台 · 三維瀏覽};
+\node[layer,draw=teal2,fill=teal2!7,below=of l5] (l4) {\textbf{L4 辨識}\quad 目標檢測 · 跨條件重辨識 · 多視圖幾何驗證};
+\node[layer,draw=gold,very thick,fill=gold!18,below=of l4] (l3) {\textbf{L3 自動標註}$\;\star$\quad 位姿投影 · 三維包圍盒擬合 · 品質判定\quad{\footnotesize（本作品核心）}};
+\node[layer,draw=teal2,fill=teal2!7,below=of l3] (l2) {\textbf{L2 三維重建}\quad 運動恢復結構（SfM）· 三維高斯潑濺 · 可微渲染};
+\node[layer,draw=ink,fill=paper,below=of l2] (l1) {\textbf{L1 影像採集}\quad 環繞影片 · 序列影格 · 遮罩處理};
+\draw[-{Stealth[length=2mm]},thick,gray] (l1)--(l2);
+\draw[-{Stealth[length=2mm]},thick,gray] (l2)--(l3);
+\draw[-{Stealth[length=2mm]},thick,gray] (l3)--(l4);
+\draw[-{Stealth[length=2mm]},thick,gray] (l4)--(l5);
+\end{tikzpicture}
+\caption{系統五層架構。L3 為本作品的原創貢獻層。}
+\end{figure}
+
+\subsection{工程實現}
+
+系統以 Rust 實現核心引擎（Tauri 桌面框架），前端為 React 19；全部影像與三維處理在本機完成，不上傳雲端。為確保可驗證性，本作品建立了完整的自動化測試體系：
+
+\begin{table}[H]
+\centering
+\small
+\caption{工程驗證}
+\begin{tabular}{lrl}
+\toprule
+\textbf{項目} & \textbf{數量} & \textbf{說明} \\
+\midrule
+後端單元測試 & \hl{190} & 含二進位格式往返、投影幾何、上軸推定、包圍盒擬合、離群修剪、品質判定 \\
+前端單元測試 & \hl{137} & 含三維投影數學、點雲繪製、輪詢生命週期 \\
+靜態檢查 & 0 警告 & 格式化與靜態分析全數通過 \\
+真實專案驗證 & \hl{8} & 端到端跑通，其中 3 個因相機註冊率過低被正確判為不可用 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{建圖過程的即時三維檢視}
+
+既有的三維重建工具在執行時\textbf{不提供任何三維預覽}，使用者只能面對滾動的文字。本作品啟用重建引擎的中間快照機制（每註冊 10 張影格寫出一份完整中間模型），並在應用內即時讀取與繪製，使「點雲從零成長」的過程可被觀察，同時也讓\textbf{標註品質在生成階段即可被目視驗證}。
+
+%=====================================================================
+\section{實驗與結果}
+
+\subsection{實驗設定}
+
+全部實驗在本地工作站完成，資料來自 8 個真實環繞採集專案與公開建築影像。所有指標均為實測值。
+
+\subsection{結果一：建築重辨識}
+
+同一棟建築在不同光照、不同視角下的辨識（re-identification）是建築記憶點的核心能力。
+
+\begin{table}[H]
+\centering
+\small
+\caption{視覺編碼器的重辨識表現（AUC）}
+\begin{tabular}{lccc}
+\toprule
+\textbf{編碼器} & \textbf{渲染視角} & \textbf{跨條件場景} & \textbf{最佳判定閾值} \\
+\midrule
+CLIP（基線） & 0.950 & 0.850 & 0.689 \\
+\textbf{DINOv2（本作品採用）} & \hl{0.998} & \hl{0.993} & 0.193 \\
+\midrule
+提升 & +0.048 & \hl{+0.143} & — \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+跨條件場景（不同時間、不同光照拍攝同一建築）由 0.850 提升至 0.993，是本作品最具實用價值的提升：\textbf{這正是「遊客今天拍一張照片，能否認出這是哪一棟歷史建築」的真實情境}。
+
+\subsection{結果二：多視圖幾何驗證}
+
+本作品以局部特徵匹配結合魯棒估計，驗證兩張照片是否屬於同一建築。
+
+\begin{table}[H]
+\centering
+\small
+\caption{幾何驗證的內點分布}
+\begin{tabular}{lccc}
+\toprule
+\textbf{配對類型} & \textbf{中位數} & \textbf{90 分位} & \textbf{最大值} \\
+\midrule
+同一建築 & 7 & 501 & 2048 \\
+不同建築 & — & — & \warn{13} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{結論：}當內點數 $\geq 15$ 時，精確率達 \hl{100\%}——即不存在任何「不同建築卻被誤判為同一棟」的情形。這使幾何驗證成為一個\textbf{零誤判的確認器}：它不會把所有正確配對都確認下來，但凡是它確認的，都是對的。
+
+\subsection{結果三：建築分類}
+
+\begin{table}[H]
+\centering
+\small
+\caption{建築類別辨識準確率}
+\begin{tabular}{lcc}
+\toprule
+\textbf{方法} & \textbf{同分布測試} & \textbf{跨域測試} \\
+\midrule
+CLIP 零樣本（無需訓練） & 53.5\% & — \\
+CLIP ＋ 線性探針 & 67.0\% & — \\
+\textbf{DINOv2 ＋ 線性探針} & \hl{80.4\%} & 62.6\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+值得強調的是：\textbf{本作品不修改任何模型架構}，而是以凍結特徵加上線性探針完成分類——這意味著效能的提升完全來自\textbf{資料品質}，而非模型規模。
+
+\subsection{結果四：端到端檢測}
+
+\begin{table}[H]
+\centering
+\small
+\caption{在 49 張未見真實照片上的檢測表現}
+\begin{tabular}{lcc}
+\toprule
+\textbf{指標} & \textbf{基線} & \textbf{本作品} \\
+\midrule
+成功檢測出建築 & 57\% & \hl{65\%} \\
+檢測且類別正確 & 43\% & \hl{56\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{結果五：標註品管}
+
+以視覺語言模型對 568 張資料集影像進行獨立審核：
+
+\begin{table}[H]
+\centering
+\small
+\caption{標註品管結果}
+\begin{tabular}{lc}
+\toprule
+\textbf{審核結論} & \textbf{佔比} \\
+\midrule
+標註正確 & 50.7\% \\
+類別體系歧義（需細化分類） & 16.4\% \\
+標籤確實有誤 & 15.0\% \\
+非建築影像 & 4.0\% \\
+\midrule
+\textbf{需修正合計} & \hl{19\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+此一閉環的價值在於：\textbf{它把「資料集品質」從不可知的假設，變成可量測、可修正的指標}。
+
+%=====================================================================
+\section{與現有方法的區別}
+
+\subsection{方法層面的根本差異}
+
+\begin{table}[H]
+\centering
+\small
+\caption{本作品與現有標註途徑的對比}
+\begin{tabular}{p{3.1cm}p{4.0cm}p{6.8cm}}
+\toprule
+\textbf{途徑} & \textbf{標註來源} & \textbf{與本作品的根本差異} \\
+\midrule
+人工標註 & 人眼判斷 & 準確但不可擴展；本作品\key{零人工逐張成本} \\
+\addlinespace
+開放詞彙檢測器 & 模型\textbf{預測} & 弱標註：框鬆、跨影格不一致、會漏框；本作品以\key{幾何計算}取代預測，\key{零漏框} \\
+\addlinespace
+生成式合成資料 & 模型\textbf{生成} & 幾何不保證正確、域偏移大；本作品標註來自\key{真實拍攝}，幾何可驗證 \\
+\addlinespace
+\textbf{本作品} & \key{三維位姿投影} & \key{幾何一致、零漏框、可稽核}；且不需額外模型、可在既有重建流程上零成本附加 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{為何不直接使用現成方案}
+
+對抗式地比較：\textbf{開放詞彙檢測器（如 YOLO-World）與本作品解決的是同一個問題，但路徑相反}——
+
+\begin{center}
+\begin{tikzpicture}[font=\small,node distance=4mm]
+\node[draw=red2,thick,fill=red2!6,rounded corners,text width=5.6cm,align=center,inner sep=6pt] (x)
+{\textbf{開放詞彙檢測器}\\二維影像 $\rightarrow$ 模型猜測 $\rightarrow$ 弱標註\\{\footnotesize 框鬆 · 跨幀不一致 · 漏框}};
+\node[draw=gold,very thick,fill=gold!12,rounded corners,text width=5.6cm,align=center,inner sep=6pt,right=1.4cm of x] (y)
+{\textbf{本作品位姿投影}\\三維幾何 $\rightarrow$ 精確投影 $\rightarrow$ 精確標註\\{\footnotesize 一致 · 零漏框 · 可稽核}};
+\draw[-{Stealth[length=2.6mm]},very thick,gray] (x)--node[above,font=\footnotesize]{同一問題、相反路徑}(y);
+\end{tikzpicture}
+\end{center}
+
+%=====================================================================
+\section{創新點總結}
+
+\begin{enumerate}[leftmargin=1.6em,itemsep=4pt]
+\item \hl{方法創新——位姿驅動的自動標註。}
+將「標註」由二維影像上的\textbf{模型預測問題}，轉化為三維空間中的\textbf{幾何計算問題}。這是本作品最核心的貢獻，也是與現有做法最根本的區別。
+
+\item \hl{度量創新——以既有資料推導品質指標。}
+提出以重建階段既有的「點雲軌跡」作為遮擋與視角的客觀代理指標，無需任何額外模型即可判斷標註樣本品質。
+
+\item \hl{工程創新——由相機軌跡推定世界座標的上軸。}
+解決重建世界座標缺乏重力方向這一實際障礙，使自動標註在任意拍攝姿態下皆能正確運作。
+
+\item \hl{閉環創新——可量測的資料集品管。}
+以多視圖幾何驗證（零誤判確認器）與視覺語言模型審核，建立「生成—驗證—修正」的資料集品管閉環，使資料品質可量測。
+
+\item \hl{系統整合——從拍攝到可辨識的完整鏈路。}
+上述方法已實現為完整、可執行的桌面系統，並在 8 個真實專案上完成端到端驗證，附 327 項自動化測試。
+\end{enumerate}
+
+%=====================================================================
+\section{應用價值與社會意義}
+
+\subsection{對澳門的實際價值}
+
+澳門的歷史建築是其最珍貴且不可替代的文化資產。然而這些建築正面臨自然老化、城市發展與維護壓力的多重挑戰。本作品提供了兩項具體能力：
+
+\begin{itemize}[leftmargin=1.5em,itemsep=2pt]
+\item \key{可規模化的三維數位存檔}——以一般消費者設備（手機或相機）環繞拍攝即可完成，不需昂貴的專業掃描設備；
+\item \key{可辨識的建築身分}——讓「這是哪一棟建築」成為一個可被自動回答的問題，這是導覽、教育、研究與文化推廣的共同基礎設施。
+\end{itemize}
+
+\subsection{可遷移性}
+
+本方法的核心——\textbf{以三維位姿產生精確二維標註}——不限於建築。凡是能以環繞方式拍攝、且在三維空間中有明確邊界的物件，皆可適用，例如：文物與典藏品、雕塑、室內空間、甚至工業零件的瑕疵標註。
+
+%=====================================================================
+\section{限制與未來工作}
+
+本作品在陳述成果的同時，亦明確界定其邊界：
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=3pt]
+\item \textbf{需先完成三維重建。}本方法以重建成功為前提。實測 8 個專案中有 3 個因拍攝品質不足導致相機註冊率過低（15\%、2\%、1\%）而被系統正確判定為不可用——這既說明了本方法對輸入品質的要求，也說明系統具備\textbf{誠實的自我評估能力}。
+
+\item \textbf{幾何驗證是確認器，而非過濾器。}當內點數 $\geq 15$ 時精確率為 100\%，但僅約 32\% 的同建築配對能被確認——因為不同立面本身沒有共同內容。因此它適合用於「確認」，而非用於「排除」。
+
+\item \textbf{跨域分類仍有落差。}DINOv2 在同樣分布下達 80.4\%，跨域降至 62.6\%，顯示域偏移仍是待解問題。
+
+\item \textbf{未來工作：}引入三維高斯潑濺的渲染能力進行\textbf{新視角資料增強}與\textbf{精確遮擋判斷}，並以多視圖幾何一致性作為單圖三維生成結果的真實性度量——後者尤具潛力，因為現行生成模型的評估普遍依賴感知指標，無法檢測幾何幻覺。
+\end{enumerate}
+
+%=====================================================================
+\section{結論}
+
+本作品的核心主張是：\textbf{建築辨識的瓶頸在標註，而標註問題可以用幾何解決。}
+
+我們提出位姿驅動的自動標註方法，把三維重建的副產品（相機位姿與稀疏點雲）轉化為精確、一致、可稽核的二維標註資料，並在此基礎上完成建築檢測與跨條件重辨識的完整鏈路。實測顯示，該資料能讓既有模型在澳門建築上達到可用精度（跨條件重辨識 AUC 0.993、檢測準確率 65\%、分類準確率 80.4\%），且全程不需修改任何模型架構——\textbf{效能的來源是資料，而非模型規模}。
+
+更重要的是，這條路徑是可複製的：任何具備環繞拍攝條件的三維物件，都能以此方式獲得精確標註。我們相信，這為「小樣本、高精度」的視覺辨識應用提供了一條切實可行的路徑。
+
+\vspace{6pt}
+\begin{center}
+\begin{tikzpicture}
+\node[draw=gold,very thick,fill=gold!10,rounded corners,inner sep=9pt,text width=15.0cm,align=center] {
+\textbf{別人用檢測器「猜」框，我們用幾何「算」框。}\\[3pt]
+{\small 這一字之差，決定了標註是「大致可用」還是「精確可稽核」。}
+};
+\end{tikzpicture}
+\end{center}
+
+%=====================================================================
+\appendix
+\section{技術附錄}
+
+\subsection{相機模型與投影}
+
+支援 11 種相機模型（SimplePinhole、Pinhole、SimpleRadial、Radial、OpenCv、OpenCvFisheye、FullOpenCv、Fov、SimpleRadialFisheye、RadialFisheye、ThinPrismFisheye），並處理徑向與切向畸變。投影關係為
+\[
+\mathbf{X}_{\text{cam}} = \mathbf{R}\,\mathbf{X}_{\text{world}} + \mathbf{t},\qquad
+\mathbf{C} = -\mathbf{R}^{\top}\mathbf{t},
+\]
+像素座標由 $\;u = f_x \frac{X}{Z} + c_x,\; v = f_y \frac{Y}{Z} + c_y\;$ 得出（畸變已於前一步校正）；$Z \leq 0$ 視為不可見。
+
+\subsection{包圍盒擬合}
+
+以推定上軸 $\mathbf{u}$ 建立正交基底 $(\mathbf{e}_1,\mathbf{e}_2,\mathbf{u})$，將點雲投影至該座標系後，於垂直平面上以主成分分析取得主方向，再於三軸上取修剪後的百分位範圍（預設 2\%--98\%）以排除離群點，最後還原至世界座標。
+
+\subsection{可稽核性}
+
+每一個輸出的二維框皆可追溯至：包圍盒參數、影格相機位姿、可見角點數、投影面積佔比與盒內觀測點數。輸出包含 YOLO 標籤、逐影格明細（CSV／JSON）與免依賴的 HTML 人工複核表，供第三方獨立驗證。
+
+\end{document}

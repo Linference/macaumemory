@@ -64,29 +64,59 @@ BAD = re.compile(r"(map|plan|logo|diagram|coat of arms|flag|chart|graph|svg|icon
 
 # Commons 的「策展分類」——人工維護，精度遠高於全文檢索。
 # 全文檢索會回傳店內商品、吊燈、酒杯；分類則幾乎都是該主題的照片。
+# 大分類底下還有子分類（例如 Category:Churches in Macau → 各教堂），
+# 因此抓圖時會一併走訪子分類（--subcats），這是數量的主要來源。
 CATEGORIES = {
     "portuguese": ["Category:Portuguese colonial architecture in Macau", "Category:Taipa Houses Museum",
-                   "Category:Mandarin's House", "Category:Moorish Barracks", "Category:Colonial architecture in Macau"],
+                   "Category:Mandarin's House", "Category:Moorish Barracks", "Category:Colonial architecture in Macau",
+                   "Category:Portuguese architecture in Macau", "Category:Buildings in Macau",
+                   "Category:Santa Sancha Centre", "Category:Dom Pedro V Theatre",
+                   "Category:Guia Fortress", "Category:Fortresses in Macau", "Category:Macau Government Headquarters"],
     "temple": ["Category:Temples in Macau", "Category:A-Ma Temple", "Category:Kun Iam Temple",
-               "Category:Chinese temples in Macau", "Category:Lin Fung Temple"],
+               "Category:Chinese temples in Macau", "Category:Lin Fung Temple",
+               "Category:Taoist temples in Macau", "Category:Tin Hau temples in Macau",
+               "Category:Sam Kai Vui Kun", "Category:Na Tcha Temple", "Category:Pagodas in Macau",
+               "Category:Shrines in Macau"],
     "church": ["Category:Churches in Macau", "Category:St. Dominic's Church (Macau)",
                "Category:St. Lawrence's Church (Macau)", "Category:Cathedral of Macau",
-               "Category:Saint Joseph's Seminary and Church"],
-    "tong_lau": ["Category:Rua da Felicidade", "Category:Shophouses in Macau",
-                 "Category:Buildings in Macau", "Category:Avenida de Almeida Ribeiro"],
+               "Category:Saint Joseph's Seminary and Church", "Category:Roman Catholic churches in Macau",
+               "Category:St. Augustine's Church (Macau)", "Category:St. Anthony's Church (Macau)",
+               "Category:Chapels in Macau", "Category:Protestant churches in Macau"],
+    "tong_lau": ["Category:Rua da Felicidade", "Category:Shophouses in Macau", "Category:Buildings in Macau",
+                 "Category:Avenida de Almeida Ribeiro", "Category:Tong lau",
+                 "Category:Arcades in Macau", "Category:Rua Central (Macau)", "Category:Rua do Cunha"],
     "residential_tower": ["Category:Residential buildings in Macau", "Category:Apartment buildings in Macau",
-                          "Category:Towers in Macau"],
+                          "Category:Towers in Macau", "Category:Skyscrapers in Macau",
+                          "Category:Housing estates in Macau", "Category:Public housing in Macau",
+                          "Category:Residential skyscrapers in Macau"],
     "casino_hotel": ["Category:Casinos in Macau", "Category:Hotels in Macau", "Category:Grand Lisboa",
-                     "Category:The Venetian Macao", "Category:Hotel Lisboa"],
+                     "Category:The Venetian Macao", "Category:Hotel Lisboa",
+                     "Category:Resorts in Macau", "Category:Galaxy Macau", "Category:City of Dreams (Macau)",
+                     "Category:Wynn Macau", "Category:MGM Macau", "Category:Sands Macao",
+                     "Category:Hotel buildings in Macau", "Category:Studio City (Macau)",
+                     "Category:The Parisian Macao", "Category:The Londoner Macao"],
     "civic": ["Category:Government buildings in Macau", "Category:Leal Senado", "Category:Museums in Macau",
-              "Category:Libraries in Macau", "Category:Post offices in Macau"],
+              "Category:Libraries in Macau", "Category:Post offices in Macau",
+              "Category:Schools in Macau", "Category:Universities and colleges in Macau",
+              "Category:Hospitals in Macau", "Category:Public buildings in Macau",
+              "Category:Macau Science Center", "Category:Macau Tower", "Category:Fire stations in Macau",
+              "Category:Police stations in Macau", "Category:Railway stations in Macau"],
     "industrial": ["Category:Industrial buildings in Macau", "Category:Lai Chi Vun Shipyards",
-                   "Category:Warehouses in Macau", "Category:Factory buildings in Macau"],
+                   "Category:Warehouses in Macau", "Category:Factory buildings in Macau",
+                   "Category:Docks in Macau", "Category:Piers in Macau", "Category:Power stations in Macau",
+                   "Category:Industrial heritage in Macau"],
     "village": ["Category:Villages in Macau", "Category:Coloane", "Category:Taipa Village",
-                "Category:Houses in Macau", "Category:Vernacular architecture in Macau"],
+                "Category:Houses in Macau", "Category:Vernacular architecture in Macau",
+                "Category:Coloane Village", "Category:Rua do Cunha", "Category:Macau houses",
+                "Category:Traditional houses in Macau", "Category:Village houses in Macau"],
     "monument": ["Category:Monuments and memorials in Macau", "Category:Ruins of Saint Paul",
-                 "Category:Arches in Macau", "Category:Statues in Macau"],
-    "market": ["Category:Markets in Macau", "Category:Red Market (Macau)", "Category:Market buildings in Macau"],
+                 "Category:Arches in Macau", "Category:Statues in Macau",
+                 "Category:Memorials in Macau", "Category:Fountains in Macau",
+                 "Category:Walls in Macau", "Category:Lighthouses in Macau",
+                 "Category:Gates in Macau", "Category:World Heritage Sites in Macau"],
+    "market": ["Category:Markets in Macau", "Category:Red Market (Macau)", "Category:Market buildings in Macau",
+               "Category:Wet markets in Macau", "Category:Street markets in Macau",
+               "Category:Almirante Lacerda Municipal Market", "Category:Municipal markets in Macau"],
 }
 
 
@@ -109,7 +139,7 @@ def api(params: dict, retries=4):
 def search(query: str, limit: int, offset: int = 0):
     data = api({"action": "query", "generator": "search", "gsrsearch": query, "gsrnamespace": 6,
                 "gsrlimit": limit, "gsroffset": offset, "prop": "imageinfo",
-                "iiprop": "url|extmetadata|size|mime", "iiurlwidth": 1024})
+                "iiprop": "url|extmetadata|size|mime|sha1", "iiurlwidth": 1024})
     out = []
     for page in (data.get("query", {}).get("pages") or []):
         ii = (page.get("imageinfo") or [{}])[0]
@@ -121,7 +151,8 @@ def search(query: str, limit: int, offset: int = 0):
         if BAD.search(title):
             continue
         out.append(dict(title=title, url=ii.get("thumburl") or ii.get("url"), mime=ii.get("mime"),
-                        width=ii.get("width"), height=ii.get("height"), meta=ii.get("extmetadata", {})))
+                        width=ii.get("width"), height=ii.get("height"), meta=ii.get("extmetadata", {}),
+                        sha1=ii.get("sha1")))
     return out
 
 
@@ -129,7 +160,7 @@ def category_files(cat: str, limit: int):
     """取得某個 Commons 分類下的檔案（人工策展，精度高）。"""
     data = api({"action": "query", "generator": "categorymembers", "gcmtitle": cat,
                 "gcmtype": "file", "gcmlimit": limit, "prop": "imageinfo",
-                "iiprop": "url|extmetadata|size|mime", "iiurlwidth": 1024})
+                "iiprop": "url|extmetadata|size|mime|sha1", "iiurlwidth": 1024})
     out = []
     for page in (data.get("query", {}).get("pages") or []):
         ii = (page.get("imageinfo") or [{}])[0]
@@ -141,8 +172,36 @@ def category_files(cat: str, limit: int):
         if BAD.search(title):
             continue
         out.append(dict(title=title, url=ii.get("thumburl") or ii.get("url"), mime=ii.get("mime"),
-                        width=ii.get("width"), height=ii.get("height"), meta=ii.get("extmetadata", {})))
+                        width=ii.get("width"), height=ii.get("height"), meta=ii.get("extmetadata", {}),
+                        sha1=ii.get("sha1")))
     return out
+
+
+def subcategories(cat: str, limit: int = 60):
+    """取得分類下的子分類名稱（用來遞迴抓圖，數量主要來源）。"""
+    data = api({"action": "query", "generator": "categorymembers", "gcmtitle": cat,
+                "gcmtype": "subcat", "gcmlimit": limit})
+    return [p.get("title") for p in (data.get("query", {}).get("pages") or []) if p.get("title")]
+
+
+def category_files_deep(cat: str, limit: int, depth: int, sleep: float):
+    """抓分類本身的檔案，並遞迴走訪子分類（depth 層）。"""
+    files = category_files(cat, limit)
+    if depth <= 0:
+        return files
+    for sub in subcategories(cat):
+        # 只在仍是「澳門相關」的子分類往下走，避免爬到 Category:Asia 之類的巨型分類
+        if not re.search(r"Macau|Macao|Taipa|Coloane|Cotai|澳門|氹仔|路環", sub, re.I):
+            continue
+        time.sleep(sleep)
+        files.extend(category_files(sub, limit))
+        if depth >= 2:
+            for sub2 in subcategories(sub):
+                if not re.search(r"Macau|Macao|Taipa|Coloane|Cotai|澳門|氹仔|路環", sub2, re.I):
+                    continue
+                time.sleep(sleep)
+                files.extend(category_files(sub2, limit))
+    return files
 
 
 def strip_html(s) -> str:
@@ -181,7 +240,7 @@ def save_item(item: dict, cid: str, zh: str, folder: Path, rows: list) -> int:
         return 0
     em = item["meta"]
     rows.append(dict(class_id=cid, class_zh=zh, file=str(out.relative_to(ROOT)).replace("\\", "/"),
-                     commons_title=item["title"],
+                     commons_title=item["title"], sha1=item.get("sha1", ""),
                      author=strip_html(em.get("Artist", {}).get("value", ""))[:80],
                      license=strip_html(em.get("LicenseShortName", {}).get("value", "")),
                      date=strip_html(em.get("DateTimeOriginal", {}).get("value", ""))[:19],
@@ -196,11 +255,20 @@ def main():
     ap.add_argument("--per-class", type=int, default=60)
     ap.add_argument("--only", default=None)
     ap.add_argument("--sleep", type=float, default=0.6)
+    ap.add_argument("--subcats", type=int, default=1, help="走訪子分類的深度（1=子分類、2=孫分類）；數量主要來源")
+    ap.add_argument("--cat-limit", type=int, default=120, help="每個分類最多取幾張檔案")
+    ap.add_argument("--search-pages", type=int, default=3, help="每個關鍵字翻幾頁（每頁 20 筆）")
     args = ap.parse_args()
 
     wanted = set(args.only.split(",")) if args.only else set(CLASSES)
     RAW.mkdir(parents=True, exist_ok=True)
-    rows, seen = [], set()
+    rows, seen, seen_sha = [], set(), set()
+    # 已有的 SHA1 先載入，避免重複下載同一張圖（不同標題但同內容）
+    if ATTR.exists():
+        with ATTR.open(encoding="utf-8-sig") as f:
+            for r in csv.DictReader(f):
+                if r.get("sha1"):
+                    seen_sha.add(r["sha1"])
 
     for cid, (zh, queries) in CLASSES.items():
         if cid not in wanted:
@@ -209,32 +277,47 @@ def main():
         folder.mkdir(parents=True, exist_ok=True)
         have = len(list(folder.glob("*.jpg"))) + len(list(folder.glob("*.png")))
         got = 0
-        # ① 先抓策展分類（精度高）
+        if have >= args.per_class:
+            print(f"  {cid:20} {zh:8} 已有 {have} 張（達標，略過）")
+            continue
+        # ① 先抓策展分類（含子分類，精度高、數量多）
         for cat in CATEGORIES.get(cid, []):
             if got + have >= args.per_class:
                 break
-            for item in category_files(cat, 40):
-                if got + have >= args.per_class or item["title"] in seen:
+            for item in category_files_deep(cat, args.cat_limit, args.subcats, args.sleep):
+                if got + have >= args.per_class:
+                    break
+                if item["title"] in seen or (item.get("sha1") and item["sha1"] in seen_sha):
                     continue
                 seen.add(item["title"])
-                got += save_item(item, cid, zh, folder, rows)
+                n = save_item(item, cid, zh, folder, rows)
+                if n:
+                    got += n
+                    if item.get("sha1"):
+                        seen_sha.add(item["sha1"])
                 time.sleep(args.sleep)
             time.sleep(args.sleep)
         # ② 再用全文檢索補足
         for q in queries:
             if got + have >= args.per_class:
                 break
-            for offset in (0, 20):
+            for page in range(args.search_pages):
                 if got + have >= args.per_class:
                     break
-                for item in search(q, 20, offset):
-                    if got + have >= args.per_class or item["title"] in seen:
+                for item in search(q, 20, page * 20):
+                    if got + have >= args.per_class:
+                        break
+                    if item["title"] in seen or (item.get("sha1") and item["sha1"] in seen_sha):
                         continue
                     seen.add(item["title"])
-                    got += save_item(item, cid, zh, folder, rows)
+                    n = save_item(item, cid, zh, folder, rows)
+                    if n:
+                        got += n
+                        if item.get("sha1"):
+                            seen_sha.add(item["sha1"])
                     time.sleep(args.sleep)
                 time.sleep(args.sleep)
-        print(f"  {cid:20} {zh:8} 新增 {got:3d}（原有 {have}）")
+        print(f"  {cid:20} {zh:8} 新增 {got:3d}（原有 {have}）→ {have + got} 張")
 
     # 合併寫入
     old = []
@@ -244,7 +327,7 @@ def main():
     files_now = {r["file"] for r in rows}
     keep = [r for r in old if r["file"] not in files_now and (ROOT / r["file"]).exists()]
     allrows = keep + rows
-    fields = ["class_id", "class_zh", "file", "commons_title", "author", "license", "date",
+    fields = ["class_id", "class_zh", "file", "commons_title", "sha1", "author", "license", "date",
               "source_page", "width", "height", "bytes"]
     ATTR.parent.mkdir(parents=True, exist_ok=True)
     with ATTR.open("w", newline="", encoding="utf-8-sig") as f:

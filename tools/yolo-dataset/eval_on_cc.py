@@ -10,6 +10,7 @@
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import sys
 from collections import Counter, defaultdict
@@ -78,8 +79,11 @@ def evaluate(model, rows, conf=0.25):
 
 
 def main():
-    model = YOLO(str(WEIGHTS))
-    print(f"[eval] 權重 {WEIGHTS.name}\n")
+    ap = argparse.ArgumentParser(description="用獨立 CC 照片集評估偵測器（seen/unseen 分開）")
+    ap.add_argument("--weights", default=str(WEIGHTS), help="要評估的權重檔（可比較多個模型）")
+    args = ap.parse_args()
+    model = YOLO(args.weights)
+    print(f"[eval] 權重 {Path(args.weights).name}\n")
     results = {}
     for tag, label in (("seen", "訓練時用過的照片"), ("unseen", "完全沒用過的照片")):
         rows = load(tag)

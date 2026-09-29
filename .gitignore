@@ -42,7 +42,28 @@ tools/poster/out/_qr.pdf
 tools/**/_probe*.py
 tools/**/_calibrate*.py
 
-# �h��׃���n�����ֻ���@�e��ϵ�y�h��׃����
+# 本機環境變數（勿提交）
 .env
 .env.*
 !.env.example
+
+# ── 除錯與中介產物（不進版控）────────────────────────────
+# 注意：路徑前面加 / 是錨定在專案根目錄，避免誤傷 tools/eval/out/ 底下
+# 已經在追蹤的報告圖表（fig-*.png/svg）。
+/out/
+/output/
+tools/recognize/out/
+tools/yolo-dataset/out/
+
+# LaTeX 編譯中介（.pdf 與 .tex 要提交，其餘是編譯產物）
+*.aux
+*.toc
+*.out
+*.synctex.gz
+
+# 尚未篩選進 photos-src/cc/ 的照片暫存區
+photos-src/_hold/
+photos-src/_hold-wikimedia/
+
+# 臨時渲染產物
+/tmp/

@@ -92,6 +92,8 @@ def main():
     args = ap.parse_args()
 
     exempt = {c.strip() for c in args.gate_exempt.split(",") if c.strip()}
+    if args.gate_exempt.strip().lower() == "all":          # 關閉類別關（只用雜物關＋室內關）
+        exempt = set(CLASSES)
     int_exempt = {c.strip() for c in args.interior_exempt.split(",") if c.strip()}
     wanted = set(args.only.split(",")) if args.only else set(CLASSES)
 

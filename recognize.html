@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="上傳一張澳門建築照片，先用 YOLO 標註這是什麼類型的建築，再與已記錄的記憶庫查重；未記錄的可以直接標記為新發現" />
+    <meta name="theme-color" content="#f5f5ef" />
+    <title>建築普查工作台 · 澳門立體誌</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Cpath d='M4 21l7-11 4.5 6.5L19 12l9 9z' fill='%23d8b45a'/%3E%3C/svg%3E" />
+  </head>
+  <body class="rc">
+    <div class="rc-wrap">
+      <!-- 標題列 -->
+      <header class="rc-top">
+        <a class="brand" href="./">
+          <span class="brand-mark">
+            <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M16 25C8 21 7 14 16 5c9 9 8 16 0 20Z" /><path d="M16 25C6 25 3 19 4 11c8 1 12 6 12 14Zm0 0c10 0 13-6 12-14-8 1-12 6-12 14ZM8 28h16" />
+            </svg>
+          </span>
+          <span class="brand-text"><strong>澳門立體誌</strong><small>MACAU MEMORY ATLAS</small></span>
+        </a>
+        <nav class="rc-nav" aria-label="工作台導覽">
+          <a class="rc-nav-current" href="#workspace" aria-current="page">辨識工作台</a>
+          <a href="#rc-ledger">普查檔案</a>
+          <a class="rc-back" href="./"><span aria-hidden="true">↗</span> 探索三維地圖</a>
+        </nav>
+      </header>
+
+      <section class="rc-hero" aria-labelledby="rc-page-title">
+        <div>
+          <p class="rc-eyebrow"><span></span> 城市記憶 · 建築普查</p>
+          <h1 id="rc-page-title">每一棟建築，<br class="rc-title-break" /><em>都值得被記住。</em></h1>
+          <p class="rc-hero-copy">從一張照片開始，辨識建築、比對記憶，<br class="rc-desktop-break" />為澳門留下下一份城市檔案。</p>
+        </div>
+        <aside class="rc-hero-note" aria-label="參考資料規模">
+          <span class="rc-note-kicker">一座城市，許多故事</span>
+          <div class="rc-library-stats"><div><strong id="rc-library-buildings">—</strong><span>已收錄建築</span></div><div><strong id="rc-library-photos">—</strong><span>參考照片</span></div></div>
+          <p><span class="rc-local-dot"></span> 影像在此裝置處理，保留你的照片隱私</p>
+        </aside>
+      </section>
+
+      <ol class="rc-workflow" aria-label="普查流程">
+        <li class="is-current" data-workflow="photo"><span class="rc-step">01</span><div><strong>選擇照片</strong><small>拍下城市的一角</small></div><span class="rc-flow-arrow" aria-hidden="true">→</span></li>
+        <li data-workflow="result"><span class="rc-step">02</span><div><strong>辨識與比對</strong><small>找到它的建築故事</small></div><span class="rc-flow-arrow" aria-hidden="true">→</span></li>
+        <li data-workflow="archive"><span class="rc-step">03</span><div><strong>定位與建檔</strong><small>留下專屬記憶編號</small></div></li>
+      </ol>
+
+      <main class="rc-grid" id="workspace">
+        <!-- 左：上傳與影像 -->
+        <section class="panel rc-upload-panel" aria-labelledby="rc-upload-title">
+          <div class="rc-panel-head"><div><span class="rc-section-kicker">PHOTO INPUT</span><h2 id="rc-upload-title">一張照片，一段記憶</h2></div><span class="rc-section-index">01</span></div>
+          <p class="hint">選一張清晰的建築照片，讓我們從這裡開始。</p>
+
+          <div class="rc-drop" id="rc-drop" role="button" tabindex="0" aria-label="上傳照片">
+            <div class="rc-drop-icon">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+              </svg>
+            </div>
+            <b>把建築照片放在這裡</b>
+            <span>拖曳照片，或 <u>點擊選擇</u></span>
+            <small>JPG / PNG / WebP <i>·</i> 也可以 Ctrl + V 貼上</small>
+          </div>
+          <div class="rc-stagebox" id="rc-stagebox" hidden>
+            <canvas id="rc-canvas"></canvas>
+            <svg id="rc-boxes" hidden></svg>
+          </div>
+          <input type="file" id="rc-file" accept="image/*" hidden />
+
+          <div class="rc-file" id="rc-file-info" hidden>
+            <img id="rc-thumb" alt="已選擇的照片縮圖" />
+            <div class="rc-file-meta">
+              <strong id="rc-filename">—</strong>
+              <span id="rc-filesize">—</span>
+            </div>
+            <button class="icon-btn sm" id="rc-clear" title="移除照片">
+              <svg viewBox="0 0 24 24" width="15" height="15"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+
+          <div class="rc-actions">
+            <button class="btn gold" id="rc-run" disabled>開始辨識 <span aria-hidden="true">↗</span></button>
+            <button class="btn sec" id="rc-pick">選擇照片</button>
+          </div>
+
+          <div class="rc-demo-row">
+            <div class="rc-demo-title"><span>或先探索一張示範照片</span><span class="rc-demo-caption">試一試 ↓</span></div>
+            <div class="rc-demo-list" id="rc-demo-list"></div>
+          </div>
+
+          <details class="rc-opts">
+            <summary>調整辨識選項</summary>
+            <div class="rc-opts-body">
+              <label class="rc-opt">
+                <span style="width:104px">偵測信心門檻</span>
+                <input type="range" id="rc-conf" min="0.1" max="0.7" step="0.05" value="0.25" />
+                <output id="rc-conf-out">0.25</output>
+              </label>
+              <label class="rc-opt"><input type="checkbox" id="rc-skip" /> 略過 YOLO 偵測，直接用整張圖比對</label>
+              <label class="rc-opt"><input type="checkbox" id="rc-notta" /> 關閉多裁切＋翻轉（快約 3 倍，較不準）</label>
+            </div>
+          </details>
+
+          <div class="rc-status">
+            <div class="rc-bar-wrap2"><i id="rc-bar"></i></div>
+            <p id="rc-stage">正在準備模型…</p>
+          </div>
+
+        </section>
+
+        <!-- 右：結果 -->
+        <section class="panel rc-result-panel" aria-labelledby="rc-result-title">
+          <div class="rc-panel-head"><div><span class="rc-section-kicker">BUILDING INSIGHTS</span><h2 id="rc-result-title">讀懂眼前的建築</h2></div><span class="rc-status-pill" id="rc-result-state">等待照片</span></div>
+          <div class="rc-result-empty" id="rc-empty">
+            <div class="rc-building-art" aria-hidden="true">
+              <svg viewBox="0 0 260 190" fill="none"><circle cx="131" cy="88" r="71" fill="#eaf0e8"/><path d="M33 163h194M56 162V83l25-17 24 17v79m-49-57h49M75 83V67m54 95V66l29-25 29 25v96m-58-84h58m-44-13h29m-29 14h29M117 66h80M202 162v-46l15-10 15 10v46" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M67 119h12v17H67zm19 0h11v17H86zm-15 26h17v17H71zm69-55h12v15h-12zm24 0h12v15h-12zm-24 27h12v15h-12zm24 0h12v15h-12zm-15 28h19v17h-19z" stroke="currentColor" stroke-width="1.4"/><path d="M38 163v-28m0 11c-11-1-15-12-7-18m7 11c11-2 16-11 10-17M241 163v-24m-6-2 6-7 6 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m103 48 6-7 6 7m-9 0 3-4 3 4" stroke="#9caa96" stroke-width="1.2" stroke-linecap="round"/><circle cx="207" cy="58" r="12" stroke="#c0cdb9" stroke-width="1.2"/></svg>
+            </div>
+            <h3>下一段城市故事，等你發現</h3>
+            <p>選擇照片並開始辨識，<br />這裡會呈現建築類型與相似的記憶。</p>
+            <div class="rc-empty-features"><span>建築分類</span><span>記憶查重</span><span>定位建檔</span></div>
+          </div>
+          <div id="rc-loading" class="rc-result-loading" role="status" hidden>
+            <span class="rc-loading-ring" aria-hidden="true"></span>
+            <h3>正在閱讀這一段城市記憶</h3>
+            <p>辨識建築外觀，再與記憶庫中的照片比對。</p>
+          </div>
+          <div id="rc-tabs" class="rc-tabs" hidden></div>
+          <div id="rc-results" hidden></div>
+          <div id="rc-errors" hidden></div>
+          <!-- 建檔表單（主流程）：每次辨識完都顯示，由 src/recognize/survey.js 繪製 -->
+          <div id="rc-survey-host" hidden></div>
+        </section>
+      </main>
+
+      <!-- 普查資料庫（統計、記錄列表、匯出）：由 src/recognize/ledger.js 繪製 -->
+      <section class="panel rc-ledger" id="rc-ledger"></section>
+
+      <!-- 診斷 -->
+      <section class="panel rc-diag" id="system">
+        <div class="rc-diag-head">
+          <h2 style="margin:0">辨識服務狀態</h2>
+          <button id="rc-diag-toggle" aria-expanded="false">顯示細節</button>
+        </div>
+        <p class="rc-diag-summary" id="rc-diag-summary">正在載入模型與嵌入庫…</p>
+        <div id="diag-body" hidden></div>
+        <details class="rc-method"><summary>辨識方法與定位說明</summary><p class="rc-foot">
+          流程：<b>照片 → YOLO（11 類澳門建築 · 768px）標註類別 → DINOv2 ViT-S/14（336px）取 384 維向量
+          → 與已記錄的記憶庫查重 → 建檔（GPS 精準定位 → 編號 → 寫入 SQLite）</b>。<br />
+          「這是哪一棟」只是查重的手段；這一頁的主結果是<b>標註類別</b>、<b>查重結論</b>與<b>普查建檔</b>。<br />
+          模型與 WASM 全部放在本機 <code>public/ort/</code>、<code>public/models/</code>（不連 CDN，離線可用）；
+          嵌入庫 <code>public/data/memory-embeddings.json</code> 由 <code>tools/recognize/build_embeddings.py</code> 產生。<br />
+          資料庫是 <b>SQLite（sqlite-wasm）</b>：<code>src/recognize/db.js</code> 建 <code>buildings</code> 表
+          ＋ <code>buildings_rtree</code> 空間索引（半徑 50 公尺查重）。這一階段資料庫在<b>記憶體</b>裡，
+          重新整理會清空——請用「③ 普查資料庫」的<b>匯出 JSON／.sqlite</b> 保存（每一筆同時鏡射一份到 localStorage）。<br />
+          定位是<b>多次取樣＋精度加權</b>（<code>src/recognize/geolocate.js</code>）：一定顯示精度半徑；
+          精度差會警示並自動展開手動定位，手動座標的來源記為 <code>manual</code>。
+        </p></details>
+      </section>
+      <footer class="rc-page-footer"><span>澳門立體誌 <i>·</i> 為城市留下記憶</span><a href="./">回到三維地圖 <span aria-hidden="true">↗</span></a></footer>
+    </div>
+
+    <!-- 三維模型檢視器（沿用主站 src/viewer.js 與 .viewer 樣式） -->
+    <div class="viewer" id="viewer" aria-hidden="true">
+      <div class="viewer-panel">
+        <header class="viewer-head">
+          <div class="viewer-title">
+            <h2 id="viewer-name">—</h2>
+            <p id="viewer-meta">—</p>
+          </div>
+          <button class="icon-btn" id="viewer-close" title="關閉">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </header>
+        <div class="viewer-main">
+          <div class="viewer-stage">
+            <canvas id="viewer-canvas"></canvas>
+            <div class="viewer-loading" id="viewer-loading">
+              <div class="ring"></div>
+              <p id="viewer-loading-text">正在載入三維模型…</p>
+              <div class="bar"><i id="viewer-bar"></i></div>
+            </div>
+            <div class="viewer-badge" id="viewer-badge"></div>
+            <div class="viewer-tools">
+              <button class="tool-btn" id="tool-rotate" title="自動旋轉">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="tool-btn" id="tool-reset" title="重設視角">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 4v4M12 4L9 7M12 4l3 3M4 12h4M4 12l3-3M4 12l3 3M20 12h-4M20 12l-3-3M20 12l-3 3M12 20v-4M12 20l-3-3M12 20l3-3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+              </button>
+              <button class="tool-btn" id="tool-wire" title="線框模式">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l8 5v8l-8 5-8-5V8zM4 8l8 5 8-5M12 13v8" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="tool-btn" id="tool-full" title="全螢幕">
+                <svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <aside class="viewer-side"><div class="viewer-side-inner" id="viewer-facts"></div></aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- 模型載入提示（首次進站必須讓使用者知道在下載模型） -->
+    <div class="rc-overlay" id="rc-overlay">
+      <div class="rc-overlay-card">
+        <div class="ring"></div>
+        <b>正在載入辨識模型</b>
+        <p id="rc-overlay-text">YOLO 建築偵測（38 MB）與 DINOv2 編碼器（87 MB）<br />全部從本機載入，第一次需要一點時間…</p>
+        <div class="rc-bar-wrap2" style="width:240px;margin:14px auto 0"><i id="rc-overlay-bar"></i></div>
+        <button class="btn sec sm" id="rc-overlay-skip" style="margin-top:14px">先在背景載入，我要看說明</button>
+      </div>
+    </div>
+
+    <div id="rc-toast"></div>
+    <script type="module" src="/src/recognize/main.js"></script>
+  </body>
+</html>

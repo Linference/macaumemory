@@ -1,0 +1,21 @@
+{
+ "encoder": "D:\\Users\\LINKIT\\Desktop\\澳门记忆\\.cache\\models\\clip-vit-base-patch32",
+ "train": 485,
+ "test": 91,
+ "test_acc": 0.6703296703296703,
+ "clip_zero_shot": 0.535,
+ "C": 1.0,
+ "per_class": {
+  "portuguese": 0.6666666666666666,
+  "temple": 1.0,
+  "church": 0.5333333333333333,
+  "tong_lau": 0.4,
+  "residential_tower": null,
+  "casino_hotel": 1.0,
+  "civic": 0.2,
+  "industrial": 1.0,
+  "village": 0.4,
+  "monument": 1.0,
+  "market": 0.8
+ }
+}

@@ -1,0 +1,11 @@
+﻿query,cand,global_sim,same_building,inliers,inlier_ratio,accepted
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_10.jpg,photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_02.jpg,0.8112,True,0,0.0,False
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_01.jpg,photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_07.jpg,0.6439,True,0,0.0,False
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_02.jpg,photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_04.jpg,0.9161,True,0,0.0,False
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_04.jpg,photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_02.jpg,0.9161,True,0,0.0,False
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_07.jpg,photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_08.jpg,0.754,True,0,0.0,False
+photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_08.jpg,photos-src/cc/ruins-st-paul/Ruins_of_Saint_Paul_s_Macau_Ank_Kumar_10.jpg,0.7856,True,0,0.0,False
+photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_01.JPG,photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_3_32858244395_.jpg,0.6258,True,0,0.0,False
+photos-src/cc/a-ma-temple/A_Ma_temple_Macau_-_panoramio.jpg,photos-src/cc/kun-iam-temple/Kun_Iam_Temple_04.JPG,0.7867,False,0,0.0,False
+photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_2_32043656663_.jpg,photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_7_32734287651_.jpg,0.4638,True,0,0.0,False
+photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_built_1488_3_32858244395_.jpg,photos-src/cc/a-ma-temple/A-Ma_Temple_Macau_01.JPG,0.6258,True,0,0.0,False

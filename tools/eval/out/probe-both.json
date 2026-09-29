@@ -1,0 +1,21 @@
+{
+ "encoder": "facebook/dinov2-base@336px/cls/shortest+tta",
+ "train": 485,
+ "test": 91,
+ "test_acc": 0.6593406593406593,
+ "clip_zero_shot": 0.535,
+ "C": 0.5,
+ "per_class": {
+  "portuguese": 0.6666666666666666,
+  "temple": 0.9,
+  "church": 0.4666666666666667,
+  "tong_lau": 0.5,
+  "residential_tower": null,
+  "casino_hotel": 1.0,
+  "civic": 0.3,
+  "industrial": 1.0,
+  "village": 0.2,
+  "monument": 1.0,
+  "market": 0.8
+ }
+}

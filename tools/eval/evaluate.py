@@ -18,6 +18,7 @@ import csv
 import itertools
 import json
 import random
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -27,7 +28,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_auc_score, roc_curve, confusion_matrix
 
-from clip_embed import ClipScorer
+from dino_embed import build_scorer
 
 ROOT = Path(__file__).resolve().parents[2]
 EVAL = ROOT / "tools" / "eval"
@@ -59,14 +60,17 @@ def load_dataset():
 
 
 def embed_all(rows, scorer):
-    cache_path = OUT / "embeddings.npz"
+    # 快取必須「依編碼器分開」：否則換成 DINOv2 時會直接沿用 CLIP 的舊特徵，
+    # 產生看起來合理、實際上完全錯誤的對照結果（這是最危險的一種錯誤）。
+    slug = re.sub(r"[^A-Za-z0-9]+", "-", str(scorer.model_name).split("/")[-1])[:48]
+    cache_path = OUT / f"embeddings-{slug}.npz"
     cache = {}
     if cache_path.exists():
         z = np.load(cache_path, allow_pickle=True)
         cache = {k: z[k] for k in z.files}
     todo = [r for r in rows if r["file"] not in cache]
     if todo:
-        print(f"[clip] 需要計算 {len(todo)} 張（快取已有 {len(cache)} 張）…")
+        print(f"[{slug}] 需要計算 {len(todo)} 張（快取已有 {len(cache)} 張）…")
         feats = scorer.embed_images([str(r["path"]) for r in todo])
         for r, f in zip(todo, feats):
             cache[r["file"]] = f.astype(np.float32)
@@ -279,13 +283,25 @@ def fig_confusion(cm, class_ids, path_png, acc):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--experiments", default="e1,e1r,e2,e3,e4,e5,e6")
+    ap.add_argument("--encoder", default="clip", choices=["clip", "dino"],
+                    help="影像編碼器：clip（原基準）或 dino（DINOv2，重辨識用）")
+    ap.add_argument("--dino-model", default="facebook/dinov2-base")
+    ap.add_argument("--dino-size", type=int, default=518, help="DINOv2 輸入邊長（224/336/518）")
+    ap.add_argument("--dino-pool", default="cls+gem", choices=["cls", "gem", "cls+gem"])
+    ap.add_argument("--dino-no-tta", action="store_true", help="關閉水平翻轉增強")
+    ap.add_argument("--dino-resize", default="squash", choices=["squash", "shortest"])
+    ap.add_argument("--out-suffix", default="", help="輸出檔名後綴，避免覆蓋 CLIP 的報告")
     args = ap.parse_args()
     want = {s.strip() for s in args.experiments.split(",")}
     OUT.mkdir(parents=True, exist_ok=True)
 
     rows = load_dataset()
-    scorer = ClipScorer()
-    print(f"[clip] 模型 {scorer.model_name} · 裝置 {scorer.device} · logit_scale {scorer.scale:.1f}")
+    if args.encoder == "dino":
+        scorer = build_scorer("dino", model_id=args.dino_model, size=args.dino_size,
+                              pool=args.dino_pool, tta=not args.dino_no_tta, resize=args.dino_resize)
+    else:
+        scorer = build_scorer("clip")
+    print(f"[{args.encoder}] 模型 {scorer.model_name} · 裝置 {scorer.device} · scale {scorer.scale:.1f}")
     rows = embed_all(rows, scorer)
 
     results, curves = {}, {}
@@ -389,7 +405,7 @@ def main():
             render_same_p50=float(np.percentile(ref_same, 50)),
         )
 
-    if "e6" in want:
+    if "e6" in want and args.encoder == "clip":
         class_ids, prompts, owner = scorer.taxonomy_vectors()
         text_feats = scorer.embed_texts(prompts)
         eval_rows = [r for r in buildings if r["class_id"] in class_ids]  # 文物不在 12 類體系內
@@ -402,7 +418,7 @@ def main():
         acc_l = float((y_l == y_true).mean())
         present = sorted(set(y_true.tolist()))
         cm = confusion_matrix(y_true, y_c, labels=present)
-        fig_confusion(cm, [class_ids[i] for i in present], OUT / "fig-confusion.png", acc_c)
+        fig_confusion(cm, [class_ids[i] for i in present], OUT / f"fig-confusion{args.out_suffix}.png", acc_c)
         top1_conf = probs_c.max(1)
         # 依來源分層看準確率（渲染 vs 真實照片）——這是本實驗最有意義的對比
         tiers = {}
@@ -426,21 +442,21 @@ def main():
     # ---- 輸出
     if "E1_渲染同環境" in results:
         sims, labels, _ = make_pairs(b_base, lambda a, b: True, lambda a, b: True, label="E1_threshold")
-        fig_threshold(sims, labels, OUT / "fig-threshold.png")
+        fig_threshold(sims, labels, OUT / f"fig-threshold{args.out_suffix}.png")
 
     if curves:
-        fig_roc(curves, OUT / "fig-roc.png")
-        fig_bar({k: v for k, v in results.items() if v.get("auc") is not None}, OUT / "fig-auc.png")
+        fig_roc(curves, OUT / f"fig-roc{args.out_suffix}.png")
+        fig_bar({k: v for k, v in results.items() if v.get("auc") is not None}, OUT / f"fig-auc{args.out_suffix}.png")
 
-    (OUT / "metrics.json").write_text(
+    (OUT / f"metrics{args.out_suffix}.json").write_text(
         json.dumps(dict(generated=__import__("time").strftime("%Y-%m-%dT%H:%M:%S"),
                         clip_model=scorer.model_name, seed=SEED, results=results), ensure_ascii=False, indent=1),
         encoding="utf-8")
-    write_report(rows, results)
-    print(f"\n[done] 結果在 {OUT.relative_to(ROOT)}/（metrics.json、report.md、fig-*.png/svg）")
+    write_report(rows, results, args.out_suffix)
+    print(f"\n[done] 結果在 {OUT.relative_to(ROOT)}/（metrics{args.out_suffix}.json、report{args.out_suffix}.md、fig-*.png）")
 
 
-def write_report(rows, results):
+def write_report(rows, results, suffix: str = ""):
     L = []
     A = L.append
     A("# 建築記憶點 · 重辨識評測報告\n")
@@ -486,7 +502,7 @@ def write_report(rows, results):
     A("- 跨條件（不同仰角、距離、光照）性能會下降，這正是實拍情境，也是需要 GPS 先驗輔助的原因。")
     A("- 渲染影像非真實照片：本報告的用途是**受控實驗**，真實世界的準確率需由實拍資料集驗證（見 `photos-src/real/`）。")
     A("- 樣本量限制：分類實驗（E6）實際類別僅涵蓋 3 類，僅作 sanity check，不能宣稱 12 類準確率。\n")
-    (OUT / "report.md").write_text("\n".join(L), encoding="utf-8")
+    (OUT / f"report{suffix}.md").write_text("\n".join(L), encoding="utf-8")
 
 
 if __name__ == "__main__":

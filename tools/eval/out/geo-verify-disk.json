@@ -1,0 +1,20 @@
+{
+ "method": "DISK + LightGlue",
+ "stats": {
+  "total": 10,
+  "same": 9,
+  "diff": 1,
+  "base_tp": 9,
+  "base_fp": 1,
+  "geo_tp": 0,
+  "geo_fp": 0,
+  "geo_rejected_same": 9,
+  "geo_rejected_diff": 1
+ },
+ "params": {
+  "method": "disk",
+  "pairs": 10,
+  "global_thr": 0.15,
+  "min_inliers": 15
+ }
+}

@@ -1,0 +1,173 @@
+{
+ "generated": "2026-09-26T10:40:00",
+ "why": "參考照片的品管清單。嵌入庫的品質上限就是參考照片的品質：主體不是這棟建築的照片（室內、特寫、裝飾、別的建築）會把該棟向量拉偏，並在檢索時變成黑洞。build_embeddings.py 會讀這份檔案，把 exclude 清單排除、把 exclude_buildings 整棟移除。",
+ "how": [
+  "1. python tools/recognize/audit_references.py —— 對每張參考照片跑一次 YOLO（與前端同一顆模型，imgsz=768），看主體框屬於哪一類，輸出 tools/recognize/out/ref-audit.json",
+  "2. python tools/recognize/make_user_sheets.py —— 把使用者提供的本機資料夾（857 張、29 棟）拼成聯絡表 out/user-sheets/",
+  "3. python tools/recognize/make_detail_sheet.py <id> —— 把「已匯入的照片」放大成 out/detail/<id>.jpg，逐張確認主體",
+  "4. 人工逐張看圖確認（AI 只看 YOLO 判定不夠：偵測不到不等於照片錯，旅遊塔、大炮台、觀音蓮像本身就是偵測器的弱項）",
+  "5. 把確認「主體不是這棟建築」的檔案列進下面的 exclude"
+ ],
+ "sources": {
+  "user-provided": {
+   "path": "C:\\Users\\LINKIT\\Desktop\\澳门著名建筑图片",
+   "note": "使用者提供的本機照片，857 張、29 棟。逐張看過 out/user-sheets/ 的 29 張聯絡表後，只匯入 242 張（每棟 3~10 張）。出處記錄：photos-src/cc/ATTRIBUTION-user-provided.csv",
+   "license": "使用者提供，未標示個別授權；僅用於本專案內部辨識評測，不對外散布"
+  },
+  "wikimedia": {
+   "note": "舊有 101 張與本輪抓取的照片，皆為 CC／公有領域，出處記錄：photos-src/cc/ATTRIBUTION.csv（舊）與 photos-src/cc/ATTRIBUTION-references.csv（本輪）",
+   "access_note": "本機無法直連 Wikimedia（實測 40 次全失敗），改用 api.allorigins.win 取 API、wsrv.nl 取圖；tools/recognize/fetch_references.py 有完整說明"
+  }
+ },
+ "exclude": [
+  {
+   "file": "cathedral-macau/Igreja_da_Sé_2011c.JPG",
+   "seen": "教堂窗戶的反光與窗框特寫",
+   "why": "看不到建築外觀"
+  },
+  {
+   "file": "cathedral-macau/Igreja_da_Sé_2011d.JPG",
+   "seen": "葡式瓷磚牆與盆栽",
+   "why": "只是牆面細節，無法代表主教座堂"
+  },
+  {
+   "file": "coloane-village/Coloane_Village_Macau_2052762780_.jpg",
+   "seen": "船廠鐵皮棚（室內）",
+   "why": "與路環市區街景無關"
+  },
+  {
+   "file": "grand-lisboa/Grand_Lisboa_Macau_5234409413_.jpg",
+   "seen": "新葡京的玻璃帷幕反射",
+   "why": "抽象反射，看不到建築"
+  },
+  {
+   "file": "grand-lisboa/Grand_Lisboa_Macau_5234996532_.jpg",
+   "seen": "從松山遠望的市景",
+   "why": "主體不是新葡京"
+  },
+  {
+   "file": "guiuan-village/Taipa_Old_Town_decoration_01-02-2023_2_.jpg",
+   "seen": "節慶裝飾特寫",
+   "why": "不是建築"
+  },
+  {
+   "file": "lai-chi-vun/Lai_Chi_Vun_Shipyards_baord_03-07-2023.jpg",
+   "seen": "解說告示板",
+   "why": "不是建築"
+  },
+  {
+   "file": "leal-senado/Leal_Senado_Macau_5239491313_.jpg",
+   "seen": "葡人石像特寫（花園裡的雕像）",
+   "why": "看不到民政總署大樓"
+  },
+  {
+   "file": "leal-senado/Leal_Senado_Macau_5239499023_.jpg",
+   "seen": "粉紅色花卉特寫",
+   "why": "看不到建築"
+  },
+  {
+   "file": "mandarins-house/Mandarin_s_House_24-02-2023_4_.jpg",
+   "seen": "庭院裡的植物與小徑",
+   "why": "看不到鄭家大屋的建築量體"
+  },
+  {
+   "file": "red-market/Red_Market_Library_inside_08-08-2023_1_.jpg",
+   "seen": "室內圖書館",
+   "why": "看不到街市建築外觀"
+  },
+  {
+   "file": "rua-da-felicidade/_Rua_da_Felicidade_at_night.jpg",
+   "seen": "夜間街道特寫",
+   "why": "畫面幾乎全黑，看不出街屋立面"
+  },
+  {
+   "file": "senado-square/Macau_Senate_Square_at_Night.jpg",
+   "seen": "夜間廣場（只偵測到教堂一角）",
+   "why": "看不出議事亭前地的整體樣貌"
+  },
+  {
+   "file": "senado-square/Senado_Square_YF_ST.jpg",
+   "seen": "被盆栽遮住的立面",
+   "why": "主體被遮蔽"
+  },
+  {
+   "file": "st-lawrence-church/MC_澳門_Macau_澳門半島_Macao_Peninsula_風順堂區_São_Lourenço_St._Lawrence_s_Chur.jpg",
+   "seen": "教堂立面局部／鄰棟（同系列同角度）",
+   "why": "與保留的那張同角度且主體不明；五張只留最能代表建築的一張"
+  },
+  {
+   "file": "the-venetian/Macau_Venetian_Macao_McDonalds_Shop_a.jpg",
+   "seen": "麥當勞門面（美食廣場裡的速食店招牌與櫃檯）",
+   "why": "★ 這是上一輪就抓到的同類錯誤：照片主體是速食店，完全看不到威尼斯人建築。已從資料夾刪除。",
+   "source": "wikimedia"
+  },
+  {
+   "file": "the-venetian/The_Venetian_Macao_澳門威尼斯人_-_panoramio.jpg",
+   "seen": "樹叢與水面反射（畫面找不到建築量體，只看得到綠樹倒影）",
+   "why": "看不到威尼斯人的建築外觀。已從資料夾刪除。",
+   "source": "wikimedia"
+  },
+  {
+   "file": "the-venetian/The_Venetian_Macao_澳門威尼斯人_-_panoramio_1_.jpg",
+   "seen": "大運河購物中心的運河與店鋪立面（室內）",
+   "why": "室內運河街景，不是飯店外觀。已從資料夾刪除。",
+   "source": "wikimedia"
+  }
+ ],
+ "manual_rejections_from_user_folder": {
+  "note": "使用者提供的 857 張裡，逐張看聯絡表後**沒有匯入**的照片類型。這些檔案留在使用者原資料夾，未複製進 photos-src/。",
+  "by_building": {
+   "the-venetian": "03 室內大運河購物中心運河、04 天幕壁畫細節",
+   "mandarins-house": "02 室內房間（有冰箱）、03 室內木構、04 紀念品店、05 圓窗框景（只剩下窗框）、08 庭院牆面、09 內部門廊",
+   "macau-tower": "00 從塔內透明地板往下拍（畫面是自己的鞋子）——與上一輪剔除的錯誤同型，這次在挑選階段就排除",
+   "dom-pedro-v-theatre": "03 帶『MORI』浮水印的圖庫照片、09 被樹擋住、13 夜間屋頂特寫",
+   "fortress-monte": "大量大炮特寫（單一炮管佔滿畫面）、03 城牆（沒有建築本體）",
+   "kun-iam-statue": "雕像頭部／身體特寫（畫面只有雕像局部）、帶『大眾點評』浮水印的照片、QR 立牌",
+   "macau-museum": "36 張館內展品與展廳（兵馬俑、瓷器、船模型、展櫃）；只有 01、04、05 拍到白色外牆與柱廊的建築本體",
+   "grand-prix-museum": "25 張館內賽車展品與展廳；只有 03、06、07 拍到白色格紋外牆的建築本體",
+   "fishermans-wharf": "海景、碼頭、招牌、『漁人碼頭』字樣牆面、室內；只有 04、05、14、20 拍到建築",
+   "portas-do-cerco": "06、10、11、14、15、16、18、19、21、22、25、26、27 是**歷史明信片與舊照片**（19 世紀關閘、帶手寫文字），不是現代實景；已排除",
+   "mgm-macau": "24、25、28 是拼貼式圖片（含大眾點評浮水印、賽車／大賽車博物館等無關內容）",
+   "wynn-macau": "02、05、09、12 是噴泉燈光秀特寫與館內畫面",
+   "macau-cultural-centre": "27 玻璃帷幕近距離抽象反光、08 幾何立面細節"
+  }
+ },
+ "exclude_buildings": {
+  "st-paul-street": "5 張參考照片沒有一張拍出『大三巴街』的街屋立面（YOLO 全部判為 casino_hotel/village/無框），實質是別的地方。依『寧可移除也不要留壞圖』的原則整棟從嵌入庫移除。本輪已確認使用者提供的 29 棟裡沒有大三巴街，故維持移除。",
+  "lin-fung-temple": "本輪從 Wikimedia 抓到的 5 張蓮峰廟照片，經目視與稽核後**未納入**：使用者提供了 29 棟、857 張本機照片，涵蓋面更廣且品質更高，因此本輪改以本機照片為主；這幾棟不在使用者清單內，為避免拉低留一法準確率先擱置在 photos-src/_hold/。",
+  "sam-kai-vui-kun": "同上（擱置於 photos-src/_hold/sam-kai-vui-kun）",
+  "santa-sancha": "同上（擱置於 photos-src/_hold/santa-sancha）",
+  "st-augustine-church": "同上（擱置於 photos-src/_hold/st-augustine-church）"
+ },
+ "class_notes": {
+  "mandarins-house": "自訂類別 tong_lau（騎樓與唐樓）與 YOLO 的判定不符：鄭家大屋是嶺南院落式大宅，YOLO 判為 portuguese(0.90)。這是資料庫的類別定義問題，不是照片問題，因此在 BUILDINGS 加上 accept_cls portuguese／village，照片保留。",
+  "dom-pedro-v-theatre": "崗頂劇院是新古典主義劇院，11 類裡沒有對應類別，YOLO 一律判 monument(0.8)。加 accept_cls monument／portuguese。",
+  "lou-kau-house": "盧家大屋同樣是嶺南院落式大宅（與鄭家大屋同型），YOLO 判 portuguese／village，加 accept_cls。",
+  "macau-tower": "旅遊塔在 11 類裡沒有對應類別（civic 只是勉強對應），YOLO 對塔狀建築幾乎偵測不到（17 張只有 1 張有框）。**這是分類器的已知限制，不是照片問題**：已逐張看過 out/detail/macau-tower.jpg 確認 14 張都是旅遊塔本體（塔身、塔樓、夜拍、與友誼大橋同框），1 張（u01）是從塔內透明地板往下拍、畫面是自己的鞋子，已於挑選階段排除。因此 macau-tower 保留在庫中，但稽核的 ok 數天生偏低。",
+  "fortress-monte": "大炮台：9 張裡 YOLO 只框到 3 張（判 industrial／casino_hotel／temple）且 6 張完全無框。已逐張看過 out/detail/fortress-monte.jpg 確認畫面是大炮台的城牆、稜堡與平台（含從高處俯瞰的整體量體）。這是偵測器對『炮台／城牆』這種非建築量體型態的弱項。",
+  "kun-iam-statue": "觀音蓮花苑：10 張裡 9 張無框。已逐張看過 out/detail/kun-iam-statue.jpg 確認都是觀音像與蓮花座本體（含遠景、不同光線）。雕像不是資料庫 11 類涵蓋的物件型態。",
+  "wynn-palace": "永利皇宮：8 張裡 YOLO 判 market／village 或無框。已逐張看過 out/user-sheets/wynn-palace-1.jpg 確認是永利皇宮本體（夜間纜車與噴泉前、白天全景）。偵測器把鏡面玻璃帷幕的高樓判成 market 是明顯誤判。",
+  "macau-museum": "澳門博物館：39 張裡只有 3 張拍到建築本體（白色外牆與柱廊），其餘 36 張都是館內展品。YOLO 對這 3 張判 village／church。已逐張確認。",
+  "grand-prix-museum": "澳門大賽車博物館：28 張裡只有 3 張拍到建築本體（白色格紋外牆），其餘是館內賽車展品。剛好達到 3 張門檻。",
+  "fishermans-wharf": "澳門漁人碼頭：27 張裡只有 4 張拍到建築（羅馬表演場、角鬥士雕像拱門、白建築運河、仿羅馬廢墟），其餘是海景與碼頭。剛好超過 3 張門檻。",
+  "3d-demo-screenshots": "photos-src/demo 的 6 張是本站三維模型截圖（白底），YOLO 一律判為 market。它們的用途是「用自己網站的模型截圖去查」，仍保留。"
+ },
+ "detector_misses_verified_by_eye": {
+  "note": "下列張數是「YOLO 沒框到或判錯，但我已逐張目視確認主體正確」——稽核的 ok 數因此低估了實際合格張數。這是分類器的限制，不是資料品質問題。",
+  "macau-tower": "14 張（17 張裡只有 1 張被框到）",
+  "kun-iam-statue": "9 張（10 張裡 9 張無框）",
+  "fortress-monte": "9 張（6 張無框、3 張判錯類別）",
+  "the-venetian": "11 張（13 張裡只有 2 張被框到；扣掉 2 張非建築後仍有 11 張是建築外觀）",
+  "wynn-palace": "8 張",
+  "wynn-macau": "6 張",
+  "galaxy-macau": "8 張",
+  "portas-do-cerco": "5 張無框（關閘拱門是單一拱形構造）",
+  "guia-fortress": "6 張無框（燈塔與炮台）",
+  "macau-science-center": "6 張（4 張無框、2 張判錯類別）",
+  "parisian": "7 張（6 張無框）",
+  "macau-museum": "3 張（判 village／church）",
+  "grand-prix-museum": "2 張（判 casino_hotel／market）",
+  "fishermans-wharf": "3 張（2 張無框、1 張判 church）"
+ },
+ "exclude_history": []
+}
