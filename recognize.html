@@ -151,8 +151,11 @@
           模型與 WASM 全部放在本機 <code>public/ort/</code>、<code>public/models/</code>（不連 CDN，離線可用）；
           嵌入庫 <code>public/data/memory-embeddings.json</code> 由 <code>tools/recognize/build_embeddings.py</code> 產生。<br />
           資料庫是 <b>SQLite（sqlite-wasm）</b>：<code>src/recognize/db.js</code> 建 <code>buildings</code> 表
-          ＋ <code>buildings_rtree</code> 空間索引（半徑 50 公尺查重）。這一階段資料庫在<b>記憶體</b>裡，
-          重新整理會清空——請用「③ 普查資料庫」的<b>匯出 JSON／.sqlite</b> 保存（每一筆同時鏡射一份到 localStorage）。<br />
+          ＋ <code>buildings_rtree</code> 空間索引（半徑 50 公尺查重）。<b>資料會自動保存在這個裝置</b>：
+          優先寫進 <b>OPFS</b>（容量無上限），瀏覽器不支援時退回 <b>localStorage</b>（約 5 MB），
+          兩者都不能用才會只剩記憶體（此時資料庫面板會出現紅色警示）。每次新增／改狀態都會存檔，
+          重新整理後自動還原；仍可用「③ 普查資料庫」的<b>匯出 JSON／.sqlite</b>額外備份。
+          目前用哪一種儲存、最後儲存時間與錯誤，都顯示在「③ 普查資料庫」與下方診斷區塊。<br />
           定位是<b>多次取樣＋精度加權</b>（<code>src/recognize/geolocate.js</code>）：一定顯示精度半徑；
           精度差會警示並自動展開手動定位，手動座標的來源記為 <code>manual</code>。
         </p></details>

@@ -13,17 +13,16 @@
 //   · 精度差／讀數跳動過大就跳警示，並**自動展開**手動定位地圖
 //   · 手動座標會蓋掉 GPS 座標，geo_source 記成 manual（原 GPS 讀數留在 geo_note）
 
-import { insertBuilding, findNearby, peekNextCode, dbState, fmtLatLng, countBuildings } from "./db.js";
+import { insertBuilding, findNearby, peekNextCode, dbState, persistenceStatus, flushPersistence, fmtLatLng, countBuildings } from "./db.js";
 import { createGeoSession, GEO_PLANS, DEFAULT_PLAN, progressText, GEO_STOP_ZH, geoWarnings } from "./geolocate.js";
 import { SurveyMiniMap } from "./minimap.js";
-import { appendMirror, mirrorCodes } from "./ledger.js";
+import { appendMirror, mirrorCodes, MIRROR_KEY } from "./ledger.js";
 import { CLASS_ZH, clsZh } from "./labels.js";
 import { geoSourceZh, round5, summarizeSamples } from "./geo-math.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const NEARBY_RADIUS_M = 50;      // 普查的空間查重半徑（需求單指定 50 公尺）
-const MIRROR_KEY = "macau-memory.pending-discoveries";
 
 export function createSurvey({
   host,
@@ -158,13 +157,18 @@ export function createSurvey({
   function updateDbState() {
     const el = $("#rc-nd-dbstate");
     const s = dbState();
+    const ps = persistenceStatus();
     st.dbReady = s.ready;
     st.dbError = s.error;
     if (!el) return;
-    el.className = `rc-nd-dbstate ${s.ready ? "ok" : "bad"}`;
-    el.textContent = s.ready
-      ? `✓ 建檔服務已就緒 · ${s.persistent ? "資料會保留在此裝置" : "本次資料請在重新整理前匯出保存"}`
-      : `SQLite 尚未就緒${s.error ? `：${s.error}` : "（載入中…）"}`;
+    el.className = `rc-nd-dbstate ${s.ready ? (ps.persistent ? "ok" : "bad") : "bad"}`;
+    if (!s.ready) { el.textContent = `SQLite 尚未就緒${s.error ? `：${s.error}` : "（載入中…）"}`; return; }
+    const last = ps.lastSaveError
+      ? `⚠ 儲存失敗：${ps.lastSaveError.message}`
+      : ps.lastSavedAt ? `最後儲存 ${String(ps.lastSavedAt).slice(11, 19)}` : "尚未儲存";
+    el.textContent = ps.persistent
+      ? `✓ 建檔服務已就緒 · 資料保存在此裝置（${ps.label}）· ${last}`
+      : `⚠ 目前是「記憶體（重整即清空）」：重新整理後資料會消失——請先匯出，或改用 Chrome／Edge`;
   }
 
   // ---------------------------------------------------------------- 狀態文字
@@ -509,11 +513,12 @@ export function createSurvey({
     st.lastInserted = inserted;
 
     // ③ 畫面回饋
+    const ps = persistenceStatus();
     const okEl = $("#rc-nd-ok");
     if (okEl) {
       okEl.hidden = false;
       okEl.innerHTML = inserted
-        ? `✓ 已寫入 SQLite：<b>${esc(inserted.code)}</b>（${esc(clsZh(inserted.type))} · ${esc(inserted.name)}） · 目前共 <b>${countBuildings()}</b> 筆${mirrored ? " · 本機備份也寫入成功" : " · ⚠️ 本機備份寫入失敗"}`
+        ? `✓ 已寫入 SQLite：<b>${esc(inserted.code)}</b>（${esc(clsZh(inserted.type))} · ${esc(inserted.name)}） · 目前共 <b>${countBuildings()}</b> 筆${mirrored ? " · 本機備份也寫入成功" : " · ⚠️ 本機備份寫入失敗"}${ps.persistent ? ` · 已自動保存在此裝置（${esc(ps.label)}）` : " · <span class=\"rc-danger\">⚠️ 只在記憶體，重新整理會消失</span>"}`
         : `<span class="rc-bad">⚠️ SQLite 寫入失敗：${esc(dbError)}</span>——這一筆只寫進本機備份（localStorage ${MIRROR_KEY}）。`;
     }
     const jsonEl = $("#rc-nd-json");

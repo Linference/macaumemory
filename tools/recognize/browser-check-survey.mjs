@@ -1,4 +1,5 @@
-// 端到端驗證「普查建檔」這條主流程：辨識 → GPS 精準定位 → 編號 → SQLite → R-Tree 查重 → 匯出。
+// 端到端驗證「普查建檔」這條主流程：辨識 → GPS 精準定位 → 編號 → SQLite → R-Tree 查重 → 匯出
+//                          ＋ 持久化（重新整理後資料還在）→ 舊備份救援 → 節流落地 → 配額失敗。
 //
 // 為什麼要另一支（browser-check.mjs / browser-check-discover.mjs 之外）：
 //   那兩支驗的是「模型能不能跑」「查重結論對不對」。這一輪新增的是資料庫、GPS 多次取樣、
@@ -6,6 +7,22 @@
 //     · 用 CDP 的 Emulation.setGeolocationOverride 造出「有 GPS」「精度很差」「讀數跳動」三種情境
 //     · 從資料庫把寫進去的資料讀回來比對（不是只看畫面文字）
 //     · 把匯出的 .sqlite 檔用 sqlite-wasm（Node 建置）打開，確認它是可攜的真的 SQLite 檔
+//
+// ─────────────────────────────────────────────────────────────────────────
+// ⚠️ 這一版把 ⑭ 的斷言方向反過來了（**不是**為了讓測試好過，是產品行為真的修好了）
+// ─────────────────────────────────────────────────────────────────────────
+// 原本 ⑭ 的斷言是：
+//     ok(after.total === 0, "重新整理後記憶體資料庫是空的（第一階段不做 OPFS 持久化的已知行為）");
+//     ok(after.persistent === false && after.persistence === "memory", "...第二階段換 OPFS");
+// 它記錄的是「資料庫只活在記憶體」這個**已知缺陷**：使用者重新整理後 DB 0 筆、備份卻有 4 筆。
+// 這一輪把持久化做出來（OPFS／localStorage，見 src/recognize/db.js），所以那兩條斷言現在
+// 必須**反過來**，而且驗得比原本更嚴：
+//     · 重新整理（真的 page.reload）後筆數、編號、欄位（類型／名稱／狀態／座標／精度／樣本數／
+//       來源／定位時間／建立時間）都要一模一樣
+//     · 持久化方式不得是 memory，而且 UI（資料庫面板＋診斷區塊）要看得到是哪一種
+//     · 再加三組新測試：重整後續建編號不衝突、舊 localStorage 鏡射要被救援進資料庫、
+//       連續快速存 3 筆後「立刻」重整也不能掉資料（節流＋關頁前強制落地）
+// 也就是說：原本只驗「有沒有壞」，現在驗「有沒有真的存下來」。
 //
 // 用法：node tools/recognize/browser-check-survey.mjs
 //   前置：Vite dev server（5173）。這一支不需要 5180 的照片伺服器（不跑模型，直接注入辨識結果）。
@@ -64,6 +81,14 @@ try {
   await client.send("Browser.setDownloadBehavior", { behavior: "allow", downloadPath: DOWNLOADS });
   const setGeo = (c) => client.send("Emulation.setGeolocationOverride", { latitude: c.lat, longitude: c.lng, accuracy: c.accuracy ?? 8 });
   await setGeo({ ...A, accuracy: 8 });
+  /** 每次重新整理後遮罩都會回來（模型在背景載入）：程式點掉它，免得擋住後面的點擊 */
+  const dismissOverlay = async () => {
+    await page.evaluate(() => document.querySelector("#rc-overlay-skip")?.click());
+    await page.waitForFunction(() => {
+      const o = document.querySelector("#rc-overlay");
+      return !o || o.hidden || o.classList.contains("gone");
+    }, { timeout: 30000, polling: 100 }).catch(() => {});
+  };
 
   await page.setViewport({ width: 1440, height: 1200, deviceScaleFactor: 1 });
   page.on("console", (m) => {
@@ -81,20 +106,38 @@ try {
   await page.goto(URL_, { waitUntil: "domcontentloaded", timeout: 120000 });
 
   // ---------------------------------------------------------------- ① SQLite 就緒
-  log("\n① SQLite（sqlite-wasm）在瀏覽器裡的就緒狀態");
+  log("\n① SQLite（sqlite-wasm）在瀏覽器裡的就緒狀態＋持久化 provider");
   await page.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
   const db = await page.evaluate(() => window.__survey.db);
   log(`  ${JSON.stringify(db)}`);
   ok(db.ready, "SQLite 已就緒（sqlite-wasm）");
   ok(db.schemaVersion === 1, `schema v1（實得 v${db.schemaVersion}）`);
   ok(/SQLite/.test(db.engine ?? ""), `引擎字串：${db.engine}`);
+  ok(db.persistent === true && db.persistence !== "memory",
+    `自動挑到可持久化的 provider（${db.persistence}／${db.persistenceLabel}），不是記憶體`);
   const wasmReq = await page.evaluate(() => performance.getEntriesByType("resource").filter((e) => /sqlite3\.wasm/.test(e.name)).map((e) => ({ url: e.name.split("/").slice(-1)[0], bytes: e.transferSize, ms: Math.round(e.duration) })));
   log(`  sqlite3.wasm 請求：${JSON.stringify(wasmReq)}`);
   ok(wasmReq.length > 0, "sqlite3.wasm 是走 Vite 的資產 URL 載入的（不是 public/ 的 import）");
 
   // 先把載入遮罩關掉（模型在背景繼續載；這支測試不跑模型）
-  await page.evaluate(() => document.querySelector("#rc-overlay-skip")?.click());
-  await new Promise((r) => setTimeout(r, 400));
+  await dismissOverlay();
+  await page.evaluate(() => localStorage.removeItem("macau-memory.pending-discoveries"));
+
+  // 這一輪之後的斷言都假設「從 0 筆開始」：先把裝置上的存檔與資料庫清乾淨再重新整理。
+  // 這樣即使測試被跑在一個帶著舊資料的 profile 上（例如 --user-data-dir）也不會誤判，
+  // 同時也驗證「持久化不只能寫，也能清」。
+  log("  → 清空裝置上的存檔＋資料庫，重新整理確認真的是 0 筆");
+  await page.evaluate(async () => { await window.__survey.wipeAll(); });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+  const fresh = await page.evaluate(() => ({
+    total: window.__survey.total,
+    persistence: window.__survey.db.persistence,
+    restored: window.__survey.db.restoredFrom,
+  }));
+  log(`  清空後重新整理：${fresh.total} 筆 · provider=${fresh.persistence} · 還原=${JSON.stringify(fresh.restored)}`);
+  ok(fresh.total === 0, `清空後重新整理仍是 0 筆（實得 ${fresh.total}）`);
+  await dismissOverlay();
   await page.evaluate(() => localStorage.removeItem("macau-memory.pending-discoveries"));
 
   // ---------------------------------------------------------------- ② 注入辨識結果 → 建檔區塊出現
@@ -286,13 +329,20 @@ try {
 
   // ---------------------------------------------------------------- ⑦ 手動定位（點地圖）
   log("\n⑦ 手動定位：在地圖上點一下 → 座標改成手動（geo_source=manual）");
+  // 先把地圖捲進視窗中央再量座標：這一頁在表格上方累積了很高的內容，地圖的頂端會落在
+  // 視窗下緣之外（實測 y≈1112、高度 280 → 點擊點 1230 > 視窗 1200），
+  // page.mouse.click 打在視窗外就等於沒點到（原本這一段有 10 條斷言因此失敗）。
+  // 這只是把「使用者真的點得到地圖」這件事做對，斷言本身沒有放寬。
+  await page.evaluate(() => document.querySelector("#rc-nd-minimap")?.scrollIntoView({ block: "center" }));
+  await new Promise((r) => setTimeout(r, 300));
   const mapBox = await page.evaluate(() => {
     const el = document.querySelector("#rc-nd-minimap");
     const r = el.getBoundingClientRect();
     return { x: r.x, y: r.y, w: r.width, h: r.height };
   });
-  log(`  地圖區塊：${JSON.stringify(mapBox)}`);
+  log(`  地圖區塊：${JSON.stringify(mapBox)}（視窗高 ${await page.evaluate(() => window.innerHeight)}）`);
   ok(mapBox.w > 100 && mapBox.h > 100, "地圖有實際尺寸（沒有被折疊成 0）");
+  ok(mapBox.y >= 0 && mapBox.y + mapBox.h <= await page.evaluate(() => window.innerHeight), "地圖完整落在視窗內（點擊才會真的打到地圖上）");
   // 建築輪廓是非同步載入的（7.8 MB），等一下再驗它真的畫上去了
   await page.waitForFunction(() => window.__survey.survey.state.minimap?.buildingsState === "ready", { timeout: 60000, polling: 500 })
     .then(() => log("  建築輪廓已載入完成"))
@@ -516,20 +566,319 @@ try {
   await page.screenshot({ path: resolve(OUT, "survey-10-手機.png"), fullPage: true });
   await page.setViewport({ width: 1440, height: 1200, deviceScaleFactor: 1 });
 
-  // ---------------------------------------------------------------- ⑭ 重新整理（第一階段：記憶體）
-  log("\n⑭ 重新整理後：SQLite 清空、本機備份還在（第一階段的已知限制）");
+  // ---------------------------------------------------------------- ⑭ 重新整理：資料必須還在
+  //
+  // 這是這一次修好的缺陷本體。舊版這裡驗的是「重新整理後記憶體資料庫是空的（已知行為）」——
+  // 那條斷言記錄的是缺陷、不是需求。現在反過來驗：重整後一個欄位都不能少。
+  log("\n⑭ 真的重新整理（page.reload）→ 資料必須還在，而且欄位一模一樣");
+  const preReload = await page.evaluate(() => ({
+    total: window.__survey.total,
+    buildings: window.__survey.json.buildings,
+    persistence: window.__survey.db.persistence,
+    label: window.__survey.db.persistenceLabel,
+  }));
+  log(`  重新整理前：${preReload.total} 筆 · provider=${preReload.persistence}（${preReload.label}）`);
   await page.reload({ waitUntil: "domcontentloaded" });
   await page.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
-  const after = await page.evaluate(() => ({
-    total: window.__survey.total,
-    mirror: JSON.parse(localStorage.getItem("macau-memory.pending-discoveries") ?? "[]").length,
-    persistence: window.__survey.db.persistence,
-    persistent: window.__survey.db.persistent,
-  }));
+  await page.waitForFunction(() => window.__survey.persistence.restoredFrom != null || window.__survey.total === 0, { timeout: 60000, polling: 100 });
+  await dismissOverlay();
+  const after = await page.evaluate(() => {
+    const rows = [...document.querySelectorAll("#diag-body .dg-row")].map((r) => r.textContent.replace(/\s+/g, " ").trim());
+    return {
+      total: window.__survey.total,
+      buildings: window.__survey.json.buildings,
+      mirror: JSON.parse(localStorage.getItem("macau-memory.pending-discoveries") ?? "[]").length,
+      persistence: window.__survey.db.persistence,
+      persistent: window.__survey.db.persistent,
+      label: window.__survey.db.persistenceLabel,
+      restored: window.__survey.db.restoredFrom,
+      lastSavedAt: window.__survey.db.lastSavedAt,
+      storage: document.querySelector("#rc-storage")?.textContent?.replace(/\s+/g, " ").trim(),
+      storageClass: document.querySelector("#rc-storage")?.className,
+      storageRow: rows.find((t) => t.startsWith("持久化方式")),
+      savedRow: rows.find((t) => t.startsWith("最後儲存")),
+      table: [...document.querySelectorAll("#rc-ledger-table tbody tr")].map((tr) => [...tr.children].map((td) => td.textContent.trim())),
+    };
+  });
   log(`  重新整理後：DB ${after.total} 筆 · 本機備份 ${after.mirror} 筆 · persistence=${after.persistence}`);
-  ok(after.total === 0, "重新整理後記憶體資料庫是空的（第一階段不做 OPFS 持久化的已知行為）");
+  log(`  還原來源：${JSON.stringify(after.restored)}`);
+  log(`  面板狀態條：${after.storage}`);
+  log(`  診斷列：${after.storageRow} ／ ${after.savedRow}`);
+  ok(after.total === preReload.total && after.total === s4.total,
+    `重新整理後資料還在：${after.total} 筆（修正前會是 0 筆）`);
+  const codesBefore = preReload.buildings.map((b) => b.code).join(" ");
+  const codesAfter = after.buildings.map((b) => b.code).join(" ");
+  ok(codesAfter === codesBefore, `編號完全一致：${codesAfter}`);
+  const b1a = preReload.buildings.find((x) => x.code.endsWith("-0001"));
+  const b1b = after.buildings.find((x) => x.code.endsWith("-0001"));
+  log(`  第一筆（重整前）：${JSON.stringify(b1a)}`);
+  log(`  第一筆（重整後）：${JSON.stringify(b1b)}`);
+  ok(!!b1b && b1b.type === b1a.type && b1b.name === b1a.name && b1b.status === b1a.status && b1b.createdAt === b1a.createdAt,
+    `第一筆的類型／名稱／狀態／建立時間都一致（${b1b?.type} / ${b1b?.name} / ${b1b?.createdAt}）`);
+  ok(b1b && b1b.location.lat === b1a.location.lat && b1b.location.lng === b1a.location.lng
+    && b1b.location.accuracyM === b1a.location.accuracyM && b1b.location.sampleCount === b1a.location.sampleCount
+    && b1b.location.source === b1a.location.source && b1b.location.capturedAt === b1a.location.capturedAt,
+    `座標／精度／樣本數／來源／定位時間都一致（${b1b?.location.lat}, ${b1b?.location.lng} ±${b1b?.location.accuracyM}m · ${b1b?.location.sampleCount} 次 · ${b1b?.location.source}）`);
+  ok(after.persistent === true && after.persistence !== "memory",
+    `持久化方式不是記憶體：${after.persistence}／${after.label}`);
   ok(after.mirror === s4.total, `本機備份仍在（${after.mirror} 筆）`);
-  ok(after.persistent === false && after.persistence === "memory", "持久化介面已預留但目前是 memory adapter（第二階段換 OPFS）");
+  ok(after.table.length === after.total, `記錄列表也還原了 ${after.table.length} 列`);
+  ok(!/重整即清空/.test(`${after.storage} ${after.storageRow}`),
+    "UI（資料庫面板狀態條＋診斷區塊）顯示的不是「記憶體（重整即清空）」");
+  ok(/OPFS|localStorage/.test(after.storageRow ?? ""), `診斷區塊明確顯示持久化方式：${after.storageRow}`);
+  ok(!!after.storageClass?.includes("rc-storage") && !after.storageClass.includes("s-danger"),
+    `狀態條是正常色（${after.storageClass}）：${after.storage}`);
+  await page.screenshot({ path: resolve(OUT, "survey-11-重整後資料還在.png"), fullPage: true });
+
+  // ---------------------------------------------------------------- ⑮ 重整後續建：編號不衝突
+  log("\n⑮ 重新整理後再建一筆 → 編號必須接續（不與已有的衝突）");
+  await context.overridePermissions(new URL(URL_).origin, ["geolocation"]);
+  await setGeo({ ...B, accuracy: 6 });
+  await inject(0.35, "church", "天主教教堂", "重整後續建.jpg");
+  await page.select("#rc-nd-geo-plan", "quick");            // change → 用「快速」計畫重新取樣（8 次 × 0.25 秒）
+  await page.waitForFunction(() => window.__survey.survey.state.session == null, { timeout: 30000, polling: 100 });
+  await new Promise((r) => setTimeout(r, 300));
+  const codePreview = await page.evaluate(() => ({ code: document.querySelector("#rc-nd-code")?.value, loc: window.__survey.survey.location }));
+  log(`  取樣結果：${codePreview.loc.lat}, ${codePreview.loc.lng}（${codePreview.loc.source}）· 預覽編號 ${codePreview.code}`);
+  ok(codePreview.code === `MM-${new Date().getFullYear()}-0005`, `重整後預覽編號接續到 0005（實得 ${codePreview.code}）`);
+  await page.evaluate(() => {
+    const n = document.querySelector("#rc-nd-name");
+    n.value = "重整後新建的教堂";
+    n.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  await page.click("#rc-nd-save");
+  await new Promise((r) => setTimeout(r, 700));
+  const s5 = await page.evaluate(() => ({
+    ok: document.querySelector("#rc-nd-ok")?.textContent?.replace(/\s+/g, " ").trim(),
+    codes: window.__survey.json.buildings.map((b) => b.code),
+    total: window.__survey.total,
+  }));
+  log(`  訊息：${s5.ok}`);
+  log(`  五筆：${s5.codes.join(" ")}`);
+  ok(s5.total === 5, `資料庫 5 筆（實得 ${s5.total}）`);
+  ok(new Set(s5.codes).size === 5, `五筆編號都不重複：${s5.codes.join(" ")}`);
+  ok(/0005/.test(s5.ok ?? ""), `新的一筆配到 0005（訊息：${s5.ok?.slice(0, 70)}）`);
+
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+  const after5 = await page.evaluate(() => ({ total: window.__survey.total, codes: window.__survey.json.buildings.map((b) => b.code) }));
+  log(`  再重新整理一次：${after5.total} 筆 · ${after5.codes.join(" ")}`);
+  ok(after5.total === 5 && after5.codes.join(" ") === s5.codes.join(" "), "第二次重新整理後 5 筆都還在（編號一致）");
+  await dismissOverlay();
+
+  // ---------------------------------------------------------------- ⑯ 救援：舊 localStorage 鏡射
+  log("\n⑯ 救援既有資料：使用者已經卡在 localStorage 鏡射裡的紀錄，第一次載入要遷進資料庫");
+  const legacy = await page.evaluate((year) => {
+    const KEY = "macau-memory.pending-discoveries";
+    const existing = JSON.parse(localStorage.getItem(KEY) ?? "[]");
+    const legacyRec = {
+      id: "legacy-1", code: "MM-2025-0777", createdAt: "2025-03-04T05:06:07.000Z", status: "pending",
+      building: {
+        name: "舊版鏡射・福隆新街 12 號", type: "tong_lau", typeZh: "騎樓與唐樓", note: "舊版只存在 localStorage",
+        location: {
+          source: "manual", lat: 22.19321, lng: 113.53987, accuracyM: null, sampleCount: 0,
+          gpsNote: "GPS 原讀數 22.19300, 113.53900 ±51.0m（手動修正）", unavailableReason: null, ok: true,
+        },
+      },
+      photo: { name: "legacy.jpg" }, detection: { source: "yolo", cls: "tong_lau", score: 0.66, box: { x: 10, y: 20, w: 100, h: 80 } },
+      dedup: { verdict: "尚未記錄", top1: { id: "ruins", zh: "大三巴牌坊", sim: 0.31 }, compared: 38 },
+      encoder: { name: "dinov2-s14", dim: 384 },
+    };
+    // 再塞一筆「編號與資料庫既有紀錄相同」的：必須被跳過（用 code 去重）
+    const dupRec = { ...legacyRec, id: "legacy-dup", code: `MM-${year}-0001`, building: { ...legacyRec.building, name: "重複編號不該被插入" } };
+    const next = [...existing, legacyRec, dupRec];
+    localStorage.setItem(KEY, JSON.stringify(next));
+    return { before: existing.length, total: next.length, legacyCode: legacyRec.code, dupCode: dupRec.code };
+  }, new Date().getFullYear());
+  log(`  鏡射：原本 ${legacy.before} 筆 → 塞入舊格式後 ${legacy.total} 筆（${legacy.legacyCode}＋重複的 ${legacy.dupCode}）`);
+
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+  await dismissOverlay();
+  const rescued = await page.evaluate(() => {
+    const rows = [...document.querySelectorAll("#diag-body .dg-row")].map((r) => r.textContent.replace(/\s+/g, " ").trim());
+    return {
+      total: window.__survey.total,
+      migration: window.__survey.db.migration,
+      buildings: window.__survey.json.buildings,
+      mirror: JSON.parse(localStorage.getItem("macau-memory.pending-discoveries") ?? "[]"),
+      storage: document.querySelector("#rc-storage")?.textContent?.replace(/\s+/g, " ").trim(),
+      rescueRow: rows.find((t) => t.startsWith("本機備份救援")),
+    };
+  });
+  log(`  遷移結果：${JSON.stringify(rescued.migration)}`);
+  log(`  面板：${rescued.storage}`);
+  log(`  診斷列：${rescued.rescueRow}`);
+  const oldRec = rescued.buildings.find((b) => b.code === "MM-2025-0777");
+  ok(rescued.migration?.inserted === 1, `只遷進 1 筆（重複編號那筆被跳過；inserted=${rescued.migration?.inserted} / skipped=${rescued.migration?.skipped}）`);
+  ok(rescued.total === 6, `資料庫變成 6 筆（5＋救援 1；實得 ${rescued.total}）`);
+  ok(!!oldRec, `舊鏡射那筆進資料庫了，編號原封不動保留 ${oldRec?.code}`);
+  ok(oldRec?.createdAt === "2025-03-04T05:06:07.000Z" && oldRec?.status === "pending" && oldRec?.name === "舊版鏡射・福隆新街 12 號",
+    `created_at / status / name 都保留（${oldRec?.createdAt} / ${oldRec?.status}）`);
+  ok(oldRec?.location.source === "manual" && oldRec?.location.lat === 22.19321 && oldRec?.location.lng === 113.53987 && oldRec?.location.accuracyM === null,
+    `座標與來源保留、精度如實為 null（${oldRec?.location.lat}, ${oldRec?.location.lng} · ${oldRec?.location.source}）`);
+  ok(oldRec?.location.note === "GPS 原讀數 22.19300, 113.53900 ±51.0m（手動修正）", `gpsNote 對應到 geo_note：${oldRec?.location.note}`);
+  ok(oldRec?.photo?.name === "legacy.jpg" && oldRec?.detection?.score === 0.66 && oldRec?.dedup?.compared === 38 && oldRec?.encoder === "dinov2-s14-384d",
+    `photo / detection / dedup / encoder 欄位對應正確（${oldRec?.photo?.name} / ${oldRec?.detection?.score} / ${oldRec?.dedup?.compared} / ${oldRec?.encoder}）`);
+  ok(rescued.buildings.filter((b) => b.code === `MM-${new Date().getFullYear()}-0001`).length === 1,
+    "重複編號的那筆沒有被插入第二次（用 code 去重）");
+  ok(rescued.mirror.some((r) => r.code === "MM-2025-0777"), "鏡射本身保留（第二層保險，沒有被刪掉）");
+  ok(/已從本機備份還原 1 筆/.test(`${rescued.storage} ${rescued.rescueRow}`), `UI 顯示「已從本機備份還原 1 筆」：${rescued.rescueRow}`);
+  await page.screenshot({ path: resolve(OUT, "survey-12-鏡射救援.png"), fullPage: true });
+
+  // 再重整一次：遷移必須是幂等的（同一筆不能一直重複插入）
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+  const idem = await page.evaluate(() => ({ total: window.__survey.total, migration: window.__survey.db.migration }));
+  log(`  再重整一次：${idem.total} 筆 · 遷移 ${JSON.stringify(idem.migration)}`);
+  ok(idem.total === 6 && idem.migration?.inserted === 0, `遷移是幂等的：第二次重整沒有再插入（${idem.total} 筆、inserted=${idem.migration?.inserted}）`);
+  await dismissOverlay();
+
+  // ---------------------------------------------------------------- ⑰ 節流＋關頁前落地
+  log("\n⑰ 節流：連續快速存 3 筆後「立刻」重新整理（不等節流窗）→ 3 筆都不能掉");
+  await context.overridePermissions(new URL(URL_).origin, ["geolocation"]);
+  await setGeo({ ...A, accuracy: 7 });
+  await inject(0.4, "temple", "中式廟宇", "節流測試.jpg");
+  await page.select("#rc-nd-geo-plan", "quick");
+  await page.waitForFunction(() => window.__survey.survey.state.session == null, { timeout: 30000, polling: 100 });
+  await new Promise((r) => setTimeout(r, 300));
+  const burstStart = Date.now();
+  for (let i = 1; i <= 3; i++) {
+    await page.evaluate((n) => {
+      const el = document.querySelector("#rc-nd-name");
+      el.value = n;
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+    }, `節流測試 ${i}`);
+    await page.click("#rc-nd-save");
+    await new Promise((r) => setTimeout(r, 80));            // 遠小於節流窗 350 ms
+  }
+  const burst = await page.evaluate(() => ({
+    total: window.__survey.total,
+    dirty: window.__survey.persistence.dirty,
+    saveCount: window.__survey.persistence.saveCount,
+  }));
+  log(`  連存 3 筆花了 ${Date.now() - burstStart} ms · DB ${burst.total} 筆 · 尚未落地(dirty)=${burst.dirty} · 累計存檔 ${burst.saveCount} 次`);
+  ok(burst.total === 9, `記憶體裡的資料庫 9 筆（實得 ${burst.total}）`);
+  ok(burst.dirty === true, "節流窗內仍標記為 dirty（證明真的有節流，不是每按一次就序列化整個 DB）");
+  // 立刻重整：非同步的 OPFS 寫入可能來不及完成，靠 pagehide 的同步快照救回來
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await page.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+  const throttled = await page.evaluate(() => ({
+    total: window.__survey.total,
+    names: window.__survey.json.buildings.map((b) => b.name),
+    codes: window.__survey.json.buildings.map((b) => b.code),
+    restored: window.__survey.db.restoredFrom,
+  }));
+  log(`  立刻重整後：${throttled.total} 筆 · 還原來源 ${JSON.stringify(throttled.restored)}`);
+  log(`  編號：${throttled.codes.join(" ")}`);
+  ok(throttled.total === 9, `節流＋關頁前落地：9 筆全部都在（實得 ${throttled.total}）`);
+  ok([1, 2, 3].every((i) => throttled.names.includes(`節流測試 ${i}`)), `三筆節流測試紀錄都在：${throttled.names.filter((n) => n?.startsWith("節流測試")).join(" / ")}`);
+  ok(new Set(throttled.codes).size === throttled.codes.length, `9 筆編號都不重複：${throttled.codes.join(" ")}`);
+  await dismissOverlay();
+
+  // ---------------------------------------------------------------- ⑱ 配額失敗要看得見
+  log("\n⑱ 配額失敗：模擬 localStorage 寫入丟 QuotaExceededError → 必須顯示可讀錯誤（不能靜默）");
+  {
+    const qp = await browser.newPage();
+    await qp.setViewport({ width: 1280, height: 1000 });
+    qp.on("pageerror", (e) => { problems.push(`[配額頁] pageerror: ${e.message}`); log(`  [配額頁 pageerror] ${e.message.slice(0, 300)}`); });
+    await qp.goto(`${URL_}?persist=localStorage`, { waitUntil: "domcontentloaded", timeout: 120000 });
+    await qp.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+    await qp.evaluate(() => document.querySelector("#rc-overlay-skip")?.click());
+    const prov = await qp.evaluate(() => ({ p: window.__survey.db.persistence, label: window.__survey.db.persistenceLabel }));
+    log(`  這頁的 provider：${prov.p}（${prov.label}）`);
+    ok(prov.p === "localStorage", `?persist=localStorage 有生效（實得 ${prov.p}）`);
+    // 這一頁與主測試共用同一個 origin 的 localStorage：先把自己的存檔與鏡射清乾淨，
+    // 再塞一筆「舊鏡射」進去（順便再走一次救援路徑），配額測試才不會被前面的資料干擾。
+    await qp.evaluate(async (year) => {
+      await window.__survey.wipeAll();
+      const KEY = "macau-memory.pending-discoveries";
+      localStorage.removeItem(KEY);
+      localStorage.setItem(KEY, JSON.stringify([{
+        code: `MM-${year}-0900`, createdAt: new Date().toISOString(), status: "pending",
+        building: { name: "配額測試用", type: "temple", location: { source: "manual", lat: 22.19, lng: 113.54 } },
+      }]));
+    }, new Date().getFullYear());
+    await qp.reload({ waitUntil: "domcontentloaded" });
+    await qp.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+    await qp.evaluate(() => document.querySelector("#rc-overlay-skip")?.click());
+    const beforeQuota = await qp.evaluate(() => ({ total: window.__survey.total, saved: window.__survey.persistence.lastSavedAt }));
+    log(`  配額測試前：${beforeQuota.total} 筆 · 最後儲存 ${beforeQuota.saved}`);
+    ok(beforeQuota.total === 1, `測試頁從乾淨狀態開始，只有救援進來的 1 筆（實得 ${beforeQuota.total}）`);
+
+    // monkey-patch：之後寫 DB 都丟 QuotaExceededError（模擬 localStorage 的 5 MB 額度爆掉）
+    await qp.evaluate(() => {
+      const orig = localStorage.setItem.bind(localStorage);
+      localStorage.setItem = (k, v) => {
+        if (k === "macau-memory.sqlite") { const e = new Error("quota"); e.name = "QuotaExceededError"; throw e; }
+        return orig(k, v);
+      };
+    });
+    const qres = await qp.evaluate(async () => {
+      const r = await window.__survey.flush({ force: true });
+      const rows = [...document.querySelectorAll("#diag-body .dg-row")].map((x) => x.textContent.replace(/\s+/g, " ").trim());
+      return {
+        flush: r,
+        err: window.__survey.persistence.lastSaveError,
+        dirty: window.__survey.persistence.dirty,
+        storage: document.querySelector("#rc-storage")?.textContent?.replace(/\s+/g, " ").trim(),
+        storageClass: document.querySelector("#rc-storage")?.className,
+        errRow: rows.find((t) => t.startsWith("儲存錯誤")),
+        total: window.__survey.total,
+        codes: window.__survey.json.buildings.map((b) => b.code),
+      };
+    });
+    log(`  flush 結果：${JSON.stringify(qres.flush).slice(0, 200)}`);
+    log(`  面板：${qres.storage}`);
+    log(`  診斷列：${qres.errRow}`);
+    ok(qres.flush?.ok === false && qres.flush?.quota === true, "寫入失敗有被回報（不是靜默吞掉）");
+    ok(/QuotaExceededError/.test(qres.err?.message ?? ""), `錯誤訊息指出是配額問題：${qres.err?.message?.slice(0, 52)}…`);
+    ok(/匯出 \.sqlite/.test(qres.err?.message ?? "") && /清空資料庫/.test(qres.err?.message ?? ""), "錯誤訊息附上可執行的建議（先匯出 .sqlite、再清空舊資料）");
+    ok(qres.storageClass?.includes("s-danger"), `資料庫面板轉成紅色警示（${qres.storageClass}）`);
+    ok(/儲存失敗/.test(qres.storage ?? "") && /QuotaExceededError/.test(qres.storage ?? ""), "面板文字顯示儲存失敗與原因");
+    ok(/儲存錯誤/.test(qres.errRow ?? "") && /QuotaExceededError/.test(qres.errRow ?? ""), `診斷區塊有「儲存錯誤」列：${qres.errRow?.slice(0, 90)}`);
+    ok(qres.dirty === true, "失敗後仍標記 dirty（下次會再重試）");
+    ok(qres.total === 1 && qres.codes.length === 1, "資料仍在記憶體裡，沒有因為存不進去就消失");
+    await qp.screenshot({ path: resolve(OUT, "survey-13-配額失敗.png"), fullPage: true });
+    await qp.close();
+  }
+
+  // ---------------------------------------------------------------- ⑲ 記憶體模式要紅色警示
+  log("\n⑲ 兩種儲存都不能用時（?persist=memory）：必須是紅色警示，不是靜靜地不存");
+  {
+    const mp = await browser.newPage();
+    await mp.setViewport({ width: 1280, height: 1000 });
+    await mp.goto(`${URL_}?persist=memory`, { waitUntil: "domcontentloaded", timeout: 120000 });
+    await mp.waitForFunction(() => window.__survey?.db?.ready === true, { timeout: 120000, polling: 200 });
+    await mp.evaluate(() => document.querySelector("#rc-overlay-skip")?.click());
+    await new Promise((r) => setTimeout(r, 400));
+    const mem = await mp.evaluate(() => {
+      const rows = [...document.querySelectorAll("#diag-body .dg-row")];
+      const persistRowEl = rows.find((x) => x.textContent.trim().startsWith("持久化方式"));
+      return {
+        persistence: window.__survey.db.persistence, label: window.__survey.db.persistenceLabel,
+        storage: document.querySelector("#rc-storage")?.textContent?.replace(/\s+/g, " ").trim(),
+        storageClass: document.querySelector("#rc-storage")?.className,
+        storageColor: getComputedStyle(document.querySelector("#rc-storage b")).color,
+        summary: document.querySelector("#rc-diag-summary")?.innerHTML ?? "",
+        persistRow: persistRowEl?.textContent?.replace(/\s+/g, " ").trim(),
+        persistRowHtml: persistRowEl?.innerHTML ?? "",
+        savedRow: rows.find((x) => x.textContent.trim().startsWith("最後儲存"))?.textContent?.replace(/\s+/g, " ").trim(),
+      };
+    });
+    log(`  面板：${mem.storage}`);
+    log(`  診斷列：${mem.persistRow} ／ ${mem.savedRow}`);
+    log(`  標題顏色：${mem.storageColor} · class=${mem.storageClass}`);
+    ok(mem.persistence === "memory" && mem.label.includes("記憶體"), `?persist=memory 生效（${mem.label}）`);
+    ok(mem.storageClass?.includes("s-danger"), `面板狀態條是紅色警示樣式（${mem.storageClass}）`);
+    ok(/重整即清空/.test(mem.storage ?? ""), "面板明確寫出「重整即清空」");
+    ok(/重整即清空/.test(mem.persistRow ?? "") && /dg-danger/.test(mem.persistRowHtml), `診斷區塊的持久化方式用紅色標示（dg-danger）：${mem.persistRow}`);
+    ok(/重整即清空|只在記憶體/.test(mem.summary) && /dg-danger/.test(mem.summary), `診斷摘要（不用展開）就有紅色警示：${mem.summary.replace(/<[^>]+>/g, "")}`);
+    ok(mem.storageColor === "rgb(176, 61, 36)", `紅色是 #b03d24（實得 ${mem.storageColor}）`);
+    ok(/匯出|Chrome/.test(mem.storage ?? ""), "有告訴使用者該怎麼做（先匯出／改用 Chrome）");
+    await mp.screenshot({ path: resolve(OUT, "survey-14-記憶體警示.png"), fullPage: true });
+    await mp.close();
+  }
 } finally {
   await browser.close();
 }

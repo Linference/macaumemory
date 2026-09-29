@@ -1,36 +1,29 @@
 // 澳門記憶 · 建築普查：資料庫面板（③ 普查資料庫）
 //
 // 負責：目前總筆數、依類型統計、記錄列表（檢視所有記錄）、匯出 JSON／.sqlite、
-// 以及 localStorage 的本機備份狀態。
+// 以及「這份資料到底存在哪裡」的持久化狀態。
 //
-// 為什麼還要 localStorage 備份：這一階段資料庫只存在記憶體（重新整理就空了，靠匯出檔
-// 保存）。把每一筆同時鏡射一份到 localStorage，重新整理後至少還看得到清單，
-// 第二階段接上 OPFS 之後這個備份就只是保險。鏡射記錄的欄位與舊版「標記為新發現」
-// 收集的格式相容（舊紀錄只有 cls/typeZh，讀取時兩種都吃）。
+// 關於 localStorage 備份：資料庫現在**真的會存下來**（OPFS 或 localStorage，見 db.js），
+// 逐筆鏡射（MIRROR_KEY）退居第二層保險——它是舊版唯一的保存方式，開機時會由
+// db.js 的 migrateMirrorRecords() 依 code 去重後補進資料庫。所以這一節顯示的是
+// 「備份幾筆 / 幾筆還沒進資料庫」，而不是「重新整理前請先匯出」。
 
 import {
-  countBuildings, stats, statsByType, listBuildings, dbState, lastQueries,
+  countBuildings, stats, statsByType, listBuildings, dbState, persistenceStatus, lastQueries,
   downloadJson, downloadSqlite, exportFilename, fmtLatLng, deleteAll,
+  MIRROR_KEY, readMirrorRecords, pendingMirrorCount,
 } from "./db.js";
 import { clsZh } from "./labels.js";
 import { geoSourceZh } from "./geo-math.js";
 
-export const MIRROR_KEY = "macau-memory.pending-discoveries";
+export { MIRROR_KEY };
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const $ = (s, root = document) => root.querySelector(s);
 
 // ------------------------------------------------------------------ 本機備份
-export function readMirror() {
-  try {
-    const raw = localStorage.getItem(MIRROR_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
-    return Array.isArray(arr) ? arr : [];
-  } catch (e) {
-    console.warn("[survey] 讀取本機備份失敗", e?.message ?? e);
-    return [];
-  }
-}
+/** 讀鏡射清單（實作在 db.js：遷移時要用同一份解析，避免兩套讀法不一致） */
+export const readMirror = readMirrorRecords;
 
 /** @returns {boolean} 是否真的寫進 localStorage */
 export function appendMirror(record) {
@@ -67,7 +60,7 @@ export function createLedger({ onNotice = () => {} } = {}) {
       <div>
         <span class="rc-section-kicker">YOUR CITY ARCHIVE</span>
         <h2>留下的城市記憶</h2>
-        <p class="hint">查看本次普查建立的建築檔案。<b>重新整理前請先匯出保存</b>；本機備份會另行保留。</p>
+        <p class="hint">查看本次普查建立的建築檔案。<b>資料會自動保存在此裝置</b>，重新整理不會消失；仍建議定期匯出留存。</p>
       </div>
       <div class="rc-ledger-actions">
         <button class="btn sec sm" id="rc-export-json">匯出 JSON</button>
@@ -76,6 +69,7 @@ export function createLedger({ onNotice = () => {} } = {}) {
         <button class="btn sec sm" id="rc-ledger-wipe" title="清空資料庫（示範／重新開始用）">清空資料庫</button>
       </div>
     </div>
+    <div class="rc-storage" id="rc-storage"></div>
     <div class="rc-ledger-summary" id="rc-ledger-summary">正在準備你的城市檔案…</div>
     <div class="rc-ledger-stats" id="rc-ledger-stats"></div>
     <div class="rc-ledger-table-wrap">
@@ -88,10 +82,50 @@ export function createLedger({ onNotice = () => {} } = {}) {
     </details>
     <div class="rc-ledger-mirror" id="rc-ledger-mirror"></div>`;
 
+  const hhmmss = (iso) => (iso ? String(iso).slice(11, 19) : "—");
+
+  /** 持久化狀態條：資料存在哪裡、存了幾筆、最後儲存時間、失敗訊息（全部要看得懂） */
+  function renderStorage() {
+    const el = $("#rc-storage");
+    if (!el) return;
+    const ps = persistenceStatus();
+    const st = dbState();
+    if (!st.ready) {
+      el.className = "rc-storage s-bad";
+      el.innerHTML = `<b>⚠ 資料庫未就緒</b><span>${esc(st.error ?? "載入中…")}</span>`;
+      return;
+    }
+    if (!ps.persistent) {
+      el.className = "rc-storage s-danger";
+      el.innerHTML = `<b>⚠ 目前是「記憶體（重整即清空）」——重新整理後資料會全部消失</b>
+        <span>這個瀏覽器沒有可用的本機儲存（${esc(ps.reason ?? "未知原因")}）。
+        請按「匯出 JSON／.sqlite」保存，或改用 Chrome／Edge 開啟本頁（支援 OPFS，容量無上限）。</span>`;
+      return;
+    }
+    const err = ps.lastSaveError;
+    el.className = `rc-storage ${err ? "s-danger" : "s-ok"}`;
+    const when = err
+      ? `⚠ 儲存失敗：${esc(err.message)}`
+      : ps.lastSavedAt
+        ? `✓ 最後儲存 ${hhmmss(ps.lastSavedAt)}（${(ps.lastSavedBytes / 1024).toFixed(0)} KB${ps.lastSaveMs != null ? ` · ${ps.lastSaveMs} ms` : ""}）`
+        : `尚未儲存`;
+    const extra = [
+      ps.restoredFrom?.rows ? `本次已從${ps.restoredFrom.source}還原 ${ps.restoredFrom.rows} 筆` : null,
+      ps.migration?.inserted ? `已從本機備份還原 ${ps.migration.inserted} 筆` : null,
+      ps.mirrorPending ? `本機備份還有 ${ps.mirrorPending} 筆待還原` : null,
+      ps.shadowError ? `備援快照：${ps.shadowError}` : null,
+      ps.restoreError ? `舊資料：${ps.restoreError}` : null,
+    ].filter(Boolean).join(" · ");
+    el.innerHTML = `<b>持久化方式：${esc(ps.label)}</b>
+      <span>${when}${extra ? ` · ${esc(extra)}` : ""}</span>`;
+  }
+
   function refresh() {
     let st = null;
     try { st = stats(); } catch (e) { st = null; }
     const state = dbState();
+    const ps = persistenceStatus();
+    renderStorage();
     const sum = $("#rc-ledger-summary");
     if (!state.ready) {
       sum.innerHTML = `<span class="rc-bad">資料庫未就緒</span>${state.error ? `：${esc(state.error)}` : ""}`;
@@ -103,7 +137,9 @@ export function createLedger({ onNotice = () => {} } = {}) {
         <div class="rc-ledger-metric"><span>已記錄位置</span><strong>${st.located}<small>筆</small></strong></div>
         <div class="rc-ledger-metric"><span>等待複核</span><strong>${st.pending}<small>筆</small></strong></div>
         <div class="rc-ledger-metric"><span>手動定位</span><strong>${st.manual}<small>筆</small></strong></div>
-        </div><p class="rc-ledger-detail">精度 &gt;30 公尺 ${st.poor} 筆 · 本次資料 ${(st.approxBytes / 1024).toFixed(0)} KB · 重新整理會清空本次資料庫，請使用上方按鈕匯出。</p>`;
+        </div><p class="rc-ledger-detail">精度 &gt;30 公尺 ${st.poor} 筆 · 本次資料 ${(st.approxBytes / 1024).toFixed(0)} KB · ${ps.persistent
+          ? `資料自動保存在此裝置（${esc(ps.label)}），重新整理不會消失；仍建議定期匯出備份。`
+          : `<span class="rc-danger">目前只存在記憶體，重新整理會清空——請立即用上方按鈕匯出。</span>`}</p>`;
       renderStats();
       renderTable();
     }
@@ -149,8 +185,14 @@ export function createLedger({ onNotice = () => {} } = {}) {
   function renderTech() {
     const q = lastQueries.nearby;
     const state = dbState();
+    const ps = persistenceStatus();
     $("#rc-ledger-sql").textContent = [
-      `資料庫：${state.ready ? "就緒" : "未就緒"} · schema v${state.schemaVersion ?? "—"} · 持久化 adapter：${state.persistence}（第二階段換 OPFS）`,
+      `資料庫：${state.ready ? "就緒" : "未就緒"} · schema v${state.schemaVersion ?? "—"} · 引擎 ${state.engine ?? "—"}`,
+      `持久化：${ps.label} · ${ps.persistent ? "重新整理後會自動還原" : "重新整理即清空"}${ps.reason ? `（${ps.reason}）` : ""}`,
+      ps.lastSavedAt ? `最後儲存：${ps.lastSavedAt}（${(ps.lastSavedBytes / 1024).toFixed(0)} KB · ${ps.lastSaveMs ?? "?"} ms · 累計 ${ps.saveCount} 次）` : "最後儲存：尚未儲存",
+      ps.restoredFrom ? `本次還原：${ps.restoredFrom.rows} 筆 ← ${ps.restoredFrom.source}${ps.restoredFrom.savedAt ? `（存於 ${ps.restoredFrom.savedAt}）` : ""}` : "",
+      ps.migration?.inserted ? `本機備份救援：已遷移 ${ps.migration.inserted} 筆（${ps.migration.codes.join(", ")}）` : "",
+      ps.lastSaveError ? `⚠ 儲存錯誤：${ps.lastSaveError.message}` : "",
       "",
       "⭐ 空間查重（R-Tree 粗篩 → haversine 精確距離）：",
       q?.sql ?? "（還沒查過；存檔或輸入座標時會執行）",
@@ -165,19 +207,21 @@ export function createLedger({ onNotice = () => {} } = {}) {
   function renderMirror() {
     const all = readMirror();
     const el = $("#rc-ledger-mirror");
-    const state = dbState();
+    const ps = persistenceStatus();
+    const pending = pendingMirrorCount();
     el.innerHTML = `
-      <details><summary class="rc-ledger-mirror-head">本機備份 · ${all.length} 筆</summary>
+      <details><summary class="rc-ledger-mirror-head">本機備份（第二層保險）· ${all.length} 筆</summary>
       <p>${all.length
-        ? `已鏡射 <b>${all.length}</b> 筆${state.persistence === "memory" ? "；重新整理後資料庫會清空，但這份備份還在，可作為第二階段匯入的來源。" : "。"}`
-        : "目前沒有備份。"}</p>
+        ? `逐筆鏡射 <b>${all.length}</b> 筆${pending ? `，其中 <b>${pending}</b> 筆還沒進資料庫（重新載入會自動補進去）` : "，全部都已進資料庫"}。
+           這份備份在資料庫存檔成功後仍然保留，當作第二層保險；資料庫本身已存於 ${esc(ps.label)}。`
+        : "目前沒有備份（資料庫本身已自動保存，這個備份只是多一層保險）。"}</p>
       ${all.length ? `<div class="rc-nd-saved" id="rc-nd-saved">${all.slice(-6).reverse().map((d) => `
         <div class="rc-nd-row"><span>${esc(d.building?.name ?? "（無名稱）")}</span>
         <em>${esc(d.code ?? "—")} · ${esc(recTypeZh(d))} · ${esc(String(d.createdAt ?? "").slice(0, 19).replace("T", " "))}</em></div>`).join("")}</div>
         <button class="btn sec sm" id="rc-mirror-clear">清除本機備份</button>` : ""}</details>`;
 
     $("#rc-mirror-clear")?.addEventListener("click", () => {
-      if (!confirm(`確定要清除本機備份的 ${all.length} 筆資料嗎？（SQLite 記憶體裡的資料不受影響）`)) return;
+      if (!confirm(`確定要清除本機備份的 ${all.length} 筆資料嗎？（資料庫裡的資料不受影響）`)) return;
       clearMirror();
       renderMirror();
       onNotice("已清除本機備份");
@@ -201,8 +245,8 @@ export function createLedger({ onNotice = () => {} } = {}) {
   });
   $("#rc-ledger-refresh")?.addEventListener("click", () => { refresh(); onNotice("已重新整理資料庫面板"); });
   $("#rc-ledger-wipe")?.addEventListener("click", () => {
-    if (!confirm("確定要清空 SQLite 裡的普查資料嗎？（本機備份不受影響，可另外清除）")) return;
-    try { deleteAll(); refresh(); onNotice("已清空資料庫"); } catch (e) { onNotice(`清空失敗：${e.message}`); }
+    if (!confirm("確定要清空普查資料庫裡的資料嗎？（清空後會立刻覆蓋裝置上的存檔；本機備份不受影響，可另外清除）")) return;
+    try { deleteAll(); refresh(); onNotice("已清空資料庫（裝置上的存檔也會一起更新）"); } catch (e) { onNotice(`清空失敗：${e.message}`); }
   });
 
   return { refresh, init: refresh, root };

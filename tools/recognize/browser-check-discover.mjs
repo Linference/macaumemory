@@ -7,6 +7,9 @@
 //   · 「已記錄」時不再隱藏建檔區塊 → 改成檢查「區塊仍在，且查重結論正確顯示已記錄」
 //   · 紀錄的欄位 cls 更名為 type（對齊 SQLite 的 buildings.type）→ 斷言改讀 type
 //   · 新增：編號 MM-YYYY-NNNN、真的寫進 SQLite、R-Tree 查重提示
+//   · 2026 這一輪再修兩條「改版後一直紅著」的斷言（不是放寬，是改成讀畫面上真正的那個元素）：
+//       ① 信心值：.rc-verdict-sub 已不存在，改成讀「比對細節」裡的 .rc-meta（同樣要求 72.2%）
+//       ② 查重區塊標題：實際是「相似的城市記憶」（原本期待舊字串「已記錄的相似建築（查重）」）
 // 其餘（note 不能被定位訊息蓋掉、失敗原因要記下來、重新整理後備份還在）一律保留原樣。
 //
 // 用法：node tools/recognize/browser-check-discover.mjs
@@ -67,7 +70,11 @@ try {
 
   const view = await page.evaluate(() => ({
     head: document.querySelector("#rc-results .rc-verdict h3")?.textContent,
-    sub: document.querySelector(".rc-verdict-sub")?.textContent,
+    // 2026 這一輪修正：信心值已經不在 .rc-verdict-sub（那個元素在結果區塊改版時拿掉了，
+    // 這條斷言因此一直紅著）。信心值現在顯示在「比對細節與相似度說明」裡的 .rc-meta：
+    // 「信心 72.2% · 框 1280×853 px · 與 21 棟已記錄建築比對」。驗的東西一樣是
+    // 「信心百分比有沒有如實顯示」，只是改成讀真正在畫面上的那個元素。
+    confLine: document.querySelector("#rc-results .rc-method")?.textContent?.replace(/\s+/g, " ").trim(),
     dedupLine: document.querySelector(".rc-dedup-line b")?.textContent,
     known: document.querySelector(".rc-known-line")?.textContent,
     secHead: document.querySelector(".rc-sec-head h3")?.textContent,
@@ -92,7 +99,7 @@ try {
     },
   }));
   log(`  主標題：${view.head}`);
-  log(`  副標題：${view.sub}`);
+  log(`  信心值列：${view.confLine?.slice(0, 90)}`);
   log(`  查重結論（大字區）：${view.dedupLine}`);
   log(`  與已記錄相似度：${view.known}`);
   log(`  區塊標題：${view.secHead}`);
@@ -104,9 +111,11 @@ try {
   await page.screenshot({ path: resolve(OUT, "discover-01-尚未記錄.png") });
 
   if (!view.head?.includes("偵測到：騎樓與唐樓")) problems.push(`主標題不是類別：${view.head}`);
-  if (!/信心 72\.2%/.test(view.sub ?? "")) problems.push(`副標題沒有信心值：${view.sub}`);
+  if (!/信心 72\.2%/.test(view.confLine ?? "")) problems.push(`畫面上沒有顯示信心值 72.2%：${view.confLine?.slice(0, 80)}`);
   if (!view.dedupLine?.startsWith("尚未記錄")) problems.push(`查重結論不是「尚未記錄」：${view.dedupLine}`);
-  if (view.secHead !== "已記錄的相似建築（查重）") problems.push(`區塊標題錯：${view.secHead}`);
+  // 2026 這一輪修正：結果區塊的標題現在叫「相似的城市記憶」（原本期待的是舊字串
+  // 「已記錄的相似建築（查重）」，改版後一直紅著）。驗的還是「查重區塊有標題」。
+  if (view.secHead !== "相似的城市記憶") problems.push(`區塊標題錯：${view.secHead}`);
   if (view.catCount !== 12) problems.push(`類別選項應為 12 個，實得 ${view.catCount}`);
   if (view.catSelected !== "tong_lau") problems.push(`類別預設應帶入 YOLO 的 tong_lau，實得 ${view.catSelected}`);
   if (view.formVisible !== true) problems.push("建檔表單沒有直接顯示（產品規則：每次辨識後都要出現）");

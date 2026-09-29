@@ -29,6 +29,17 @@ photos-src/cc/*/
 # 模型權重（第三方下載檔，不進版控）
 *.pt
 *.onnx
+!public/models/dinov2-vits14-336.onnx
+!public/models/macau-buildings-yolo.onnx
+
+# 本機產物與素材暫存；網站執行所需的兩個 ONNX 例外納入版本控制
+/tmp/
+/out/
+/output/
+/photos-src/_hold/
+/photos-src/_hold-wikimedia/
+/tools/recognize/out/
+/tools/recognize/__pycache__/
 
 # Python 快取
 __pycache__/

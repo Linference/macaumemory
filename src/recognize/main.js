@@ -20,7 +20,7 @@ import { marginOf, verdict } from "./compare.js";
 import { dedupVerdict, dedupThresholds } from "./dedup.js";
 import { ModelViewer } from "../viewer.js";
 // 普查建檔（這一輪新增的主流程）：SQLite 資料層、GPS 多次取樣、手動定位地圖、建檔表單、資料庫面板
-import { openDb, dbState, countBuildings, findNearby, lastQueries, exportJsonText } from "./db.js";
+import { openDb, dbState, persistenceStatus, onStorageChange, flushPersistence, wipeAll, clearPersistence, countBuildings, findNearby, lastQueries, exportJsonText } from "./db.js";
 import { createSurvey } from "./survey.js";
 import { createLedger, readMirror } from "./ledger.js";
 import { GEO_PLANS } from "./geolocate.js";
@@ -52,6 +52,15 @@ function diagSummary() {
     : `載入中：YOLO ${d.yolo.state} · DINOv2 ${d.dino.state} · 嵌入庫 ${d.lib.state}`];
   if (d.lib.count) parts.push(`嵌入庫 ${d.lib.count} 棟 / ${d.lib.photos} 張參考`);
   if (d.last.totalMs != null) parts.push(`上次辨識 ${d.last.totalMs} ms`);
+  // 資料庫的持久化狀態也放進摘要：不展開細節也要看得到「資料到底有沒有存」
+  const st = dbState();
+  if (st.ready) {
+    parts.push(st.persistent
+      ? `<span class="dg-ok">✓ 建檔會保存在此裝置</span>`
+      : `<span class="dg-danger">⚠ 建檔只在記憶體，重整即清空</span>`);
+  } else {
+    parts.push(`<span class="dg-danger">⚠ 普查資料庫未就緒</span>`);
+  }
   return parts.join(" · ");
 }
 
@@ -63,10 +72,33 @@ function renderDiag() {
   const d = diag;
   const ok = (s) => (s ? `<span class="dg-ok">${s}</span>` : "");
   const bad = (s) => (s ? `<span class="dg-bad">${escapeHtml(s)}</span>` : "");
+  const danger = (s) => (s ? `<span class="dg-danger">${escapeHtml(s)}</span>` : "");
   const mb = (b) => (b ? `${(b / 1048576).toFixed(1)} MB` : "—");
   const row = (k, v) => `<div class="dg-row"><span class="dg-k">${k}</span><span class="dg-v">${v}</span></div>`;
   const ev = d.lib.eval;
+  const st = dbState();
+  const ps = persistenceStatus();
+  const timeZh = (iso) => (iso ? String(iso).slice(11, 19) : "—");
   el.innerHTML = [
+    // ① 普查資料庫的持久化狀態放最前面：使用者這次就是看不出「資料根本沒存」才白做一輪
+    row("普查資料庫", !st.ready ? bad(st.error ? `未就緒：${st.error}` : "尚未就緒")
+      : `${ok(`就緒 v${st.schemaVersion}`)} · ${countBuildings()} 筆 · R-Tree ${st.rtree} 列`),
+    row("持久化方式", !st.ready ? "—" : st.persistent
+      ? `${ok(st.persistenceLabel)}${ps.reason ? `<span class="dg-sub">（${escapeHtml(ps.reason)}）</span>` : ""}`
+      : `${danger("記憶體（重整即清空）")}<span class="dg-sub">——${escapeHtml(ps.reason ?? "沒有可用的儲存")}。請用「③ 普查資料庫」的匯出保存，或改用 Chrome／Edge。</span>`),
+    row("目前筆數", st.ready ? `${countBuildings()} 筆（本機備份另有 ${ps.mirrorPending} 筆待還原）` : "—"),
+    row("最後儲存", !st.persistent ? danger("沒有儲存（重整即清空）")
+      : ps.lastSaveError ? danger(`儲存失敗：${ps.lastSaveError.message}`)
+        : `${ps.lastSavedAt ? `${ok("✓")} ${timeZh(ps.lastSavedAt)}（${(ps.lastSavedBytes / 1024).toFixed(0)} KB${ps.lastSaveMs != null ? ` · ${ps.lastSaveMs} ms` : ""}）` : "尚未儲存"}`),
+    ...(ps.lastSaveError ? [row("儲存錯誤", `${danger("⚠ " + ps.lastSaveError.message)}`)] : []),
+    ...(ps.restoredFrom ? [row("本次還原", `${ok("✓")} 從 ${escapeHtml(ps.restoredFrom.source)} 還原 ${ps.restoredFrom.rows} 筆${ps.restoredFrom.savedAt ? `（存於 ${timeZh(ps.restoredFrom.savedAt)}）` : ""}`)] : []),
+    ...(ps.migration?.inserted ? [row("本機備份救援", `${ok("✓")} 已從本機備份還原 ${ps.migration.inserted} 筆（編號 ${escapeHtml(ps.migration.codes.join(", "))}）`)] : []),
+    ...(ps.shadowError ? [row("備援快照", bad(ps.shadowError))] : []),
+    ...(ps.restoreError ? [row("舊資料警告", danger(`⚠ ${ps.restoreError}`))] : []),
+    ...(ps.quarantined ? [row("毀損檔處置", `已另存為 ${escapeHtml(ps.quarantined)}（沒有直接覆蓋）`)] : []),
+    ...(ps.schemaMismatch ? [row("schema 警告", bad(ps.schemaMismatch))] : []),
+    ...(ps.storagePersisted === false && st.persistence === "opfs"
+      ? [row("儲存空間許可", `<span class="dg-sub">瀏覽器未授予持久化（空間不足時可能被自動清除，建議定期匯出 .sqlite）</span>`)] : []),
     row("onnxruntime-web", escapeHtml(d.ort) + (d.threads ? ` · ${d.threads} 執行緒` : "")),
     row("YOLO 偵測模型", d.yolo.error ? bad(d.yolo.error)
       : `${ok(d.yolo.state)} · ${mb(d.yolo.bytes)}${d.yolo.input ? ` · ${d.yolo.input}px` : ""}${d.yolo.loadMs != null ? ` · 載入 ${d.yolo.loadMs} ms` : ""}`),
@@ -866,16 +898,35 @@ async function boot() {
     .map((d) => `<button class="rc-demo" data-demo="${d.file}" aria-pressed="false" aria-label="使用${escapeHtml(d.label)}示範照片"><span class="rc-demo-image"><img src="${BASE}${encodeURI(d.file)}" alt="" loading="lazy" /></span><span class="rc-demo-label">${escapeHtml(d.label)}</span></button>`)
     .join("");
 
-  // 資料庫與模型並行載入：SQLite（記憶體）幾十毫秒就好了，不該排在 87 MB 的模型後面
+  // 資料庫與模型並行載入：SQLite 幾十毫秒就好了，不該排在 87 MB 的模型後面；
+  // 但 openDb() 現在還要讀回持久化的位元組＋遷移舊備份，所以是非同步的（見 db.js）。
   const dbPromise = openDb()
-    .then(() => { ledger.init(); survey.updateDbState(); return true; })
+    .then(() => {
+      ledger.init();
+      survey.updateDbState();
+      const st = dbState();
+      const ps = persistenceStatus();
+      const bits = [];
+      if (ps.restoredFrom?.rows) bits.push(`已從${ps.restoredFrom.source}還原 ${ps.restoredFrom.rows} 筆`);
+      if (ps.migration?.inserted) bits.push(`已從本機備份還原 ${ps.migration.inserted} 筆`);
+      if (bits.length) toast(`${bits.join(" · ")}（${st.persistenceLabel}）`, 6000);
+      if (ps.restoreError) toast(`⚠ ${ps.restoreError}`, 8000);
+      if (!st.persistent) toast("⚠ 這個瀏覽器沒有可用的本機儲存：資料只留在記憶體，重新整理就清空", 8000);
+      renderDiag();
+      return true;
+    })
     .catch((e) => {
       warn("SQLite 初始化失敗", e);
       showError("普查資料庫（SQLite）", `${e.message}——建檔仍可用，但資料只會寫進本機備份（localStorage），請看「③ 普查資料庫」面板`);
       ledger.init();
       survey.updateDbState();
+      renderDiag();
       return false;
     });
+
+  // 每次存檔（節流後）都重畫診斷區塊、資料庫面板與表單狀態：
+  // 使用者隨時看得到「最後儲存時間」與儲存錯誤，而不是以為資料已經存好了
+  onStorageChange(() => { renderDiag(); ledger.refresh(); survey.updateDbState(); });
 
   setStage("正在載入模型與嵌入庫…", 5);
   const [libOk, dinoOk] = await Promise.all([
@@ -932,6 +983,12 @@ window.__survey = {
   survey,
   ledger,
   get db() { return dbState(); },
+  get persistence() { return persistenceStatus(); },
+  /** 立刻把資料庫寫進 provider（測試與 pagehide 用同一條路徑） */
+  flush: (opts) => flushPersistence(opts),
+  /** 清空資料庫 + 清掉裝置上的檔（重新整理後真的是空的） */
+  wipeAll: () => wipeAll(),
+  clearPersistence: () => clearPersistence(),
   get total() { try { return countBuildings(); } catch { return null; } },
   get nearby() { try { return findNearby({ lat: survey.location.lat, lng: survey.location.lng, radiusM: 50 }); } catch { return null; } },
   get lastQuery() { return lastQueries.nearby; },

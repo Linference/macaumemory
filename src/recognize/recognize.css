@@ -255,13 +255,26 @@ body.rc input[type=checkbox], body.rc input[type=range] { accent-color: var(--go
 .rc-ledger-head .hint { max-width: 540px; margin-bottom: 0 !important; }
 .rc-ledger-actions { display: flex; flex-wrap: wrap; gap: 7px; }
 #rc-ledger-wipe { color: #a08e7e; }
-.rc-ledger-summary { margin-top: 22px; }
+
+/* 持久化狀態條（③ 普查資料庫最上方）：資料存在哪裡、最後存到什麼時候、有沒有失敗 */
+.rc-storage { margin-top: 18px; padding: 13px 16px; border-radius: 10px; border: 1px solid #dbe6d0; background: #f4f8ee; display: grid; gap: 4px; }
+.rc-storage b { font-size: 11px; font-weight: 500; color: #5c7a4c; }
+.rc-storage span { font-size: 10px; line-height: 1.85; color: #8b9a7e; }
+.rc-storage.s-ok { border-color: #cfe0c0; box-shadow: inset 4px 0 0 #7ea06c; }
+.rc-storage.s-danger { border-color: #e7bdb1; background: #fdf3f0; box-shadow: inset 4px 0 0 #b03d24; }
+.rc-storage.s-danger b { color: #b03d24; }
+.rc-storage.s-danger span { color: #a4705f; }
+.rc-storage.s-bad { border-color: #e5d3ba; background: #fbf6ec; box-shadow: inset 4px 0 0 #c08a3e; }
+.rc-storage.s-bad b { color: #a3702f; }
+
+.rc-ledger-summary { margin-top: 18px; }
 .rc-ledger-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .rc-ledger-metric { padding: 15px 17px; border-radius: 10px; background: #f7f9f2; border: 1px solid #e9eee1; }
 .rc-ledger-metric > span { display: block; font-size: 10px; color: #92a086; }
 .rc-ledger-metric > strong { display: block; font-size: 25px; font-weight: 500; color: #526f46; margin-top: 5px; font-variant-numeric: tabular-nums; }
 .rc-ledger-metric small { font-size: 10px; font-weight: 400; margin-left: 4px; color: #91a083; }
 .rc-ledger-detail { font-size: 10px; line-height: 1.8; color: #a0a995; margin: 10px 0 0; }
+.rc-danger { color: #b03d24 !important; font-weight: 500; }
 .rc-ledger-stats { margin-top: 18px; display: grid; gap: 9px; }
 .rc-ledger-stat-head { font-size: 11px; color: #768b69; margin-bottom: 2px; }
 .rc-ledger-stat { display: grid; grid-template-columns: 130px minmax(70px, 1fr) 50px minmax(140px, 1fr); align-items: center; gap: 12px; font-size: 10px; color: #9aa58e; }
@@ -295,6 +308,10 @@ body.rc .rc-diag-head h2 { font-size: 12px; font-weight: 500; color: #849574; }
 #diag-body { display: grid; gap: 10px; margin-top: 19px; }
 .dg-row { display: flex; gap: 15px; font-size: 11px; border-bottom: 1px solid var(--line-soft); padding-bottom: 10px; }.dg-k { width: 135px; flex: none; color: #8c9b7d; }.dg-v { flex: 1; min-width: 0; color: #657f54; overflow-wrap: anywhere; }
 .dg-ok { color: #6b9056; }.dg-bad, .rc-bad { color: #b07855; }
+/* 紅色警示：只在「資料真的會不見」這種等級用（記憶體模式、儲存失敗） */
+.dg-danger { color: #b03d24; font-weight: 500; }
+.dg-sub { color: #9aa78e; font-weight: 400; }
+.dg-v .dg-danger + .dg-sub { margin-left: 4px; }
 .rc-method { margin-top: 13px; }.rc-method > summary { font-size: 10px; color: #9ca88f; cursor: pointer; }
 .rc-foot { font-size: 10px; color: #97a48a; line-height: 1.9; margin: 14px 0 0; }.rc-foot code { font: 10px Consolas, monospace; overflow-wrap: anywhere; }
 #rc-errors { display: grid; gap: 8px; margin-top: 17px; }
