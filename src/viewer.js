@@ -126,7 +126,7 @@ export class ModelViewer {
   async loadModels({ THREE, GLTFLoader, DRACOLoader, MeshoptDecoder, files }) {
     const loader = new GLTFLoader();
     const draco = new DRACOLoader();
-    draco.setDecoderPath("/draco/");
+    draco.setDecoderPath(new URL("draco/", document.baseURI).href);
     loader.setDRACOLoader(draco);
     loader.setMeshoptDecoder(MeshoptDecoder);
     this.loader = loader;

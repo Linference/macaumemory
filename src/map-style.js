@@ -69,7 +69,7 @@ export function buildStyle() {
         minzoom: 10,
         maxzoom: 15,
       },
-      buildings: { type: "geojson", data: "data/macau-buildings.geojson", maxzoom: 19, tolerance: 0.1 },
+      buildings: { type: "geojson", data: "data/macau-buildings.geojson", promoteId: "bid", maxzoom: 19, tolerance: 0.1 },
       roads: { type: "geojson", data: "data/macau-roads.geojson" },
       rail: { type: "geojson", data: "data/macau-rail.geojson" },
       landuse: { type: "geojson", data: "data/macau-landuse.geojson" },

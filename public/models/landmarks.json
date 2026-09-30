@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "placements": [
+    {
+      "id": "parisian",
+      "enabled": true,
+      "file": "models/parisian.detail.glb",
+      "lodFile": "models/parisian.lod.glb",
+      "minZoom": 14,
+      "detailZoom": 16.5,
+      "anchor": [
+        -0.0010986328125,
+        -0.294403076171875,
+        0.00079345703125
+      ],
+      "altitudeM": 0,
+      "placementQuality": "provisional",
+      "scaleSource": "visual estimate using map footprint; not a measurement",
+      "spot": "parisian",
+      "coords": [
+        113.5613419,
+        22.143728
+      ],
+      "metersPerUnit": 245,
+      "rotationDeg": [
+        0,
+        90,
+        0
+      ],
+      "buildingIds": [
+        "a839a4c1-03a7-4c61-9803-2d5ec212d411"
+      ]
+    },
+    {
+      "id": "macau-science-center",
+      "enabled": true,
+      "file": "models/macau-science-center.detail.glb",
+      "lodFile": "models/macau-science-center.lod.glb",
+      "minZoom": 14,
+      "detailZoom": 16.5,
+      "anchor": [
+        0.0003204345703125,
+        -0.1963653564453125,
+        -0.000274658203125
+      ],
+      "altitudeM": 0,
+      "placementQuality": "provisional",
+      "scaleSource": "visual estimate using map footprint; not a measurement",
+      "spot": "macau-science-center",
+      "coords": [
+        113.556965,
+        22.186193
+      ],
+      "metersPerUnit": 110,
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "buildingIds": [
+        "ea69c1fe-70c5-4514-9f16-b8c75e899f88"
+      ]
+    },
+    {
+      "id": "galaxy-macau",
+      "enabled": true,
+      "file": "models/galaxy-macau.detail.glb",
+      "lodFile": "models/galaxy-macau.lod.glb",
+      "minZoom": 14,
+      "detailZoom": 16.5,
+      "anchor": [
+        0.0,
+        0,
+        0.0
+      ],
+      "altitudeM": 0,
+      "placementQuality": "provisional",
+      "scaleSource": "visual estimate using map footprint; not a measurement",
+      "spot": "galaxy",
+      "coords": [
+        113.5536124,
+        22.1488037
+      ],
+      "metersPerUnit": 475,
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "buildingIds": [
+        "014139d2-f92e-4deb-9d75-223be5d84b4b"
+      ]
+    },
+    {
+      "id": "londoner-macao",
+      "enabled": true,
+      "file": "models/londoner-macao.detail.glb",
+      "lodFile": "models/londoner-macao.lod.glb",
+      "minZoom": 14,
+      "detailZoom": 16.5,
+      "anchor": [
+        0.0,
+        0,
+        0.0
+      ],
+      "altitudeM": 0,
+      "placementQuality": "provisional",
+      "scaleSource": "visual estimate using map footprint; not a measurement",
+      "spot": "londoner",
+      "coords": [
+        113.564652,
+        22.14595
+      ],
+      "metersPerUnit": 415,
+      "rotationDeg": [
+        0,
+        90,
+        0
+      ],
+      "buildingIds": [
+        "c1cd2760-3717-4bf4-87ea-bcb3e5cc3e34"
+      ]
+    }
+  ]
+}

@@ -31,6 +31,7 @@ export function createSurvey({
   getPhoto = () => null,
   onNotice = () => {},
   onSaved = () => {},
+  onLocationChange = () => {},
 }) {
   const st = {
     ctx: null, key: null, mounted: false,
@@ -251,6 +252,7 @@ export function createSurvey({
     const loc = effectiveLocation();
     if (st.minimap?.ready) st.minimap.setPoint({ lat: loc.lat, lng: loc.lng, accuracyM: st.manual ? null : loc.accuracyM });
     checkNearby(loc);
+    onLocationChange(loc);
     const useGps = $("#rc-nd-use-gps");
     if (useGps) useGps.hidden = !(st.manual && st.geo?.lat != null);
   }
@@ -459,6 +461,10 @@ export function createSurvey({
         thresholds: ctx.thresholds ?? null,
         top1: r.topK?.[0] ? { id: r.topK[0].id, zh: r.topK[0].zh, sim: r.topK[0].sim } : null,
         compared: r.totalCompared ?? 0,
+        locationRanking: r.geo ?? null,
+        visualMargin: r.margin ?? null,
+        candidates: (r.topK ?? []).map((c) => ({ id: c.id, similarity: c.sim,
+          distanceM: c.geo?.distanceM ?? null, locationPenalty: c.geo?.penalty ?? 0, locationConflict: c.geo?.conflict ?? false })),
       },
       nearby: (st.nearby?.rows ?? []).map((n) => ({ code: n.code, name: n.name, distanceM: Math.round(n.distanceM * 10) / 10 })),
       encoder: getEncoder?.() ?? null,

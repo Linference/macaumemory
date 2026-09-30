@@ -13,6 +13,8 @@ import { iconSvg } from "./icons.js";
 import { MarkerLayer } from "./markers.js";
 import { ModelViewer } from "./viewer.js";
 import { setLang, getLang, T } from "./i18n.js";
+import { installLandmarkModels } from "./landmark-models.js";
+import { parseMapQuery } from "./map-link.js";
 
 // 明確指定 MapLibre worker 位址：使用 .js 版本（避免 .mjs 被伺服器給錯 MIME 而無法載入）
 try {
@@ -23,6 +25,7 @@ try {
 
 const $ = (sel) => document.querySelector(sel);
 const HOME = { center: [113.5515, 22.1862], zoom: 13.5, pitch: 52, bearing: -14 };
+const initialHash = location.hash;
 
 const state = {
   data: null,
@@ -107,6 +110,8 @@ const markerLayer = new MarkerLayer(map, {
 
 // ---------------------------------------------------------------- 地圖載入完成
 let appReady = false;
+let restoringInitialView = true;
+let landmarkModels = null;
 function onMapReady() {
   if (appReady) return;
   appReady = true;
@@ -114,6 +119,14 @@ function onMapReady() {
   applyCameraLimits();
   try { map.setSky({ "sky-color": "#0a141f", "horizon-color": "#2b4557", "fog-color": "#0d1a25", "sky-horizon-blend": 0.55, "horizon-fog-blend": 0.5, "fog-ground-blend": 0.18 }); } catch (e) { console.warn(e); }
   try { map.setTerrain({ source: "dem", exaggeration: 1.5 }); } catch (e) { console.warn("terrain:", e); }
+  installLandmarkModels(map, attractions, { visible: $("#tg-buildings").checked }).then((controller) => {
+    landmarkModels = controller;
+    controller.setVisible($("#tg-buildings").checked);
+    controller.ready?.then(() => {
+      const failed = controller.status.filter((p) => p.error).length;
+      if (failed) toast(`${failed} 個地標模型未能載入，保留原建築`);
+    });
+  }).catch((error) => console.warn("[landmarks] retaining whiteboxes:", error.message));
   markerLayer.setData(attractions);
   setupLabelsAndPois();
   renderChips();
@@ -122,6 +135,7 @@ function onMapReady() {
   renderCredits();
   boot("準備就緒", 100);
   const restored = applyQuery() || applyHash();
+  restoringInitialView = false;
   setTimeout(() => {
     $("#boot").classList.add("gone");
     // 由網址還原時不再覆蓋鏡頭
@@ -447,7 +461,7 @@ function showBusStop(stop) {
 
 // ---------------------------------------------------------------- 圖層開關
 const layerToggles = [
-  ["#tg-buildings", ["buildings"]],
+  ["#tg-buildings", ["buildings", "building-outline"]],
   ["#tg-hillshade", ["hillshade"]],
   ["#tg-roads", ["road", "road-casing", "rail"]],
   ["#tg-raster", ["water-fill", "landuse-fill"]],
@@ -456,6 +470,7 @@ const layerToggles = [
 for (const [sel, layers] of layerToggles) {
   $(sel).addEventListener("change", (e) => {
     const vis = e.target.checked ? "visible" : "none";
+    if (sel === "#tg-buildings") landmarkModels?.setVisible(e.target.checked);
     for (const id of layers) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", vis);
   });
 }
@@ -1069,7 +1084,7 @@ function renderPoiChips() {
 // ---------------------------------------------------------------- 網址狀態（可分享深連結）
 let hashLock = false;
 function writeHash() {
-  if (hashLock) return;
+  if (hashLock || restoringInitialView) return;
   const c = map.getCenter();
   const z = map.getZoom().toFixed(2);
   const sel = state.selected?.id ? `/spot/${state.selected.id}` : "";
@@ -1077,7 +1092,7 @@ function writeHash() {
   if (location.hash !== next) history.replaceState(null, "", next);
 }
 function readHash() {
-  const h = location.hash.replace(/^#/, "");
+  const h = initialHash.replace(/^#/, "");
   if (!h) return null;
   const [nav, spot] = h.split("/spot/");
   const [z, lat, lng] = nav.split("/").map(Number);
@@ -1090,21 +1105,16 @@ function readHash() {
  * 若同時有 lat/lng（例如直接指定座標）也一併套用。
  */
 function applyQuery() {
-  let q;
-  try { q = new URLSearchParams(location.search); } catch { return false; }
-  const spot = q.get("spot");
-  const lat = Number(q.get("lat"));
-  const lng = Number(q.get("lng"));
-  const zoom = Number(q.get("zoom"));
-  if (!spot && !(isFinite(lat) && isFinite(lng))) return false;
+  const { spot, coords, zoom } = parseMapQuery(location.search);
+  if (!spot && !coords) return false;
   hashLock = true;
-  if (isFinite(lat) && isFinite(lng)) {
-    map.jumpTo({ center: [lng, lat], zoom: isFinite(zoom) ? zoom : HOME.zoom, pitch: HOME.pitch, bearing: HOME.bearing });
+  if (coords) {
+    map.jumpTo({ center: coords, zoom: zoom ?? HOME.zoom, pitch: HOME.pitch, bearing: HOME.bearing });
   }
   if (spot) {
     const a = byId.get(spot);
     if (a) {
-      if (!(isFinite(lat) && isFinite(lng))) {
+      if (!coords) {
         map.jumpTo({ center: a.coords, zoom: Math.max(HOME.zoom, 15.6), pitch: HOME.pitch, bearing: HOME.bearing });
       }
       setTimeout(() => select(a, { fly: false }), 500);

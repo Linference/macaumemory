@@ -16,7 +16,8 @@ import { T } from "../i18n.js";
 import { clsZh, simLabel } from "./labels.js";
 import { createEncoder, DEFAULT_DINO } from "./dino.js";
 import { multiCrops } from "./preprocess.js";
-import { marginOf, verdict } from "./compare.js";
+import { rankCandidates, marginOf, verdict } from "./compare.js";
+import { locationQuality } from "./geo-ranking.js";
 import { dedupVerdict, dedupThresholds } from "./dedup.js";
 import { ModelViewer } from "../viewer.js";
 // 普查建檔（這一輪新增的主流程）：SQLite 資料層、GPS 多次取樣、手動定位地圖、建檔表單、資料庫面板
@@ -108,14 +109,14 @@ function renderDiag() {
     row("記憶點嵌入庫", d.lib.error ? bad(d.lib.error)
       : `${ok(d.lib.state)} · ${d.lib.count} 棟 / ${d.lib.photos} 張參考${d.lib.dims.length ? ` · ${d.lib.dims.join("/")} 維（已 L2 正規化）` : ""}`),
     row("庫建立時間", escapeHtml(d.lib.generated ?? "—")),
-    row("庫檢索實測", ev?.top1 != null
-      ? `留一法 Top-1 ${(ev.top1 * 100).toFixed(1)}% · Top-3 ${(ev.top3 * 100).toFixed(1)}%（${ev.n_queries} 筆查詢 / ${ev.n_buildings} 棟）`
+    row("參考庫留一法", ev?.top1 != null
+      ? `留一法 Top-1 ${(ev.top1 * 100).toFixed(1)}% · Top-3 ${(ev.top3 * 100).toFixed(1)}%（${ev.n_queries} 筆查詢 / ${ev.n_buildings} 棟）。庫內評估，非獨立實拍或端到端準確率。`
       : "—"),
     row("查重門檻", (() => {
       const t = currentThresholds();
       return t.source === "eval.suggested"
-        ? `≥${t.hit} 高度相似 · ${t.maybe}~${t.hit} 需人工確認 · &lt;${t.maybe} 尚未記錄（取自庫的 eval.suggested）`
-        : `≥${t.hit} 高度相似 · ${t.maybe}~${t.hit} 需人工確認 · &lt;${t.maybe} 尚未記錄（退回 labels.js 預設，庫沒有 eval.suggested）`;
+        ? `≥${t.hit} 高度相似 · ${t.maybe}~${t.hit} 需人工確認 · &lt;${t.maybe} 未找到可靠匹配（取自庫的 eval.suggested）`
+        : `≥${t.hit} 高度相似 · ${t.maybe}~${t.hit} 需人工確認 · &lt;${t.maybe} 未找到可靠匹配（退回 labels.js 預設，庫沒有 eval.suggested）`;
     })()),
     row("最近一次 YOLO", d.last.detectMs != null ? `${d.last.detectMs} ms · 偵測到 ${d.last.detections} 棟` : "—"),
     row("最近一次 DINOv2", d.last.embedMs != null ? `${d.last.embedMs} ms` : "—"),
@@ -174,9 +175,13 @@ async function loadLibrary() {
   diag.lib.state = "載入中…";
   renderDiag();
   try {
-    const res = await fetch(`${BASE}data/memory-embeddings.json`);
+    const [res, attractions] = await Promise.all([
+      fetch(`${BASE}data/memory-embeddings.json`),
+      fetch(`${BASE}data/attractions.json`).then((r) => r.ok ? r.json() : null).catch(() => null),
+    ]);
     if (!res.ok) throw new Error(`HTTP ${res.status}：data/memory-embeddings.json`);
     const raw = await res.json();
+    const positions = new Map((attractions?.attractions ?? []).map((a) => [a.id, a.coords]));
     const buildings = [];
     for (const b of raw.buildings ?? []) {
       const vectors = (b.vectors ?? []).map((v) => Float32Array.from(v));
@@ -185,6 +190,7 @@ async function loadLibrary() {
         id: b.id, zh: b.zh, en: b.en, cls: b.cls,
         spot: b.spot ?? null, model: b.model ?? null,
         files: b.files ?? [], vectors,
+        coords: b.coords ?? positions.get(b.spot) ?? null,
       });
     }
     if (!buildings.length) throw new Error("嵌入庫裡沒有任何建築");
@@ -323,7 +329,7 @@ function yoloDetect(bitmap, opts) {
 
 // ------------------------------------------------------------------ 查重門檻
 /**
- * 查重門檻：以嵌入庫的 eval.suggested（留一法實測建議，hit 0.82 / maybe 0.48）為準，
+ * 查重門檻：以嵌入庫的 eval.suggested（留一法實測建議，hit 0.82 / maybe 0.57）為準，
  * 讀不到才退回 labels.js 的 SIM_THRESHOLDS。門檻由資料決定，不寫死在 UI 裡。
  */
 function currentThresholds() {
@@ -332,33 +338,9 @@ function currentThresholds() {
 
 // ------------------------------------------------------------------ 比對排序
 function rankTop(query, { topK = 3, clsHint = null, thresholds = currentThresholds() } = {}) {
-  const rows = [];
-  for (const b of lib.buildings) {
-    let best = -Infinity, bestIdx = -1, sum = 0, n = 0;
-    for (let i = 0; i < b.vectors.length; i++) {
-      const v = b.vectors[i];
-      if (v.length !== query.length) continue;
-      let s = 0;
-      for (let k = 0; k < v.length; k++) s += v[k] * query[k];
-      sum += s; n++;
-      if (s > best) { best = s; bestIdx = i; }
-    }
-    if (!n) continue;
-    rows.push({
-      id: b.id, zh: b.zh, en: b.en, cls: b.cls, clsZh: clsZh(b.cls),
-      spot: b.spot, model: b.model, count: b.vectors.length,
-      sim: round4(best), mean: round4(sum / n), bestRef: b.files?.[bestIdx] ?? null,
-      clsMatch: clsHint ? b.cls === clsHint : null,
-      adjusted: best + (clsHint && b.cls === clsHint ? 0.02 : 0),
-    });
-  }
-  rows.sort((a, b) => (b.adjusted - a.adjusted) || (b.mean - a.mean));
-  const top = rows.slice(0, topK).map((c) => ({
-    ...c,
-    level: simLabel(c.sim, thresholds),
-    dedup: dedupVerdict([c], 1, thresholds),
-  }));
-  return { top, all: rows, total: rows.length, thresholds };
+  return rankCandidates(lib, query, { topK, clsHint, thresholds,
+    geo: { enabled: geoMatchEnabled, location: geoMatchLocation },
+  });
 }
 
 // ------------------------------------------------------------------ 主流程
@@ -367,6 +349,38 @@ let currentBitmap = null;
 let lastResults = null;
 let activeIndex = 0;
 let busy = false;
+let geoMatchEnabled = false;
+let geoMatchLocation = null;
+let geoLocationKey = "";
+let geoRefreshTimer = null;
+let geoExpiryTimer = null;
+
+function refreshGeoRanking() {
+  for (const r of lastResults?.results ?? []) {
+    if (!r.queryVector) continue;
+    const ranked = rankTop(r.queryVector, { clsHint: r.cls ?? null });
+    Object.assign(r, { topK: ranked.top, totalCompared: ranked.total,
+      margin: marginOf(ranked.top), thresholds: ranked.thresholds, geo: ranked.geo });
+  }
+}
+
+function receiveSurveyLocation(location) {
+  geoMatchLocation = location;
+  clearTimeout(geoExpiryTimer);
+  if (location.source !== "manual" && locationQuality(location).usable) {
+    geoExpiryTimer = setTimeout(() => receiveSurveyLocation(geoMatchLocation),
+      Math.max(1, Date.parse(location.capturedAt) + 300001 - Date.now()));
+  }
+  const key = JSON.stringify([location.lat, location.lng, location.accuracyM, location.source, locationQuality(location).usable]);
+  if (key === geoLocationKey) return;
+  geoLocationKey = key;
+  clearTimeout(geoRefreshTimer);
+  geoRefreshTimer = setTimeout(() => {
+    if (!lastResults || busy) return;
+    refreshGeoRanking();
+    renderResults();
+  }, 0);
+}
 
 function setWorkflow(step) {
   const order = ["photo", "result", "archive"];
@@ -411,6 +425,7 @@ async function pickFile(file) {
     currentFile = file;
     currentBitmap = null;
     lastResults = null;
+    geoMatchEnabled = false; // Each photo needs its own confirmation that the location applies.
     $("#rc-filename").textContent = file.name;
     $("#rc-filesize").textContent = `${(file.size / 1024).toFixed(0)} KB · ${file.type || "image"}`;
     const url = URL.createObjectURL(file);
@@ -441,6 +456,7 @@ async function pickFile(file) {
 }
 
 function clearFile() {
+  geoMatchEnabled = false;
   currentFile = null;
   currentBitmap = null;
   lastResults = null;
@@ -533,8 +549,9 @@ async function run() {
         const crops = r.source === "fallback" ? multiCrops(bitmap.width, bitmap.height, enc.size, tta ? 3 : 1) : null;
         const vec = await enc.embed(bitmap, r.source === "fallback" ? null : r.box, { crops, tta });
         embedMsTotal += performance.now() - t1;
-        const { top, total } = rankTop(vec, { topK: 3, clsHint: r.cls ?? null });
-        results.push({ ...r, topK: top, totalCompared: total, margin: round4(marginOf(top)) });
+        const ranked = rankTop(vec, { topK: 3, clsHint: r.cls ?? null });
+        results.push({ ...r, queryVector: vec, topK: ranked.top, totalCompared: ranked.total,
+          margin: marginOf(ranked.top), thresholds: ranked.thresholds, geo: ranked.geo });
       } catch (e) {
         embedMsTotal += performance.now() - t1;
         showError(`DINOv2 編碼（第 ${r.index + 1} 個區域）`, e.message);
@@ -624,7 +641,7 @@ function renderResults() {
   const m = r.margin ?? 0;
   const matched = top[0] ?? null;
   const th = r.thresholds ?? currentThresholds();
-  const v = verdict(top, m);
+  const v = verdict(top, m, th);
   const dd = r.dedup ?? dedupVerdict(top, m, th);
 
   // ① 標註：大字顯示「偵測到的類別」，不是建築名
@@ -635,7 +652,7 @@ function renderResults() {
 
   // ② 查重結論
   const knownLine = matched
-    ? `<div class="rc-known-line"><span class="rc-known-tag">與已記錄建築的相似度</span> <b>${matched.sim.toFixed(3)}</b> · 最像「<b>${escapeHtml(matched.zh)}</b>」 · 與第二名差距 ${m.toFixed(3)}</div>`
+    ? `<div class="rc-known-line"><span class="rc-known-tag">與已記錄建築的影像相似度</span> <b>${matched.sim.toFixed(3)}</b> · 首位候選「<b>${escapeHtml(matched.zh)}</b>」 · 影像分差 ${m.toFixed(3)}</div>`
     : `<div class="rc-known-line">目前沒有可比的已記錄建築</div>`;
 
   const head = `
@@ -672,6 +689,7 @@ function renderResults() {
           <span class="rc-sim">相似度 <b>${c.sim.toFixed(3)}</b></span>
         </div>
         <div class="rc-card-sub">${escapeHtml(c.clsZh)}${c.en ? ` · ${escapeHtml(c.en)}` : ""} · 參考照片 ${c.count} 張${c.clsMatch ? " · 類別與 YOLO 一致" : ""}</div>
+        ${r.geo?.used ? `<div class="rc-card-sub">${c.geo?.used ? `距離建檔位置 ${Math.round(c.geo.distanceM).toLocaleString()} 公尺${c.geo.conflict ? " · 位置不一致，請核對" : ""}` : "此候選缺少座標，保留影像分數"}</div>` : ""}
         <div class="rc-bar-wrap" title="相對於本張照片最高分的比例">
           <i style="width:${Math.max(2, Math.min(100, (c.sim / maxSim) * 100)).toFixed(1)}%"></i>
         </div>
@@ -685,20 +703,31 @@ function renderResults() {
 
   const dedupHead = top.length
     ? `<div class="rc-sec-head"><h3>相似的城市記憶</h3>
-        <span>依影像相似度排序 · ${top.length} 個候選建築</span></div>`
+        <span>${r.geo?.used ? "影像＋位置輔助排序" : "影像排序"} · ${top.length} 個候選建築</span></div>`
     : "";
 
   // ③ 建檔：普查的主流程——**不再只有「尚未記錄」才出現**，每一次辨識都會顯示。
   // 查重結論（dd）仍然會帶進建檔區塊，因為「這可能已經記錄過」正是要提醒使用者的重點。
   survey.setContext({ r, dd, thresholds: th, key: `${lastResults.file ?? ""}|${activeIndex}|${r.cls ?? ""}|${r.source ?? ""}` });
 
-  $("#rc-results").innerHTML = head + dedupHead +
+  const geoQuality = locationQuality(geoMatchLocation);
+  const geoNote = !geoMatchEnabled ? "只在這個位置對應目前照片時開啟；舊照片或遠景請保持關閉。"
+    : !geoQuality.usable ? geoQuality.reason
+      : "已參考下方建檔位置；遠方候選小幅降權，影像相似度保持原值。位置不一致時需要人工確認。";
+  const geoControl = `<div class="rc-geo-match"><label><input type="checkbox" id="rc-geo-match" ${geoMatchEnabled ? "checked" : ""} /> 用建檔位置輔助比對這張照片</label>
+    <p role="status">${escapeHtml(geoNote)}</p></div>`;
+  $("#rc-results").innerHTML = head + geoControl + dedupHead +
     (top.length ? `<div class="rc-cards">${cards}</div>` : `<p class="rc-none">這張照片沒有可比對的候選。</p>`) +
-    `<details class="rc-method"><summary>比對細節與相似度說明</summary>${boxLine}<div class="rc-meta">${headlineSub}</div><p class="rc-note">查重門檻：${th.hit} 以上＝高度相似、${th.maybe}~${th.hit}＝需要人工確認、低於 ${th.maybe}＝尚未記錄。<br />相似度 = DINOv2 影像特徵的餘弦相似度（1.000 = 特徵完全相同）。
-      同一棟建築在不同角度／光線下通常落在 0.3~0.7，不同棟多半在 0.1 以下；
-      外觀相近的建築（例如路氹城的幾間度假村）會互相干擾，所以請一併看「與第二名差距」。
-      這一版只用影像特徵，<b>沒有</b>使用照片的 GPS；建檔時的座標查重（R-Tree，半徑 50 公尺）是另一層防護。</p></details>`;
+    `<details class="rc-method"><summary>比對細節與相似度說明</summary>${boxLine}<div class="rc-meta">${headlineSub}</div><p class="rc-note">查重門檻：${th.hit} 以上＝高度相似、${th.maybe}~${th.hit}＝需要人工確認、低於 ${th.maybe}＝未找到可靠匹配。<br />相似度 = DINOv2 影像特徵的餘弦相似度（1.000 = 特徵完全相同）。
+      相似度不是正確機率，低分也可能來自角度、光線或遮擋。這些門檻由參考庫留一法提出，尚未完成獨立實拍校準。
+      位置輔助需要主動開啟，精度超過 100 公尺或 GPS 超過 5 分鐘會退回影像排序；它不讀取照片 EXIF。
+      建檔時的 R-Tree（半徑 50 公尺）另外檢查附近檔案。低於門檻代表未找到可靠匹配，不能據此斷定未建檔。</p></details>`;
   $("#rc-results").hidden = false;
+  $("#rc-geo-match")?.addEventListener("change", (event) => {
+    geoMatchEnabled = event.target.checked;
+    refreshGeoRanking();
+    renderResults();
+  });
 
   for (const b of $("#rc-results").querySelectorAll("[data-model]")) {
     b.addEventListener("click", () => openModel(b.dataset.model, b.dataset.title, b.dataset.sub));
@@ -732,6 +761,7 @@ const survey = createSurvey({
   }),
   onNotice: (m) => toast(m),
   onSaved: () => ledger.refresh(),     // 存檔後立刻更新「③ 普查資料庫」的統計與列表
+  onLocationChange: receiveSurveyLocation,
 });
 
 function renderTabs(results) {

@@ -62,7 +62,9 @@ for (const f of b.features) {
   const oid = osmSrc?.record_id ? parseInt(String(osmSrc.record_id).replace(/^[a-z]/, ""), 10) || undefined : undefined;
   buildings.push({
     type: "Feature",
+    id: p.id ?? f.id ?? (oid ? `osm-${oid}` : undefined),
     properties: clean({
+      bid: p.id ?? f.id ?? (oid ? `osm-${oid}` : undefined),
       t: p.class === "building" || !p.class ? p.subtype : (p.class ?? p.subtype),
       h, lv: p.num_floors ?? undefined, n: n ?? undefined,
       s: source === "ml" ? 1 : undefined, // 1 = ML 推估足跡（無高度資料）

@@ -6,7 +6,7 @@
 //
 // 門檻來源：public/data/memory-embeddings.json 的 eval.suggested（由留一法實測建議）
 //   hit   0.82 → 與已記錄建築高度相似
-//   maybe 0.48 → 落在「不同棟也可能出現」的區間，需要人工確認
+//   maybe 0.57 → 落在「不同棟也可能出現」的區間，需要人工確認（隨庫版本變動）
 // 讀不到 eval.suggested 時退回 labels.js 的 SIM_THRESHOLDS，不讓 UI 壞掉。
 
 import { SIM_THRESHOLDS } from "./labels.js";
@@ -17,8 +17,8 @@ export function dedupThresholds(meta = null) {
   const s = meta?.eval?.suggested ?? null;
   const hit = Number(s?.hit);
   const maybe = Number(s?.maybe);
-  if (Number.isFinite(hit) && Number.isFinite(maybe) && hit > maybe && maybe >= 0) return { hit, maybe, source: "eval.suggested" };
-  return { hit: SIM_THRESHOLDS.hit, maybe: SIM_THRESHOLDS.maybe, source: "labels.SIM_THRESHOLDS" };
+  if (Number.isFinite(hit) && Number.isFinite(maybe) && hit > maybe && maybe >= 0) return { hit, maybe, low: Math.min(SIM_THRESHOLDS.low, maybe), source: "eval.suggested" };
+  return { ...SIM_THRESHOLDS, source: "labels.SIM_THRESHOLDS" };
 }
 
 const round3 = (x) => Math.round((Number(x) || 0) * 1000) / 1000;
@@ -38,13 +38,13 @@ export function dedupVerdict(top, margin, th) {
   const sim = best ? round3(best.sim) : null;
   const name = best ? (best.zh ?? best.id ?? "（未命名）") : null;
 
-  if ((v.key === "confident" || v.key === "likely") && sim != null && sim >= th.hit) {
+  if (v.key === "confident" && sim != null && sim >= th.hit) {
     return {
       key: "known", verdictKey: v.key, zh: v.zh, detail: v.detail,
       recorded: true, sim, name,
       title: "已記錄：這棟在記憶庫裡",
       text: `很可能已記錄：這棟與「${name}」高度相似（${sim.toFixed(3)}）`,
-      hint: "查重結果：這棟建築已經有紀錄，可直接看它的三維模型或地圖位置。",
+      hint: "影像與既有紀錄高度相似，請核對建築名稱與位置；相似度不是正確機率。",
     };
   }
   if ((v.key === "likely" || v.key === "weak") && sim != null && sim >= th.maybe) {
@@ -52,17 +52,17 @@ export function dedupVerdict(top, margin, th) {
       key: "maybe", verdictKey: v.key, zh: v.zh, detail: v.detail,
       recorded: false, sim, name,
       title: "尚不確定：需要人工確認",
-      text: `可能是同一棟：與「${name}」相似度 ${sim.toFixed(3)}，落在 ${th.maybe}~${th.hit} 的模糊區間，建議人工確認`,
+      text: `需要確認：與「${name}」相似度 ${sim.toFixed(3)}；${v.detail}`,
       hint: "查重結果：分數不足以斷定，先確認是不是既有紀錄，再決定要不要入庫。",
     };
   }
   return {
     key: "unknown", verdictKey: v.key, zh: v.zh, detail: v.detail,
     recorded: false, sim, name,
-    title: "尚未記錄：可能是新發現",
+    title: "未找到可靠匹配：可能是新發現",
     text: sim == null
-      ? `尚未記錄：目前沒有可比的已記錄建築（門檻 ${th.maybe}）`
-      : `尚未記錄：最高相似度只有 ${sim.toFixed(3)}（門檻 ${th.maybe}），這棟建築不在現有記憶庫中`,
-    hint: "查重結果：這棟建築還沒被記錄——這正是最有價值的結果，可以標記為新發現。",
+      ? `目前沒有可比的已記錄建築（門檻 ${th.maybe}）`
+      : `未找到可靠匹配：最高相似度 ${sim.toFixed(3)}（門檻 ${th.maybe}），也可能受視角、遮擋或光線影響`,
+    hint: "低相似度無法證明尚未建檔。請核對候選與附近檔案，再決定是否建立新紀錄。",
   };
 }
