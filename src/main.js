@@ -13,7 +13,6 @@ import { iconSvg } from "./icons.js";
 import { MarkerLayer } from "./markers.js";
 import { ModelViewer } from "./viewer.js";
 import { setLang, getLang, T } from "./i18n.js";
-import { installLandmarkModels } from "./landmark-models.js";
 import { parseMapQuery } from "./map-link.js";
 
 // 明確指定 MapLibre worker 位址：使用 .js 版本（避免 .mjs 被伺服器給錯 MIME 而無法載入）
@@ -111,7 +110,6 @@ const markerLayer = new MarkerLayer(map, {
 // ---------------------------------------------------------------- 地圖載入完成
 let appReady = false;
 let restoringInitialView = true;
-let landmarkModels = null;
 function onMapReady() {
   if (appReady) return;
   appReady = true;
@@ -119,14 +117,6 @@ function onMapReady() {
   applyCameraLimits();
   try { map.setSky({ "sky-color": "#0a141f", "horizon-color": "#2b4557", "fog-color": "#0d1a25", "sky-horizon-blend": 0.55, "horizon-fog-blend": 0.5, "fog-ground-blend": 0.18 }); } catch (e) { console.warn(e); }
   try { map.setTerrain({ source: "dem", exaggeration: 1.5 }); } catch (e) { console.warn("terrain:", e); }
-  installLandmarkModels(map, attractions, { visible: $("#tg-buildings").checked }).then((controller) => {
-    landmarkModels = controller;
-    controller.setVisible($("#tg-buildings").checked);
-    controller.ready?.then(() => {
-      const failed = controller.status.filter((p) => p.error).length;
-      if (failed) toast(`${failed} 個地標模型未能載入，保留原建築`);
-    });
-  }).catch((error) => console.warn("[landmarks] retaining whiteboxes:", error.message));
   markerLayer.setData(attractions);
   setupLabelsAndPois();
   renderChips();
@@ -470,7 +460,6 @@ const layerToggles = [
 for (const [sel, layers] of layerToggles) {
   $(sel).addEventListener("change", (e) => {
     const vis = e.target.checked ? "visible" : "none";
-    if (sel === "#tg-buildings") landmarkModels?.setVisible(e.target.checked);
     for (const id of layers) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", vis);
   });
 }
