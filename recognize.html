@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="上傳一張澳門建築照片，先用 YOLO 標註這是什麼類型的建築，再與已記錄的記憶庫查重；未記錄的可以直接標記為新發現" />
-    <meta name="theme-color" content="#f5f5ef" />
+    <meta name="theme-color" content="#0a0e13" />
     <title>建築普查工作台 · 澳門立體誌</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Cpath d='M4 21l7-11 4.5 6.5L19 12l9 9z' fill='%23d8b45a'/%3E%3C/svg%3E" />
   </head>
@@ -85,8 +85,13 @@
           </div>
 
           <div class="rc-demo-row">
-            <div class="rc-demo-title"><span>或先探索一張示範照片</span><span class="rc-demo-caption">試一試 ↓</span></div>
+            <div class="rc-demo-title"><span>或先探索一張真實街景照片</span><span class="rc-demo-caption">實拍示範 ↓</span></div>
             <div class="rc-demo-list" id="rc-demo-list"></div>
+            <details class="rc-photo-credits">
+              <summary>實拍照片來源與授權</summary>
+              <ul id="rc-photo-credits-list"></ul>
+              <p>使用 Wikimedia Commons 已授權縮圖，未修改照片內容；卡片以 CSS 裁切顯示。示範照片也收錄在參考庫中，用來體驗操作流程。</p>
+            </details>
           </div>
 
           <details class="rc-opts">
@@ -114,7 +119,7 @@
           <div class="rc-panel-head"><div><span class="rc-section-kicker">BUILDING INSIGHTS</span><h2 id="rc-result-title">讀懂眼前的建築</h2></div><span class="rc-status-pill" id="rc-result-state">等待照片</span></div>
           <div class="rc-result-empty" id="rc-empty">
             <div class="rc-building-art" aria-hidden="true">
-              <svg viewBox="0 0 260 190" fill="none"><circle cx="131" cy="88" r="71" fill="#eaf0e8"/><path d="M33 163h194M56 162V83l25-17 24 17v79m-49-57h49M75 83V67m54 95V66l29-25 29 25v96m-58-84h58m-44-13h29m-29 14h29M117 66h80M202 162v-46l15-10 15 10v46" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M67 119h12v17H67zm19 0h11v17H86zm-15 26h17v17H71zm69-55h12v15h-12zm24 0h12v15h-12zm-24 27h12v15h-12zm24 0h12v15h-12zm-15 28h19v17h-19z" stroke="currentColor" stroke-width="1.4"/><path d="M38 163v-28m0 11c-11-1-15-12-7-18m7 11c11-2 16-11 10-17M241 163v-24m-6-2 6-7 6 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m103 48 6-7 6 7m-9 0 3-4 3 4" stroke="#9caa96" stroke-width="1.2" stroke-linecap="round"/><circle cx="207" cy="58" r="12" stroke="#c0cdb9" stroke-width="1.2"/></svg>
+              <svg viewBox="0 0 260 190" fill="none"><circle cx="131" cy="88" r="71" class="rc-art-disc"/><path d="M33 163h194M56 162V83l25-17 24 17v79m-49-57h49M75 83V67m54 95V66l29-25 29 25v96m-58-84h58m-44-13h29m-29 14h29M117 66h80M202 162v-46l15-10 15 10v46" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M67 119h12v17H67zm19 0h11v17H86zm-15 26h17v17H71zm69-55h12v15h-12zm24 0h12v15h-12zm-24 27h12v15h-12zm24 0h12v15h-12zm-15 28h19v17h-19z" stroke="currentColor" stroke-width="1.4"/><path d="M38 163v-28m0 11c-11-1-15-12-7-18m7 11c11-2 16-11 10-17M241 163v-24m-6-2 6-7 6 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m103 48 6-7 6 7m-9 0 3-4 3 4" class="rc-art-detail" stroke-width="1.2" stroke-linecap="round"/><circle cx="207" cy="58" r="12" class="rc-art-sun" stroke-width="1.2"/></svg>
             </div>
             <h3>下一段城市故事，等你發現</h3>
             <p>選擇照片並開始辨識，<br />這裡會呈現建築類型與相似的記憶。</p>

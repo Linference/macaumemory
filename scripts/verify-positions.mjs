@@ -14,14 +14,15 @@ const inRing = (ring, lon, lat) => {
   }
   return hit;
 };
-const bboxOf = (coords) => {
+const polygonsOf = (geometry) => geometry.type === "MultiPolygon" ? geometry.coordinates : [geometry.coordinates];
+const bboxOf = (polygons) => {
   let minx = 999, maxx = -999, miny = 999, maxy = -999;
-  for (const r of coords) for (const p of r) { if (p[0] < minx) minx = p[0]; if (p[0] > maxx) maxx = p[0]; if (p[1] < miny) miny = p[1]; if (p[1] > maxy) maxy = p[1]; }
+  for (const poly of polygons) for (const r of poly) for (const p of r) { if (p[0] < minx) minx = p[0]; if (p[0] > maxx) maxx = p[0]; if (p[1] < miny) miny = p[1]; if (p[1] > maxy) maxy = p[1]; }
   return { minx, maxx, miny, maxy };
 };
-const bld = buildings.map((f) => ({ bbox: bboxOf(f.geometry.coordinates), coords: f.geometry.coordinates, n: f.properties.n, t: f.properties.t, h: f.properties.h }));
-const wtr = water.map((f) => ({ bbox: bboxOf(f.geometry.coordinates), coords: f.geometry.coordinates, c: f.properties.c, sea: f.properties.sea }));
-const inGeom = (g, lon, lat) => lon >= g.bbox.minx && lon <= g.bbox.maxx && lat >= g.bbox.miny && lat <= g.bbox.maxy && g.coords.reduce((acc, ring) => acc ^ (inRing(ring, lon, lat) ? 1 : 0), 0) === 1;
+const bld = buildings.map((f) => ({ bbox: bboxOf(polygonsOf(f.geometry)), polygons: polygonsOf(f.geometry), n: f.properties.n, t: f.properties.t, h: f.properties.h }));
+const wtr = water.map((f) => ({ bbox: bboxOf(polygonsOf(f.geometry)), polygons: polygonsOf(f.geometry), c: f.properties.c, sea: f.properties.sea }));
+const inGeom = (g, lon, lat) => lon >= g.bbox.minx && lon <= g.bbox.maxx && lat >= g.bbox.miny && lat <= g.bbox.maxy && g.polygons.some((poly) => poly.reduce((acc, ring) => acc ^ (inRing(ring, lon, lat) ? 1 : 0), 0) === 1);
 const distM = (a, b) => Math.hypot((a[0] - b[0]) * 102400, (a[1] - b[1]) * 110800);
 
 const buildingCats = new Set(["heritage", "temple", "museum", "landmark", "resort", "transport"]);

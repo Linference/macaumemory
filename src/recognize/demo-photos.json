@@ -1,0 +1,46 @@
+[
+  {
+    "label": "大三巴牌坊",
+    "file": "photos/demo/real-ruins-st-paul.jpg",
+    "buildingId": "ruins-st-paul",
+    "author": "Ank Kumar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source": "https://commons.wikimedia.org/wiki/File%3ARuins_of_Saint_Paul%27s%2C_Macau_%28Ank_Kumar%29_10.jpg",
+    "title": "File:Ruins of Saint Paul's, Macau (Ank Kumar) 10.jpg",
+    "changes": "使用既有 Commons 縮圖，未修改照片內容；卡片以 CSS 裁切顯示。"
+  },
+  {
+    "label": "澳門旅遊塔",
+    "file": "photos/demo/real-macau-tower.jpg",
+    "buildingId": "macau-tower",
+    "author": "Macanese馬交人（原圖）；Lauri Silvennoinen（編輯）",
+    "license": "Public domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "source": "https://commons.wikimedia.org/wiki/File%3AMacau_Tower_edit1.JPG",
+    "title": "File:Macau Tower edit1.JPG",
+    "changes": "使用既有 Commons 縮圖，未修改照片內容；卡片以 CSS 裁切顯示。"
+  },
+  {
+    "label": "媽閣廟",
+    "file": "photos/demo/real-a-ma-temple.jpg",
+    "buildingId": "a-ma-temple",
+    "author": "Richard Mortel from Riyadh, Saudi Arabia",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "https://commons.wikimedia.org/wiki/File%3AA-Ma_Temple%2C_Macau%2C_built_1488_%282%29_%2832043656663%29.jpg",
+    "title": "File:A-Ma Temple, Macau, built 1488 (2) (32043656663).jpg",
+    "changes": "使用既有 Commons 縮圖，未修改照片內容；卡片以 CSS 裁切顯示。"
+  },
+  {
+    "label": "港務局大樓",
+    "file": "photos/demo/real-moorish-barracks.jpg",
+    "buildingId": "moorish-barracks",
+    "author": "Netsonfong",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File%3AMoorish_Barracks.jpg",
+    "title": "File:Moorish Barracks.jpg",
+    "changes": "使用既有 Commons 縮圖，未修改照片內容；卡片以 CSS 裁切顯示。"
+  }
+]

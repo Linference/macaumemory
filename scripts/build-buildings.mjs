@@ -14,7 +14,7 @@
 // 用法：node scripts/build-buildings.mjs [--tol 0.2] [--write]
 import fs from "node:fs";
 import path from "node:path";
-import { CACHE, DATA, MACAU_BBOX, ensureDir, simplify, q, ringAreaM2, writeJson } from "./lib.mjs";
+import { CACHE, DATA, MACAU_BBOX, ensureDir, simplify, ringAreaM2, writeJson } from "./lib.mjs";
 
 const argv = process.argv.slice(2);
 const args = {};
@@ -27,7 +27,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (argv[i + 1] && !argv[i + 1].startsWith("--")) { args[m[1]] = argv[++i]; }
   else args[m[1]] = "true";
 }
-const TOL = args.tol ? Number(args.tol) : 0.2;
+const TOL = args.tol ? Number(args.tol) : 0.05;
 const WRITE = args.write === "true";
 if (!isFinite(TOL)) throw new Error(`--tol 必須是數字，收到「${args.tol}」`);
 const RAW = path.join(CACHE, "overture", "building.geojson");
@@ -45,7 +45,8 @@ function geomIntersects(g) {
   for (const poly of polys) for (const ring of poly) walk(ring);
   return box.maxx >= MACAU_BBOX.west - 0.01 && box.minx <= MACAU_BBOX.east + 0.01 && box.maxy >= MACAU_BBOX.south - 0.01 && box.miny <= MACAU_BBOX.north + 0.01;
 }
-const simplifyPoly = (coords, tol) => coords.map((ring) => simplify(ring, tol).map(q));
+const precise = (c) => [Math.round(c[0] * 1e7) / 1e7, Math.round(c[1] * 1e7) / 1e7];
+const simplifyPoly = (coords, tol) => coords.map((ring) => simplify(ring, tol).map(precise)).filter((ring) => ring.length >= 4);
 
 // ---------------------------------------------------------------- 1. 讀原始資料 + 併入 OSM 高度
 console.log(`[1/4] 讀取 Overture 原始建築（容差 ${TOL} m）…`);
@@ -85,19 +86,24 @@ for (const f of raw.features) {
     else if (hit.lv != null) { lv = hit.lv; fromLevels++; }
     if (!n && hit.n) n = hit.n;
   }
-  const coord = simplifyPoly(polys[0], TOL);
-  pts += coord[0].length;
+  const coords = polys.map((poly) => simplifyPoly(poly, TOL)).filter((poly) => poly[0]?.length >= 4);
+  if (!coords.length) continue;
+  pts += coords.reduce((total, poly) => total + poly.reduce((n, part) => n + part.length, 0), 0);
+  const footprintArea = coords.reduce((total, poly) => total + Math.max(0, ringAreaM2(poly[0]) - poly.slice(1).reduce((holes, hole) => holes + ringAreaM2(hole), 0)), 0);
   feats.push({
     type: "Feature",
+    id: f.id,
     properties: clean({
       t: p.class === "building" || !p.class ? p.subtype : (p.class ?? p.subtype),
       h, hs, lv, n,
       oid,
       mh: p.min_height != null ? Math.round(p.min_height * 10) / 10 : undefined,
       u: p.subtype && !["commercial", "residential", "industrial", "civic"].includes(p.subtype) ? p.subtype : undefined,
-      a: Math.round(ringAreaM2(coord[0])),          // 足跡面積 m²（供高度模型與樣式使用）
+      a: Math.round(footprintArea),          // 足跡面積 m²（供高度模型與樣式使用）
     }),
-    geometry: { type: "Polygon", coordinates: coord },
+    geometry: coords.length === 1
+      ? { type: "Polygon", coordinates: coords[0] }
+      : { type: "MultiPolygon", coordinates: coords },
   });
 }
 console.log(`      保留 ${feats.length} 棟；平均 ${(pts / feats.length).toFixed(1)} 個點（原 6.8）`);

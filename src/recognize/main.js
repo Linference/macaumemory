@@ -25,6 +25,7 @@ import { createSurvey } from "./survey.js";
 import { createLedger, readMirror } from "./ledger.js";
 import { GEO_PLANS } from "./geolocate.js";
 import yoloWorkerUrl from "./yolo.worker.js?worker&url";
+import DEMO_FILES from "./demo-photos.json";
 
 const $ = (s) => document.querySelector(s);
 const BASE = new URL("./", document.baseURI).href;
@@ -802,12 +803,6 @@ async function openModel(modelId, title, subtitle) {
 }
 
 // ------------------------------------------------------------------ 示範素材
-const DEMO_FILES = [
-  { label: "大三巴牌坊", file: "photos/demo/大三巴牌坊-demo.jpg" },
-  { label: "澳門旅遊塔", file: "photos/demo/澳門旅遊塔-demo.jpg" },
-  { label: "澳門科學館", file: "photos/demo/澳門科學館-demo.jpg" },
-  { label: "澳門巴黎人", file: "photos/demo/澳門巴黎人-demo.jpg" },
-];
 
 async function loadDemo(url) {
   try {
@@ -897,6 +892,9 @@ async function boot() {
   $("#rc-demo-list").innerHTML = DEMO_FILES
     .map((d) => `<button class="rc-demo" data-demo="${d.file}" aria-pressed="false" aria-label="使用${escapeHtml(d.label)}示範照片"><span class="rc-demo-image"><img src="${BASE}${encodeURI(d.file)}" alt="" loading="lazy" /></span><span class="rc-demo-label">${escapeHtml(d.label)}</span></button>`)
     .join("");
+  $("#rc-photo-credits-list").innerHTML = DEMO_FILES.map((d) =>
+    `<li><a href="${escapeHtml(d.source)}" target="_blank" rel="noopener noreferrer">${escapeHtml(d.label)}</a> · ${escapeHtml(d.author)} · <a href="${escapeHtml(d.licenseUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(d.license)}</a></li>`
+  ).join("");
 
   // 資料庫與模型並行載入：SQLite 幾十毫秒就好了，不該排在 87 MB 的模型後面；
   // 但 openDb() 現在還要讀回持久化的位元組＋遷移舊備份，所以是非同步的（見 db.js）。
