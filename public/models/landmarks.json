@@ -24,11 +24,13 @@
       "metersPerUnit": 245,
       "rotationDeg": [
         0,
-        90,
+        0,
         0
       ],
       "buildingIds": [
-        "a839a4c1-03a7-4c61-9803-2d5ec212d411"
+        "a839a4c1-03a7-4c61-9803-2d5ec212d411",
+        "bd4b4bd0-17f7-4eeb-b1a3-8cb89b4c1a4a",
+        "b8f0ed2a-d8b3-454c-a689-179b8fb97a79"
       ]
     },
     {
@@ -78,17 +80,23 @@
       "scaleSource": "visual estimate using map footprint; not a measurement",
       "spot": "galaxy",
       "coords": [
-        113.5536124,
-        22.1488037
+        113.55403,
+        22.148426
       ],
       "metersPerUnit": 475,
       "rotationDeg": [
         0,
-        0,
+        45,
         0
       ],
       "buildingIds": [
-        "014139d2-f92e-4deb-9d75-223be5d84b4b"
+        "014139d2-f92e-4deb-9d75-223be5d84b4b",
+        "3468b427-01c7-4666-9069-48b54f5f2519",
+        "1d9ed47b-5f74-40d8-a6fe-1c71027cf2f5",
+        "aa5b232d-dc3a-4550-b13e-ef3c657986b9",
+        "d77a31df-63b7-4822-b206-00fda98addad",
+        "94985c2d-c74c-4411-814e-e4b277c1e9aa",
+        "c2147f76-8076-42fa-a41d-f1301139003d"
       ]
     },
     {
@@ -118,7 +126,8 @@
         0
       ],
       "buildingIds": [
-        "c1cd2760-3717-4bf4-87ea-bcb3e5cc3e34"
+        "c1cd2760-3717-4bf4-87ea-bcb3e5cc3e34",
+        "64d1bcb5-25c0-4cb0-93ce-1b1cafae19dd"
       ]
     }
   ]
