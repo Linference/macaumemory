@@ -78,3 +78,10 @@ photos-src/_hold-wikimedia/
 
 # 臨時渲染產物
 /tmp/
+
+# Local hosting checkout, render intermediates, and unrelated local material
+/sites/
+/docs/video/_work/
+/docs/video/_verify/
+/docs/video/stats*.txt
+/CAICP/

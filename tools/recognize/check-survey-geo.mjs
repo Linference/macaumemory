@@ -63,17 +63,14 @@ const same8x20 = summarizeSamples(Array.from({ length: 20 }, () => sample(0, 0, 
 ok(same8x20.accuracyM === 8, "20 次一致的 ±8 公尺也是 ±8 公尺（誤差是相關的，平均不會變準）");
 const noisy = summarizeSamples([sample(0, 0, 30), sample(12, 0, 30), sample(-12, 0, 30), sample(4, 0, 30)]);
 log(`  4 次 ±30 公尺但彼此差 12 公尺 → 最終精度 ±${noisy.accuracyM} 公尺（離散 ±${noisy.spreadM}）`);
-ok(noisy.accuracyM < 30 && noisy.accuracyM >= 15, `有隨機成分時允許改善，但最多好 2 倍（實得 ${noisy.accuracyM}）`);
-ok(noisy.improved === true, "improved 旗標＝true（有實際改善）");
+ok(noisy.accuracyM >= 30, `跳動時保持或擴大設備估計範圍（實得 ${noisy.accuracyM}）`);
+ok(noisy.improved === false, "不把多次取樣視為已驗證精度改善");
 const poor8 = summarizeSamples(Array.from({ length: 8 }, () => sample(0, 0, 120)));
 ok(poor8.accuracyM === 120, `筆電沒有 GPS 晶片的情境：8 次都 ±120 公尺 → 誠實回報 ±${poor8.accuracyM} 公尺`);
 
-log("\n⑤ 來源判定（瀏覽器沒有提供 provider，只能用精度＋高度回推）");
-ok(classifyGeoSource({ bestAccuracyM: 8, spreadM: 0, hasAltitude: true }) === "gps", "±8 公尺＋有高度 → gps");
-ok(classifyGeoSource({ bestAccuracyM: 12, spreadM: 0, hasAltitude: false }) === "gps", "±12 公尺＋讀數穩定 → gps");
-ok(classifyGeoSource({ bestAccuracyM: 120, spreadM: 0 }) === "wifi", "±120 公尺 → wifi");
-ok(classifyGeoSource({ bestAccuracyM: 25, spreadM: 60 }) === "wifi", "±25 公尺但讀數跳動 60 公尺 → wifi（不硬掰成 GPS）");
-ok(geoSourceZh("manual") === "手動標記" && geoSourceZh("wifi") === "WiFi／基地台", "來源中文對照正確");
+log("\n⑤ 來源由設備提供，API 無 provider 時不推測衛星／WiFi");
+for (const bestAccuracyM of [8, 12, 25, 120]) ok(classifyGeoSource({ bestAccuracyM }) === "browser", `${bestAccuracyM} 公尺 → 裝置定位，來源未知`);
+ok(geoSourceZh("manual") === "手動標記" && geoSourceZh("browser").includes("來源未提供"), "來源中文對照正確");
 
 log("\n⑥ 失敗訊息（每一種都要有可讀中文 ＋ 補救方式）");
 for (const [err, key, must] of [
@@ -134,8 +131,8 @@ const runSession = (script, plan, extra = {}) => new Promise((resolve) => {
   ok(result.reason === "max-samples", "達不到目標精度 → 取滿設定的樣本數才停");
   ok(result.sampleCount === 8, `取滿 8 次（實得 ${result.sampleCount}）`);
   ok(!!warn && warn.level === "warn", `產生 lv-warn 等級的警語：${warn?.zh}`);
-  ok(/精度一直很差/.test(warn.zh), "警語本體說明「精度一直很差」");
-  ok(/GPS 晶片/.test(warn.hint) && /手機/.test(warn.hint) && /手動/.test(warn.hint), `補救建議含「沒有 GPS 晶片／用手機／手動標記」：${warn.hint.slice(0, 46)}…`);
+  ok(/估計範圍較大/.test(warn.zh), "警語說明設備估計範圍");
+  ok(/遮擋/.test(warn.hint) && /地圖/.test(warn.hint), `補救建議包含開闊處重試及地圖確認：${warn.hint.slice(0, 46)}…`);
 }
 // ⑦-3 讀數跳動過大 → 不得宣布「達到目標精度」
 {
@@ -189,7 +186,7 @@ const runSession = (script, plan, extra = {}) => new Promise((resolve) => {
 }
 
 log("\n⑧ 停止原因的中文對照完整");
-ok(Object.keys(GEO_STOP_ZH).length >= 7 && GEO_STOP_ZH.target === "達到目標精度", `共 ${Object.keys(GEO_STOP_ZH).length} 種：${Object.values(GEO_STOP_ZH).join("、")}`);
+ok(Object.keys(GEO_STOP_ZH).length >= 7 && GEO_STOP_ZH.target.includes("設備估計範圍"), `共 ${Object.keys(GEO_STOP_ZH).length} 種：${Object.values(GEO_STOP_ZH).join("、")}`);
 ok(GEO_LIMITS.poorAccuracyM === 30 && GEO_LIMITS.spreadWarnM === 50, `門檻：精度差 ${GEO_LIMITS.poorAccuracyM} 公尺、跳動 ${GEO_LIMITS.spreadWarnM} 公尺`);
 
 log(`\n=== 摘要 ===`);

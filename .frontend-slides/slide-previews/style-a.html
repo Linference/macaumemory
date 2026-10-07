@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>人工智能发展史 — Terminal Green</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   =========================================== */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+  html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+  .deck-viewport { position: static; overflow: visible; background: #fff; }
+  .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+  .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+  .slide:last-child { break-after: auto; page-break-after: auto; }
+  .deck-controls { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ===========================================
+   STYLE A — TERMINAL GREEN
+   Developer-native. The deck IS a terminal session.
+   A git log of machine intelligence.
+   =========================================== */
+:root {
+  --stage-bg: #010409;
+  --slide-bg: #0d1117;
+  --ink:      #c9d1d9;
+  --dim:      #6e7681;
+  --dimmer:   #30363d;
+  --green:    #39d353;
+  --green-dim:#1b7a30;
+  --amber:    #e3b341;
+  --cyan:     #58a6ff;
+}
+
+.slide {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  background: var(--slide-bg);
+  color: var(--ink);
+  padding: 74px 96px 64px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- scanline + vignette atmosphere --- */
+.slide::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 20;
+  background:
+    repeating-linear-gradient(180deg, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.30) 2px 3px),
+    radial-gradient(ellipse 130% 110% at 50% 40%, rgba(57,211,83,.055), transparent 62%);
+  mix-blend-mode: screen;
+}
+.slide::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 21;
+  background: radial-gradient(ellipse 120% 100% at 50% 50%, transparent 40%, rgba(1,4,9,.85) 100%);
+}
+
+/* --- top chrome: window titlebar --- */
+.titlebar {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 18px; border-bottom: 1px solid var(--dimmer);
+  animation: fadein .5s .02s both;
+}
+.dots { display: flex; gap: 8px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.r { background: #ff5f56; } .dot.y { background: #ffbd2e; } .dot.g { background: #27c93f; }
+.titlebar .path { color: var(--dim); font-size: 15px; letter-spacing: .04em; }
+.titlebar .path b { color: var(--ink); font-weight: 400; }
+.branch { margin-left: auto; font-size: 14px; color: var(--green); letter-spacing: .1em; }
+
+/* --- headline --- */
+.head {
+  display: grid; grid-template-columns: 1fr auto; align-items: end;
+  gap: 40px; margin: 34px 0 30px;
+  animation: fadein .6s .12s both;
+}
+h1 {
+  margin: 0; font-size: 82px; font-weight: 800; letter-spacing: -.02em;
+  line-height: 1.02; color: #fff;
+}
+h1 .cursor {
+  display: inline-block; width: .5em; height: .9em; margin-left: .08em;
+  background: var(--green); vertical-align: -.06em;
+  animation: blink 1.05s steps(1,end) infinite;
+}
+.sub { margin: 14px 0 0; font-size: 20px; color: var(--dim); font-weight: 300; letter-spacing: .02em; }
+.sub .k { color: var(--green-dim); }
+.cmd { text-align: right; font-size: 14px; color: var(--dim); line-height: 2.0; }
+.cmd .p { color: var(--green); }
+
+/* --- the log --- */
+.log { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0; }
+.row {
+  display: grid; grid-template-columns: 108px 78px 1fr auto;
+  align-items: baseline; gap: 22px;
+  padding: 11px 16px 11px 20px;
+  border-left: 2px solid var(--dimmer);
+  position: relative;
+  animation: slidein .5s both;
+}
+.row:hover { background: rgba(57,211,83,.045); border-left-color: var(--green); }
+.row .hash { color: var(--dimmer); font-size: 14px; letter-spacing: .02em; }
+.row .yr   { font-size: 26px; font-weight: 700; color: var(--green); letter-spacing: -.01em; }
+.row .yr.muted { color: var(--amber); }
+.row .ev   { font-size: 19px; color: var(--ink); font-weight: 400; }
+.row .ev em { font-style: normal; color: #fff; font-weight: 700; }
+.row .tag  { font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.row.winter { border-left-color: var(--amber); background: rgba(227,179,65,.05); }
+.row.winter .tag { color: var(--amber); }
+.row.now { border-left-color: var(--cyan); background: rgba(88,166,255,.07); }
+.row.now .yr { color: var(--cyan); }
+.row.now .tag { color: var(--cyan); }
+
+.row:nth-child(1){animation-delay:.24s} .row:nth-child(2){animation-delay:.30s}
+.row:nth-child(3){animation-delay:.36s} .row:nth-child(4){animation-delay:.42s}
+.row:nth-child(5){animation-delay:.48s} .row:nth-child(6){animation-delay:.54s}
+.row:nth-child(7){animation-delay:.60s} .row:nth-child(8){animation-delay:.66s}
+.row:nth-child(9){animation-delay:.72s} .row:nth-child(10){animation-delay:.78s}
+.row:nth-child(11){animation-delay:.84s} .row:nth-child(12){animation-delay:.90s}
+
+/* --- footer --- */
+.foot {
+  display: flex; align-items: center; gap: 20px;
+  border-top: 1px solid var(--dimmer); padding-top: 16px;
+  font-size: 14px; color: var(--dim);
+  animation: fadein .6s 1.0s both;
+}
+.foot .stat { color: var(--green); }
+.foot .stat b { font-weight: 700; }
+.foot .spacer { flex: 1; }
+.foot .blink { color: var(--green); animation: blink 1.05s steps(1,end) infinite; }
+
+@keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
+@keyframes fadein { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+@keyframes slidein { from{opacity:0; transform:translateX(-16px)} to{opacity:1; transform:none} }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+  <div class="deck-stage">
+    <section class="slide active">
+
+      <div class="titlebar">
+        <div class="dots"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i></div>
+        <div class="path">~/history <b>ai-timeline.log</b></div>
+        <div class="branch">● main</div>
+      </div>
+
+      <div class="head">
+        <div>
+          <h1>人工智能发展史<span class="cursor"></span></h1>
+          <p class="sub">从<span class="k">一个神经元</span>到<span class="k">一千亿参数</span>　·　八十年</p>
+        </div>
+        <div class="cmd">
+          <div><span class="p">$</span> git log --oneline --all</div>
+          <div><span class="p">$</span> 12 milestones</div>
+        </div>
+      </div>
+
+      <div class="log">
+        <div class="row"><span class="hash">a1f0c98</span><span class="yr">1943</span><span class="ev">McCulloch 与 Pitts 提出<em>人工神经元数学模型</em></span><span class="tag">origin</span></div>
+        <div class="row"><span class="hash">3c7be01</span><span class="yr">1950</span><span class="ev">图灵发表《计算机器与智能》，提出<em>图灵测试</em></span><span class="tag">theory</span></div>
+        <div class="row"><span class="hash">6d2a4f7</span><span class="yr">1956</span><span class="ev">达特茅斯会议——<em>「人工智能」正式命名</em></span><span class="tag">birth</span></div>
+        <div class="row"><span class="hash">9e11b30</span><span class="yr">1958</span><span class="ev">Rosenblatt 建成<em>感知机</em>，机器第一次「学习」</span><span class="tag">first model</span></div>
+        <div class="row winter"><span class="hash">b40cc12</span><span class="yr muted">1969</span><span class="ev">Minsky 与 Papert 指出感知机局限 → <em>第一次寒冬</em></span><span class="tag">winter i</span></div>
+        <div class="row winter"><span class="hash">7a3d9e5</span><span class="yr muted">1987</span><span class="ev">专家系统维护成本失控 → <em>第二次寒冬</em></span><span class="tag">winter ii</span></div>
+        <div class="row"><span class="hash">c82f1a4</span><span class="yr">1997</span><span class="ev"><em>深蓝</em>击败卡斯帕罗夫——机器赢下国际象棋</span><span class="tag">search</span></div>
+        <div class="row"><span class="hash">f5e0b83</span><span class="yr">2012</span><span class="ev"><em>AlexNet</em> 夺冠 ImageNet，深度学习爆发</span><span class="tag">gpu era</span></div>
+        <div class="row"><span class="hash">2b9c6d0</span><span class="yr">2016</span><span class="ev"><em>AlphaGo</em> 击败李世石——直觉也能被搜索</span><span class="tag">rl</span></div>
+        <div class="row"><span class="hash">e3a7f29</span><span class="yr">2017</span><span class="ev">论文《Attention Is All You Need》提出<em>Transformer</em></span><span class="tag">architecture</span></div>
+        <div class="row"><span class="hash">01d4b6e</span><span class="yr">2020</span><span class="ev"><em>GPT-3</em> 一千七百五十亿参数——规模成为方法</span><span class="tag">scale</span></div>
+        <div class="row now"><span class="hash">HEAD</span><span class="yr">2022</span><span class="ev"><em>ChatGPT</em> 发布，人工智能进入日常语言</span><span class="tag">now</span></div>
+      </div>
+
+      <div class="foot">
+        <div class="stat">寒冬 2 次　·　复兴 <b>3</b> 次　·　跨度 <b>79</b> 年</div>
+        <div class="spacer"></div>
+        <div>每一次跃迁，都发生在算力、数据与算法同时就位之后</div>
+        <div class="blink">█</div>
+      </div>
+
+    </section>
+  </div>
+</div>
+
+<script>
+/* Scale the fixed 1920x1080 stage to fit the viewport, uniformly. */
+(function () {
+  var stage = document.querySelector('.deck-stage');
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var x = (window.innerWidth - 1920 * s) / 2;
+    var y = (window.innerHeight - 1080 * s) / 2;
+    stage.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+})();
+</script>
+</body>
+</html>

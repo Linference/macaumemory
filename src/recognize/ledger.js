@@ -168,12 +168,14 @@ export function createLedger({ onNotice = () => {} } = {}) {
     const el = $("#rc-ledger-table");
     if (!rows.length) { el.innerHTML = `<p class="rc-ledger-empty"><strong>你的第一份城市檔案，從這裡開始</strong>辨識一棟建築並完成建檔後，它就會出現在這裡。</p>`; return; }
     el.innerHTML = `<table>
-      <thead><tr><th>編號</th><th>類型</th><th>名稱</th><th>座標</th><th>精度</th><th>來源</th><th>樣本</th><th>時間</th><th>狀態</th></tr></thead>
+      <thead><tr><th>編號</th><th>類型</th><th>名稱</th><th>建築位置</th><th>位置確認</th><th>拍攝位置</th><th>估計範圍</th><th>來源</th><th>樣本</th><th>時間</th><th>狀態</th></tr></thead>
       <tbody>${rows.map((r) => `<tr>
         <td class="code">${esc(r.code)}</td>
         <td>${esc(clsZh(r.type))}</td>
         <td class="name">${esc(r.name ?? "（未命名）")}</td>
         <td class="coord">${esc(fmtLatLng(r.lat, r.lng))}</td>
+        <td>${r.location_role === "building-confirmed" ? (r.footprint_id ? "已選輪廓" : "已手動確認") : r.location_role === "building-unlocated" ? "待補位置" : "舊紀錄待確認"}</td>
+        <td class="coord">${r.capture_location ? esc((() => { const p = JSON.parse(r.capture_location); return `${fmtLatLng(p.lat, p.lng)} · ${p.accuracyM == null ? "範圍未知" : `約 ${p.accuracyM.toFixed(1)} m`}`; })()) : "—"}</td>
         <td>${r.accuracy_m == null ? "—" : `±${Number(r.accuracy_m).toFixed(1)} m`}</td>
         <td><span class="src s-${esc(r.geo_source ?? "none")}">${esc(geoSourceZh(r.geo_source))}</span></td>
         <td>${r.sample_count ?? 0}</td>

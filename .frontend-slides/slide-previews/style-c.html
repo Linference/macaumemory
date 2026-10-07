@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>人工智能发展史</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   =========================================== */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+  html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+  .deck-viewport { position: static; overflow: visible; background: #fff; }
+  .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+  .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+  .slide:last-child { break-after: auto; page-break-after: auto; }
+  .deck-controls { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ===========================================
+   STYLE C — THE CURVE (custom)
+   Thesis: the layout IS the data. A single exponential curve
+   is the spine; milestones sit on it. Darkroom warm, editorial
+   serif against a cold subject. No cards, no boxes.
+   =========================================== */
+:root {
+  --stage-bg: #100E0B;
+  --slide-bg: #16130F;
+  --ground: #16130F;
+  --ink:    #F2EBE0;
+  --amber:  #E8A33D;
+  --ember:  #C4572A;
+  --muted:  #8A7C6A;
+  --line:   rgba(232,163,61,.20);
+}
+
+.slide {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Archivo", system-ui, sans-serif;
+  box-sizing: border-box;
+  position: relative;
+  padding: 66px 80px 0;
+}
+
+/* --- atmosphere: warm darkroom glow + fine grain --- */
+.slide::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 88% 12%, rgba(232,163,61,.13), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 6% 92%, rgba(196,87,42,.10), transparent 62%);
+}
+.slide::after {
+  content: ""; position: absolute; inset: 0; z-index: 40; pointer-events: none; opacity: .05;
+  background-image:
+    radial-gradient(1px 1px at 21% 37%, #fff, transparent),
+    radial-gradient(1px 1px at 63% 71%, #fff, transparent),
+    radial-gradient(1px 1px at 84% 23%, #fff, transparent),
+    radial-gradient(1px 1px at 39% 88%, #fff, transparent);
+  background-size: 190px 190px;
+}
+
+.wrap { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; }
+
+/* --- kicker + headline --- */
+.kicker {
+  font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--amber);
+  display: flex; align-items: center; gap: 16px;
+  animation: fade .7s .05s both;
+}
+.kicker .rule { width: 56px; height: 1px; background: var(--amber); opacity: .6; }
+
+.head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; margin-top: 26px; }
+h1 {
+  font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
+  font-size: 104px; line-height: .98; margin: 0; letter-spacing: -.01em; color: var(--ink);
+  animation: fade .8s .12s both;
+}
+h1 em { font-style: italic; color: var(--amber); }
+.dek {
+  margin: 20px 0 0; font-size: 20px; font-weight: 300; line-height: 1.75;
+  color: rgba(242,235,224,.62); max-width: 780px;
+  animation: fade .8s .20s both;
+}
+.dek b { color: var(--ink); font-weight: 500; }
+
+.axis-note {
+  text-align: right; font-family: "IBM Plex Mono", monospace; font-size: 12px;
+  letter-spacing: .1em; color: var(--muted); line-height: 2.1;
+  animation: fade .8s .28s both;
+}
+.axis-note .hl { color: var(--amber); }
+
+/* --- the plot --- */
+.plot {
+  position: relative; margin-top: 34px;
+  width: 1760px; height: 400px;
+  animation: fade .9s .34s both;
+}
+.plot svg { position: absolute; inset: 0; width: 1760px; height: 400px; overflow: visible; }
+.grid-line { stroke: rgba(242,235,224,.055); stroke-width: 1; }
+.curve {
+  fill: none; stroke: var(--amber); stroke-width: 2.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 7px rgba(232,163,61,.45));
+  stroke-dasharray: 3000; stroke-dashoffset: 3000;
+  animation: draw 2.6s cubic-bezier(.35,.75,.2,1) .5s forwards;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* --- milestone marker --- */
+.mk { position: absolute; width: 0; height: 0; }
+.mk .dot {
+  position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--ground); border: 2px solid var(--amber);
+  animation: pop .45s both;
+}
+.mk.winter .dot { border-color: var(--ember); background: var(--ember); }
+.mk.now .dot { background: var(--amber); border-color: var(--amber); box-shadow: 0 0 0 6px rgba(232,163,61,.16); }
+.mk .lead { position: absolute; left: 0; width: 1px; background: var(--line); }
+.mk .yr {
+  position: absolute; left: -22px; width: 150px;
+  font-family: "Instrument Serif", Georgia, serif; font-size: 40px; line-height: 1;
+  color: var(--ink); animation: fade .5s both;
+}
+.mk.winter .yr { color: var(--ember); }
+.mk.now .yr { color: var(--amber); }
+.mk .ev {
+  position: absolute; left: -22px; width: 210px;
+  font-size: 14.5px; line-height: 1.6; color: rgba(242,235,224,.66);
+  animation: fade .5s both;
+}
+.mk .ev b { color: var(--ink); font-weight: 500; }
+.mk.winter .ev { color: rgba(196,87,42,.85); }
+/* labels above the curve must clear the stroke, not sit on it */
+.mk.up .yr { bottom: 74px; } .mk.up .ev { bottom: 20px; }
+.mk.down .yr { top: 48px; }  .mk.down .ev { top: 96px; }
+.mk.up .lead { bottom: 7px; height: 11px; }
+.mk.down .lead { top: 8px; height: 34px; }
+/* the final milestone sits near the right edge — pull its label inward */
+.mk.now .yr { left: -34px; }
+.mk.now .ev { left: -34px; }
+
+@keyframes pop { from{transform:scale(0)} to{transform:scale(1)} }
+@keyframes fade { from{opacity:0; transform:translateY(9px)} to{opacity:1; transform:none} }
+
+/* --- footer --- */
+.foot {
+  margin-top: auto; display: flex; align-items: flex-end; gap: 56px;
+  border-top: 1px solid rgba(242,235,224,.10); padding: 22px 0 30px;
+  animation: fade .8s 1.5s both;
+}
+.foot .claim {
+  font-family: "Instrument Serif", Georgia, serif; font-size: 27px; line-height: 1.35;
+  color: var(--ink); flex: 1;
+}
+.foot .claim span { color: var(--amber); font-style: italic; }
+.nums { display: flex; gap: 46px; }
+.num .v { font-family: "Instrument Serif", Georgia, serif; font-size: 40px; line-height: 1; color: var(--amber); }
+.num .k { margin-top: 6px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+  <div class="deck-stage">
+    <section class="slide active">
+      <div class="wrap">
+
+        <div class="kicker"><span class="rule"></span>1943 — 2022 · 机器智能编年</div>
+
+        <div class="head">
+          <div>
+            <h1>人工智能<em>发展史</em></h1>
+            <p class="dek">每一次跃迁都不是灵感的产物，而是<b>算力、数据、算法</b>三者同时就位的结果。八十年的曲线只有一件事要说：<b>它一直在加速。</b></p>
+          </div>
+          <div class="axis-note">
+            纵轴 · 模型规模（示意）<br>
+            横轴 · 时间<br>
+            <span class="hl">两次寒冬，三次复兴</span>
+          </div>
+        </div>
+
+        <div class="plot" id="plot">
+          <svg id="svg" viewBox="0 0 1760 400" preserveAspectRatio="none"></svg>
+        </div>
+
+        <div class="foot">
+          <div class="claim">沉寂从不是终点——<span>它只是下一次跃迁前的蓄力。</span></div>
+          <div class="nums">
+            <div class="num"><div class="v">79</div><div class="k">跨度 / 年</div></div>
+            <div class="num"><div class="v">2</div><div class="k">寒冬</div></div>
+            <div class="num"><div class="v">3</div><div class="k">复兴</div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+/* ---- Build the curve: layout generated from the data shape ---- */
+(function () {
+  var W = 1760, H = 400;
+  var Y0 = H - 12, Y1 = 30;          /* bottom at t=0, top at t=1 */
+  var yAt = function (t) { return Y0 - (Y0 - Y1) * Math.pow(t, 3.2); };
+
+  var svg = document.getElementById('svg');
+  var ns = 'http://www.w3.org/2000/svg';
+
+  /* faint horizontal rules */
+  [0.25, 0.5, 0.75].forEach(function (f) {
+    var l = document.createElementNS(ns, 'line');
+    l.setAttribute('x1', 0); l.setAttribute('x2', W);
+    l.setAttribute('y1', H * f); l.setAttribute('y2', H * f);
+    l.setAttribute('class', 'grid-line');
+    svg.appendChild(l);
+  });
+
+  /* the curve */
+  var d = '';
+  for (var i = 0; i <= 240; i++) {
+    var t = i / 240;
+    d += (i ? ' L ' : 'M ') + (t * W).toFixed(1) + ',' + yAt(t).toFixed(1);
+  }
+  var path = document.createElementNS(ns, 'path');
+  path.setAttribute('d', d);
+  path.setAttribute('class', 'curve');
+  svg.appendChild(path);
+
+  /* milestones — position comes from the same function as the curve */
+  var M = [
+    { t: 0.015, side: 'up',   cls: '',       yr: '1943', ev: '<b>人工神经元</b>的数学模型' },
+    { t: 0.105, side: 'down', cls: '',       yr: '1950', ev: '图灵提出<b>图灵测试</b>' },
+    { t: 0.200, side: 'up',   cls: '',       yr: '1956', ev: '达特茅斯会议，<b>AI 得名</b>' },
+    { t: 0.305, side: 'down', cls: 'winter', yr: '1969', ev: '<b>第一次寒冬</b>' },
+    { t: 0.400, side: 'up',   cls: 'winter', yr: '1987', ev: '<b>第二次寒冬</b>' },
+    { t: 0.560, side: 'down', cls: '',       yr: '2012', ev: '<b>AlexNet</b> 引爆深度学习' },
+    { t: 0.730, side: 'up',   cls: '',       yr: '2017', ev: '<b>Transformer</b> 提出' },
+    { t: 0.940, side: 'down', cls: 'now',    yr: '2022', ev: '<b>ChatGPT</b> 走进日常' }
+  ];
+
+  var plot = document.getElementById('plot');
+  M.forEach(function (m, idx) {
+    var el = document.createElement('div');
+    el.className = 'mk ' + m.side + (m.cls ? ' ' + m.cls : '');
+    el.style.left = (m.t * W) + 'px';
+    el.style.top = yAt(m.t) + 'px';
+
+    var dot = document.createElement('div'); dot.className = 'dot';
+    dot.style.animationDelay = (0.7 + idx * 0.17) + 's';
+    var lead = document.createElement('div'); lead.className = 'lead';
+    var yr = document.createElement('div'); yr.className = 'yr'; yr.textContent = m.yr;
+    yr.style.animationDelay = (0.78 + idx * 0.17) + 's';
+    var ev = document.createElement('div'); ev.className = 'ev'; ev.innerHTML = m.ev;
+    ev.style.animationDelay = (0.86 + idx * 0.17) + 's';
+
+    el.appendChild(lead); el.appendChild(dot); el.appendChild(yr); el.appendChild(ev);
+    plot.appendChild(el);
+  });
+})();
+
+/* ---- Fixed-stage scaling ---- */
+(function () {
+  var stage = document.querySelector('.deck-stage');
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var x = (window.innerWidth - 1920 * s) / 2;
+    var y = (window.innerHeight - 1080 * s) / 2;
+    stage.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+})();
+</script>
+</body>
+</html>

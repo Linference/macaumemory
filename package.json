@@ -19,7 +19,8 @@
     "data:merge": "node scripts/merge-building-heights.mjs",
     "data:geocode": "node scripts/geocode-attractions.mjs",
     "verify": "node scripts/verify-positions.mjs",
-    "data:bus": "node scripts/fetch-bus.mjs"
+    "data:bus": "node scripts/fetch-bus.mjs",
+    "guide:server": "node server/guide.mjs"
   },
   "dependencies": {
     "@gltf-transform/cli": "^4.5.0",
@@ -27,10 +28,12 @@
     "geotiff": "^3.0.5",
     "maplibre-gl": "^6.10.0",
     "opencc-js": "^1.4.2",
+    "playcanvas": "2.21.4",
     "three": "^0.186.0",
     "vite": "^8.3.0"
   },
   "devDependencies": {
+    "@playcanvas/splat-transform": "^3.10.0",
     "puppeteer-core": "^25.11.0"
   }
 }

@@ -1,0 +1,9 @@
+途见 / 澳门记忆实时高斯实景
+
+大三巴模型：使用者提供的航拍影片，经本地 MacauSplat / COLMAP / Brush 重建。
+网站默认直接使用原始 final.ply 的完整字节，657492 个高斯点，完整三阶球谐系数。无模型有损转换或降采样。原始 PLY 未修改。
+
+浏览器渲染：PlayCanvas Engine 2.21.4，MIT License。
+https://github.com/playcanvas/engine
+MacauSplat 基于 OOOSplat，Apache-2.0。
+https://github.com/ooolabdev/ooosplat

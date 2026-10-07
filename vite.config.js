@@ -65,6 +65,7 @@ export default defineConfig({
   worker: { format: "es" },
   server: {
     host: "127.0.0.1",
+    proxy: { "/api/guide": "http://127.0.0.1:8787" },
     port: 5173,
     strictPort: false,
     // Vite 預設會監視整個專案目錄，但這個專案有大量「與前端無關」的內容：
@@ -78,6 +79,7 @@ export default defineConfig({
         "**/tools/**",
         "**/.cache/**",
         "**/datasets/**",
+        "**/output/**",
         "**/public/ort/**",
         "**/*.wasm",
         "**/*.onnx",
@@ -86,7 +88,7 @@ export default defineConfig({
       ],
     },
   },
-  preview: { host: "127.0.0.1", port: 4173, strictPort: false },
+  preview: { host: "127.0.0.1", port: 4173, strictPort: false, proxy: { "/api/guide": "http://127.0.0.1:8787" } },
   // 這兩個套件都必須「排除預打包」：
   //   · maplibre-gl 自己用 import.meta.url 找 worker
   //   · @sqlite.org/sqlite-wasm 的 ESM 外殼也用 import.meta.url 推導 sqlite3.wasm 的位置，
@@ -104,6 +106,9 @@ export default defineConfig({
       input: {
         main: path.resolve("index.html"),
         recognize: path.resolve("recognize.html"),
+        system: path.resolve("system.html"),
+        capture: path.resolve("capture.html"),
+        gaussian: path.resolve("gaussian.html"),
       },
     },
   },

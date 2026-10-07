@@ -81,7 +81,7 @@ ok(back?.created_at === row1.created_at && back?.captured_at === REC.capturedAt,
 ok(db.findNearby({ lat: A.lat, lng: A.lng, radiusM: 50 }).rows.length === 1, "R-Tree 虛擬表也一起還原（半徑 50 公尺查到 1 筆）");
 ok(db.peekNextCode(new Date().getFullYear()) === row2.code.replace(/(\d+)$/, (m) => String(Number(m) + 1).padStart(m.length, "0")),
   `配號接續，不會撞到已還原的編號（${db.peekNextCode(new Date().getFullYear())}）`);
-ok(db.dbState().schemaVersion === 1 && db.rawDb().selectValue("PRAGMA integrity_check") === "ok", "還原後的資料庫通過 PRAGMA integrity_check");
+ok(db.dbState().schemaVersion === db.SCHEMA_VERSION && db.rawDb().selectValue("PRAGMA integrity_check") === "ok", "還原後的資料庫通過 PRAGMA integrity_check");
 
 // ------------------------------------------------------------------ ② 遷移舊鏡射
 log("\n② 救援既有資料：localStorage 鏡射（舊格式）遷進資料庫，依 code 去重、保留原編號");

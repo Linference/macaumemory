@@ -49,24 +49,25 @@ export function circlePolygon(lat, lng, radiusM, steps = 48) {
 /**
  * 精度加權的平均座標。
  *
- * 為什麼要加權：單次讀數的 accuracy 是「68% 信心水準的半徑」，誤差大的讀數不該
- * 跟誤差小的讀數等權。權重取 1/accuracy²（反變異數加權），精度好 2 倍＝權重 4 倍。
+ * 瀏覽器 accuracy 是設備回報的水平誤差半徑（規格要求 95% 信心水準）。
+ * 1/accuracy² 僅作為平滑座標的權重；連續讀數有相關性，不能由此推導真實精度。
  *
  * @param {Array<{lat:number,lng:number,accuracyM:number}>} samples
  * @returns {{lat:number,lng:number,weightSum:number,sigmaW:number,n:number}}
- *          sigmaW = 加權平均的理論標準差（公尺）= sqrt(1/Σw)
+ *          sigmaW = 權重尺度 sqrt(1/Σw)，不是已校準的定位誤差
  */
 export function weightedCentroid(samples) {
   let sw = 0, swLat = 0, swLng = 0;
+  const anchor = samples[0];
   for (const s of samples) {
-    const acc = Math.max(1, Number(s.accuracyM) || 1);   // 至少 1 公尺，避免 0 造成無限權重
+    const acc = Number.isFinite(s.accuracyM) && s.accuracyM >= 0 ? Math.max(1, s.accuracyM) : 1000;
     const w = 1 / (acc * acc);
     sw += w;
-    swLat += w * s.lat;
-    swLng += w * s.lng;
+    swLat += w * (s.lat - anchor.lat);
+    swLng += w * (s.lng - anchor.lng);
   }
   if (!sw) return { lat: null, lng: null, weightSum: 0, sigmaW: null, n: 0 };
-  return { lat: swLat / sw, lng: swLng / sw, weightSum: sw, sigmaW: Math.sqrt(1 / sw), n: samples.length };
+  return { lat: anchor.lat + swLat / sw, lng: anchor.lng + swLng / sw, weightSum: sw, sigmaW: Math.sqrt(1 / sw), n: samples.length };
 }
 
 /**
@@ -79,7 +80,7 @@ export function spreadM(samples, center = null) {
   if (c.lat == null) return { rmsM: 0, stdM: 0 };
   let sw = 0, swD2 = 0;
   for (const s of samples) {
-    const acc = Math.max(1, Number(s.accuracyM) || 1);
+    const acc = Number.isFinite(s.accuracyM) && s.accuracyM >= 0 ? Math.max(1, s.accuracyM) : 1000;
     const w = 1 / (acc * acc);
     const d = haversineM(c.lat, c.lng, s.lat, s.lng);
     sw += w;
@@ -92,59 +93,54 @@ export function spreadM(samples, center = null) {
 /**
  * 一組讀數 → 最終定位結果。
  *
- * 最終精度估計 accuracyM 的取法（保守但可解釋）：
- *   σ_w    = 加權平均的理論標準差 sqrt(1/Σw)     ← 讀數越多越小
- *   σ_mean = 樣本離散 / sqrt(n)                  ← 讀數跳動大時變大
- *   而且**只有在「讀數之間真的在跳動」時才允許比單次讀數更準**（最多好 2 倍）：
- *     定位誤差在同一次取樣裡高度相關（同一組 WiFi AP／同一批衛星），
- *     八次都回報 ±120 公尺時，平均起來還是 ±120 公尺，不能除以 √8 假裝很準。
- *     讀數有離散（>0.5 公尺）才代表裡面有隨機成分，平均才有意義。
- *   下限 1 公尺：不宣稱次公尺級精度（手機／筆電不可能）。
+ * 平滑座標與保守顯示範圍：包住所有有效讀數的設備誤差圈。
+ * radius = max(讀數到加權中心的距離 + 該讀數回報半徑)。
+ * 不以樣本數縮小誤差，也不把跳動當成獨立隨機誤差；這個範圍不是實測精度保證。
+ * 任一有效座標缺少誤差半徑時，範圍保持未知。
  */
 export function summarizeSamples(samples) {
+  samples = samples.filter(validGeoSample);
   const n = samples.length;
   if (!n) return { lat: null, lng: null, accuracyM: null, bestAccuracyM: null, sampleCount: 0, spreadM: 0, rmsM: 0, source: "unknown", hasAltitude: false };
   const c = weightedCentroid(samples);
   const sp = spreadM(samples, c);
   const best = Math.min(...samples.map((s) => (Number.isFinite(s.accuracyM) ? s.accuracyM : Infinity)));
   const bestAccuracyM = Number.isFinite(best) ? best : null;
-  const sigmaMean = sp.rmsM / Math.sqrt(n);
-  const noisy = sp.rmsM > 0.5;                       // 讀數之間確實有差異 → 誤差含隨機成分
-  const gain = noisy ? Math.min(2, Math.sqrt(n)) : 1;  // 最多好 2 倍
-  const floorAcc = bestAccuracyM == null ? 1 : bestAccuracyM / gain;
-  const raw = Math.max(c.sigmaW ?? 0, sigmaMean, floorAcc, 1);
-  const accuracyM = bestAccuracyM == null ? raw : Math.min(raw, Math.max(1, bestAccuracyM));
+  const accuracyKnown = samples.every((s) => Number.isFinite(s.accuracyM) && s.accuracyM >= 0);
+  const accuracyM = accuracyKnown ? Math.max(...samples.map((s) =>
+    haversineM(c.lat, c.lng, s.lat, s.lng) + s.accuracyM)) : null;
   const hasAltitude = samples.some((s) => Number.isFinite(s.altitude));
   return {
     lat: c.lat, lng: c.lng,
-    accuracyM: round2(accuracyM),
+    accuracyM: accuracyM == null ? null : Math.ceil(accuracyM * 100) / 100,
+    accuracyMethod: "reported-envelope-v1",
     bestAccuracyM: bestAccuracyM == null ? null : round2(bestAccuracyM),
     sampleCount: n,
     spreadM: round2(sp.rmsM),
     rmsM: round2(sp.rmsM),
     sigmaWeightedM: round2(c.sigmaW ?? 0),
-    improved: noisy && bestAccuracyM != null && accuracyM < bestAccuracyM - 1e-9,
+    improved: false,
     hasAltitude,
     source: classifyGeoSource({ bestAccuracyM, spreadM: sp.rmsM, hasAltitude, sampleCount: n }),
   };
 }
 
 /**
- * 判斷座標來自 GPS 還是 WiFi／基地台。
- *
- * ⚠️ 瀏覽器**沒有**提供這個資訊（W3C Geolocation API 沒有 provider 欄位），
- * 所以這是啟發式：精度 ≤ 20 公尺且（拿得到高度或樣本離散 ≤ 15 公尺）→ 判為 gps；
- * 其餘判為 wifi。寫進資料庫的 geo_source 有記錄下來源，日後可以再校正。
+ * API 不提供 provider，不能用精度或高度猜測 GPS／WiFi。
  */
-export function classifyGeoSource({ bestAccuracyM, spreadM = 0, hasAltitude = false }) {
+export function classifyGeoSource({ bestAccuracyM }) {
   if (bestAccuracyM == null || !Number.isFinite(bestAccuracyM)) return "unknown";
-  if (bestAccuracyM <= 20 && (hasAltitude || spreadM <= 15)) return "gps";
-  return "wifi";
+  return "browser";
 }
 
+export const validGeoSample = (s) => s && Number.isFinite(s.lat) && Number.isFinite(s.lng)
+  && Math.abs(s.lat) <= 90 && Math.abs(s.lng) <= 180
+  && (s.accuracyM == null || (Number.isFinite(s.accuracyM) && s.accuracyM >= 0));
+
 export const GEO_SOURCE_ZH = {
-  gps: "GPS 衛星",
-  wifi: "WiFi／基地台",
+  gps: "舊版推測 GPS",
+  wifi: "舊版推測 WiFi／基地台",
+  browser: "裝置定位（來源未提供）",
   manual: "手動標記",
   unknown: "來源不明",
   none: "未定位",

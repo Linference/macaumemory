@@ -21,6 +21,8 @@
           <span class="brand-text"><strong>澳門立體誌</strong><small>MACAU MEMORY ATLAS</small></span>
         </a>
         <nav class="rc-nav" aria-label="工作台導覽">
+          <a href="./system.html">文化探索系統</a>
+          <a href="./capture.html">資料選圖</a>
           <a class="rc-nav-current" href="#workspace" aria-current="page">辨識工作台</a>
           <a href="#rc-ledger">普查檔案</a>
           <a class="rc-back" href="./"><span aria-hidden="true">↗</span> 探索三維地圖</a>
@@ -67,6 +69,17 @@
             <svg id="rc-boxes" hidden></svg>
           </div>
           <input type="file" id="rc-file" accept="image/*" hidden />
+          <input type="file" id="rc-camera-file" accept="image/*" capture="environment" hidden />
+          <dialog class="rc-camera-dialog" id="rc-camera-dialog" aria-labelledby="rc-camera-title">
+            <div class="rc-camera-head"><h2 id="rc-camera-title">拍攝建築照片</h2><button class="btn sec" id="rc-camera-close" type="button">關閉</button></div>
+            <video id="rc-camera-video" autoplay muted playsinline aria-label="相機即時預覽"></video>
+            <p id="rc-camera-status" role="status">將建築完整放進畫面。</p>
+            <div class="rc-camera-buttons">
+              <button class="btn gold" id="rc-camera-shutter" type="button" disabled>拍攝並使用照片</button>
+              <button class="btn sec" id="rc-camera-switch" type="button" disabled>切換前／後鏡頭</button>
+              <button class="btn sec" id="rc-camera-native" type="button">系統相機／選取照片</button>
+            </div>
+          </dialog>
 
           <div class="rc-file" id="rc-file-info" hidden>
             <img id="rc-thumb" alt="已選擇的照片縮圖" />
@@ -81,6 +94,7 @@
 
           <div class="rc-actions">
             <button class="btn gold" id="rc-run" disabled>開始辨識 <span aria-hidden="true">↗</span></button>
+            <button class="btn sec" id="rc-camera-open" type="button">拍照</button>
             <button class="btn sec" id="rc-pick">選擇照片</button>
           </div>
 
@@ -132,6 +146,7 @@
           </div>
           <div id="rc-tabs" class="rc-tabs" hidden></div>
           <div id="rc-results" hidden></div>
+          <section id="rc-multi" class="rc-multi" aria-label="同一建築多照片比對"></section>
           <div id="rc-errors" hidden></div>
           <!-- 建檔表單（主流程）：每次辨識完都顯示，由 src/recognize/survey.js 繪製 -->
           <div id="rc-survey-host" hidden></div>
@@ -151,7 +166,7 @@
         <div id="diag-body" hidden></div>
         <details class="rc-method"><summary>辨識方法與定位說明</summary><p class="rc-foot">
           流程：<b>照片 → YOLO（11 類澳門建築 · 768px）標註類別 → DINOv2 ViT-S/14（336px）取 384 維向量
-          → 與已記錄的記憶庫查重 → 建檔（GPS 精準定位 → 編號 → 寫入 SQLite）</b>。<br />
+          → 與已記錄的記憶庫查重 → 確認建築位置 → 編號與建檔</b>。<br />
           「這是哪一棟」只是查重的手段；這一頁的主結果是<b>標註類別</b>、<b>查重結論</b>與<b>普查建檔</b>。<br />
           模型與 WASM 全部放在本機 <code>public/ort/</code>、<code>public/models/</code>（不連 CDN，離線可用）；
           嵌入庫 <code>public/data/memory-embeddings.json</code> 由 <code>tools/recognize/build_embeddings.py</code> 產生。<br />
@@ -161,8 +176,8 @@
           兩者都不能用才會只剩記憶體（此時資料庫面板會出現紅色警示）。每次新增／改狀態都會存檔，
           重新整理後自動還原；仍可用「③ 普查資料庫」的<b>匯出 JSON／.sqlite</b>額外備份。
           目前用哪一種儲存、最後儲存時間與錯誤，都顯示在「③ 普查資料庫」與下方診斷區塊。<br />
-          定位是<b>多次取樣＋精度加權</b>（<code>src/recognize/geolocate.js</code>）：一定顯示精度半徑；
-          精度差會警示並自動展開手動定位，手動座標的來源記為 <code>manual</code>。
+          裝置定位會<b>多次取樣並顯示設備估計範圍</b>；取樣次數不代表實際精度提升。
+          拍攝位置與建築位置分開保存。建築位置由你點選輪廓或手動確認，舊照片不自動套用現在的裝置座標。
         </p></details>
       </section>
       <footer class="rc-page-footer"><span>澳門立體誌 <i>·</i> 為城市留下記憶</span><a href="./">回到三維地圖 <span aria-hidden="true">↗</span></a></footer>

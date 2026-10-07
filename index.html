@@ -8,6 +8,7 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Cpath d='M4 21l7-11 4.5 6.5L19 12l9 9z' fill='%23d8b45a'/%3E%3Ccircle cx='24' cy='8' r='3' fill='%23e8e2d6'/%3E%3C/svg%3E" />
   </head>
   <body>
+    <a href="./system.html" style="position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:12;padding:9px 15px;border:1px solid #d8b45a66;border-radius:20px;background:#10161de8;color:#d8b45a;font-size:12px;text-decoration:none">澳門記憶 · 文化探索系統 ↗</a>
     <div id="map"></div>
 
     <!-- 載入畫面 -->
@@ -87,9 +88,9 @@
       <label class="sw"><input type="checkbox" id="tg-raster" checked /><span>水體 / 綠地</span></label>
       <label class="sw"><input type="checkbox" id="tg-boundary" checked /><span>行政邊界</span></label>
       <label class="sw"><input type="checkbox" id="tg-labels" checked /><span>地名標籤</span></label>
-      <label class="sw"><input type="checkbox" id="tg-pois" checked /><span>周邊設施</span></label>
+      <label class="sw"><input type="checkbox" id="tg-pois" /><span>周邊設施</span></label>
       <label class="sw"><input type="checkbox" id="tg-bus" /><span>巴士站（OSM）</span></label>
-      <label class="sw"><input type="checkbox" id="tg-photos" /><span id="lb-photos">實景照片</span></label>
+      <label class="sw"><input type="checkbox" id="tg-photos" checked /><span id="lb-photos">記憶點</span></label>
       <div class="poi-chips" id="photo-chips"></div>
       <button class="ghost-btn" id="btn-bus-api" style="margin-top:6px">🚌 設定即時報站 API</button>
       <div class="poi-chips" id="poi-chips"></div>
@@ -207,6 +208,17 @@
         <button class="btn sec nav-btn" id="nav-stop">結束</button>
       </div>
       <div class="nav-steps" id="nav-steps"></div>
+    </section>
+    <section class="digital-guide" id="digital-guide" hidden aria-label="小澳數字人建築導覽">
+      <header class="guide-header"><div><span class="guide-kicker">MACAU MEMORY · VIRTUAL GUIDE</span><strong>小澳 · 建築導覽員</strong></div><button class="guide-close" type="button" data-guide-close aria-label="關閉數字人導覽">×</button></header>
+      <div class="guide-portrait"><img src="guide/xiaoao.webp" alt="身穿深藍金邊制服的虛擬導覽員小澳"><img class="guide-talking" src="guide/xiaoao-speaking.webp" alt="" aria-hidden="true"><span class="guide-badge">AI 虛擬導覽</span><span class="guide-presence" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="guide-context"><small>正在一起探索</small><strong data-guide-building></strong></div>
+      <p class="guide-status" data-guide-status role="status">你的建築導覽員</p>
+      <div class="guide-messages" data-guide-messages role="log" aria-label="與小澳的對話" aria-live="polite"></div>
+      <div class="guide-tools"><button type="button" data-guide-replay>播放講解</button><button type="button" data-guide-mute aria-pressed="false">靜音</button></div>
+      <div class="guide-questions"><button type="button" data-guide-question="這座建築有什麼歷史？">建築歷史</button><button type="button" data-guide-question="這座建築有哪些值得觀察的特色？">建築特色</button></div>
+      <form class="guide-form"><textarea rows="1" maxlength="600" placeholder="問小澳關於這座建築…" aria-label="向數字人提問"></textarea><button type="submit" data-guide-send aria-label="送出問題">送出</button></form>
+      <div class="guide-foot"><button type="button" data-guide-mic aria-pressed="false">語音提問</button><small>錄音會傳送至腾讯雲辨識</small></div>
     </section>
     <!-- AI 導覽助理 -->
     <button class="ai-fab" id="ai-fab" title="問阿獅（AI 導覽）">

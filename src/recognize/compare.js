@@ -33,10 +33,17 @@ export function rankCandidates(lib, query, { topK = 3, clsHint = null, threshold
     });
   }
   const located = rankWithLocation(rows, geo);
+  const visual = rankWithLocation(rows).rows;
+  if (visual.length) visual[0].visualMargin = visual.length > 1
+    ? visual[0].sim - Math.max(...visual.slice(1).map((r) => r.sim)) : 1;
   const ranked = located.rows.map((r) => ({ ...r, level: simLabel(r.sim, thresholds) }));
   if (ranked.length) ranked[0].visualMargin = ranked.length > 1
     ? ranked[0].sim - Math.max(...ranked.slice(1).map((r) => r.sim)) : 1;
-  return { top: ranked.slice(0, topK), all: ranked, total: ranked.length, geo: located.geo, thresholds };
+  return { top: ranked.slice(0, topK), visualTop: visual.slice(0, topK), all: ranked, total: ranked.length,
+    geo: located.geo, thresholds, comparison: {
+      visualFirst: visual[0]?.id ?? null, locatedFirst: ranked[0]?.id ?? null,
+      changed: visual[0]?.id !== ranked[0]?.id,
+    } };
 }
 
 /** 第一名與第二名的差距：太小代表「這幾棟長得像」，不能只憑影像斷定。 */

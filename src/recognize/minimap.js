@@ -3,8 +3,8 @@
 // 為什麼需要它：普查時最常見的情況是「筆電沒有 GPS 晶片」——座標可能偏掉幾十公尺，
 // 甚至定到隔壁街區。這時候唯一可靠的補救就是讓人在圖上把點拖到正確位置。
 // 這一張圖同時負責三件事：
-//   ① 顯示座標點的位置（可點選、可拖曳）
-//   ② 畫出 ±accuracy 公尺的精度圈（一眼看出這個座標有多可信）
+//   ① 金色建築位置（可點選輪廓、拖曳）
+//   ② 藍色裝置位置與設備估計範圍（不是實測精度保證）
 //   ③ 讓使用者自己指定座標（geo_source = 'manual'）
 //
 // 這張圖是「示意圖」而不是街道圖：本頁不載入任何線上圖磚（全站都走離線資料），
@@ -39,6 +39,8 @@ export class SurveyMiniMap {
     this.maplibregl = null;
     this.marker = null;
     this.point = null;          // {lat,lng,accuracyM}
+    this.capture = null;
+    this.footprintId = null;
     this.ready = false;
     this.starting = false;
     this.failed = null;
@@ -63,8 +65,8 @@ export class SurveyMiniMap {
       const map = new maplibregl.Map({
         container: this.container,
         style: this.buildStyle(attractions),
-        center: this.point ? [this.point.lng, this.point.lat] : MACAU_CENTER,
-        zoom: this.point ? 16.5 : 13.4,
+        center: this.point ? [this.point.lng, this.point.lat] : this.capture ? [this.capture.lng, this.capture.lat] : MACAU_CENTER,
+        zoom: this.point || this.capture ? 16.5 : 13.4,
         maxZoom: 19,
         minZoom: 11,
         attributionControl: false,
@@ -80,8 +82,11 @@ export class SurveyMiniMap {
 
       map.on("click", (e) => {
         if (e.originalEvent?.defaultPrevented) return;
-        this.setPoint({ lat: e.lngLat.lat, lng: e.lngLat.lng, accuracyM: null });
-        this.onPick(e.lngLat.lat, e.lngLat.lng, "map-click");
+        const feature = map.getLayer("fp-fill") ? map.queryRenderedFeatures(e.point, { layers: ["fp-fill"] })[0] : null;
+        const footprintId = feature?.properties?.bid ?? feature?.id ?? null;
+        this.footprintId = footprintId == null ? null : String(footprintId);
+        this.setPoint({ lat: e.lngLat.lat, lng: e.lngLat.lng, footprintId: this.footprintId });
+        this.onPick(e.lngLat.lat, e.lngLat.lng, feature ? "footprint" : "map-click", this.footprintId);
       });
 
       await new Promise((resolve) => {
@@ -96,6 +101,8 @@ export class SurveyMiniMap {
       map.addLayer({ id: "acc-line", type: "line", source: "acc", paint: { "line-color": "#6fb2d2", "line-width": 1.4, "line-dasharray": [3, 2] } });
       map.addSource("pt", { type: "geojson", data: EMPTY_FC });
       map.addLayer({ id: "pt-dot", type: "circle", source: "pt", paint: { "circle-radius": 4.5, "circle-color": "#d8b45a", "circle-stroke-color": "#0b1117", "circle-stroke-width": 1.6 } });
+      map.addSource("capture", { type: "geojson", data: EMPTY_FC });
+      map.addLayer({ id: "capture-dot", type: "circle", source: "capture", paint: { "circle-radius": 6, "circle-color": "#6fb2d2", "circle-stroke-color": "#ffffff", "circle-stroke-width": 2 } });
 
       const el = document.createElement("div");
       el.className = "rc-mmap-pin";
@@ -105,8 +112,9 @@ export class SurveyMiniMap {
         .setLngLat(this.point ? [this.point.lng, this.point.lat] : MACAU_CENTER);
       this.marker.on("dragend", () => {
         const ll = this.marker.getLngLat();
-        this.setPoint({ lat: ll.lat, lng: ll.lng, accuracyM: null });
-        this.onPick(ll.lat, ll.lng, "marker-drag");
+        this.footprintId = null;
+        this.setPoint({ lat: ll.lat, lng: ll.lng, footprintId: null });
+        this.onPick(ll.lat, ll.lng, "marker-drag", null);
       });
 
       // 行政區名（DOM 標記：本頁沒有字型伺服器，MapLibre 的文字圖層不能用中文）
@@ -167,6 +175,9 @@ export class SurveyMiniMap {
       // 放在景點點位下面、邊界上面：建築是底圖，不該蓋住精度圈與標記
       map.addLayer({ id: "fp-fill", type: "fill", source: "footprints", paint: { "fill-color": "#7f8d99", "fill-opacity": 0.55 } }, map.getLayer("facts") ? "facts" : undefined);
       map.addLayer({ id: "fp-line", type: "line", source: "footprints", minzoom: 15, paint: { "line-color": "#0b1117", "line-width": 0.5, "line-opacity": 0.7 } }, map.getLayer("facts") ? "facts" : undefined);
+      map.addLayer({ id: "fp-selected", type: "fill", source: "footprints",
+        filter: ["==", ["get", "bid"], ""], paint: { "fill-color": "#d8b45a", "fill-opacity": 0.75 } }, "acc-fill");
+      this.renderPoint();
       this.buildingsState = "ready";
       this.onBuildingStatus?.(`已載入 ${fc.features?.length ?? 0} 棟建築輪廓——可以對照實際建築拖曳標記了`, "ready");
       return "ready";
@@ -174,6 +185,12 @@ export class SurveyMiniMap {
       this.buildingsState = "failed";
       this.onBuildingStatus?.(`建築輪廓載入失敗：${e?.message ?? e}（仍可用景點與行政區名判斷位置）`, "failed");
       return "failed";
+    }
+  }
+
+  setBuildingsVisible(visible) {
+    for (const id of ["fp-fill", "fp-line", "fp-selected"]) {
+      if (this.map?.getLayer(id)) this.map.setLayoutProperty(id, "visibility", visible ? "visible" : "none");
     }
   }
 
@@ -277,14 +294,23 @@ export class SurveyMiniMap {
   }
 
   /** 更新點與精度圈（accuracyM 為 null＝只畫點、不畫圈） */
-  setPoint({ lat, lng, accuracyM = null }) {
-    this.point = { lat, lng, accuracyM };
+  setPoint(point) {
+    this.point = point && Number.isFinite(point.lat) && Number.isFinite(point.lng) ? point : null;
+    this.footprintId = this.point?.footprintId ?? null;
     this.renderPoint();
+  }
+
+  setCapture(capture) {
+    const moved = capture && (!this.capture || capture.lat !== this.capture.lat || capture.lng !== this.capture.lng);
+    this.capture = capture && Number.isFinite(capture.lat) && Number.isFinite(capture.lng) ? capture : null;
+    this.renderPoint();
+    if (moved && this.ready && !this.point) this.map.jumpTo({ center: [capture.lng, capture.lat], zoom: Math.max(this.map.getZoom(), 16) });
   }
 
   renderPoint() {
     if (!this.ready || !this.map) return;
     const p = this.point;
+    const camera = this.capture;
     const src = this.map.getSource("pt");
     const acc = this.map.getSource("acc");
     if (src) {
@@ -293,14 +319,18 @@ export class SurveyMiniMap {
       this._pt = { has: fc.features.length > 0, lat: p?.lat ?? null, lng: p?.lng ?? null };
     }
     if (acc) {
-      const r = Number(p?.accuracyM);
-      const draw = p && Number.isFinite(r) && r > 0;
+      const r = camera?.accuracyM;
+      const draw = !!camera && Number.isFinite(r) && r > 0;
       const fc = draw
-        ? { type: "FeatureCollection", features: [{ type: "Feature", properties: { r }, geometry: { type: "Polygon", coordinates: [circlePolygon(p.lat, p.lng, r)] } }] }
+        ? { type: "FeatureCollection", features: [{ type: "Feature", properties: { r }, geometry: { type: "Polygon", coordinates: [circlePolygon(camera.lat, camera.lng, r)] } }] }
         : EMPTY_FC;
       acc.setData(fc);
       this._acc = { has: draw, radiusM: draw ? r : null, ringPoints: draw ? fc.features[0].geometry.coordinates[0].length : 0 };
     }
+    this.map.getSource("capture")?.setData(camera ? { type: "FeatureCollection", features: [
+      { type: "Feature", properties: {}, geometry: { type: "Point", coordinates: [camera.lng, camera.lat] } },
+    ] } : EMPTY_FC);
+    if (this.map.getLayer("fp-selected")) this.map.setFilter("fp-selected", ["==", ["get", "bid"], this.footprintId ?? ""]);
     if (this.marker) {
       const el = this.marker.getElement();
       if (!p) { el.style.display = "none"; }
@@ -330,6 +360,8 @@ export class SurveyMiniMap {
       ready: this.ready,
       failed: this.failed,
       point: this.point,
+      capture: this.capture,
+      footprintId: this.footprintId,
       accuracyCircle: this._acc ?? { has: false },
       pointLayer: this._pt ?? { has: false },
       marker: this.marker ? { lat: this.marker.getLngLat().lat, lng: this.marker.getLngLat().lng } : null,

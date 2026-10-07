@@ -2,23 +2,21 @@
 //
 // 流程（每一次辨識完都會出現，不再是「查重 <0.48 才出現」的次要分支）：
 //   ① 拍一棟建築 → YOLO 判類型
-//   ② GPS 精準定位（多次取樣＋精度加權，見 geolocate.js）
+//   ② 選用裝置定位，另行確認建築位置
 //   ③ 配一個編號 MM-YYYY-NNNN
 //   ④ 錄入 SQLite（同時更新 R-Tree）
 //   ⑤ 顯示成功與目前總筆數
 //
 // 這個模組只做 UI 與流程；定位在 geolocate.js、資料庫在 db.js、地圖在 minimap.js。
-// 三件與「筆電沒有 GPS」直接相關的事在這裡落實：
-//   · 一定顯示 accuracy（最終精度、最佳精度、樣本離散、來源）
-//   · 精度差／讀數跳動過大就跳警示，並**自動展開**手動定位地圖
-//   · 手動座標會蓋掉 GPS 座標，geo_source 記成 manual（原 GPS 讀數留在 geo_note）
+// 裝置估計範圍與建築確認位置分開顯示、分開儲存；新照片不沿用舊位置。
 
 import { insertBuilding, findNearby, peekNextCode, dbState, persistenceStatus, flushPersistence, fmtLatLng, countBuildings } from "./db.js";
 import { createGeoSession, GEO_PLANS, DEFAULT_PLAN, progressText, GEO_STOP_ZH, geoWarnings } from "./geolocate.js";
 import { SurveyMiniMap } from "./minimap.js";
 import { appendMirror, mirrorCodes, MIRROR_KEY } from "./ledger.js";
 import { CLASS_ZH, clsZh } from "./labels.js";
-import { geoSourceZh, round5, summarizeSamples } from "./geo-math.js";
+import { geoSourceZh, summarizeSamples } from "./geo-math.js";
+import { captureLocationFromGeo, buildingLocationFromPick, matchingLocation, parseTypedLocation } from "./survey-location.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -82,7 +80,8 @@ export function createSurvey({
         </div>
 
         <div class="rc-field rc-geo">
-          <label>記錄建築位置 <em>自動定位或手動標記</em></label>
+          <label>① 取得拍攝位置 <em>裝置位置，不等於建築位置</em></label>
+          <p class="rc-location-help">現場拍攝可取得定位；上傳舊照片時，請直接在下方標記照片中的建築。</p>
           <div class="rc-geo-controls">
             <button type="button" class="btn gold sm" id="rc-nd-geo">取得定位</button>
             <button type="button" class="btn sec sm" id="rc-nd-geo-done" hidden>完成取樣</button>
@@ -95,24 +94,29 @@ export function createSurvey({
           <ul class="rc-geo-samples" id="rc-nd-geo-samples"></ul>
           <div class="rc-geo-warn" id="rc-nd-geo-warn" hidden></div>
 
+          <div class="rc-location-pair" aria-live="polite">
+            <div class="capture"><span>拍攝位置 · 藍色</span><strong id="rc-capture-summary">尚未取得裝置位置</strong></div>
+            <div class="building"><span>建築位置 · 金色</span><strong id="rc-building-summary">尚未確認建築位置</strong></div>
+          </div>
+          <button type="button" class="btn sec sm" id="rc-confirm-building">② 在地圖上確認這棟建築 ↗</button>
+
           <details class="rc-manual" id="rc-nd-manual">
-            <summary>手動定位（在地圖上拖曳標記）</summary>
+            <summary>建築位置：點選輪廓或拖曳金色標記</summary>
             <div class="rc-mmap-wrap">
               <div class="rc-mmap" id="rc-nd-minimap"></div>
-              <div class="rc-mmap-tag">示意圖 · 離線資料（行政邊界／行政區名／61 個景點）</div>
+              <div class="rc-mmap-tag">藍點／圈：裝置位置與估計範圍 · 金點：建築位置</div>
             </div>
             <div class="rc-mmap-opts">
               <label><input type="checkbox" id="rc-mmap-buildings" /> 顯示建築輪廓（約 7.8 MB，第一次較慢）</label>
               <span class="rc-mmap-status" id="rc-mmap-status"></span>
             </div>
-            <p class="rc-manual-hint">點地圖、或拖曳金色標記，就能把這棟建築的座標放在那裡（來源會記成「手動標記」）。
-              本頁不連線圖磚，圖上是離線的行政邊界、行政區名與 61 個已記錄景點；放大到 14 級以上會出現街道名，
-              勾選「顯示建築輪廓」就能對照實際建築的位置（精度不足自動展開時會直接幫你載入）。也可以用手機地圖查好座標再貼上：</p>
+            <p class="rc-manual-hint">放大後點選照片中的建築輪廓，系統會高亮並保存其輪廓編號；也可以點地圖或拖曳金色標記。
+              手動確認不代表測量精度。尚未確認時，檔案可先儲存，建築座標留空，裝置定位另行保存。</p>
             <div class="rc-manual-row">
-              <input type="number" step="0.00001" id="rc-nd-lat" placeholder="緯度 22.19745" />
-              <input type="number" step="0.00001" id="rc-nd-lng" placeholder="經度 113.54084" />
+              <input type="number" step="0.000001" id="rc-nd-lat" aria-label="建築緯度" placeholder="緯度 22.19745" />
+              <input type="number" step="0.000001" id="rc-nd-lng" aria-label="建築經度" placeholder="經度 113.54084" />
               <button type="button" class="btn sec sm" id="rc-nd-apply">套用這個座標</button>
-              <button type="button" class="btn sec sm" id="rc-nd-use-gps" hidden>改回 GPS 座標</button>
+              <button type="button" class="btn sec sm" id="rc-nd-use-gps" hidden>清除建築位置</button>
             </div>
           </details>
         </div>
@@ -177,11 +181,11 @@ export function createSurvey({
   function idleStatusText() {
     if (st.manual) return manualText();
     if (st.geoError) return `${st.geoError.zh}——${st.geoError.hint}`;
-    return "尚未取得定位。按「取得定位」開始多次取樣（預設每秒 1 次、最多 30 次，達到目標精度會自動停）；也可以直接在下方地圖拖曳標記。";
+    return "按「取得定位」記錄裝置位置，或直接在下方地圖確認建築。多次取樣用於觀察穩定性，不保證提高實際精度。";
   }
   function resultText(g) {
     const reasonZh = g.reasonZh ?? GEO_STOP_ZH[g.reason] ?? g.reason ?? "—";
-    return `完成：最終座標 ${fmtLatLng(g.lat, g.lng)} · 最終精度 ±${g.accuracyM?.toFixed(1)} 公尺`
+    return `裝置位置 ${fmtLatLng(g.lat, g.lng)} · 設備估計範圍 ${g.accuracyM?.toFixed(1) ?? "未知"} 公尺`
       + ` · 樣本 ${g.sampleCount} 次 · 最佳 ±${g.bestAccuracyM?.toFixed(1) ?? "—"} 公尺`
       + ` · 離散 ±${g.spreadM?.toFixed(1) ?? "—"} 公尺 · 來源 ${g.sourceZh ?? geoSourceZh(g.source)} · 停止原因：${reasonZh}`;
   }
@@ -212,7 +216,7 @@ export function createSurvey({
     el.innerHTML = `<li class="rc-geo-samples-head">最近 ${tail.length} 次讀數（共 ${all.length} 次）</li>`
       + tail.map((s) => `<li><span class="i">#${s.index}</span>
           <span class="c">${s.lat.toFixed(5)}, ${s.lng.toFixed(5)}</span>
-          <span class="a">±${(s.accuracyM ?? 0).toFixed(1)} m</span></li>`).join("");
+          <span class="a">${s.accuracyM == null ? "未知" : `${s.accuracyM.toFixed(1)} m`}</span></li>`).join("");
   }
 
   function setProgress(pct) {
@@ -222,39 +226,30 @@ export function createSurvey({
 
   // ---------------------------------------------------------------- 座標
   function effectiveLocation() {
-    if (st.manual) {
-      return {
-        source: "manual", lat: st.manual.lat, lng: st.manual.lng, accuracyM: null, sampleCount: 0,
-        bestAccuracyM: null, spreadM: null, stopReason: "manual", capturedAt: new Date().toISOString(),
-        gpsNote: st.geo?.lat != null
-          ? `GPS 原讀數 ${fmtLatLng(st.geo.lat, st.geo.lng)} ±${st.geo.accuracyM?.toFixed(1)}m（${geoSourceZh(st.geo.source)}，${st.geo.sampleCount} 次，${st.geo.reasonZh}），使用者手動修正為目前座標`
-          : "使用者在地圖上手動標記（這一輪沒有 GPS 讀數）",
-        unavailableReason: null,
-      };
-    }
-    if (st.geo?.lat != null) {
-      return {
-        source: st.geo.source, lat: st.geo.lat, lng: st.geo.lng,
-        accuracyM: st.geo.accuracyM, sampleCount: st.geo.sampleCount,
-        bestAccuracyM: st.geo.bestAccuracyM, spreadM: st.geo.spreadM,
-        stopReason: st.geo.reason, capturedAt: st.geo.samples?.at(-1)?.at ?? new Date().toISOString(),
-        gpsNote: null, unavailableReason: null,
-      };
-    }
-    if (st.geoError) {
-      return { source: "unavailable", lat: null, lng: null, accuracyM: null, sampleCount: 0, unavailableReason: `${st.geoError.zh}——${st.geoError.hint}`, gpsNote: null };
-    }
-    return { source: "none", lat: null, lng: null, accuracyM: null, sampleCount: 0, unavailableReason: "尚未取得定位，也沒有手動標記", gpsNote: null };
+    return buildingLocationFromPick(st.manual);
+  }
+
+  const captureLocation = () => captureLocationFromGeo(st.geo);
+  function syncMap() {
+    if (!st.minimap?.ready) return;
+    st.minimap.setCapture(captureLocation() ?? captureLocationFromGeo(st.geoLive));
+    const loc = effectiveLocation();
+    st.minimap.setPoint(loc.lat == null ? null : loc);
   }
 
   /** 座標變了 → 更新地圖、精度圈、R-Tree 查重提示。 */
   function onLocationChanged() {
     const loc = effectiveLocation();
-    if (st.minimap?.ready) st.minimap.setPoint({ lat: loc.lat, lng: loc.lng, accuracyM: st.manual ? null : loc.accuracyM });
+    syncMap();
     checkNearby(loc);
-    onLocationChange(loc);
+    const capture = captureLocation();
+    onLocationChange(matchingLocation(capture, loc) ?? loc);
+    const cs = $("#rc-capture-summary");
+    const bs = $("#rc-building-summary");
+    if (cs) cs.textContent = capture ? `${fmtLatLng(capture.lat, capture.lng)} · 估計範圍 ${capture.accuracyM?.toFixed(1) ?? "未知"} m` : "尚未取得裝置位置";
+    if (bs) bs.textContent = loc.confirmed ? `${fmtLatLng(loc.lat, loc.lng)}${loc.footprintId ? " · 已選建築輪廓" : " · 已手動確認"}` : "尚未確認 · 儲存時建築座標留空";
     const useGps = $("#rc-nd-use-gps");
-    if (useGps) useGps.hidden = !(st.manual && st.geo?.lat != null);
+    if (useGps) useGps.hidden = !st.manual;
   }
 
   /**
@@ -276,7 +271,7 @@ export function createSurvey({
     el.hidden = false;
     if (loc.lat == null || loc.lng == null) {
       el.className = "rc-survey-nearby n-none";
-      el.innerHTML = `<span>⚠ 這一筆沒有座標：不會出現在地圖上，也無法做空間查重。建議先「取得定位」，或用「手動定位」在圖上標記。</span>`;
+      el.innerHTML = `<span>請在地圖上確認建築位置，以便檢查附近是否已有檔案。裝置定位僅保存為拍攝位置。</span>`;
       return;
     }
     let res = null;
@@ -305,11 +300,11 @@ export function createSurvey({
 
   function startSampling({ auto = false } = {}) {
     if (st.session?.active) st.session.cancel();
-    st.manual = null;
     st.geo = null;
     st.geoError = null;
     st.geoLive = null;
     st.samples = [];
+    onLocationChanged();
     renderWarnings([]);
     renderSamples();
     setProgress(0);
@@ -331,7 +326,7 @@ export function createSurvey({
         setStatus(progressText(count, st.plan, live), "live");
         renderSamples();
         setProgress((count / st.plan.maxSamples) * 100);
-        if (st.minimap?.ready) st.minimap.setPoint({ lat: live.lat, lng: live.lng, accuracyM: live.accuracyM });
+        syncMap();
       },
       onEnd: (result) => {
         st.session = null;
@@ -370,8 +365,11 @@ export function createSurvey({
     if (!st.minimap) {
       st.minimap = new SurveyMiniMap({
         container: $("#rc-nd-minimap"),
-        onPick: (lat, lng, origin) => {
-          st.manual = { lat: round5(lat), lng: round5(lng), origin };
+        onPick: (lat, lng, origin, footprintId = null) => {
+          st.manual = { lat, lng, origin, footprintId, confirmedAt: new Date().toISOString() };
+          const latInput = $("#rc-nd-lat"), lngInput = $("#rc-nd-lng");
+          if (latInput) latInput.value = lat.toFixed(6);
+          if (lngInput) lngInput.value = lng.toFixed(6);
           setStatus(manualText(), "manual");
           if (st.geo?.warnings) renderWarnings(st.geo.warnings);
           onLocationChanged();
@@ -385,11 +383,10 @@ export function createSurvey({
     }
     const ok = await st.minimap.start();
     if (ok) {
-      const loc = effectiveLocation();
-      st.minimap.setPoint({ lat: loc.lat, lng: loc.lng, accuracyM: st.manual ? null : loc.accuracyM });
+      syncMap();
       st.minimap.resize();
-      if (reason === "accuracy") {
-        onNotice("精度不足：已自動展開手動定位，請把標記拖到建築的位置");
+      if (reason === "accuracy" || reason === "building") {
+        if (reason === "accuracy") onNotice("定位估計範圍較大，請在地圖上確認建築位置");
         // 精度差時使用者就是要在圖上找「哪一棟」，所以順便載入建築輪廓（狀態會即時顯示）
         const cb = $("#rc-mmap-buildings");
         if (cb && !cb.checked) {
@@ -402,13 +399,12 @@ export function createSurvey({
   }
 
   function applyTypedCoords() {
-    const lat = Number($("#rc-nd-lat")?.value);
-    const lng = Number($("#rc-nd-lng")?.value);
-    if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) {
+    const pick = parseTypedLocation($("#rc-nd-lat")?.value, $("#rc-nd-lng")?.value);
+    if (!pick) {
       showErr("請輸入有效的經緯度（例如 22.19745 / 113.54084）");
       return;
     }
-    st.manual = { lat: round5(lat), lng: round5(lng), origin: "typed" };
+    st.manual = { ...pick, origin: "typed", confirmedAt: new Date().toISOString() };
     clearErr();
     setStatus(manualText(), "manual");
     onLocationChanged();
@@ -436,6 +432,7 @@ export function createSurvey({
         note: note || null,
         location: {
           source: loc.source,
+          role: loc.role, confirmed: loc.confirmed, footprintId: loc.footprintId,
           lat: loc.lat, lng: loc.lng,
           accuracyM: loc.accuracyM ?? null,
           sampleCount: loc.sampleCount ?? 0,
@@ -449,7 +446,8 @@ export function createSurvey({
           unavailableReason: loc.unavailableReason ?? null,
         },
       },
-      photo: { name: photo.name ?? null, bytes: photo.bytes ?? null, width: photo.width ?? null, height: photo.height ?? null },
+      photo: { name: photo.name ?? null, bytes: photo.bytes ?? null, width: photo.width ?? null, height: photo.height ?? null,
+        captureLocation: captureLocation() },
       detection: {
         source: r.source ?? null, cls: r.cls ?? null, clsZh: r.clsZh ?? null,
         score: r.score != null ? Math.round(r.score * 1e4) / 1e4 : null,
@@ -462,6 +460,8 @@ export function createSurvey({
         top1: r.topK?.[0] ? { id: r.topK[0].id, zh: r.topK[0].zh, sim: r.topK[0].sim } : null,
         compared: r.totalCompared ?? 0,
         locationRanking: r.geo ?? null,
+        comparison: { ...(r.comparison ?? {}), visualCandidates: (r.visualTopK ?? []).map((c) => ({ id: c.id, similarity: c.sim })),
+          locationCandidates: (r.topK ?? []).map((c) => ({ id: c.id, similarity: c.sim })) },
         visualMargin: r.margin ?? null,
         candidates: (r.topK ?? []).map((c) => ({ id: c.id, similarity: c.sim,
           distanceM: c.geo?.distanceM ?? null, locationPenalty: c.geo?.penalty ?? 0, locationConflict: c.geo?.conflict ?? false })),
@@ -499,6 +499,9 @@ export function createSurvey({
         // geo_note 兩種用途：手動修正時記下原 GPS 讀數；失敗時記下原因（可追溯）
         geoStopReason: loc.stopReason, geoNote: loc.gpsNote ?? loc.unavailableReason ?? null,
         capturedAt: loc.capturedAt,
+        locationRole: loc.confirmed ? "building-confirmed" : "building-unlocated",
+        footprintId: loc.footprintId, captureLocation: record.photo.captureLocation,
+        matchComparison: record.dedup.comparison,
         status: "pending",
         photoName: record.photo.name,
         detectorScore: record.detection.score, detectorCls: record.detection.cls,
@@ -555,6 +558,7 @@ export function createSurvey({
     $("#rc-nd-cls")?.addEventListener("change", clearErr);
 
     $("#rc-nd-geo")?.addEventListener("click", () => startSampling());
+    $("#rc-confirm-building")?.addEventListener("click", () => openManual({ reason: "building" }));
     $("#rc-nd-geo-done")?.addEventListener("click", () => { stopSampling(); onNotice("已停止取樣，使用目前結果"); });
     $("#rc-nd-geo-plan")?.addEventListener("change", (e) => {
       st.plan = planById(e.target.value);
@@ -563,17 +567,19 @@ export function createSurvey({
     });
     $("#rc-nd-manual")?.addEventListener("toggle", (e) => { if (e.target.open) openManual(); });
     $("#rc-mmap-buildings")?.addEventListener("change", async (e) => {
-      if (!e.target.checked) return;
+      if (!e.target.checked) { st.minimap?.setBuildingsVisible(false); return; }
       if (!st.minimap) await openManual();
       const state = await st.minimap?.loadBuildings();
       if (state !== "ready") e.target.checked = false;
+      else st.minimap?.setBuildingsVisible(e.target.checked);
     });
     $("#rc-nd-apply")?.addEventListener("click", applyTypedCoords);
     $("#rc-nd-use-gps")?.addEventListener("click", () => {
       st.manual = null;
+      for (const id of ["#rc-nd-lat", "#rc-nd-lng"]) { const el = $(id); if (el) el.value = ""; }
       setStatus(st.geo ? resultText(st.geo) : idleStatusText(), st.geo ? "ok" : "");
       onLocationChanged();
-      onNotice("已改回 GPS 座標");
+      onNotice("已清除建築位置，拍攝位置另行保留");
     });
     $("#rc-nd-cancel")?.addEventListener("click", () => {
       for (const id of ["#rc-nd-name", "#rc-nd-note", "#rc-nd-lat", "#rc-nd-lng"]) { const el = $(id); if (el) el.value = ""; }
@@ -583,8 +589,18 @@ export function createSurvey({
   }
 
   // ---------------------------------------------------------------- 對外
+  function resetLocations() {
+    st.session?.cancel(); st.session = null;
+    clearErr();
+    st.manual = null; st.geo = null; st.geoLive = null; st.geoError = null; st.samples = [];
+    for (const id of ["#rc-nd-lat", "#rc-nd-lng"]) { const el = $(id); if (el) el.value = ""; }
+    const geoButton = $("#rc-nd-geo"); if (geoButton) { geoButton.disabled = false; geoButton.textContent = "取得定位"; }
+    const done = $("#rc-nd-geo-done"); if (done) done.hidden = true;
+    setProgress(0); renderSamples(); renderWarnings([]);
+    setStatus(idleStatusText()); onLocationChanged();
+  }
+
   function setContext({ r, dd, thresholds, key }) {
-    const first = !st.ctx;
     if (!st.mounted) mount();          // 第一次有辨識結果時才畫（類別清單要靠已載入的嵌入庫）
     st.ctx = { r, dd, thresholds };
     const verdict = $("#rc-survey-verdict");
@@ -599,11 +615,8 @@ export function createSurvey({
       for (const id of ["#rc-nd-name", "#rc-nd-note"]) { const el = $(id); if (el) el.value = ""; }
       const preview = $("#rc-nd-preview"); if (preview) preview.hidden = true;
       refreshCode();
-      if (first && !st.geo && !st.manual) startSampling({ auto: true });
-      else if (st.geo || st.manual) {
-        setStatus(`${st.manual ? manualText() : resultText(st.geo)}｜座標沿用上一次取樣（同一地點可直接建檔；按「重新取樣」可重測）`, st.manual ? "manual" : "ok");
-        onLocationChanged();
-      }
+      // 每張照片／建築區域都重新確認，不把上一張的位置套到新照片。
+      resetLocations();
     } else {
       onLocationChanged();
     }
@@ -611,11 +624,12 @@ export function createSurvey({
   }
 
   return {
-    mount, setContext, save,
+    mount, setContext, save, resetLocations,
     refreshCode, updateDbState, openManual,
     get state() { return st; },
     get plan() { return st.plan; },
     get location() { return effectiveLocation(); },
+    get captureLocation() { return captureLocation(); },
     get nearby() { return st.nearby; },
     /** 測試／示範用：直接餵一組讀數（走跟真實取樣同一套 summarise + warning 邏輯） */
     injectGeo({ samples = [], reason = "manual" } = {}) {

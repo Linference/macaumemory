@@ -1,0 +1,40 @@
+.digital-guide[hidden] { display: none !important; }
+.digital-guide { --voice: 0; position: fixed; z-index: 45; right: 410px; bottom: 24px; width: 338px; max-height: calc(100dvh - 100px); overflow: hidden; color: #f4ede0; background: linear-gradient(145deg, #182833f5, #0c1823fa); border: 1px solid #d0af6259; border-radius: 22px; box-shadow: 0 24px 80px #0008; backdrop-filter: blur(22px); display: flex; flex-direction: column; animation: guide-arrive .4s ease-out; }
+.guide-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 16px 18px 10px; }
+.guide-kicker { display: block; font: 9px/1.8 sans-serif; letter-spacing: .22em; color: #d2b575; }
+.guide-header strong { font-size: 15px; font-weight: 500; }
+.guide-close { width: 30px; height: 30px; border: 1px solid #ffffff24; border-radius: 50%; background: transparent; color: #eee6d8; cursor: pointer; }
+.guide-portrait { position: relative; min-height: 170px; height: 230px; flex-shrink: 1; overflow: hidden; background: radial-gradient(ellipse at 50% 75%, #aa865c25, transparent 65%); margin: 0 10px; border-radius: 14px; }
+.guide-portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 65%, #111e29); pointer-events: none; }
+.guide-portrait img { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; transform: scale(1.025); animation: guide-breathe 6s ease-in-out infinite; }
+.guide-portrait .guide-talking { opacity: var(--voice); transition: opacity 70ms linear; }
+.guide-badge { position: absolute; z-index: 2; left: 12px; bottom: 12px; border: 1px solid #d2b57540; border-radius: 20px; padding: 5px 9px; color: #e6d5ad; background: #09151bba; font-size: 10px; }
+.guide-presence { position: absolute; z-index: 2; right: 12px; bottom: 16px; display: flex; align-items: center; gap: 4px; height: 20px; }
+.guide-presence i { display: block; height: calc(4px + var(--voice) * 17px); width: 3px; border-radius: 5px; background: #d5b66e; transition: height .08s; }
+.guide-presence i:nth-child(even) { height: calc(4px + var(--voice) * 9px); }
+[data-mode="listening"] .guide-presence i { animation: guide-listen .7s infinite alternate; background: #77c9bd; }
+.guide-context { padding: 9px 18px 8px; }
+.guide-context small { display: block; color: #a9b4bd; font-size: 10px; margin-bottom: 4px; }
+.guide-context strong { font-size: 16px; font-weight: 500; }
+.guide-status { margin: 0 18px 8px; color: #cdb780; font-size: 11px; line-height: 1.6; min-height: 18px; }
+.guide-messages { min-height: 50px; max-height: 155px; flex: 1 1 auto; overflow: auto; padding: 0 16px; overscroll-behavior: contain; }
+.guide-message { white-space: pre-wrap; font-size: 12px; line-height: 1.85; padding: 10px 12px; border-radius: 12px; margin: 0 0 9px; background: #ffffff07; border: 1px solid #ffffff0c; }
+.guide-message.user { margin-left: 25px; border-color: #d2b57538; background: #b99b491b; }
+.guide-tools, .guide-questions { display: flex; gap: 6px; padding: 8px 16px 0; }
+.guide-tools button, .guide-questions button { border: 1px solid #ffffff22; border-radius: 20px; padding: 6px 10px; background: transparent; color: #e6d7b6; font: inherit; font-size: 10px; cursor: pointer; }
+.guide-questions button { color: #b7c4ce; }
+.guide-form { display: flex; gap: 6px; padding: 12px 16px 8px; }
+.guide-form textarea { min-width: 0; flex: 1; resize: none; border: 1px solid #ffffff25; background: #070f1755; color: #f4ede0; border-radius: 10px; padding: 10px; font: inherit; font-size: 12px; }
+.guide-form button { border: 0; border-radius: 10px; background: #d1b16d; color: #18212a; padding: 0 12px; cursor: pointer; }
+.guide-foot { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding: 0 16px 14px; }
+.guide-foot button { border: 1px solid #d2b57566; color: #dcc28b; border-radius: 9px; background: #ffffff05; font: inherit; font-size: 11px; padding: 8px 12px; cursor: pointer; }
+.guide-foot button[aria-pressed="true"] { color: #b4ede1; border-color: #6eb6a8; }
+.guide-foot small { color: #83929c; font-size: 9px; }
+.digital-guide button:disabled { opacity: .45; cursor: wait; }
+.digital-guide button:focus-visible, .digital-guide textarea:focus-visible { outline: 2px solid #dfc486; outline-offset: 3px; }
+@keyframes guide-arrive { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes guide-breathe { 50% { transform: translateY(2px) scale(1.03); } }
+@keyframes guide-listen { to { height: 18px; } }
+@media (max-width: 1100px) { .digital-guide { right: 410px; width: 300px; } .guide-portrait { height: 195px; } }
+@media (max-width: 720px) { .digital-guide { right: 12px; bottom: 12px; width: min(338px, calc(100vw - 24px)); max-height: calc(100dvh - 82px); z-index: 85; } .guide-portrait { height: 180px; min-height: 120px; } .guide-messages { max-height: 140px; } .guide-form textarea { font-size: 16px; } .guide-foot button { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .digital-guide, .guide-portrait img, .guide-presence i { animation: none; } }

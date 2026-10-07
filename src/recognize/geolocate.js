@@ -1,22 +1,9 @@
-// 澳門記憶 · 建築普查：GPS 精準定位（多次取樣 ＋ 精度加權）
-//
-// 為什麼不能只用一次 getCurrentPosition：
-//   展示機器是筆電，筆電幾乎都沒有 GPS 晶片，navigator.geolocation 會退回
-//   WiFi／基地台定位，單次讀數的 accuracy 可能是 20~100 公尺、甚至定到別的區。
-//   單次讀數沒有辦法判斷「這次準不準」，所以這裡改成：
-//
-//   按「取得定位」
-//     ↓  enableHighAccuracy: true、timeout 放寬、maximumAge: 0（強制新的讀數）
-//   連續取樣（預設每 1 秒 1 次，最多 30 次）＋ 即時回報每一次讀數
-//     ↓  停止條件（任一）：達到目標精度 ≤5 公尺 / 取滿 30 次 / 使用者按「完成」/ 連續失敗
-//   以 1/accuracy² 加權平均算出最終座標，並保留：樣本數、最佳精度、最終精度、離散程度
-//
-//   失敗與品質不佳的每一種情況都有可讀的中文訊息與補救建議（見 geoWarnings）。
-//
-// 這個檔案不碰 DOM：UI 由 survey.js 負責，這裡只回呼事件。所以同一份邏輯可以用
-// 假造的 geolocation 物件在 Node／測試裡跑。
+// 裝置定位取樣：觀察設備估計範圍與讀數穩定性，不保證實際精度提升。
+// 座標加權平滑，估計圈不隨樣本數縮小；瀏覽器不提供衛星／WiFi 來源。
+// 取得的是裝置位置，建築位置在 survey.js 中另行確認並儲存。
+// 不操作 DOM，測試可注入 geolocation。
 
-import { summarizeSamples, geoSourceZh } from "./geo-math.js";
+import { summarizeSamples, geoSourceZh, validGeoSample } from "./geo-math.js";
 
 /**
  * 取樣計畫（普查現場用得到的三種情境）。
@@ -26,31 +13,31 @@ export const GEO_PLANS = {
   standard: {
     id: "standard", zh: "標準",
     maxSamples: 30, intervalMs: 1000, targetAccuracyM: 5,
-    text: "30 次 × 1 秒 · 目標 ≤5 公尺",
+    text: "最多 30 次 · 設備估計範圍目標 ≤5 公尺",
   },
   quick: {
     id: "quick", zh: "快速",
     maxSamples: 8, intervalMs: 250, targetAccuracyM: 15,
-    text: "8 次 × 0.25 秒 · 目標 ≤15 公尺",
+    text: "最多 8 次 · 設備估計範圍目標 ≤15 公尺",
   },
   precise: {
-    id: "precise", zh: "精確",
+    id: "precise", zh: "延長取樣",
     maxSamples: 40, intervalMs: 1000, targetAccuracyM: 3,
-    text: "40 次 × 1 秒 · 目標 ≤3 公尺",
+    text: "最多 40 次 · 設備估計範圍目標 ≤3 公尺",
   },
 };
 export const DEFAULT_PLAN = "standard";
 
 /** 門檻（使用者特別要求：精度差與跳動過大都要明確警告） */
 export const GEO_LIMITS = {
-  poorAccuracyM: 30,        // 最終／最佳精度比這個差 → 「這台裝置可能沒有 GPS 晶片」
+  poorAccuracyM: 30,        // 估計範圍過大，提示手動確認建築
   spreadWarnM: 50,          // 樣本離散超過這個 → 「讀數跳動過大」
   timeoutMs: 30000,         // 單次 getCurrentPosition 的 timeout（放寬）
   maximumAge: 0,            // 不接受快取讀數
   enableHighAccuracy: true,
   maxConsecutiveErrors: 3,  // 連續失敗幾次就放棄
   maxDurationMs: 120000,    // 整個取樣流程的硬上限
-  minSamplesForStop: 3,     // 至少 3 個樣本才相信「已達目標精度」
+  minSamplesForStop: 3,     // 至少 3 個有效讀數，再檢查範圍和穩定性
 };
 
 /** 瀏覽器錯誤碼 → 可讀中文 ＋ 建議 */
@@ -100,8 +87,8 @@ export function geoWarnings(result, { plan = GEO_PLANS[DEFAULT_PLAN] } = {}) {
   if (worst != null && worst > GEO_LIMITS.poorAccuracyM) {
     out.push({
       key: "poor-accuracy", level: "warn",
-      zh: `精度一直很差（最好也只有 ±${Math.round(best ?? acc)} 公尺）`,
-      hint: "此裝置可能沒有 GPS 晶片（筆電常見），現在這個座標可能是 WiFi／基地台推出來的，誤差可達數十至上百公尺。建議用手機開啟本頁重新定位，或打開下方的「手動定位（在地圖上拖曳標記）」把標記拖到建築的位置。",
+      zh: `定位估計範圍較大（約 ${Math.round(acc)} 公尺；最佳設備讀數 ${Math.round(best ?? acc)} 公尺）`,
+      hint: "建築遮擋、訊號反射或裝置定位能力都可能造成偏差。請站定並在開闊處重試，或在下方地圖點選實際建築。瀏覽器沒有提供衛星／WiFi 來源資訊。",
     });
   }
   if (result.spreadM != null && result.spreadM > GEO_LIMITS.spreadWarnM) {
@@ -122,15 +109,15 @@ export function geoWarnings(result, { plan = GEO_PLANS[DEFAULT_PLAN] } = {}) {
       && (result.spreadM ?? 0) <= Math.max(5, plan.targetAccuracyM)) {
     out.push({
       key: "target", level: "ok",
-      zh: `已達目標精度（±${acc.toFixed(1)} 公尺 ≤ 目標 ${plan.targetAccuracyM} 公尺，離散 ±${(result.spreadM ?? 0).toFixed(1)} 公尺）`,
-      hint: "這個座標可以直接建檔。",
+      zh: `設備估計範圍達到取樣目標（${acc.toFixed(1)} 公尺；讀數離散 ${(result.spreadM ?? 0).toFixed(1)} 公尺）`,
+      hint: "這是設備回報的估計範圍，沒有實地測量驗證。此點是拍攝者位置，請另外確認照片中的建築位置。",
     });
   }
-  if (result.source === "wifi") {
+  if (acc == null) {
     out.push({
-      key: "source-wifi", level: "info",
-      zh: "來源判定為 WiFi／基地台（不是衛星）",
-      hint: "瀏覽器不會直接說座標怎麼來的；這裡是用精度與讀數離散回推的。WiFi 定位在市區通常還可用，但請務必看一下精度圈的大小。",
+      key: "unknown-accuracy", level: "warn",
+      zh: "設備沒有提供有效誤差範圍",
+      hint: "此定位不能用於位置輔助排序，請在地圖上確認建築位置。",
     });
   }
   if (result.lat == null) {
@@ -141,7 +128,7 @@ export function geoWarnings(result, { plan = GEO_PLANS[DEFAULT_PLAN] } = {}) {
 
 /** 停止原因 → 中文（顯示在結果摘要，日後也可用來篩選資料品質） */
 export const GEO_STOP_ZH = {
-  target: "達到目標精度",
+  target: "設備估計範圍達到取樣目標",
   "max-samples": "取滿設定的樣本數",
   manual: "使用者按了完成",
   error: "連續失敗，提前結束",
@@ -206,7 +193,6 @@ export function createGeoSession({
     geolocation.getCurrentPosition(
       (pos) => {
         if (!active) return;
-        errors = 0;
         const c = pos.coords;
         const sample = {
           lat: c.latitude, lng: c.longitude,
@@ -216,6 +202,15 @@ export function createGeoSession({
           index: samples.length + 1,
           t: Date.now(),
         };
+        if (!validGeoSample(sample)) {
+          errors++;
+          lastError = { code: "invalid", zh: "設備回傳無效定位讀數", hint: "請重試或手動標記建築位置。" };
+          onStatus(lastError.zh, lastError);
+          if (errors >= limits.maxConsecutiveErrors) { finish("error"); return; }
+          timer = setTimeout(tick, plan.intervalMs);
+          return;
+        }
+        errors = 0;
         samples.push(sample);
         const live = summarizeSamples(samples);
         onSample(sample, live, samples.length);
@@ -224,7 +219,7 @@ export function createGeoSession({
         // （只看平均會出現「離散 94 公尺卻宣布達到目標精度」的矛盾結果，實測踩過）
         const tight = live.spreadM <= Math.max(5, plan.targetAccuracyM);
         if (live.accuracyM != null && live.accuracyM <= plan.targetAccuracyM && tight && samples.length >= limits.minSamplesForStop) {
-          onStatus(`已達目標精度（±${live.accuracyM.toFixed(1)} 公尺、離散 ±${live.spreadM.toFixed(1)} 公尺），停止取樣`);
+          onStatus(`設備估計範圍達到取樣目標（${live.accuracyM.toFixed(1)} 公尺），停止取樣；請確認建築位置`);
           finish("target");
           return;
         }
@@ -253,6 +248,7 @@ export function createGeoSession({
     start() {
       if (active) return;
       finished = false;
+      samples.length = 0;
       active = true;
       startedAt = Date.now();
       errors = 0;
@@ -283,7 +279,7 @@ export function createGeoSession({
 
 /** 依目前狀態給下一句提示（UI 的狀態列用） */
 export function progressText(count, plan, live) {
-  const acc = live?.accuracyM != null ? `±${live.accuracyM.toFixed(1)} 公尺` : "精度未知";
+  const acc = live?.accuracyM != null ? `設備估計範圍 ${live.accuracyM.toFixed(1)} 公尺` : "估計範圍未知";
   const best = live?.bestAccuracyM != null ? `最佳 ±${live.bestAccuracyM.toFixed(1)} 公尺` : "最佳 —";
   return `取樣中：第 ${count}/${plan.maxSamples} 次 · 目前座標 ${live?.lat?.toFixed(5) ?? "—"}, ${live?.lng?.toFixed(5) ?? "—"} · ${acc} · ${best}`;
 }

@@ -8,12 +8,14 @@ import { MyLocation, distanceMeters, bearingLabel, formatDistance } from "./geol
 import { NavigationController } from "./navigation.js";
 import { AiChat } from "./chat.js";
 import { PhotoLayer } from "./photos.js";
+import { escapeMemoryText, memoryDate, memorySourceLink } from "./memory-photo.js";
 import { Speaker, Listener, speechSupported } from "./speech.js";
 import { iconSvg } from "./icons.js";
 import { MarkerLayer } from "./markers.js";
 import { ModelViewer } from "./viewer.js";
 import { setLang, getLang, T } from "./i18n.js";
 import { parseMapQuery } from "./map-link.js";
+import { DigitalGuide } from "./digital-guide.js";
 
 // 明確指定 MapLibre worker 位址：使用 .js 版本（避免 .mjs 被伺服器給錯 MIME 而無法載入）
 try {
@@ -23,12 +25,14 @@ try {
 }
 
 const $ = (sel) => document.querySelector(sel);
+const digitalGuide = new DigitalGuide({ onNotice: (message) => toast(message), onOpen: () => { $("#ai-panel").classList.remove("on"); $("#ai-panel").setAttribute("aria-hidden", "true"); } });
 const HOME = { center: [113.5515, 22.1862], zoom: 13.5, pitch: 52, bearing: -14 };
 const initialHash = location.hash;
 
 const state = {
   data: null,
   manifest: null,
+  gaussianScenes: [],
   filter: "all",
   query: "",
   selected: null,
@@ -44,12 +48,14 @@ main().catch((err) => {
 
 async function main() {
 boot("正在載入地理資料…", 8);
-const [data, manifest] = await Promise.all([
+const [data, manifest, gaussianCatalog] = await Promise.all([
   fetch("data/attractions.json").then((r) => r.json()),
   fetch("models/manifest.json").then((r) => r.json()).catch(() => ({ models: {} })),
+  fetch("data/gaussian-scenes.json").then((r) => r.ok ? r.json() : { scenes: [] }).catch(() => ({ scenes: [] })),
 ]);
 state.data = data;
 state.manifest = manifest;
+state.gaussianScenes = gaussianCatalog.scenes ?? [];
 state.categories = data.categories;
 boot("正在建立三維地圖…", 26);
 
@@ -123,6 +129,11 @@ function onMapReady() {
   renderList();
   renderSidebarFoot();
   renderCredits();
+  // 圖層載入後套用當前開關；載入期間的使用者操作也要保留。
+  void ensurePhotos().then(() => {
+    photoLayer.setVisible($("#tg-photos").checked);
+    if (state.selected) openDetail(state.selected);
+  });
   boot("準備就緒", 100);
   const restored = applyQuery() || applyHash();
   restoringInitialView = false;
@@ -221,6 +232,7 @@ function select(a, { fly = false } = {}) {
   state.selected = a;
   markerLayer.setActive(a.id);
   openDetail(a);
+  digitalGuide.show(a);
   if (fly) {
     map.flyTo({ center: a.coords, zoom: Math.max(map.getZoom(), 15.6), pitch: 58, duration: 1500, essential: true });
   }
@@ -242,6 +254,7 @@ function openDetail(a) {
   const distText = myPos ? `${T("距離你")} ${formatDistance(distanceMeters(myPos.coords, a.coords))}（${T(bearingLabel(myPos.coords, a.coords))}）` : null;
 
   const actions = [];
+  if (state.gaussianScenes.some((s) => s.id === a.id)) actions.push(`<a class="btn" href="./gaussian.html?scene=${encodeURIComponent(a.id)}">${T("實景記憶 · 即時三維")}</a>`);
   const hasModel = !!(a.model && state.manifest.models?.[a.model]);
   if (hasModel) actions.push(`<button class="btn" data-act="model">${T("🧊 查看三維模型")}</button>`);
   if (a.coords) actions.push(`<button class="btn" data-act="nav">${T("🧭 導航到這裡")}</button>`);
@@ -332,6 +345,7 @@ function openDetail(a) {
 }
 
 $("#detail-close").addEventListener("click", () => {
+  digitalGuide.hide();
   $("#detail").classList.remove("open");
   $("#detail").setAttribute("aria-hidden", "true");
   markerLayer.setActive(null);
@@ -622,8 +636,14 @@ window.addEventListener("resize", () => { applyCameraLimits(); });
 // ---------------------------------------------------------------- 澳門記憶 · 記憶點
 const photoLayer = new PhotoLayer(map, { onOpen: (p, i) => openLightbox(p, i) });
 let photosReady = false;
+let photosLoading = null;
 async function ensurePhotos() {
   if (photosReady) return photoLayer;
+  if (photosLoading) return photosLoading;
+  photosLoading = loadPhotos();
+  try { return await photosLoading; } finally { photosLoading = null; }
+}
+async function loadPhotos() {
   try {
     await photoLayer.load();
     photosReady = true;
@@ -663,31 +683,34 @@ function openLightbox(p, idx = 0) {
   const cur = photos[idx] ?? photos[0] ?? {};
   const clsZh = p.clsZh ?? photoLayer.taxonomy[p.cls]?.zh ?? p.cls;
   $("#lb-img").src = cur.file ?? p.cover;
+  $("#lb-img").alt = `${p.zh ?? "建築"} · ${memoryDate(cur.taken)}`;
+  const sourceLink = memorySourceLink(cur.sourcePage);
   const strip = photos.length > 1 ? `
     <h4 style="margin:16px 0 7px;font-size:11.5px;letter-spacing:.12em;color:var(--gold)">${T("這棟建築的")}${photos.length}${T("張照片")}</h4>
-    <div class="d-photos lb-strip">${photos.map((ph, i) => `<img src="${ph.thumb}" data-i="${i}" class="${i === idx ? "on" : ""}" title="${ph.taken ? new Date(ph.taken).toLocaleString("zh-TW") : ""}${ph.similarity ? " · 相似度 " + ph.similarity : ""}" />`).join("")}</div>` : "";
+    <div class="d-photos lb-strip">${photos.map((ph, i) => `<button type="button" data-i="${i}" class="memory-shot ${i === idx ? "on" : ""}" aria-label="${escapeMemoryText(p.zh)}，${memoryDate(ph.taken)}，第 ${i + 1} 張" aria-pressed="${i === idx}"><img src="${ph.thumb}" loading="lazy" alt="${escapeMemoryText(p.zh)}實拍照片" /><span>${memoryDate(ph.taken)}</span></button>`).join("")}</div>` : "";
   $("#lb-info").innerHTML = `
     <div class="lb-id">${p.id}${p.needsReview ? ` <span class="place-warn">${T("待複核")}</span>` : ""}</div>
     <h3>${p.zh ?? T("未命名建築")}</h3>
     <div class="lb-cls">${T(clsZh)}${p.conf ? ` · 信心 ${Math.round(p.conf * 100)}%` : ""}${p.clsSource === "manual" ? T(" · 手動標註") : ""}</div>
+    <div class="memory-current">實拍照片 · ${idx + 1} / ${photos.length} · ${memoryDate(cur.taken)}</div>
     ${p.caption ? `<p>${p.caption}</p>` : `<p style="color:var(--ink-dim)">${T("尚未產生建築解讀")}</p>`}
     ${(p.tags ?? []).length ? `<div class="photo-tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div>` : ""}
     ${strip}
     <dl>
       <dt>座標</dt><dd>${p.lon != null ? `${p.lon.toFixed(5)}, ${p.lat.toFixed(5)}` : ""}</dd>
-      ${p.firstSeen ? `<dt>首次</dt><dd>${new Date(p.firstSeen).toLocaleString("zh-TW")}</dd>` : ""}
-      ${p.lastSeen && p.lastSeen !== p.firstSeen ? `<dt>最近</dt><dd>${new Date(p.lastSeen).toLocaleString("zh-TW")}</dd>` : ""}
-      ${cur.taken ? `<dt>本張</dt><dd>${new Date(cur.taken).toLocaleString("zh-TW")}${cur.similarity ? ` · 相似度 ${cur.similarity}` : ""}</dd>` : ""}
+      ${p.firstSeen ? `<dt>最早照片</dt><dd>${memoryDate(p.firstSeen)}</dd>` : ""}
+      ${p.lastSeen && p.lastSeen !== p.firstSeen ? `<dt>最新照片</dt><dd>${memoryDate(p.lastSeen)}</dd>` : ""}
+      <dt>拍攝日期</dt><dd>${memoryDate(cur.taken)}</dd>
       ${cur.device ? `<dt>裝置</dt><dd>${cur.device}</dd>` : ""}
       ${p.nearZh ? `<dt>鄰近</dt><dd>${p.nearZh}</dd>` : ""}
       ${p.building ? `<dt>建築</dt><dd>${p.building}</dd>` : ""}
       ${p.style ? `<dt>風格</dt><dd>${p.style}</dd>` : ""}
       ${p.clsWhy ? `<dt>分類依據</dt><dd>${p.clsWhy}</dd>` : ""}
-      ${cur.credit ? `<dt>來源</dt><dd>${cur.credit}</dd>` : ""}
+      ${cur.credit ? `<dt>照片來源</dt><dd>${escapeMemoryText(cur.credit)}${sourceLink ? ` · <a href="${sourceLink}" target="_blank" rel="noopener noreferrer">查看原圖來源</a>` : ""}</dd>` : ""}
     </dl>`;
   $("#lightbox").classList.add("on");
   $("#lightbox").setAttribute("aria-hidden", "false");
-  for (const img of $("#lb-info").querySelectorAll(".lb-strip img")) {
+  for (const img of $("#lb-info").querySelectorAll(".lb-strip [data-i]")) {
     img.addEventListener("click", () => openLightbox(p, +img.dataset.i));
   }
 }
@@ -1030,6 +1053,10 @@ if (window.innerWidth > 1180) $("#sidebar").classList.add("open");
 let labelLayer = null;
 let poiLayer = null;
 async function setupLabelsAndPois() {
+  poiLayer = new PoiLayer(map, {});
+  if (!$("#tg-pois").checked) poiLayer.enabled.clear();
+  renderPoiChips();
+  void poiLayer.setVisible($("#tg-pois").checked).catch((e) => console.warn("poi:", e));
   labelLayer = new LabelLayer(map, {
     onClick: (p, coords) => {
       map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), p.k === "region" ? 12.5 : 15.2), duration: 1200 });
@@ -1039,11 +1066,6 @@ async function setupLabelsAndPois() {
     const labels = await fetch("data/macau-labels.geojson").then((r) => r.json());
     labelLayer.setData(labels.features ?? []);
   } catch (e) { console.warn("labels:", e); }
-
-  poiLayer = new PoiLayer(map, {});
-  // 周邊設施：預設開啟，但延後載入以免拖慢首次顯示
-  setTimeout(() => poiLayer.setVisible(true).catch((e) => console.warn("poi:", e)), 1600);
-  renderPoiChips();
 }
 
 function renderPoiChips() {
@@ -1053,14 +1075,13 @@ function renderPoiChips() {
     .map((g) => `<button class="poi-chip" data-g="${g.id}"><span class="poi-dot" style="background:${g.color}"></span>${T(g.zh)}</button>`)
     .join("");
   for (const el of box.querySelectorAll(".poi-chip")) {
-    if (POI_DEFAULT_OFF.has(el.dataset.g)) el.classList.add("off");
+    if (!$("#tg-pois").checked || POI_DEFAULT_OFF.has(el.dataset.g)) el.classList.add("off");
     el.addEventListener("click", () => {
       const id = el.dataset.g;
       const on = !el.classList.contains("off");
       el.classList.toggle("off", on);
       if (on) el.classList.remove("on"); else el.classList.add("on");
       poiLayer?.setGroup(id, !on);
-      poiLayer?.setVisible(true);
       const vis = [...box.querySelectorAll(".poi-chip")].some((x) => !x.classList.contains("off"));
       if (!vis) $("#tg-pois").checked = false;
       else $("#tg-pois").checked = true;

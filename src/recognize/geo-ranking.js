@@ -1,5 +1,5 @@
 // Location is an opt-in, bounded tie-breaker. It never raises visual similarity.
-export const GEO_POLICY = Object.freeze({ maxAccuracyM: 100, maxAgeMs: 300000, cameraRadiusM: 120, maxPenalty: 0.08 });
+export const GEO_POLICY = Object.freeze({ maxAccuracyM: 100, maxAgeMs: 300000, cameraRadiusM: 120, buildingRadiusM: 30, maxPenalty: 0.08 });
 
 export function validCoords(coords) {
   return Array.isArray(coords) && coords.length === 2 && coords.every(Number.isFinite)
@@ -16,11 +16,15 @@ export function distanceM(a, b) {
 export function locationQuality(location, now = Date.now()) {
   if (!location || !validCoords([location.lng, location.lat])) return { usable: false, reason: "請先在下方取得定位，或手動標記照片中的建築位置。" };
   const manual = location.source === "manual";
-  const accuracy = manual ? 15 : location.accuracyM;
+  const role = location.role ?? (manual ? "building" : "capture");
+  if (role === "building" && location.confirmed === false) return { usable: false, reason: "請先點選並確認照片中的建築位置。" };
+  // 手動位置沒有設備誤差值；30m 是匹配容差，不能顯示為定位精度。
+  const accuracy = manual ? 0 : location.accuracyM;
   if (!Number.isFinite(accuracy) || accuracy < 0 || accuracy > GEO_POLICY.maxAccuracyM) return { usable: false, reason: "定位精度不足（需 ≤100 公尺），已保留純影像排序。可改用手動標記。" };
   const at = Date.parse(location.capturedAt);
   if (!manual && (!Number.isFinite(now) || !Number.isFinite(at) || now - at > GEO_POLICY.maxAgeMs || at - now > 30000)) return { usable: false, reason: "定位已過期，請重新取樣；目前使用純影像排序。" };
-  return { usable: true, accuracyM: accuracy, radiusM: GEO_POLICY.cameraRadiusM + 3 * accuracy };
+  return { usable: true, role, accuracyM: manual ? null : accuracy,
+    radiusM: (role === "building" ? GEO_POLICY.buildingRadiusM : GEO_POLICY.cameraRadiusM) + accuracy };
 }
 
 export function rankWithLocation(rows, { enabled = false, location = null, now } = {}) {

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>核心創新動畫 · 三維包圍盒 → 投影 → 二維標註</title>
+<!--
+  為什麼用 HTML/Canvas 而不是 matplotlib：
+    matplotlib 是繪圖庫，做不出真正的輝光、漸層、運動模糊與正確排版；
+    這些在 Canvas/CSS 裡都是原生能力。而且這裡直接沿用網站的色票與字體，
+    讓動畫看起來是「這個作品的一部分」，而不是另一套「AI 科技感」。
+  決定性要求：必須可逐帧重現（Puppeteer 會呼叫 window.__seek(frame)），
+    因此不得使用 Math.random()（改用種子亂數）與任何真實時間。
+-->
+<style>
+  :root{
+    /* 與網站 src/styles.css 同一組深色面板色票 */
+    --ink:#080b10; --ink2:#101720; --panel:#12161c; --line:#262d38;
+    --gold:#d4af37; --gold-deep:#8a6d24; --cyan:#4fd8e8; --text:#eef1f5; --dim:#7f8fa3;
+  }
+  html,body{margin:0;background:var(--ink);overflow:hidden}
+  canvas{display:block;width:1920px;height:1080px}
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="./animation-data.js"></script>
+<script>
+const W = 1920, H = 1080, FPS = 30, DUR = 25;
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d', { alpha: false });
+
+/* ---------- 種子亂數：保證逐帧可重現 ---------- */
+function mulberry(seed){ return function(){ seed|=0; seed = seed+0x6D2B79F5|0;
+  let t = Math.imul(seed ^ seed>>>15, 1|seed); t = t+Math.imul(t ^ t>>>7, 61|t) ^ t;
+  return ((t ^ t>>>14)>>>0)/4294967296; }; }
+
+/* ---------- 真正的三次貝茲緩動 ---------- */
+function bezier(p1x,p1y,p2x,p2y){
+  const cx=3*p1x, bx=3*(p2x-p1x)-cx, ax=1-cx-bx;
+  const cy=3*p1y, by=3*(p2y-p1y)-cy, ay=1-cy-by;
+  const fx=t=>((ax*t+bx)*t+cx)*t, fy=t=>((ay*t+by)*t+cy)*t;
+  const dfx=t=>(3*ax*t+2*bx)*t+cx;
+  return x=>{ let t=x; for(let i=0;i<8;i++){ const e=fx(t)-x; if(Math.abs(e)<1e-5) break;
+    const d=dfx(t); if(Math.abs(d)<1e-6) break; t-=e/d; } return fy(Math.max(0,Math.min(1,t))); };
+}
+const EASE = {
+  io:  bezier(.45,.05,.55,.95),
+  out: bezier(.16,1,.3,1),
+  over:bezier(.34,1.56,.64,1),      // 帶一點過衝，落定時更有份量
+  in:  bezier(.55,0,1,.45),
+};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+
+/* ---------- 資料 ---------- */
+const D = window.ANIM_DATA;
+const PTS = D.points;                       // [x,y,z,r,g,b]，座標已正規化到 ±1
+const BOX = D.box.sizeNorm;                 // 包圍盒在正規化座標中的尺寸
+const BOX_M = D.box.sizeMeters;             // 真實公尺
+
+/* ---------- 3D → 2D 投影（與網頁端 PointCloudViewer 同一套數學） ---------- */
+function makeCam(az, el, dist, fov, aspect){
+  const eye=[Math.cos(el)*Math.cos(az)*dist, Math.sin(el)*dist, Math.cos(el)*Math.sin(az)*dist];
+  const f=[-eye[0],-eye[1],-eye[2]];
+  const fl=Math.hypot(...f)||1; f[0]/=fl; f[1]/=fl; f[2]/=fl;
+  let r=[f[2],0,-f[0]]; const rl=Math.hypot(...r)||1; r=r.map(v=>v/rl);
+  const u=[r[2]*f[1]-r[1]*f[2], r[0]*f[2]-r[2]*f[0], r[1]*f[0]-r[0]*f[1]];
+  const focal=1/Math.tan(fov/2);
+  return { eye, proj(p){
+    const d=[p[0]-eye[0], p[1]-eye[1], p[2]-eye[2]];
+    const z=d[0]*f[0]+d[1]*f[1]+d[2]*f[2];
+    if(z<=0.02) return null;
+    return { x:((d[0]*r[0]+d[1]*r[1]+d[2]*r[2])/z)*focal/aspect,
+             y:((d[0]*u[0]+d[1]*u[1]+d[2]*u[2])/z)*focal, z };
+  }};
+}
+
+const EDGES=[[0,1],[0,2],[0,4],[1,3],[1,5],[2,3],[2,6],[3,7],[4,5],[4,6],[5,7],[6,7]];
+function boxCorners(s){ const hx=s[0]/2,hy=s[1]/2,hz=s[2]/2,out=[];
+  for(const sx of [-1,1]) for(const sy of [-1,1]) for(const sz of [-1,1]) out.push([sx*hx,sy*hy,sz*hz]);
+  return out; }
+
+/* ---------- 畫發光線（真正的 shadowBlur，而非疊線模擬） ---------- */
+function glowLine(x1,y1,x2,y2,color,lw,alpha,blur){
+  ctx.save();
+  ctx.globalAlpha=alpha; ctx.strokeStyle=color; ctx.lineWidth=lw;
+  ctx.lineCap='round'; ctx.shadowColor=color; ctx.shadowBlur=blur;
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  ctx.restore();
+}
+
+/* ---------- 版面：左側 3D、右側小窗 ---------- */
+const VIEW={cx:700, cy:560, scale:430};     // 3D 區中心與縮放
+const PANEL={x:1170, y:230, w:600, h:337};  // 右側小窗（16:9）
+
+let photoImg=null;
+const img=new Image(); img.onload=()=>{photoImg=img;}; img.src='./frame-sample.jpg';
+
+/* 逐帧繪製：t 為秒 */
+function renderAt(t){
+  const rnd=mulberry(20260926);
+  /* 背景：徑向漸層 + 暗角 */
+  const bg=ctx.createRadialGradient(W*0.42,H*0.46,60, W*0.42,H*0.46, W*0.82);
+  bg.addColorStop(0,'#131b26'); bg.addColorStop(.55,'#0d131b'); bg.addColorStop(1,'#070a0e');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+  /* 參考格線（細、低對比） */
+  ctx.save(); ctx.globalAlpha=.05; ctx.strokeStyle='#8fa3b8'; ctx.lineWidth=1;
+  for(let x=60;x<W;x+=80){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for(let y=60;y<H;y+=80){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  ctx.restore();
+
+  /* 運鏡 */
+  const az=0.62+EASE.io(t/DUR)*0.34, el=0.52;
+  const cam=makeCam(az, el, 2.55, 0.86, W/H);
+  const P=p=>{ const q=cam.proj(p); return q? {x:VIEW.cx+q.x*VIEW.scale, y:VIEW.cy+q.y*VIEW.scale, z:q.z}:null; };
+
+  /* ① 點雲浮現（0~3.2s）：依深度淡出，近的亮而大 */
+  const appear=EASE.out(t/2.9);
+  if(appear>0){
+    const k=Math.floor(PTS.length*clamp(appear,0,1));
+    const buf=[];
+    for(let i=0;i<k;i++){
+      const p=PTS[i]; const q=P(p); if(!q) continue;
+      if(q.x<40||q.x>W-40||q.y<40||q.y>H-40) continue;
+      buf.push([q.x,q.y,q.z,p[3],p[4],p[5]]);
+    }
+    buf.sort((a,b)=>b[2]-a[2]);                       // 遠的先畫
+    const zs=buf.map(b=>b[2]), zlo=Math.min(...zs), zhi=Math.max(...zs);
+    for(const [x,y,z,r,g,b] of buf){
+      const d=(z-zlo)/Math.max(1e-6,zhi-zlo);         // 0 近 → 1 遠
+      const fade=0.34+0.66*(1-d);
+      const s=Math.max(1, 1.1+1.9*(1-d));
+      ctx.fillStyle=`rgba(${Math.round(255*(r*fade+0.05))},${Math.round(255*(g*fade+0.05))},${Math.round(255*(b*fade+0.05))},${0.90})`;
+      ctx.fillRect(x,y,s,s);
+    }
+  }
+
+  /* ② 相機軌跡環（3.2~8.4s）：帶一個沿軌跡前進的光點 */
+  if(t>3.2){
+    const rt=EASE.io((t-3.2)/3.4), steps=220, n=Math.floor(steps*rt);
+    ctx.save(); ctx.strokeStyle='var(--cyan)';
+    // 軌跡以漸層透明度繪製（尾端淡出），比單色線更有速度感
+    for(let s=0;s<n;s++){
+      const a1=0.62+(s/steps)*Math.PI*2, a2=0.62+((s+1)/steps)*Math.PI*2;
+      const p1=P([Math.cos(a1)*1.05, 0.62, Math.sin(a1)*1.05]);
+      const p2=P([Math.cos(a2)*1.05, 0.62, Math.sin(a2)*1.05]);
+      if(!p1||!p2) continue;
+      const fade=0.10+0.55*(s/steps);
+      glowLine(p1.x,p1.y,p2.x,p2.y,'#4fd8e8',1.5,fade*(0.35+0.65*rt),7);
+    }
+    ctx.restore();
+    // 沿軌跡前進的相機光點
+    const hp=(t-3.2)/3.4;
+    const a=0.62+clamp(hp,0,1)*Math.PI*2;
+    const hp2=P([Math.cos(a)*1.05,0.62,Math.sin(a)*1.05]);
+    if(hp2){
+      const g2=ctx.createRadialGradient(hp2.x,hp2.y,0,hp2.x,hp2.y,16);
+      g2.addColorStop(0,'rgba(180,245,255,0.95)'); g2.addColorStop(1,'rgba(79,216,232,0)');
+      ctx.fillStyle=g2; ctx.beginPath(); ctx.arc(hp2.x,hp2.y,16,0,7); ctx.fill();
+      ctx.fillStyle='#dffaff'; ctx.beginPath(); ctx.arc(hp2.x,hp2.y,3.2,0,7); ctx.fill();
+    }
+  }
+
+  /* ③ 包圍盒長出（8.4~13.6s）：逐邊錯開 + 過衝落定 */
+  let grow=0;
+  if(t>8.4){ const g=clamp((t-8.4)/2.4,0,1); grow = g<1 ? ease2(g) : 1; }
+  function ease2(g){ return Math.max(0, EASE.over(g)); }
+  if(grow>0){
+    const cs=boxCorners(BOX.map(v=>v*grow)), pr=cs.map(P);
+    for(let ei=0;ei<EDGES.length;ei++){
+      const [a,b]=EDGES[ei], pa=pr[a], pb=pr[b]; if(!pa||!pb) continue;
+      const st=EASE.out(clamp((t-8.4-ei*0.05)/1.5,0,1)); if(st<=0) continue;
+      glowLine(pa.x,pa.y, lerp(pa.x,pb.x,st), lerp(pa.y,pb.y,st), '#d4af37', 2.0, .95, 14);
+    }
+    if(grow>=1 && t>11){
+      for(const q of pr) if(q){ ctx.fillStyle='#fff3cf';
+        ctx.beginPath(); ctx.arc(q.x,q.y,2.6,0,7); ctx.fill(); }
+    }
+  }
+
+  /* ⑤ 尺寸標註（12.5s 後）：填補構圖並提供資訊 */
+  if(t>12.5 && grow>=1){
+    const a=EASE.out(clamp((t-12.5)/1.2,0,1));
+    const base=P([0,-BOX[1]/2-0.10,0]), tip=P([BOX[0],-BOX[1]/2-0.10,0]);
+    if(base&&tip){
+      ctx.save(); ctx.globalAlpha=a*.9; ctx.strokeStyle='#d4af37'; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.moveTo(base.x,base.y); ctx.lineTo(tip.x,tip.y); ctx.stroke();
+      for(const q of [base,tip]){ ctx.beginPath(); ctx.moveTo(q.x,q.y-5); ctx.lineTo(q.x,q.y+5); ctx.stroke(); }
+      ctx.fillStyle='#d4af37'; ctx.font='600 20px "Noto Sans SC",sans-serif';
+      ctx.textAlign='center'; ctx.fillText(`${BOX_M[0].toFixed(1)} m`,(base.x+tip.x)/2,base.y+30);
+      ctx.restore();
+    }
+  }
+
+  /* ④ 投影射線 → 影格平面（13.6~20.2s） */
+  if(t>13.6 && grow>=1){
+    const cs=boxCorners(BOX.map(v=>v*grow));
+    const sc=[0,-0.42,1.30], ra=EASE.out(clamp((t-13.6)/2.2,0,1));
+    for(const c of cs){
+      const q=P(c); if(!q) continue;
+      const e=[lerp(c[0],sc[0],ra), lerp(c[1],sc[1],ra), lerp(c[2],sc[2],ra)];
+      const q2=P(e); if(!q2) continue;
+      ctx.save(); ctx.globalAlpha=.34; ctx.strokeStyle='#4fd8e8'; ctx.lineWidth=0.9;
+      ctx.beginPath(); ctx.moveTo(q.x,q.y); ctx.lineTo(q2.x,q2.y); ctx.stroke(); ctx.restore();
+    }
+    // 影格平面（半透明面板 + 發光邊框）
+    const q=[[-0.95,0.05,1.30],[0.95,0.05,1.30],[0.95,-0.88,1.30],[-0.95,-0.88,1.30]].map(P);
+    if(q.every(Boolean)){
+      ctx.save(); ctx.beginPath();
+      ctx.moveTo(q[0].x,q[0].y); for(let i=1;i<4;i++) ctx.lineTo(q[i].x,q[i].y); ctx.closePath();
+      ctx.fillStyle='rgba(13,18,25,0.88)'; ctx.fill();
+      ctx.strokeStyle='rgba(127,143,163,0.5)'; ctx.lineWidth=1.2; ctx.stroke(); ctx.restore();
+    }
+  }
+
+  /* ④ 右側小窗：真實影格 + 投影框（15.6s 後） */
+  if(t>15.6){
+    const a=EASE.out(clamp((t-15.6)/1.5,0,1));
+    ctx.save();
+    ctx.shadowColor='rgba(212,175,55,0.45)'; ctx.shadowBlur=26;
+    ctx.fillStyle='#0b1016'; ctx.fillRect(PANEL.x,PANEL.y,PANEL.w,PANEL.h);
+    ctx.restore();
+    ctx.save(); ctx.globalAlpha=a; ctx.beginPath();
+    ctx.rect(PANEL.x,PANEL.y,PANEL.w,PANEL.h); ctx.clip();
+    if(photoImg) ctx.drawImage(photoImg, PANEL.x,PANEL.y,PANEL.w,PANEL.h);
+    else { ctx.fillStyle='#151d27'; ctx.fillRect(PANEL.x,PANEL.y,PANEL.w,PANEL.h); }
+    ctx.restore();
+    // 投影框（由該視角的包圍盒投影範圍換算）
+    const cs=boxCorners(BOX), ps=cs.map(P).filter(Boolean);
+    if(ps.length===8){
+      const xs=ps.map(p=>p.x), ys=ps.map(p=>p.y);
+      const cx=(Math.min(...xs)+Math.max(...xs))/2, cy=(Math.min(...ys)+Math.max(...ys))/2;
+      const bw=(Math.max(...xs)-Math.min(...xs))*1.75, bh=(Math.max(...ys)-Math.min(...ys))*1.75;
+      const map=(px,py)=>({x:PANEL.x+PANEL.w*(0.5+(px-cx)/bw), y:PANEL.y+PANEL.h*(0.5+(py-cy)/bh)});
+      const p0=map(Math.min(...xs),Math.min(...ys)), p1=map(Math.max(...xs),Math.max(...ys));
+      ctx.save(); ctx.globalAlpha=a;
+      // 三層描邊做出發光框（由外而內：寬而淡 → 窄而亮）
+      for(const [lw,al,blur] of [[9,.16,18],[4,.35,12],[2.4,1,6]]){
+        ctx.shadowColor='rgba(212,175,55,0.9)'; ctx.shadowBlur=blur;
+        ctx.strokeStyle=`rgba(212,175,55,${al})`; ctx.lineWidth=lw;
+        ctx.strokeRect(p0.x,p0.y,p1.x-p0.x,p1.y-p0.y);
+      }
+      ctx.restore();
+      ctx.save(); ctx.globalAlpha=a; ctx.fillStyle='#d4af37';
+      ctx.font='700 22px "Noto Sans SC",sans-serif'; ctx.textAlign='left';
+      ctx.fillText('投影到影格', PANEL.x, PANEL.y-18); ctx.restore();
+    }
+  }
+
+  /* 字幕（簡體，逐字照腳本） */
+  const caps=[[0.4,3.4,'我们用三维几何，自动算出标注'],
+              [3.6,8.2,'拍一段环绕影片，重建出相机位姿'],
+              [8.4,13.4,'在三维空间拟合建筑包围盒'],
+              [13.6,20.2,'投影到每一张影格'],
+              [20.4,23.2,'几何一致 · 零漏框 · 全程无需人工']];
+  for(const [a,b,s] of caps){
+    if(t>=a&&t<b){
+      const fadeIn=EASE.out(clamp((t-a)/0.5,0,1)), fadeOut=1-EASE.io(clamp((t-b+0.5)/0.5,0,1));
+      const al=Math.min(fadeIn,fadeOut);
+      ctx.save(); ctx.globalAlpha=al;
+      ctx.font='600 38px "Noto Sans SC",sans-serif'; ctx.textAlign='center';
+      const tw=ctx.measureText(s).width, bw2=tw+96, bx=W/2-bw2/2, by=H-128;
+      ctx.fillStyle='rgba(11,16,22,0.80)';
+      ctx.beginPath(); ctx.roundRect(bx,by,bw2,72,10); ctx.fill();
+      ctx.strokeStyle='rgba(212,175,55,0.55)'; ctx.lineWidth=1.4;
+      ctx.beginPath(); ctx.moveTo(bx+18,by); ctx.lineTo(bx+bw2-18,by); ctx.stroke();
+      ctx.fillStyle='#eef1f5'; ctx.fillText(s, W/2, by+48);
+      ctx.restore();
+      break;
+    }
+  }
+
+  /* 階段標籤 */
+  const stages=[[0.4,'① 点云'],[3.6,'② 相机轨迹'],[8.4,'③ 三维包围盒'],[13.6,'④ 投影'],[20.4,'⑤ 逐影格标注']];
+  let lab=''; for(const [a,s] of stages) if(t>=a) lab=s;
+  if(lab){
+    ctx.save(); ctx.globalAlpha=.85; ctx.fillStyle='#7f8fa3';
+    ctx.font='500 20px "Noto Sans SC",sans-serif'; ctx.textAlign='left';
+    ctx.fillText(lab,60,72);
+    ctx.strokeStyle='rgba(212,175,55,0.6)'; ctx.lineWidth=1.6;
+    ctx.beginPath(); ctx.moveTo(60,86); ctx.lineTo(150,86); ctx.stroke(); ctx.restore();
+  }
+
+  /* 收尾金句（23.4~25s）：襯線字，份量較重 */
+  if(t>=23.4){
+    const p=EASE.out(clamp((t-23.4)/0.9,0,1));
+    ctx.save(); ctx.globalAlpha=p; ctx.textAlign='center';
+    ctx.shadowColor='rgba(212,175,55,0.55)'; ctx.shadowBlur=28;
+    ctx.fillStyle='#d4af37'; ctx.font='700 58px "Noto Serif SC",serif';
+    ctx.fillText('别人用人工标框', W/2, H/2-26);
+    ctx.shadowBlur=0; ctx.fillStyle='#eef1f5';
+    ctx.fillText('我们用几何算框', W/2, H/2+58);
+    ctx.restore();
+  }
+
+  /* 暗角 */
+  const vg=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*0.34, W/2,H/2, Math.max(W,H)*0.72);
+  vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,0,0,0.55)');
+  ctx.fillStyle=vg; ctx.fillRect(0,0,W,H);
+}
+
+/* Puppeteer 逐帧驅動的介面 */
+window.__seek = f => { renderAt(f/FPS); return true; };
+window.__info = () => ({ frames: Math.round(DUR*FPS), points: PTS.length, photo: !!photoImg });
+window.__ready = () => !!photoImg;
+renderAt(0);
+</script>
+</body>
+</html>

@@ -27,12 +27,16 @@ import { createLedger, readMirror } from "./ledger.js";
 import { GEO_PLANS } from "./geolocate.js";
 import yoloWorkerUrl from "./yolo.worker.js?worker&url";
 import DEMO_FILES from "./demo-photos.json";
+import { installCamera } from "./camera.js";
+import { createMultiViewPanel } from "./multi-view-panel.js";
 
 const $ = (s) => document.querySelector(s);
 const BASE = new URL("./", document.baseURI).href;
 const warn = (...a) => console.warn("[recognize]", ...a);
 const escapeHtml = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const round4 = (x) => Math.round(x * 1e4) / 1e4;
+const multiView = createMultiViewPanel({ host: $("#rc-multi"), getLibrary: () => lib,
+  getThresholds: currentThresholds, onNext: () => $("#rc-file")?.click() });
 
 // ------------------------------------------------------------------ 診斷狀態
 const diag = {
@@ -314,7 +318,7 @@ async function loadDino() {
     diag.dino.state = "失敗";
     diag.dino.error = e.message;
     renderDiag();
-    showError("DINOv2 編碼器", `${e.message}（請確認 public/models/dinov2-small-336.onnx 與 public/ort/ 都存在）`);
+    showError("DINOv2 編碼器", `${e.message}（請確認 public/${DEFAULT_DINO} 與 public/ort/ 都存在）`);
     return false;
   }
 }
@@ -345,6 +349,7 @@ function rankTop(query, { topK = 3, clsHint = null, thresholds = currentThreshol
 
 // ------------------------------------------------------------------ 主流程
 let currentFile = null;
+let photoRevision = 0;
 let currentBitmap = null;
 let lastResults = null;
 let activeIndex = 0;
@@ -360,11 +365,13 @@ function refreshGeoRanking() {
     if (!r.queryVector) continue;
     const ranked = rankTop(r.queryVector, { clsHint: r.cls ?? null });
     Object.assign(r, { topK: ranked.top, totalCompared: ranked.total,
-      margin: marginOf(ranked.top), thresholds: ranked.thresholds, geo: ranked.geo });
+      margin: marginOf(ranked.top), thresholds: ranked.thresholds, geo: ranked.geo,
+      visualTopK: ranked.visualTop, comparison: ranked.comparison });
   }
 }
 
 function receiveSurveyLocation(location) {
+  if (location.lat == null) geoMatchEnabled = false;
   geoMatchLocation = location;
   clearTimeout(geoExpiryTimer);
   if (location.source !== "manual" && locationQuality(location).usable) {
@@ -402,6 +409,7 @@ function resultState(text, state = "") {
 
 function setBusy(on) {
   busy = on;
+  multiView.setBusy(on);
   $("#rc-loading").hidden = !on;
   const btn = $("#rc-run");
   if (btn) {
@@ -423,6 +431,9 @@ async function pickFile(file) {
   try {
     if (!/^image\//.test(file.type)) { toast("請選擇圖片檔（JPG / PNG / WebP）"); return; }
     currentFile = file;
+    photoRevision++;
+    survey.resetLocations();
+    multiView.setCurrent(null);
     currentBitmap = null;
     lastResults = null;
     geoMatchEnabled = false; // Each photo needs its own confirmation that the location applies.
@@ -456,6 +467,9 @@ async function pickFile(file) {
 }
 
 function clearFile() {
+  photoRevision++;
+  survey.resetLocations();
+  multiView.setCurrent(null);
   geoMatchEnabled = false;
   currentFile = null;
   currentBitmap = null;
@@ -551,7 +565,8 @@ async function run() {
         embedMsTotal += performance.now() - t1;
         const ranked = rankTop(vec, { topK: 3, clsHint: r.cls ?? null });
         results.push({ ...r, queryVector: vec, topK: ranked.top, totalCompared: ranked.total,
-          margin: marginOf(ranked.top), thresholds: ranked.thresholds, geo: ranked.geo });
+          margin: marginOf(ranked.top), thresholds: ranked.thresholds, geo: ranked.geo,
+          visualTopK: ranked.visualTop, comparison: ranked.comparison });
       } catch (e) {
         embedMsTotal += performance.now() - t1;
         showError(`DINOv2 編碼（第 ${r.index + 1} 個區域）`, e.message);
@@ -634,6 +649,7 @@ function renderResults() {
   setWorkflow(2);
   const { results } = lastResults;
   const r = results[activeIndex] ?? results[0];
+  multiView.setCurrent(r.queryVector ? { file: currentFile, vector: r.queryVector, region: r.index } : null);
   drawBoxes();
   renderTabs(results);
 
@@ -689,7 +705,7 @@ function renderResults() {
           <span class="rc-sim">相似度 <b>${c.sim.toFixed(3)}</b></span>
         </div>
         <div class="rc-card-sub">${escapeHtml(c.clsZh)}${c.en ? ` · ${escapeHtml(c.en)}` : ""} · 參考照片 ${c.count} 張${c.clsMatch ? " · 類別與 YOLO 一致" : ""}</div>
-        ${r.geo?.used ? `<div class="rc-card-sub">${c.geo?.used ? `距離建檔位置 ${Math.round(c.geo.distanceM).toLocaleString()} 公尺${c.geo.conflict ? " · 位置不一致，請核對" : ""}` : "此候選缺少座標，保留影像分數"}</div>` : ""}
+        ${r.geo?.used ? `<div class="rc-card-sub">${c.geo?.used ? `距離${r.geo.role === "building" ? "已確認建築" : "拍攝者"}位置 ${Math.round(c.geo.distanceM).toLocaleString()} 公尺${c.geo.conflict ? " · 位置不一致，請核對" : ""}` : "此候選缺少座標，保留影像分數"}</div>` : ""}
         <div class="rc-bar-wrap" title="相對於本張照片最高分的比例">
           <i style="width:${Math.max(2, Math.min(100, (c.sim / maxSim) * 100)).toFixed(1)}%"></i>
         </div>
@@ -708,15 +724,20 @@ function renderResults() {
 
   // ③ 建檔：普查的主流程——**不再只有「尚未記錄」才出現**，每一次辨識都會顯示。
   // 查重結論（dd）仍然會帶進建檔區塊，因為「這可能已經記錄過」正是要提醒使用者的重點。
-  survey.setContext({ r, dd, thresholds: th, key: `${lastResults.file ?? ""}|${activeIndex}|${r.cls ?? ""}|${r.source ?? ""}` });
+  survey.setContext({ r, dd, thresholds: th, key: `${photoRevision}|${activeIndex}|${r.cls ?? ""}|${r.source ?? ""}` });
 
   const geoQuality = locationQuality(geoMatchLocation);
-  const geoNote = !geoMatchEnabled ? "只在這個位置對應目前照片時開啟；舊照片或遠景請保持關閉。"
+  const geoNote = !geoMatchEnabled ? "現場照片可取得裝置位置；舊照片請在下方地圖確認建築位置。位置對應這張照片時再開啟。"
     : !geoQuality.usable ? geoQuality.reason
-      : "已參考下方建檔位置；遠方候選小幅降權，影像相似度保持原值。位置不一致時需要人工確認。";
-  const geoControl = `<div class="rc-geo-match"><label><input type="checkbox" id="rc-geo-match" ${geoMatchEnabled ? "checked" : ""} /> 用建檔位置輔助比對這張照片</label>
+      : `已使用${geoQuality.role === "building" ? "已確認的建築位置" : "拍攝位置與設備估計範圍"}。位置只輔助排序；相近候選仍需核對或補拍。`;
+  const geoControl = `<div class="rc-geo-match"><label><input type="checkbox" id="rc-geo-match" ${geoMatchEnabled ? "checked" : ""} /> 我確認下方位置對應這張照片，啟用位置輔助</label>
     <p role="status">${escapeHtml(geoNote)}</p></div>`;
-  $("#rc-results").innerHTML = head + geoControl + dedupHead +
+  const visual = r.visualTopK ?? top;
+  const comparison = `<div class="rc-location-comparison" aria-label="影像與位置輔助結果對照">
+    <div><span>僅圖像 · 首位候選</span><strong>${escapeHtml(visual[0]?.zh ?? "無候選")}</strong><small>相似度 ${visual[0]?.sim.toFixed(3) ?? "—"}</small></div>
+    <div><span>${r.geo?.used ? "圖像＋位置 · 首位候選" : "位置輔助 · 尚未啟用"}</span><strong>${r.geo?.used ? escapeHtml(top[0]?.zh ?? "無候選") : "先確認照片位置"}</strong><small>${r.geo?.used ? (r.comparison?.changed ? "位置改變了排序，請核對候選" : "兩種方式首位候選一致") : "完成定位或標記建築後，勾選上方選項"}</small></div>
+    <p>此處比較同一張照片的候選結果；正確率需以有標準答案的獨立照片測試。</p></div>`;
+  $("#rc-results").innerHTML = head + geoControl + comparison + dedupHead +
     (top.length ? `<div class="rc-cards">${cards}</div>` : `<p class="rc-none">這張照片沒有可比對的候選。</p>`) +
     `<details class="rc-method"><summary>比對細節與相似度說明</summary>${boxLine}<div class="rc-meta">${headlineSub}</div><p class="rc-note">查重門檻：${th.hit} 以上＝高度相似、${th.maybe}~${th.hit}＝需要人工確認、低於 ${th.maybe}＝未找到可靠匹配。<br />相似度 = DINOv2 影像特徵的餘弦相似度（1.000 = 特徵完全相同）。
       相似度不是正確機率，低分也可能來自角度、光線或遮擋。這些門檻由參考庫留一法提出，尚未完成獨立實拍校準。
@@ -851,6 +872,7 @@ async function loadDemo(url) {
 
 // ------------------------------------------------------------------ 事件
 function wireEvents() {
+  installCamera({ onPhoto: pickFile, canCapture: () => !busy, onNotice: toast });
   const input = $("#rc-file");
   const openPicker = () => input?.click();
   $("#rc-pick")?.addEventListener("click", openPicker);

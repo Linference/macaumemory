@@ -1,0 +1,1678 @@
+{
+  "schemaVersion": 1,
+  "coordinateSystem": "WGS84",
+  "counts": {
+    "places": 32,
+    "photos": 305
+  },
+  "places": [
+    {
+      "id": "a-ma-temple",
+      "spotId": "a-ma-temple",
+      "memoryId": "MM-0005",
+      "name": "媽閣廟",
+      "category": "temple",
+      "categoryName": "中式廟宇",
+      "coordinates": [
+        113.531265,
+        22.18609
+      ],
+      "summary": "澳門最古老的廟宇之一，澳門葡文名「Macau」的由來。",
+      "photoCount": 13,
+      "cover": "photos/real/thumb/a-ma-temple-33849fa41382.webp",
+      "gallery": [
+        {
+          "file": "photos/real/a-ma-temple-33849fa41382.webp",
+          "thumb": "photos/real/thumb/a-ma-temple-33849fa41382.webp",
+          "taken": "2011-12-10",
+          "credit": "Abasaa · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AA-Ma_Temple_%28Macau%29_01.JPG",
+          "source": "wikimedia_commons",
+          "author": "Abasaa",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/a-ma-temple-082085f9eac9.webp",
+          "thumb": "photos/real/thumb/a-ma-temple-082085f9eac9.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/a-ma-temple-29e6793322f2.webp",
+          "thumb": "photos/real/thumb/a-ma-temple-29e6793322f2.webp",
+          "taken": null,
+          "credit": "Richard Mortel from Riyadh, Saudi Arabia · CC BY 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AA-Ma_Temple%2C_Macau%2C_built_1488_%287%29_%2832734287651%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "Richard Mortel from Riyadh, Saudi Arabia",
+          "license": "CC BY 2.0"
+        }
+      ],
+      "mapPath": "./?spot=a-ma-temple",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "cathedral-macau",
+      "spotId": "cathedral",
+      "memoryId": "MM-0006",
+      "name": "主教座堂（大堂）",
+      "category": "church",
+      "categoryName": "天主教教堂",
+      "coordinates": [
+        113.541607,
+        22.19354
+      ],
+      "summary": "澳門天主教區的主教座堂，位於大堂前地。",
+      "photoCount": 5,
+      "cover": "photos/real/thumb/cathedral-macau-088c5129951f.webp",
+      "gallery": [
+        {
+          "file": "photos/real/cathedral-macau-088c5129951f.webp",
+          "thumb": "photos/real/thumb/cathedral-macau-088c5129951f.webp",
+          "taken": "2011-05-17",
+          "credit": "Jssfrk · CC0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AIgreja_da_S%C3%A9_2011b.JPG",
+          "source": "wikimedia_commons",
+          "author": "Jssfrk",
+          "license": "CC0"
+        },
+        {
+          "file": "photos/real/cathedral-macau-b5f044be7359.webp",
+          "thumb": "photos/real/thumb/cathedral-macau-b5f044be7359.webp",
+          "taken": "2011-05-17",
+          "credit": "Jssfrk · CC0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AIgreja_da_S%C3%A9_2011a.JPG",
+          "source": "wikimedia_commons",
+          "author": "Jssfrk",
+          "license": "CC0"
+        },
+        {
+          "file": "photos/real/cathedral-macau-690636ccb58c.webp",
+          "thumb": "photos/real/thumb/cathedral-macau-690636ccb58c.webp",
+          "taken": "2011-05-17",
+          "credit": "Jssfrk · CC0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AIgreja_da_S%C3%A9_2011c.JPG",
+          "source": "wikimedia_commons",
+          "author": "Jssfrk",
+          "license": "CC0"
+        },
+        {
+          "file": "photos/real/cathedral-macau-af29a9bc705c.webp",
+          "thumb": "photos/real/thumb/cathedral-macau-af29a9bc705c.webp",
+          "taken": "2011-05-17",
+          "credit": "Jssfrk · CC0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AIgreja_da_S%C3%A9_2011d.JPG",
+          "source": "wikimedia_commons",
+          "author": "Jssfrk",
+          "license": "CC0"
+        }
+      ],
+      "mapPath": "./?spot=cathedral",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "fishermans-wharf",
+      "spotId": "fisherman-wharf",
+      "memoryId": "MM-0007",
+      "name": "澳門漁人碼頭",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.555725,
+        22.191309
+      ],
+      "summary": "海濱主題娛樂區，集酒店、會展、餐飲與購物於一身。",
+      "photoCount": 4,
+      "cover": "photos/real/thumb/fishermans-wharf-29f50599e375.webp",
+      "gallery": [
+        {
+          "file": "photos/real/fishermans-wharf-29f50599e375.webp",
+          "thumb": "photos/real/thumb/fishermans-wharf-29f50599e375.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/fishermans-wharf-47ad9ed592c3.webp",
+          "thumb": "photos/real/thumb/fishermans-wharf-47ad9ed592c3.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/fishermans-wharf-928099ddea4f.webp",
+          "thumb": "photos/real/thumb/fishermans-wharf-928099ddea4f.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=fisherman-wharf",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "fortress-monte",
+      "spotId": "fortress-monte",
+      "memoryId": "MM-0008",
+      "name": "大炮台（聖保祿炮台）",
+      "category": "monument",
+      "categoryName": "牌坊與紀念物",
+      "coordinates": [
+        113.542312,
+        22.197041
+      ],
+      "summary": "1617 年由耶穌會士建成的軍事要塞，澳門防禦體系的核心。",
+      "photoCount": 9,
+      "cover": "photos/real/thumb/fortress-monte-183211f34df8.webp",
+      "gallery": [
+        {
+          "file": "photos/real/fortress-monte-183211f34df8.webp",
+          "thumb": "photos/real/thumb/fortress-monte-183211f34df8.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/fortress-monte-28a89aa2e33c.webp",
+          "thumb": "photos/real/thumb/fortress-monte-28a89aa2e33c.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/fortress-monte-31e6aa9ecf73.webp",
+          "thumb": "photos/real/thumb/fortress-monte-31e6aa9ecf73.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=fortress-monte",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "galaxy-macau",
+      "spotId": "galaxy",
+      "memoryId": "MM-0009",
+      "name": "澳門銀河",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.555202,
+        22.148866
+      ],
+      "summary": "2011 年開幕，設有全球最大的人工衝浪池與空中花園。",
+      "photoCount": 10,
+      "cover": "photos/real/thumb/galaxy-macau-10d464abea25.webp",
+      "gallery": [
+        {
+          "file": "photos/real/galaxy-macau-10d464abea25.webp",
+          "thumb": "photos/real/thumb/galaxy-macau-10d464abea25.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/galaxy-macau-143f3f968268.webp",
+          "thumb": "photos/real/thumb/galaxy-macau-143f3f968268.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/galaxy-macau-2aaa30e0fafa.webp",
+          "thumb": "photos/real/thumb/galaxy-macau-2aaa30e0fafa.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=galaxy",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "grand-lisboa",
+      "spotId": "grand-lisboa",
+      "memoryId": "MM-0010",
+      "name": "葡京酒店（新葡京）",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.543309,
+        22.190969
+      ],
+      "summary": "蓮花造型的摩天大樓，澳門半島的天際線地標。",
+      "photoCount": 15,
+      "cover": "photos/real/thumb/grand-lisboa-01f78752583a.webp",
+      "gallery": [
+        {
+          "file": "photos/real/grand-lisboa-01f78752583a.webp",
+          "thumb": "photos/real/thumb/grand-lisboa-01f78752583a.webp",
+          "taken": "2010-11-15",
+          "credit": "Rob Young from United Kingdom · CC BY 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AGrand_Lisboa%2C_Macau_%285234996532%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "Rob Young from United Kingdom",
+          "license": "CC BY 2.0"
+        },
+        {
+          "file": "photos/real/grand-lisboa-1d11b41b586e.webp",
+          "thumb": "photos/real/thumb/grand-lisboa-1d11b41b586e.webp",
+          "taken": "2011-03-12",
+          "credit": "螺钉 · CC BY-SA 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ACasino_Lisboa_%26_Grand_Lisboa%2C_Macau.JPG",
+          "source": "wikimedia_commons",
+          "author": "螺钉",
+          "license": "CC BY-SA 3.0"
+        },
+        {
+          "file": "photos/real/grand-lisboa-1559882da333.webp",
+          "thumb": "photos/real/thumb/grand-lisboa-1559882da333.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=grand-lisboa",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "grand-prix-museum",
+      "spotId": "grand-prix-museum",
+      "memoryId": "MM-0011",
+      "name": "澳門大賽車博物館",
+      "category": "civic",
+      "categoryName": "公共建築",
+      "coordinates": [
+        113.552951,
+        22.194901
+      ],
+      "summary": "格蘭披治大賽車的殿堂，展示歷屆戰車與車手故事。",
+      "photoCount": 3,
+      "cover": "photos/real/thumb/grand-prix-museum-1e7ba97bf258.webp",
+      "gallery": [
+        {
+          "file": "photos/real/grand-prix-museum-1e7ba97bf258.webp",
+          "thumb": "photos/real/thumb/grand-prix-museum-1e7ba97bf258.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/grand-prix-museum-779afc95b1d5.webp",
+          "thumb": "photos/real/thumb/grand-prix-museum-779afc95b1d5.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/grand-prix-museum-bf24fae0b4b3.webp",
+          "thumb": "photos/real/thumb/grand-prix-museum-bf24fae0b4b3.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=grand-prix-museum",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "guia-fortress",
+      "spotId": "guia-fortress",
+      "memoryId": "MM-0012",
+      "name": "東望洋炮台及燈塔",
+      "category": "monument",
+      "categoryName": "牌坊與紀念物",
+      "coordinates": [
+        113.54977,
+        22.19651
+      ],
+      "summary": "中國沿海第一座現代燈塔，與聖母雪地殿教堂同處山頂。",
+      "photoCount": 10,
+      "cover": "photos/real/thumb/guia-fortress-1ad9eab9cc32.webp",
+      "gallery": [
+        {
+          "file": "photos/real/guia-fortress-1ad9eab9cc32.webp",
+          "thumb": "photos/real/thumb/guia-fortress-1ad9eab9cc32.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/guia-fortress-44255f1fcdc4.webp",
+          "thumb": "photos/real/thumb/guia-fortress-44255f1fcdc4.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/guia-fortress-4926fd47d29e.webp",
+          "thumb": "photos/real/thumb/guia-fortress-4926fd47d29e.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=guia-fortress",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "kun-iam-statue",
+      "spotId": "kun-iam-statue",
+      "memoryId": "MM-0013",
+      "name": "觀音蓮花苑",
+      "category": "monument",
+      "categoryName": "牌坊與紀念物",
+      "coordinates": [
+        113.55214,
+        22.185784
+      ],
+      "summary": "矗立於人工島上的觀音像，高約 20 米。",
+      "photoCount": 10,
+      "cover": "photos/real/thumb/kun-iam-statue-39a44811a3de.webp",
+      "gallery": [
+        {
+          "file": "photos/real/kun-iam-statue-39a44811a3de.webp",
+          "thumb": "photos/real/thumb/kun-iam-statue-39a44811a3de.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/kun-iam-statue-4b2696becde2.webp",
+          "thumb": "photos/real/thumb/kun-iam-statue-4b2696becde2.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/kun-iam-statue-84a5599c6c39.webp",
+          "thumb": "photos/real/thumb/kun-iam-statue-84a5599c6c39.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=kun-iam-statue",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "lai-chi-vun",
+      "spotId": "lai-chi-vun",
+      "memoryId": "MM-0014",
+      "name": "荔枝碗船廠",
+      "category": "industrial",
+      "categoryName": "工業與倉庫",
+      "coordinates": [
+        113.55205,
+        22.1211
+      ],
+      "summary": "昔日澳門造船業遺址，保留木造船廠與海濱風貌。",
+      "photoCount": 5,
+      "cover": "photos/real/thumb/lai-chi-vun-b9d94b3eaa4e.webp",
+      "gallery": [
+        {
+          "file": "photos/real/lai-chi-vun-b9d94b3eaa4e.webp",
+          "thumb": "photos/real/thumb/lai-chi-vun-b9d94b3eaa4e.webp",
+          "taken": "2014-04-03",
+          "credit": "Macau government · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ALai_Chi_Vun_Shipyard.jpg",
+          "source": "wikimedia_commons",
+          "author": "Macau government",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/lai-chi-vun-f8795e785569.webp",
+          "thumb": "photos/real/thumb/lai-chi-vun-f8795e785569.webp",
+          "taken": "2023-07-03",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ALai_Chi_Vun_Shipyards_entry_03-07-2023.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/lai-chi-vun-2e6d00c37495.webp",
+          "thumb": "photos/real/thumb/lai-chi-vun-2e6d00c37495.webp",
+          "taken": "2023-07-03",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ALai_Chi_Vun_Shipyards_baord_03-07-2023.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/lai-chi-vun-3257534519ad.webp",
+          "thumb": "photos/real/thumb/lai-chi-vun-3257534519ad.webp",
+          "taken": "2023-07-03",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ALai_Chi_Vun_Shipyards_03-07-2023%284%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "mapPath": "./?spot=lai-chi-vun",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "leal-senado",
+      "spotId": "leal-senado",
+      "memoryId": "MM-0015",
+      "name": "民政總署大樓",
+      "category": "civic",
+      "categoryName": "公共建築",
+      "coordinates": [
+        113.539773,
+        22.193502
+      ],
+      "summary": "建於 1784 年的葡萄牙殖民時期市政廳，現為市政署大樓。",
+      "photoCount": 12,
+      "cover": "photos/real/thumb/leal-senado-8678e7580936.webp",
+      "gallery": [
+        {
+          "file": "photos/real/leal-senado-8678e7580936.webp",
+          "thumb": "photos/real/thumb/leal-senado-8678e7580936.webp",
+          "taken": "2008-06-29",
+          "credit": "WiNG · CC BY 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacao_Edificio_do_Leal_Senado.jpg",
+          "source": "wikimedia_commons",
+          "author": "WiNG",
+          "license": "CC BY 3.0"
+        },
+        {
+          "file": "photos/real/leal-senado-b35dd5d83dac.webp",
+          "thumb": "photos/real/thumb/leal-senado-b35dd5d83dac.webp",
+          "taken": "2015-02-07",
+          "credit": "Wei-Te Wong · CC BY-SA 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AChinese_New_Year_decorations_on_Leal_Senado_20150207.jpg",
+          "source": "wikimedia_commons",
+          "author": "Wei-Te Wong",
+          "license": "CC BY-SA 2.0"
+        },
+        {
+          "file": "photos/real/leal-senado-e4829d6b3f2c.webp",
+          "thumb": "photos/real/thumb/leal-senado-e4829d6b3f2c.webp",
+          "taken": "2010-11-10",
+          "credit": "yeowatzup · CC BY 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ALeal_Senado%2C_Macau_%285239491313%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "yeowatzup",
+          "license": "CC BY 2.0"
+        },
+        {
+          "file": "photos/real/leal-senado-fba74afc4960.webp",
+          "thumb": "photos/real/thumb/leal-senado-fba74afc4960.webp",
+          "taken": "2010-11-10",
+          "credit": "yeowatzup · CC BY 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ALeal_Senado%2C_Macau_%285239499023%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "yeowatzup",
+          "license": "CC BY 2.0"
+        }
+      ],
+      "mapPath": "./?spot=leal-senado",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "londoner-macao",
+      "spotId": "londoner",
+      "memoryId": "MM-0016",
+      "name": "澳門倫敦人",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.564652,
+        22.14595
+      ],
+      "summary": "英倫維多利亞風格的主題度假村，外牆仿英國國會大廈。",
+      "photoCount": 8,
+      "cover": "photos/real/thumb/londoner-macao-094742873008.webp",
+      "gallery": [
+        {
+          "file": "photos/real/londoner-macao-094742873008.webp",
+          "thumb": "photos/real/thumb/londoner-macao-094742873008.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/londoner-macao-21ec50a19c9d.webp",
+          "thumb": "photos/real/thumb/londoner-macao-21ec50a19c9d.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/londoner-macao-2cd131301a5f.webp",
+          "thumb": "photos/real/thumb/londoner-macao-2cd131301a5f.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=londoner",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "macau-cultural-centre",
+      "spotId": "centro-cultural",
+      "memoryId": "MM-0017",
+      "name": "澳門文化中心",
+      "category": "civic",
+      "categoryName": "公共建築",
+      "coordinates": [
+        113.555478,
+        22.188866
+      ],
+      "summary": "1999 年啟用，澳門最重要的表演藝術場地。",
+      "photoCount": 8,
+      "cover": "photos/real/thumb/macau-cultural-centre-0a6b62931d82.webp",
+      "gallery": [
+        {
+          "file": "photos/real/macau-cultural-centre-0a6b62931d82.webp",
+          "thumb": "photos/real/thumb/macau-cultural-centre-0a6b62931d82.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/macau-cultural-centre-563ee72db79b.webp",
+          "thumb": "photos/real/thumb/macau-cultural-centre-563ee72db79b.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/macau-cultural-centre-7a13a75ab69e.webp",
+          "thumb": "photos/real/thumb/macau-cultural-centre-7a13a75ab69e.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=centro-cultural",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "macau-museum",
+      "spotId": "museum-macau-museum",
+      "memoryId": "MM-0018",
+      "name": "澳門博物館",
+      "category": "civic",
+      "categoryName": "公共建築",
+      "coordinates": [
+        113.542061,
+        22.197626
+      ],
+      "summary": "1998 年開幕，位於大炮台上，是了解澳門歷史、民俗與城市發展的必訪博物館。",
+      "photoCount": 3,
+      "cover": "photos/real/thumb/macau-museum-c842bbfce8ab.webp",
+      "gallery": [
+        {
+          "file": "photos/real/macau-museum-c842bbfce8ab.webp",
+          "thumb": "photos/real/thumb/macau-museum-c842bbfce8ab.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/macau-museum-d7f7d3f8d07d.webp",
+          "thumb": "photos/real/thumb/macau-museum-d7f7d3f8d07d.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/macau-museum-ecd429e99ab1.webp",
+          "thumb": "photos/real/thumb/macau-museum-ecd429e99ab1.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=museum-macau-museum",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "macau-science-center",
+      "spotId": "macau-science-center",
+      "memoryId": "MM-0004",
+      "name": "澳門科學館",
+      "category": "civic",
+      "categoryName": "公共建築",
+      "coordinates": [
+        113.556965,
+        22.186193
+      ],
+      "summary": "澳門科學館由貝聿銘事務所設計，於2009年開幕，以流線弧形量體與幾何切割聞名，展現現代主義與地域氣候回應的融合。其選址於孫逸仙大馬路旁填海地段，與澳門漁人碼頭、文化中心共構新口岸濱海文化帶，象徵澳門回歸後推動科普教育與城市現代化的企圖。建築設有天文館與互動展廳，是澳門少數以當代建築語彙詮釋公共性的地標。",
+      "photoCount": 9,
+      "cover": "photos/real/thumb/macau-science-center-38b6139775a5.webp",
+      "gallery": [
+        {
+          "file": "photos/real/macau-science-center-38b6139775a5.webp",
+          "thumb": "photos/real/thumb/macau-science-center-38b6139775a5.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/macau-science-center-7165f5434487.webp",
+          "thumb": "photos/real/thumb/macau-science-center-7165f5434487.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/macau-science-center-80a9cd5d37f1.webp",
+          "thumb": "photos/real/thumb/macau-science-center-80a9cd5d37f1.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=macau-science-center",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "macau-tower",
+      "spotId": "macau-tower",
+      "memoryId": "MM-0003",
+      "name": "澳門旅遊塔",
+      "category": "civic",
+      "categoryName": "公共建築",
+      "coordinates": [
+        113.5368,
+        22.179819
+      ],
+      "summary": "澳門旅遊塔於2001年啟用，由建築師高登·莫勒（Gordon Moller）設計，總高338米，是澳門最具標誌性的現代地標之一。其簡潔的混凝土塔身與觀景層設計體現了當代高層建築的工程美學，並與珠江口景觀相互呼應。該塔不僅是旅遊與會展設施，也象徵澳門回歸後城市現代化與國際化的發展方向。",
+      "photoCount": 15,
+      "cover": "photos/real/thumb/macau-tower-66375d10e0c5.webp",
+      "gallery": [
+        {
+          "file": "photos/real/macau-tower-66375d10e0c5.webp",
+          "thumb": "photos/real/thumb/macau-tower-66375d10e0c5.webp",
+          "taken": "2003-12-29",
+          "credit": "Original image Macanese馬交人 Edited version Lauri Silvennoinen · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacau_Tower_edit1.JPG",
+          "source": "wikimedia_commons",
+          "author": "Original image Macanese馬交人 Edited version Lauri Silvennoinen",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/macau-tower-937baf8a64cd.webp",
+          "thumb": "photos/real/thumb/macau-tower-937baf8a64cd.webp",
+          "taken": "2010-08-10",
+          "credit": "投稿者 · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacau_Tower_58.jpg",
+          "source": "wikimedia_commons",
+          "author": "投稿者",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/macau-tower-e15775f8325c.webp",
+          "thumb": "photos/real/thumb/macau-tower-e15775f8325c.webp",
+          "taken": "2005-03-19",
+          "credit": "Iidxplus · CC BY-SA 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ANightview_of_mtower.jpg",
+          "source": "wikimedia_commons",
+          "author": "Iidxplus",
+          "license": "CC BY-SA 3.0"
+        },
+        {
+          "file": "photos/real/macau-tower-3efdcb356c2a.webp",
+          "thumb": "photos/real/thumb/macau-tower-3efdcb356c2a.webp",
+          "taken": "2008-02-20",
+          "credit": "Ninjakeg · CC BY-SA 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacau_tower_sky.jpg",
+          "source": "wikimedia_commons",
+          "author": "Ninjakeg",
+          "license": "CC BY-SA 3.0"
+        }
+      ],
+      "mapPath": "./?spot=macau-tower",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "mandarins-house",
+      "spotId": "mandarins-house",
+      "memoryId": "MM-0019",
+      "name": "鄭家大屋",
+      "category": "tong_lau",
+      "categoryName": "騎樓與唐樓",
+      "coordinates": [
+        113.534876,
+        22.188705
+      ],
+      "summary": "中國近代思想家鄭觀應的故居，佔地約 4,000 平方米。",
+      "photoCount": 13,
+      "cover": "photos/real/thumb/mandarins-house-b821dae3520b.webp",
+      "gallery": [
+        {
+          "file": "photos/real/mandarins-house-b821dae3520b.webp",
+          "thumb": "photos/real/thumb/mandarins-house-b821dae3520b.webp",
+          "taken": "2011-09-26",
+          "credit": "Niels Elgaard Larsen - User: (WT-shared) Elgaard at  wts wikivoyage · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacaoMandarinsHouse.jpg",
+          "source": "wikimedia_commons",
+          "author": "Niels Elgaard Larsen - User: (WT-shared) Elgaard at  wts wikivoyage",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/mandarins-house-a19fa1b928c1.webp",
+          "thumb": "photos/real/thumb/mandarins-house-a19fa1b928c1.webp",
+          "taken": "2023-02-24",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMandarin%27s_House_24-02-2023%282%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/mandarins-house-146add2025a3.webp",
+          "thumb": "photos/real/thumb/mandarins-house-146add2025a3.webp",
+          "taken": "2023-02-24",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMandarin%27s_House_24-02-2023%286%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/mandarins-house-25575001e9f7.webp",
+          "thumb": "photos/real/thumb/mandarins-house-25575001e9f7.webp",
+          "taken": "2023-02-24",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMandarin%27s_House_24-02-2023%284%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "mapPath": "./?spot=mandarins-house",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "mgm-macau",
+      "spotId": "mgm-macau",
+      "memoryId": "MM-0020",
+      "name": "澳門美高梅",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.548271,
+        22.185582
+      ],
+      "summary": "2007 年開幕，新口岸的地標建築，內設保利美高梅博物館。",
+      "photoCount": 9,
+      "cover": "photos/real/thumb/mgm-macau-26259284ceec.webp",
+      "gallery": [
+        {
+          "file": "photos/real/mgm-macau-26259284ceec.webp",
+          "thumb": "photos/real/thumb/mgm-macau-26259284ceec.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/mgm-macau-30629eb753a2.webp",
+          "thumb": "photos/real/thumb/mgm-macau-30629eb753a2.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/mgm-macau-486c00bfc2c6.webp",
+          "thumb": "photos/real/thumb/mgm-macau-486c00bfc2c6.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=mgm-macau",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "moorish-barracks",
+      "spotId": "moorish-barracks",
+      "memoryId": "MM-0021",
+      "name": "港務局大樓",
+      "category": "portuguese",
+      "categoryName": "葡式殖民建築",
+      "coordinates": [
+        113.532703,
+        22.187396
+      ],
+      "summary": "1874 年落成的摩爾式建築，原為印度籍警察營地。",
+      "photoCount": 11,
+      "cover": "photos/real/thumb/moorish-barracks-0acd79b22c38.webp",
+      "gallery": [
+        {
+          "file": "photos/real/moorish-barracks-0acd79b22c38.webp",
+          "thumb": "photos/real/thumb/moorish-barracks-0acd79b22c38.webp",
+          "taken": "2011-12-10",
+          "credit": "Abasaa · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMoorish_Barracks_02.JPG",
+          "source": "wikimedia_commons",
+          "author": "Abasaa",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/moorish-barracks-83fb400c65f6.webp",
+          "thumb": "photos/real/thumb/moorish-barracks-83fb400c65f6.webp",
+          "taken": "2011-12-10",
+          "credit": "Abasaa · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMoorish_Barracks_01.JPG",
+          "source": "wikimedia_commons",
+          "author": "Abasaa",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/moorish-barracks-101bc0fe5ecd.webp",
+          "thumb": "photos/real/thumb/moorish-barracks-101bc0fe5ecd.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=moorish-barracks",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "na-tcha-temple",
+      "spotId": "na-tcha-temple",
+      "memoryId": "MM-0022",
+      "name": "大三巴哪吒廟",
+      "category": "temple",
+      "categoryName": "中式廟宇",
+      "coordinates": [
+        113.540682,
+        22.197727
+      ],
+      "summary": "建成於 1888 年，小巧的中式廟宇與大三巴牌坊相鄰而立。",
+      "photoCount": 9,
+      "cover": "photos/real/thumb/na-tcha-temple-1c2bf1a001f4.webp",
+      "gallery": [
+        {
+          "file": "photos/real/na-tcha-temple-1c2bf1a001f4.webp",
+          "thumb": "photos/real/thumb/na-tcha-temple-1c2bf1a001f4.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/na-tcha-temple-1cc9db22f205.webp",
+          "thumb": "photos/real/thumb/na-tcha-temple-1cc9db22f205.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/na-tcha-temple-3e3c265e763a.webp",
+          "thumb": "photos/real/thumb/na-tcha-temple-3e3c265e763a.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=na-tcha-temple",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "parisian",
+      "spotId": "parisian",
+      "memoryId": "MM-0002",
+      "name": "澳門巴黎人",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.560718,
+        22.143676
+      ],
+      "summary": "澳門巴黎人於2016年開幕，以二分之一比例複製巴黎艾菲爾鐵塔為標誌，屬路氹城大型綜合度假村建築群。其法式古典立面與夜間燈光秀，延續澳門以博彩娛樂帶動旅遊的發展模式，也反映殖民歷史後期以來澳門對歐陸文化符號的挪用與再造。",
+      "photoCount": 9,
+      "cover": "photos/real/thumb/parisian-01387f3e2e16.webp",
+      "gallery": [
+        {
+          "file": "photos/real/parisian-01387f3e2e16.webp",
+          "thumb": "photos/real/thumb/parisian-01387f3e2e16.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/parisian-601da4600ab6.webp",
+          "thumb": "photos/real/thumb/parisian-601da4600ab6.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/parisian-627b456cb505.webp",
+          "thumb": "photos/real/thumb/parisian-627b456cb505.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=parisian",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "portas-do-cerco",
+      "spotId": "portas-do-cerco",
+      "memoryId": "MM-0023",
+      "name": "關閘（關閘拱門）",
+      "category": "monument",
+      "categoryName": "牌坊與紀念物",
+      "coordinates": [
+        113.549123,
+        22.215933
+      ],
+      "summary": "澳門與內地之間的主要陸路口岸，拱門建於 1870 年。",
+      "photoCount": 9,
+      "cover": "photos/real/thumb/portas-do-cerco-300f0e5e2d04.webp",
+      "gallery": [
+        {
+          "file": "photos/real/portas-do-cerco-300f0e5e2d04.webp",
+          "thumb": "photos/real/thumb/portas-do-cerco-300f0e5e2d04.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/portas-do-cerco-34bc45a3d04b.webp",
+          "thumb": "photos/real/thumb/portas-do-cerco-34bc45a3d04b.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/portas-do-cerco-42b685b6d352.webp",
+          "thumb": "photos/real/thumb/portas-do-cerco-42b685b6d352.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=portas-do-cerco",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "red-market",
+      "spotId": "red-market",
+      "memoryId": "MM-0024",
+      "name": "紅街市（提督街市）",
+      "category": "market",
+      "categoryName": "街市與市集",
+      "coordinates": [
+        113.544791,
+        22.205385
+      ],
+      "summary": "1936 年落成的現代主義市場建築，澳門僅存一座。",
+      "photoCount": 5,
+      "cover": "photos/real/thumb/red-market-f1bf06a963c7.webp",
+      "gallery": [
+        {
+          "file": "photos/real/red-market-f1bf06a963c7.webp",
+          "thumb": "photos/real/thumb/red-market-f1bf06a963c7.webp",
+          "taken": "2016-08-24",
+          "credit": "Doraemon.tvb · CC BY-SA 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARed_Market_2016.jpg",
+          "source": "wikimedia_commons",
+          "author": "Doraemon.tvb",
+          "license": "CC BY-SA 3.0"
+        },
+        {
+          "file": "photos/real/red-market-ff7dd791823c.webp",
+          "thumb": "photos/real/thumb/red-market-ff7dd791823c.webp",
+          "taken": "2023-08-08",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARed_Market_Library_inside_08-08-2023%283%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/red-market-2ee7e53617f8.webp",
+          "thumb": "photos/real/thumb/red-market-2ee7e53617f8.webp",
+          "taken": "2018-12-14",
+          "credit": "Mx. Granger · CC0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARed_Market%2C_Macau_-_interior.jpg",
+          "source": "wikimedia_commons",
+          "author": "Mx. Granger",
+          "license": "CC0"
+        },
+        {
+          "file": "photos/real/red-market-24ad7e0ee773.webp",
+          "thumb": "photos/real/thumb/red-market-24ad7e0ee773.webp",
+          "taken": "2023-08-08",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARed_Market_Library_inside_08-08-2023%281%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "mapPath": "./?spot=red-market",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "ruins-st-paul",
+      "spotId": "ruins-st-paul",
+      "memoryId": "MM-0001",
+      "name": "大三巴牌坊",
+      "category": "monument",
+      "categoryName": "牌坊與紀念物",
+      "coordinates": [
+        113.540839,
+        22.197458
+      ],
+      "summary": "大三巴牌坊原為17世紀聖保祿學院天主之母教堂的正面石壁，1835年大火後僅存此立面，是澳門最具代表性的地標。其立面融合巴洛克風格與東方裝飾元素，分為五層，雕刻包含聖母、耶穌會聖人、中國獅子及菊花等圖案，見證天主教在遠東的傳播與中西文化交融。",
+      "photoCount": 15,
+      "cover": "photos/real/thumb/ruins-st-paul-249559aa87d9.webp",
+      "gallery": [
+        {
+          "file": "photos/real/ruins-st-paul-249559aa87d9.webp",
+          "thumb": "photos/real/thumb/ruins-st-paul-249559aa87d9.webp",
+          "taken": "2016-05-18",
+          "credit": "Ank Kumar · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARuins_of_Saint_Paul%27s%2C_Macau_%28Ank_Kumar%29_07.jpg",
+          "source": "wikimedia_commons",
+          "author": "Ank Kumar",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/ruins-st-paul-ef3ad3db36d3.webp",
+          "thumb": "photos/real/thumb/ruins-st-paul-ef3ad3db36d3.webp",
+          "taken": "2016-05-18",
+          "credit": "Ank Kumar · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARuins_of_Saint_Paul%27s%2C_Macau_%28Ank_Kumar%29_01.jpg",
+          "source": "wikimedia_commons",
+          "author": "Ank Kumar",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/ruins-st-paul-3f8b4d0ab9a0.webp",
+          "thumb": "photos/real/thumb/ruins-st-paul-3f8b4d0ab9a0.webp",
+          "taken": "2016-05-18",
+          "credit": "Ank Kumar · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARuins_of_Saint_Paul%27s%2C_Macau_%28Ank_Kumar%29_10.jpg",
+          "source": "wikimedia_commons",
+          "author": "Ank Kumar",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/ruins-st-paul-5ebb020f44b0.webp",
+          "thumb": "photos/real/thumb/ruins-st-paul-5ebb020f44b0.webp",
+          "taken": "2016-05-18",
+          "credit": "Ank Kumar · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ARuins_of_Saint_Paul%27s%2C_Macau_%28Ank_Kumar%29_08.jpg",
+          "source": "wikimedia_commons",
+          "author": "Ank Kumar",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "mapPath": "./?spot=ruins-st-paul",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "senado-square",
+      "spotId": "senado-square",
+      "memoryId": "MM-0025",
+      "name": "議事亭前地",
+      "category": "civic",
+      "categoryName": "公共建築",
+      "coordinates": [
+        113.540291,
+        22.194023
+      ],
+      "summary": "澳門歷史城區的核心廣場，葡式波浪碎石地面的起點。",
+      "photoCount": 5,
+      "cover": "photos/real/thumb/senado-square-e3ed46a17cb4.webp",
+      "gallery": [
+        {
+          "file": "photos/real/senado-square-e3ed46a17cb4.webp",
+          "thumb": "photos/real/thumb/senado-square-e3ed46a17cb4.webp",
+          "taken": "2008-12-23",
+          "credit": "Kounosu · CC BY-SA 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ASenado_Square_in_Macau01.jpg",
+          "source": "wikimedia_commons",
+          "author": "Kounosu",
+          "license": "CC BY-SA 3.0"
+        },
+        {
+          "file": "photos/real/senado-square-0bdcdd63814e.webp",
+          "thumb": "photos/real/thumb/senado-square-0bdcdd63814e.webp",
+          "taken": null,
+          "credit": "No machine-readable author provided. KAMSAND23 assumed (based on copyright claims). · CC BY-SA 2.5 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ASenado_Square_YF_ST.jpg",
+          "source": "wikimedia_commons",
+          "author": "No machine-readable author provided. KAMSAND23 assumed (based on copyright claims).",
+          "license": "CC BY-SA 2.5"
+        },
+        {
+          "file": "photos/real/senado-square-852bb0a487b8.webp",
+          "thumb": "photos/real/thumb/senado-square-852bb0a487b8.webp",
+          "taken": null,
+          "credit": "The Red Hat of Pat Ferrick at English Wikipedia · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacau_Senate_Square_at_Night.jpg",
+          "source": "wikimedia_commons",
+          "author": "The Red Hat of Pat Ferrick at English Wikipedia",
+          "license": "Public domain"
+        }
+      ],
+      "mapPath": "./?spot=senado-square",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "st-dominic-church",
+      "spotId": "st-dominic",
+      "memoryId": "MM-0026",
+      "name": "玫瑰堂（聖多明我教堂）",
+      "category": "church",
+      "categoryName": "天主教教堂",
+      "coordinates": [
+        113.54037,
+        22.194838
+      ],
+      "summary": "建於 1587 年，巴洛克式教堂，內設天主教聖物寶庫。",
+      "photoCount": 13,
+      "cover": "photos/real/thumb/st-dominic-church-1fff768d327b.webp",
+      "gallery": [
+        {
+          "file": "photos/real/st-dominic-church-1fff768d327b.webp",
+          "thumb": "photos/real/thumb/st-dominic-church-1fff768d327b.webp",
+          "taken": "2007-11-10",
+          "credit": "yeowatzup · CC BY 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ASt_Dominic_Church%2C_Macau_%282052755676%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "yeowatzup",
+          "license": "CC BY 2.0"
+        },
+        {
+          "file": "photos/real/st-dominic-church-15bf68e2d018.webp",
+          "thumb": "photos/real/thumb/st-dominic-church-15bf68e2d018.webp",
+          "taken": "2012-03-11",
+          "credit": "Michal Osmenda from Brussels, Belgium · CC BY 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ASt._Dominics_Church%2C_Macau_%286993785827%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "Michal Osmenda from Brussels, Belgium",
+          "license": "CC BY 2.0"
+        },
+        {
+          "file": "photos/real/st-dominic-church-c781c2ffa5d0.webp",
+          "thumb": "photos/real/thumb/st-dominic-church-c781c2ffa5d0.webp",
+          "taken": "2007-11-10",
+          "credit": "yeowatzup · CC BY 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ASt_Dominic_Church%2C_Macau_%282051968047%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "yeowatzup",
+          "license": "CC BY 2.0"
+        },
+        {
+          "file": "photos/real/st-dominic-church-53f1004ccf64.webp",
+          "thumb": "photos/real/thumb/st-dominic-church-53f1004ccf64.webp",
+          "taken": "2010-11-06",
+          "credit": "deror_avi · CC BY-SA 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacau_IMG_5365.JPG",
+          "source": "wikimedia_commons",
+          "author": "deror_avi",
+          "license": "CC BY-SA 3.0"
+        }
+      ],
+      "mapPath": "./?spot=st-dominic",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "st-joseph-seminary",
+      "spotId": "st-joseph-seminary",
+      "memoryId": "MM-0027",
+      "name": "聖若瑟修院及聖堂",
+      "category": "church",
+      "categoryName": "天主教教堂",
+      "coordinates": [
+        113.5375,
+        22.191944
+      ],
+      "summary": "俗稱「三巴仔」，18 世紀遠東培育傳教士的重要基地。",
+      "photoCount": 10,
+      "cover": "photos/real/thumb/st-joseph-seminary-053cd4f7e36d.webp",
+      "gallery": [
+        {
+          "file": "photos/real/st-joseph-seminary-053cd4f7e36d.webp",
+          "thumb": "photos/real/thumb/st-joseph-seminary-053cd4f7e36d.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/st-joseph-seminary-0a4ee096f399.webp",
+          "thumb": "photos/real/thumb/st-joseph-seminary-0a4ee096f399.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/st-joseph-seminary-3cc831f0b9da.webp",
+          "thumb": "photos/real/thumb/st-joseph-seminary-3cc831f0b9da.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=st-joseph-seminary",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "st-lawrence-church",
+      "spotId": "st-lawrence",
+      "memoryId": "MM-0028",
+      "name": "聖老楞佐堂",
+      "category": "church",
+      "categoryName": "天主教教堂",
+      "coordinates": [
+        113.536765,
+        22.190665
+      ],
+      "summary": "澳門三大古教堂之一，俗稱「風順堂」。",
+      "photoCount": 4,
+      "cover": "photos/real/thumb/st-lawrence-church-193eedf1f00e.webp",
+      "gallery": [
+        {
+          "file": "photos/real/st-lawrence-church-193eedf1f00e.webp",
+          "thumb": "photos/real/thumb/st-lawrence-church-193eedf1f00e.webp",
+          "taken": "2014-11-15",
+          "credit": "Abasaa · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ASt._Lawrence%27s_Church_%28Macau%29_01.JPG",
+          "source": "wikimedia_commons",
+          "author": "Abasaa",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/st-lawrence-church-a072b6abd9b1.webp",
+          "thumb": "photos/real/thumb/st-lawrence-church-a072b6abd9b1.webp",
+          "taken": "2019-11-14",
+          "credit": "Kismoah HGOA2 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMC_%E6%BE%B3%E9%96%80_Macau_%E6%BE%B3%E9%96%80%E5%8D%8A%E5%B3%B6_Macao_Peninsula_%E9%A2%A8%E9%A0%86%E5%A0%82%E5%8D%80_S%C3%A3o_Louren%C3%A7o_St._Lawrence%27s_Church_%E8%81%96%E8%80%81%E6%A5%9E%E4%BD%90%E5%A0%82_Igreja_de_S%C3%A3o_Louren%C3%A7o_November_2019_SS2_03.jpg",
+          "source": "wikimedia_commons",
+          "author": "Kismoah HGOA2",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/st-lawrence-church-141bbe9350d8.webp",
+          "thumb": "photos/real/thumb/st-lawrence-church-141bbe9350d8.webp",
+          "taken": "2019-11-14",
+          "credit": "Kismoah HGOA2 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMC_%E6%BE%B3%E9%96%80_Macau_%E6%BE%B3%E9%96%80%E5%8D%8A%E5%B3%B6_Macao_Peninsula_%E9%A2%A8%E9%A0%86%E5%A0%82%E5%8D%80_S%C3%A3o_Louren%C3%A7o_St._Lawrence%27s_Church_%E8%81%96%E8%80%81%E6%A5%9E%E4%BD%90%E5%A0%82_Igreja_de_S%C3%A3o_Louren%C3%A7o_November_2019_SS2_05.jpg",
+          "source": "wikimedia_commons",
+          "author": "Kismoah HGOA2",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/st-lawrence-church-4c8c53478a13.webp",
+          "thumb": "photos/real/thumb/st-lawrence-church-4c8c53478a13.webp",
+          "taken": "2019-11-14",
+          "credit": "Kismoah HGOA2 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMC_%E6%BE%B3%E9%96%80_Macau_%E6%BE%B3%E9%96%80%E5%8D%8A%E5%B3%B6_Macao_Peninsula_%E9%A2%A8%E9%A0%86%E5%A0%82%E5%8D%80_S%C3%A3o_Louren%C3%A7o_St._Lawrence%27s_Church_%E8%81%96%E8%80%81%E6%A5%9E%E4%BD%90%E5%A0%82_Igreja_de_S%C3%A3o_Louren%C3%A7o_November_2019_SS2_13.jpg",
+          "source": "wikimedia_commons",
+          "author": "Kismoah HGOA2",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "mapPath": "./?spot=st-lawrence",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "taipa-houses",
+      "spotId": "taipa-houses",
+      "memoryId": "MM-0029",
+      "name": "龍環葡韻住宅式博物館",
+      "category": "portuguese",
+      "categoryName": "葡式殖民建築",
+      "coordinates": [
+        113.559569,
+        22.153778
+      ],
+      "summary": "五幢 1921 年落成的葡式住宅，展示土生葡人生活。",
+      "photoCount": 25,
+      "cover": "photos/real/thumb/taipa-houses-363353f7c75e.webp",
+      "gallery": [
+        {
+          "file": "photos/real/taipa-houses-363353f7c75e.webp",
+          "thumb": "photos/real/thumb/taipa-houses-363353f7c75e.webp",
+          "taken": "2011-12-10",
+          "credit": "Abasaa · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ATaipa_Houses_Museum_02.JPG",
+          "source": "wikimedia_commons",
+          "author": "Abasaa",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/taipa-houses-f56a78fabf1f.webp",
+          "thumb": "photos/real/thumb/taipa-houses-f56a78fabf1f.webp",
+          "taken": "2023-08-22",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ATaipa_Houses_Museum_22-08-2023%282%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        },
+        {
+          "file": "photos/real/taipa-houses-fee6ecf59f2b.webp",
+          "thumb": "photos/real/thumb/taipa-houses-fee6ecf59f2b.webp",
+          "taken": "2011-12-10",
+          "credit": "Abasaa · Public domain · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ATaipa_Houses_Museum_01.JPG",
+          "source": "wikimedia_commons",
+          "author": "Abasaa",
+          "license": "Public domain"
+        },
+        {
+          "file": "photos/real/taipa-houses-2b3a75eb0e5c.webp",
+          "thumb": "photos/real/thumb/taipa-houses-2b3a75eb0e5c.webp",
+          "taken": "2023-01-30",
+          "credit": "LN9267 · CC BY-SA 4.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3ATaipa_Houses_Museum_30-01-2023%281%29.jpg",
+          "source": "wikimedia_commons",
+          "author": "LN9267",
+          "license": "CC BY-SA 4.0"
+        }
+      ],
+      "mapPath": "./?spot=taipa-houses",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "the-venetian",
+      "spotId": "venetian",
+      "memoryId": "MM-0030",
+      "name": "澳門威尼斯人",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.559655,
+        22.149291
+      ],
+      "summary": "2007 年開幕的巨型綜合度假村，設有人工運河與貢多拉。",
+      "photoCount": 13,
+      "cover": "photos/real/thumb/the-venetian-386f37140493.webp",
+      "gallery": [
+        {
+          "file": "photos/real/the-venetian-386f37140493.webp",
+          "thumb": "photos/real/thumb/the-venetian-386f37140493.webp",
+          "taken": "2007-11-29",
+          "credit": "Jimmy Yao (vixyao) on Flickr · CC BY-SA 2.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AVenetian_Macau.jpg",
+          "source": "wikimedia_commons",
+          "author": "Jimmy Yao (vixyao) on Flickr",
+          "license": "CC BY-SA 2.0"
+        },
+        {
+          "file": "photos/real/the-venetian-f0d4f9981152.webp",
+          "thumb": "photos/real/thumb/the-venetian-f0d4f9981152.webp",
+          "taken": "2007-12-23",
+          "credit": "MacVT · CC BY-SA 3.0 · Wikimedia Commons",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File%3AMacau_Venetian_Macao_McDonalds_Shop_a.jpg",
+          "source": "wikimedia_commons",
+          "author": "MacVT",
+          "license": "CC BY-SA 3.0"
+        },
+        {
+          "file": "photos/real/the-venetian-2596027ab414.webp",
+          "thumb": "photos/real/thumb/the-venetian-2596027ab414.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=venetian",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "wynn-macau",
+      "spotId": "wynn-macau",
+      "memoryId": "MM-0031",
+      "name": "永利澳門",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.545936,
+        22.188257
+      ],
+      "summary": "2006 年開幕，門前設有音樂噴泉與表演湖。",
+      "photoCount": 8,
+      "cover": "photos/real/thumb/wynn-macau-1349324a26ca.webp",
+      "gallery": [
+        {
+          "file": "photos/real/wynn-macau-1349324a26ca.webp",
+          "thumb": "photos/real/thumb/wynn-macau-1349324a26ca.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/wynn-macau-17f4cfcfb961.webp",
+          "thumb": "photos/real/thumb/wynn-macau-17f4cfcfb961.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/wynn-macau-2e3452d93376.webp",
+          "thumb": "photos/real/thumb/wynn-macau-2e3452d93376.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=wynn-macau",
+      "recognizePath": "./recognize.html"
+    },
+    {
+      "id": "wynn-palace",
+      "spotId": "wynn-palace",
+      "memoryId": "MM-0032",
+      "name": "永利皇宮",
+      "category": "casino_hotel",
+      "categoryName": "酒店與娛樂場",
+      "coordinates": [
+        113.57162,
+        22.148326
+      ],
+      "summary": "2016 年開幕，設有觀光纜車與表演湖。",
+      "photoCount": 8,
+      "cover": "photos/real/thumb/wynn-palace-24a05befb073.webp",
+      "gallery": [
+        {
+          "file": "photos/real/wynn-palace-24a05befb073.webp",
+          "thumb": "photos/real/thumb/wynn-palace-24a05befb073.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/wynn-palace-28220658bed3.webp",
+          "thumb": "photos/real/thumb/wynn-palace-28220658bed3.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        },
+        {
+          "file": "photos/real/wynn-palace-33c7a1aec2d3.webp",
+          "thumb": "photos/real/thumb/wynn-palace-33c7a1aec2d3.webp",
+          "taken": null,
+          "credit": "專案提供的建築實拍照片",
+          "sourcePage": "",
+          "source": "user-provided",
+          "author": "",
+          "license": ""
+        }
+      ],
+      "mapPath": "./?spot=wynn-palace",
+      "recognizePath": "./recognize.html"
+    }
+  ]
+}

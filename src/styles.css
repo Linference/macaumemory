@@ -396,3 +396,10 @@ canvas:focus { outline: none; }
 .lb-id { font-size: 11px; letter-spacing: .16em; color: var(--gold); margin-bottom: 4px; }
 .lb-strip img { width: 80px; height: 60px; }
 .lb-strip img.on { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(216,180,90,.4); }
+.lb-strip { gap: 8px; padding: 3px 2px 9px; }
+.memory-shot { flex: 0 0 92px; padding: 4px; border: 1px solid var(--line-soft); border-radius: 8px; background: rgba(255,255,255,.03); color: var(--ink-dim); cursor: pointer; }
+.lb-strip .memory-shot img { width: 82px; height: 64px; object-fit: cover; margin: 0; border: 0; border-radius: 5px; }
+.memory-shot span { display: block; font-size: 10px; margin-top: 5px; white-space: nowrap; }
+.memory-shot.on, .memory-shot:hover, .memory-shot:focus-visible { border-color: var(--gold); color: var(--gold); outline-offset: 2px; }
+.memory-current { font-size: 11px; color: var(--ink-dim); margin-bottom: 10px; }
+.lb-info dd a { color: var(--gold); }

@@ -36,17 +36,18 @@ export const dot = (a, b) => {
   return s;
 };
 
-export async function createEncoder(ort, modelUrl, { size = DINO_SIZE } = {}) {
+export async function createEncoder(ort, modelUrl, { size = DINO_SIZE, fingerprint = false } = {}) {
   const t0 = performance.now();
   const res = await fetch(modelUrl);
   if (!res.ok) throw new Error(`模型下載失敗 HTTP ${res.status}：${modelUrl}`);
   const buf = await res.arrayBuffer();
+  const modelSha256 = fingerprint ? [...new Uint8Array(await crypto.subtle.digest('SHA-256', buf))].map(n => n.toString(16).padStart(2, '0')).join('') : null;
   const session = await ort.InferenceSession.create(buf, { executionProviders: ["wasm"] });
   const inName = session.inputNames[0];
   const outName = session.outputNames[0];
   const dim = Number(session.outputMetadata?.[outName]?.dimensions?.at(-1)) || 0;
   return {
-    session, inName, outName, size, dim,
+    session, inName, outName, size, dim, modelSha256,
     loadMs: performance.now() - t0,
     bytes: buf.byteLength,
 

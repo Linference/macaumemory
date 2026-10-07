@@ -32,7 +32,7 @@
 import { bboxForRadius, haversineM, round5 } from "./geo-math.js";
 
 /** 這個檔案裡唯一的 SQL 來源：schema 變更時只要改這裡 ＋ 提高 SCHEMA_VERSION */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 export const SCHEMA_SQL = `
 CREATE TABLE IF NOT EXISTS meta (
@@ -69,7 +69,11 @@ CREATE TABLE IF NOT EXISTS buildings (
   dedup_sim         REAL,                        -- 存檔時的最高影像相似度
   dedup_compared    INTEGER,                     -- 比對了幾棟
   encoder           TEXT,
-  created_at        TEXT    NOT NULL
+  created_at        TEXT    NOT NULL,
+  location_role     TEXT NOT NULL DEFAULT 'legacy-unverified',
+  footprint_id      TEXT,
+  capture_location  TEXT,
+  match_comparison  TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_buildings_type       ON buildings(type);
@@ -81,6 +85,20 @@ CREATE INDEX IF NOT EXISTS idx_buildings_created    ON buildings(created_at);
 -- 所以它只當「粗篩」，精確距離用 buildings.lat/lng 算 haversine 再過濾。
 CREATE VIRTUAL TABLE IF NOT EXISTS buildings_rtree USING rtree(id, minlat, maxlat, minlng, maxlng);
 `;
+
+/** v1 → v2 加欄位，保留舊座標、編號和 R-Tree；舊座標不自動宣稱為已確認建築位置。 */
+export function migrateLocationSchema(db) {
+  const columns = new Set(db.selectObjects("PRAGMA table_info(buildings)").map((c) => c.name));
+  const additions = {
+    location_role: "TEXT NOT NULL DEFAULT 'legacy-unverified'",
+    footprint_id: "TEXT", capture_location: "TEXT", match_comparison: "TEXT",
+  };
+  db.transaction(() => {
+    for (const [column, type] of Object.entries(additions)) {
+      if (!columns.has(column)) db.exec(`ALTER TABLE buildings ADD COLUMN ${column} ${type}`);
+    }
+  });
+}
 
 // ---------------------------------------------------------------------------
 // 持久化 provider：把整個 DB 匯出成位元組寫進裝置，下次開啟再還原
@@ -559,6 +577,8 @@ export async function openDb({ persistence = null, prefer = null, migrate = true
 
     // ③ schema（IF NOT EXISTS：還原回來的庫已經有表，這裡是全新的庫才真的建）
     state.db.exec(SCHEMA_SQL);
+    migrateLocationSchema(state.db);
+    state.schemaMismatch = null;
     state.db.exec({
       sql: "INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
       bind: ["schema_version", String(SCHEMA_VERSION)],
@@ -678,8 +698,8 @@ export function insertBuilding(rec) {
             (code, type, name, note, lat, lng, accuracy_m, sample_count, geo_source,
              geo_best_accuracy_m, geo_spread_m, geo_stop_reason, geo_note, captured_at, status, photo_name,
              detector_score, detector_cls, detector_source, detector_box, dedup_sim, dedup_compared,
-             encoder, created_at)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+             encoder, created_at, location_role, footprint_id, capture_location, match_comparison)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
           bind: [
             code, rec.type, rec.name ?? null, rec.note ?? null,
             rec.lat ?? null, rec.lng ?? null, rec.accuracyM ?? null, rec.sampleCount ?? null, rec.geoSource ?? "none",
@@ -688,6 +708,9 @@ export function insertBuilding(rec) {
             rec.detectorScore ?? null, rec.detectorCls ?? null, rec.detectorSource ?? null,
             rec.detectorBox ? JSON.stringify(rec.detectorBox) : null,
             rec.dedupSim ?? null, rec.dedupCompared ?? null, rec.encoder ?? null, created,
+            rec.locationRole ?? "legacy-unverified", rec.footprintId ?? null,
+            rec.captureLocation ? JSON.stringify(rec.captureLocation) : null,
+            rec.matchComparison ? JSON.stringify(rec.matchComparison) : null,
           ],
         });
         id = Number(selectValue("SELECT last_insert_rowid()", [], null));
@@ -800,7 +823,12 @@ const toRecord = (r) => ({
     stopReason: r.geo_stop_reason,
     note: r.geo_note,
     capturedAt: r.captured_at,
+    role: r.location_role,
+    confirmed: r.location_role === "building-confirmed",
+    footprintId: r.footprint_id,
   },
+  captureLocation: r.capture_location ? JSON.parse(r.capture_location) : null,
+  matchComparison: r.match_comparison ? JSON.parse(r.match_comparison) : null,
   detection: { source: r.detector_source, cls: r.detector_cls, score: r.detector_score, box: r.detector_box ? JSON.parse(r.detector_box) : null },
   dedup: { sim: r.dedup_sim, compared: r.dedup_compared },
   photo: { name: r.photo_name },
@@ -1099,6 +1127,10 @@ export function mirrorToBuilding(rec) {
     geoStopReason: loc.stopReason ?? null,
     geoNote: loc.gpsNote ?? loc.unavailableReason ?? null,
     capturedAt: loc.capturedAt ?? null,
+    locationRole: loc.confirmed === true ? "building-confirmed" : loc.role === "building" ? "building-unlocated" : "legacy-unverified",
+    footprintId: loc.footprintId ?? null,
+    captureLocation: rec.photo?.captureLocation ?? rec.captureLocation ?? null,
+    matchComparison: rec.dedup?.comparison ?? rec.matchComparison ?? null,
     status: rec.status ?? "pending",
     photoName: rec.photo?.name ?? null,
     detectorScore: num(det.score), detectorCls: det.cls ?? b.cls ?? null,

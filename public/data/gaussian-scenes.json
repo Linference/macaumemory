@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "scenes": [
+    {
+      "id": "ruins-st-paul",
+      "title": "大三巴牌坊 · 實景記憶",
+      "description": "使用航拍多視角影像重建，旋轉或縮放探索建築與周邊街巷。",
+      "file": "gaussian/stpaul/scene.ply",
+      "splatCount": 657492,
+      "fileSize": 155169663,
+      "shBands": 3,
+      "camera": {
+        "position": [
+          3.624704761355136,
+          -2.179743876653566,
+          -0.645427541872155
+        ],
+        "target": [
+          2.1041766088060925,
+          -2.2838258068920654,
+          3.2199981710038834
+        ],
+        "up": [
+          0.15790206798134043,
+          0.9871909519643544,
+          -0.02282457638003126
+        ],
+        "fov": 52
+      },
+      "source": "使用者提供的大三巴航拍素材；MacauSplat / COLMAP / Brush 實際訓練輸出",
+      "storage": "Original PLY bytes; all Gaussian points and original SH coefficients retained. No model conversion or downsampling.",
+      "sourceCamera": "frame_000144.jpg"
+    }
+  ]
+}

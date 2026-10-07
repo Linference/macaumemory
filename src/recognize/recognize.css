@@ -19,6 +19,27 @@ body.rc button { touch-action: manipulation; }
 .rc-geo-match label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; color: var(--ink); }
 .rc-geo-match input { margin-top: 5px; accent-color: var(--gold); flex: none; }
 .rc-geo-match p { color: var(--ink-dim); font-size: 12px; line-height: 1.7; margin: 6px 0 0; }
+.rc-location-comparison, .rc-location-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+.rc-location-comparison > div, .rc-location-pair > div { display: grid; gap: 6px; padding: 13px; background: var(--panel-2); border: 1px solid var(--line-soft); border-radius: 10px; min-width: 0; }
+.rc-location-comparison span, .rc-location-pair span, .rc-location-comparison small, .rc-location-comparison p, .rc-location-help { font-size: 12px; color: var(--ink-dim); }
+.rc-location-comparison strong, .rc-location-pair strong { overflow-wrap: anywhere; font-size: 14px; font-weight: 500; }
+.rc-location-comparison p { grid-column: 1 / -1; margin: 0; }
+.rc-location-pair .capture { border-left: 3px solid var(--accent); }
+.rc-location-pair .building { border-left: 3px solid var(--gold); }
+.rc-location-help { margin: 0 0 10px; line-height: 1.8; }
+.rc-location-pair strong { font-size: 12px; }
+@media (max-width: 600px) { .rc-location-comparison, .rc-location-pair { grid-template-columns: 1fr; } .rc-mmap-tag { max-width: calc(100% - 16px); } }
+.rc-multi { border-top: 1px solid var(--line); margin-top: 22px; padding-top: 22px; }
+.mv-consent { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: var(--ink-dim); }
+.mv-consent input { accent-color: var(--gold); margin-top: 5px; }
+.mv-shot { display: flex; gap: 10px; align-items: center; margin: 9px 0; font-size: 12px; }
+.mv-shot img { width: 58px; height: 46px; object-fit: cover; border-radius: 7px; }
+.mv-shot span { flex: 1; overflow-wrap: anywhere; }
+.mv-summary { display: grid; gap: 10px; margin-top: 16px; }
+.mv-summary > div { display: grid; gap: 5px; padding: 13px; border-radius: 10px; background: var(--panel-2); }
+.mv-summary span, .mv-summary small { color: var(--ink-dim); font-size: 12px; }
+.rc-multi .rc-actions { flex-wrap: wrap; }
+.rc-multi .rc-actions .btn, .rc-multi .rc-actions .btn.gold { flex: 1 1 130px; white-space: nowrap; }
 .rc-wrap { max-width: 1280px; padding: 0 38px 24px; margin: auto; }
 
 /* 導覽與城市敘事 */
@@ -426,3 +447,14 @@ body.rc :is(button, a, input, select, textarea, summary, [role=button]):focus-vi
   .dg-row { display: block; }.dg-k { width: auto; margin-bottom: 4px; }.rc-page-footer { font-size: 9px; }.rc-page-footer i { padding: 0 3px; }.rc-overlay-card { padding: 28px; }
 }
 @media (prefers-reduced-motion: reduce) { html:has(body.rc) { scroll-behavior: auto; } body.rc *, body.rc *::before, body.rc *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
+
+/* Camera uses the atlas navy/gold palette on mobile and desktop. */
+.rc-camera-dialog { color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 20px; width: min(640px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; }
+.rc-camera-dialog::backdrop { background: rgba(4, 12, 20, .8); }
+.rc-camera-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.rc-camera-head h2 { margin: 0; font-size: 20px; }
+.rc-camera-dialog video { display: block; width: 100%; max-height: 50dvh; aspect-ratio: 4 / 3; object-fit: contain; background: #050c12; border-radius: 12px; }
+.rc-camera-dialog p { color: var(--ink-dim); font-size: 13px; line-height: 1.7; }
+.rc-camera-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.rc-camera-buttons .btn { min-height: 44px; }
+@media (max-width: 480px) { .rc-camera-buttons .btn { width: 100%; } }

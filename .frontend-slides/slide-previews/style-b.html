@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>人工智能发展史</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@500;700;800;900&family=Chakra+Petch:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   =========================================== */
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); }
+.deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg, #fff); }
+.slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg, #fff); }
+.slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+img, video, canvas, svg { max-width: 100%; max-height: 100%; }
+.deck-controls { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 1000; }
+@media print {
+  html, body { width: 1920px; height: auto; overflow: visible; background: #fff; }
+  .deck-viewport { position: static; overflow: visible; background: #fff; }
+  .deck-stage { position: static; width: auto; height: auto; transform: none !important; background: none; }
+  .slide { position: relative; display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; width: 1920px; height: 1080px; break-after: page; page-break-after: always; }
+  .slide:last-child { break-after: auto; page-break-after: auto; }
+  .deck-controls { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+}
+
+/* ===========================================
+   STYLE B — 8-BIT ORBIT (bold template)
+   Retro-futuristic pixel-art. The 4px unit governs everything.
+   Naval void, three neons, hard offset shadows, CRT scanlines.
+   =========================================== */
+:root {
+  --stage-bg: #0A0E27;
+  --slide-bg: #0A0E27;
+  --void:   #0A0E27;
+  --navy:   #0F1B3D;
+  --cyan:   #5EDCF4;
+  --pink:   #F0A6CA;
+  --yellow: #F4D03F;
+  --lav:    #E2D5F2;
+  --white:  #FFFFFF;
+  --u: 4px; /* the pixel unit */
+}
+
+.slide {
+  background: var(--void);
+  color: var(--lav);
+  font-family: "Chakra Petch", system-ui, sans-serif;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* --- animated starfield --- */
+.stars, .stars2 {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, #fff, transparent),
+    radial-gradient(1px 1px at 28% 68%, #5EDCF4, transparent),
+    radial-gradient(1px 1px at 44% 14%, #fff, transparent),
+    radial-gradient(2px 2px at 61% 82%, #F0A6CA, transparent),
+    radial-gradient(1px 1px at 76% 34%, #fff, transparent),
+    radial-gradient(1px 1px at 88% 58%, #F4D03F, transparent),
+    radial-gradient(1px 1px at 52% 46%, #fff, transparent),
+    radial-gradient(1px 1px at 8% 88%, #5EDCF4, transparent);
+  background-size: 100% 100%;
+  opacity: .7;
+}
+.stars2 { background-position: 60px 90px; animation: drift 22s linear infinite; opacity: .35; }
+@keyframes drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-60px,-90px,0); } }
+
+/* --- CRT scanlines + grain + vignette --- */
+.crt {
+  position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  background:
+    repeating-linear-gradient(180deg, rgba(255,255,255,0) 0 3px, rgba(0,0,0,.32) 3px 4px),
+    radial-gradient(ellipse 120% 100% at 50% 45%, transparent 42%, rgba(4,6,20,.9) 100%);
+}
+.grain {
+  position: absolute; inset: 0; z-index: 31; pointer-events: none; opacity: .16;
+  background-image:
+    radial-gradient(1px 1px at 17% 41%, #fff, transparent),
+    radial-gradient(1px 1px at 53% 27%, #fff, transparent),
+    radial-gradient(1px 1px at 71% 73%, #fff, transparent),
+    radial-gradient(1px 1px at 33% 91%, #fff, transparent),
+    radial-gradient(1px 1px at 91% 11%, #fff, transparent);
+  background-size: 140px 140px;
+  animation: grain .7s steps(3) infinite;
+}
+@keyframes grain { 0%{background-position:0 0} 33%{background-position:-30px 20px} 66%{background-position:20px -30px} 100%{background-position:0 0} }
+
+.wrap { position: relative; z-index: 10; padding: 60px 80px 56px; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+
+/* --- HUD header --- */
+.hud { display: flex; align-items: center; gap: 20px; font-family: "Space Mono", monospace; font-size: 15px; letter-spacing: .12em; text-transform: uppercase; }
+.hud .pill { background: var(--cyan); color: var(--void); padding: 5px 14px; font-weight: 700; box-shadow: 4px 4px 0 var(--pink); }
+.hud .line { flex: 1; height: 4px; background: repeating-linear-gradient(90deg, var(--navy) 0 12px, transparent 12px 20px); }
+.hud .lv { color: var(--yellow); font-weight: 700; }
+
+/* --- title block --- */
+.title { margin-top: 34px; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
+h1 {
+  font-family: "Tektur", "Chakra Petch", sans-serif;
+  font-weight: 900; font-size: 96px; line-height: 1; margin: 0;
+  color: var(--white); letter-spacing: 0;
+  text-shadow: 6px 6px 0 var(--navy), 12px 12px 0 rgba(94,220,244,.30);
+}
+h1 .accent { color: var(--yellow); text-shadow: 6px 6px 0 var(--navy), 12px 12px 0 rgba(240,166,202,.35); }
+.sub { margin: 18px 0 0; font-size: 22px; font-weight: 400; color: var(--lav); letter-spacing: 0; line-height: 1.7; max-width: 900px; }
+.sub .k { color: var(--cyan); font-weight: 600; }
+.badge {
+  font-family: "Space Mono", monospace; text-align: right; font-size: 14px; line-height: 2;
+  color: var(--pink); letter-spacing: .1em; text-transform: uppercase;
+  border: 2px solid var(--pink); padding: 14px 18px; box-shadow: 8px 8px 0 var(--navy);
+}
+
+/* --- the timeline rail --- */
+.rail { margin-top: auto; position: relative; padding-top: 108px; }
+.axis { position: absolute; top: 96px; left: 0; right: 0; height: 4px; background: var(--navy); }
+/* let the axis carry the deck's centre of gravity instead of pooling dead air above it */
+.deck-stage .slide .rail { padding-top: 150px; }
+.deck-stage .slide .axis { top: 138px; }
+.deck-stage .slide .stats { margin-top: auto; }
+.deck-stage .slide .title { margin-top: auto; }
+.axis::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--yellow) 55%, var(--pink) 100%);
+  transform-origin: left; transform: scaleX(0);
+  animation: grow 2.1s cubic-bezier(.2,.9,.15,1) .35s forwards;
+}
+@keyframes grow { to { transform: scaleX(1); } }
+
+.nodes { display: grid; grid-template-columns: repeat(8, 1fr); gap: 0; position: relative; }
+.node { position: relative; padding: 30px 16px 0 0; text-align: left; animation: rise .55s both; }
+.node:nth-child(1){animation-delay:.55s} .node:nth-child(2){animation-delay:.70s}
+.node:nth-child(3){animation-delay:.85s} .node:nth-child(4){animation-delay:1.00s}
+.node:nth-child(5){animation-delay:1.15s} .node:nth-child(6){animation-delay:1.30s}
+.node:nth-child(7){animation-delay:1.45s} .node:nth-child(8){animation-delay:1.60s}
+@keyframes rise { from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:none} }
+
+.node .pin {
+  position: absolute; top: -10px; left: 0; width: 24px; height: 24px;
+  background: var(--void); border: 4px solid var(--cyan);
+}
+.node.c2 .pin { border-color: var(--yellow); }
+.node.c3 .pin { border-color: var(--pink); }
+.node.now .pin { background: var(--yellow); border-color: var(--yellow); box-shadow: 4px 4px 0 var(--pink); }
+.node .yr { font-family: "Tektur", sans-serif; font-weight: 800; font-size: 30px; color: var(--white); letter-spacing: 0; }
+.node.now .yr { color: var(--yellow); }
+.node .ev { margin-top: 8px; font-size: 15.5px; line-height: 1.62; color: var(--lav); }
+.node .ev b { color: var(--cyan); font-weight: 600; }
+.node .tag { display: inline-block; margin-top: 10px; font-family: "Space Mono", monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--void); background: var(--lav); padding: 2px 7px; }
+.node.winter .tag { background: var(--pink); }
+.node.now .tag { background: var(--yellow); }
+
+/* --- stat strip --- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px; }
+.stat { background: var(--navy); border: 2px solid var(--navy); padding: 18px 20px; box-shadow: 8px 8px 0 rgba(0,0,0,.5); }
+.stat:nth-child(1){ border-color: var(--cyan); } .stat:nth-child(2){ border-color: var(--pink); }
+.stat:nth-child(3){ border-color: var(--yellow); } .stat:nth-child(4){ border-color: var(--lav); }
+.stat .n { font-family: "Tektur", sans-serif; font-weight: 900; font-size: 42px; line-height: 1; color: var(--white); }
+.stat:nth-child(1) .n { color: var(--cyan); } .stat:nth-child(2) .n { color: var(--pink); }
+.stat:nth-child(3) .n { color: var(--yellow); } .stat:nth-child(4) .n { color: var(--lav); }
+.stat .l { margin-top: 8px; font-family: "Space Mono", monospace; font-size: 12.5px; letter-spacing: .08em; color: var(--lav); }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+  <div class="deck-stage">
+    <section class="slide active">
+      <div class="stars"></div>
+      <div class="stars2"></div>
+
+      <div class="wrap">
+
+        <div class="hud">
+          <span class="pill">Machina</span>
+          <span class="line"></span>
+          <span class="lv">LV.01 — 起源</span>
+          <span>1943 → 2022</span>
+        </div>
+
+        <div class="title">
+          <div>
+            <h1>人工智能<span class="accent">发展史</span></h1>
+            <p class="sub">从<span class="k">一个神经元的数学模型</span>，到<span class="k">会说话的一千亿参数</span>——八十年的两次寒冬与三次复兴。</p>
+          </div>
+          <div class="badge">Season 01<br>12 Milestones<br>2 Winters</div>
+        </div>
+
+        <div class="rail">
+          <div class="axis"></div>
+          <div class="nodes">
+            <div class="node">
+              <span class="pin"></span><div class="yr">1943</div>
+              <div class="ev">McCulloch 与 Pitts 提出<b>人工神经元</b>的数学形式</div>
+              <span class="tag">origin</span>
+            </div>
+            <div class="node c2">
+              <span class="pin"></span><div class="yr">1950</div>
+              <div class="ev">图灵发表《计算机器与智能》，提出<b>图灵测试</b></div>
+              <span class="tag">theory</span>
+            </div>
+            <div class="node c3">
+              <span class="pin"></span><div class="yr">1956</div>
+              <div class="ev">达特茅斯会议——<b>「人工智能」正式命名</b></div>
+              <span class="tag">birth</span>
+            </div>
+            <div class="node winter">
+              <span class="pin"></span><div class="yr">1969</div>
+              <div class="ev">感知机局限被指出，<b>第一次寒冬</b>降临</div>
+              <span class="tag">winter i</span>
+            </div>
+            <div class="node winter">
+              <span class="pin"></span><div class="yr">1987</div>
+              <div class="ev">专家系统成本失控，<b>第二次寒冬</b></div>
+              <span class="tag">winter ii</span>
+            </div>
+            <div class="node c2">
+              <span class="pin"></span><div class="yr">2012</div>
+              <div class="ev"><b>AlexNet</b> 夺冠 ImageNet，深度学习爆发</div>
+              <span class="tag">gpu era</span>
+            </div>
+            <div class="node c3">
+              <span class="pin"></span><div class="yr">2017</div>
+              <div class="ev"><b>Transformer</b> 架构问世，注意力取代循环</div>
+              <span class="tag">arch</span>
+            </div>
+            <div class="node now">
+              <span class="pin"></span><div class="yr">2022</div>
+              <div class="ev"><b>ChatGPT</b> 发布，机器走进日常语言</div>
+              <span class="tag">now</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="n">79</div><div class="l">年的跨度</div></div>
+          <div class="stat"><div class="n">02</div><div class="l">次行业寒冬</div></div>
+          <div class="stat"><div class="n">1750亿</div><div class="l">GPT-3 参数量</div></div>
+          <div class="stat"><div class="n">3</div><div class="l">要素：算力 · 数据 · 算法</div></div>
+        </div>
+
+      </div>
+
+      <div class="crt"></div>
+      <div class="grain"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+/* Scale the fixed 1920x1080 stage to fit the viewport, uniformly. */
+(function () {
+  var stage = document.querySelector('.deck-stage');
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var x = (window.innerWidth - 1920 * s) / 2;
+    var y = (window.innerHeight - 1080 * s) / 2;
+    stage.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + s + ')';
+  }
+  fit();
+  window.addEventListener('resize', fit);
+})();
+</script>
+</body>
+</html>
