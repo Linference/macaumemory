@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "澳門記憶 · 3D 立體澳門地圖（OSM + 開放海拔 DEM + 博物館文物 3D 模型）",
+  "description": "途见 · 基于3DGS与GMVR的澳门文旅记忆系统：三维高斯实景、地理感知多视角识别与建筑记忆档案",
   "scripts": {
     "data:osm": "node scripts/fetch-osm.mjs",
     "data:dem": "node scripts/fetch-terrain.mjs && node scripts/clean-dem.mjs",
