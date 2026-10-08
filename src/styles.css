@@ -36,6 +36,10 @@ canvas:focus { outline: none; }
 /* ---------------- 頂部 ---------------- */
 .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; pointer-events: none; }
 .topbar > * { pointer-events: auto; }
+.topbar-identity { display: flex; align-items: center; gap: 10px; }
+.gaussian-entry { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 9px 13px; border: 1px solid var(--gold); border-radius: 999px; background: var(--panel); color: var(--gold); font-size: 14px; font-weight: 600; white-space: nowrap; text-decoration: none; backdrop-filter: blur(14px); box-shadow: var(--shadow); transition: background .2s, border-color .2s; }
+.gaussian-entry:hover { background: var(--panel-2); border-color: var(--ink); }
+.gaussian-entry:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .brand { display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; backdrop-filter: blur(14px); box-shadow: var(--shadow); }
 .brand-mark { color: var(--gold); display: grid; place-items: center; }
 .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
@@ -219,11 +223,16 @@ canvas:focus { outline: none; }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 760px) {
-  .sidebar { width: calc(100vw - 32px); top: 58px; bottom: 60px; }
+  .topbar { flex-wrap: wrap; gap: 8px; }
+  .topbar-identity { width: 100%; justify-content: space-between; gap: 6px; }
+  .topbar-actions { margin-left: auto; gap: 6px; }
+  .topbar-actions .icon-btn { width: 34px; height: 34px; }
+  .gaussian-entry { padding: 9px 10px; }
+  .sidebar { width: calc(100vw - 32px); top: 112px; bottom: 60px; }
   .detail { width: calc(100vw - 32px); top: 58px; bottom: 60px; }
   .credits { max-width: calc(100vw - 190px); }
   .hud { display: none; }
-  .controls { top: 58px; }
+  .controls { top: 112px; }
 }
 
 /* ---------------- 位置校正模式 ---------------- */
