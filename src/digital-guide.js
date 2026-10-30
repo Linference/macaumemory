@@ -3,7 +3,9 @@ import { splitSpeech, base64Audio, GuideRecorder, GuidePlayer } from "./guide-au
 
 export function buildingIntroduction(a) {
   const facts = String(a.brief || a.detail || "你可以從建築外觀開始觀察，也可以問我相關問題。").replace(/\s+/g, " ").trim();
-  return `你好，我是小澳。這裡是${a.zh}。${[...facts].slice(0, 95).join("")}你想了解它的歷史，還是建築特色？`;
+  if (a.kind === "memory") return `你好，我是小澳。你來到了${a.zh}的記憶點。${[...facts].slice(0, 95).join("")}想看看這裡的實拍照片，或問我這個地方的故事嗎？`;
+  const memoryHint = a.nearbyMemory ? `這裡也有真實照片記憶點，你可以在建築資料中查看照片與故事。` : "";
+  return `你好，我是小澳。這裡是${a.zh}。${[...facts].slice(0, 95).join("")}${memoryHint}你想了解它的歷史，還是建築特色？`;
 }
 
 export class DigitalGuide {
@@ -31,14 +33,15 @@ export class DigitalGuide {
     document.addEventListener("visibilitychange", () => { if (document.hidden) { this.stopSpeech(); this.recorder.cancel(); this.micPending = false; this.refreshMic(); } });
   }
   mode(mode, text) { this.element.dataset.mode = mode; this.$("[data-guide-status]").textContent = text; }
-  show(a, { autoSpeak = true } = {}) {
+  show(a, { autoSpeak = true, arrival = false } = {}) {
     if (this.attraction?.id === a.id && !this.element.hidden) return;
     this.hide();
     if (autoSpeak && !this.muted) this.player.unlock().catch(() => {});
     this.attraction = a; this.history = []; this.element.hidden = false;
+    this.$(".guide-kicker").textContent = arrival ? "途見 · 附近導覽" : "TUJIAN · VIRTUAL GUIDE";
     this.$("[data-guide-building]").textContent = a.zh;
     this.$("[data-guide-messages]").replaceChildren(); this.$("textarea").value = "";
-    this.mode("idle", "你的建築導覽員"); this.onOpen();
+    this.mode("idle", arrival ? "已到達附近 · 小澳帶你認識這裡" : "你的建築導覽員"); this.onOpen();
     const introduction = buildingIntroduction(a);
     this.addMessage("assistant", introduction); this.lastSpoken = introduction;
     if (autoSpeak && !this.muted) this.speak(introduction);

@@ -685,6 +685,7 @@ function renderResults() {
       ${matched ? `<div class="rc-verdict-actions">
         ${matched.model ? `<button class="btn gold" data-model="${escapeHtml(matched.model)}" data-title="${escapeHtml(matched.zh)}" data-sub="${escapeHtml(matched.en ?? "")}">看三維模型</button>` : ""}
         ${matched.spot ? `<a class="btn sec" href="${escapeHtml(mapLink(matched))}">在地圖上開啟</a>` : ""}
+        <a class="btn sec" href="./memory.html?place=${encodeURIComponent(matched.spot || matched.id)}">確認後查看地點記憶</a>
         ${!matched.model && !matched.spot ? `<span class="rc-nomodel">最相似的記憶點尚無三維模型與地圖連結</span>` : ""}
       </div>` : ""}
     </div>`;

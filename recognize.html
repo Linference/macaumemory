@@ -5,29 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content="上傳一張澳門建築照片，先用 YOLO 標註這是什麼類型的建築，再與已記錄的記憶庫查重；未記錄的可以直接標記為新發現" />
     <meta name="theme-color" content="#0a0e13" />
-    <title>建築普查工作台 · 澳門立體誌</title>
+    <title>拍照辨識 · 途見</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Cpath d='M4 21l7-11 4.5 6.5L19 12l9 9z' fill='%23d8b45a'/%3E%3C/svg%3E" />
   </head>
   <body class="rc">
+    <site-nav current="recognize"></site-nav>
     <div class="rc-wrap">
-      <!-- 標題列 -->
-      <header class="rc-top">
-        <a class="brand" href="./">
-          <span class="brand-mark">
-            <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-              <path d="M16 25C8 21 7 14 16 5c9 9 8 16 0 20Z" /><path d="M16 25C6 25 3 19 4 11c8 1 12 6 12 14Zm0 0c10 0 13-6 12-14-8 1-12 6-12 14ZM8 28h16" />
-            </svg>
-          </span>
-          <span class="brand-text"><strong>澳門立體誌</strong><small>MACAU MEMORY ATLAS</small></span>
-        </a>
-        <nav class="rc-nav" aria-label="工作台導覽">
-          <a href="./system.html">文化探索系統</a>
-          <a href="./capture.html">資料選圖</a>
-          <a class="rc-nav-current" href="#workspace" aria-current="page">辨識工作台</a>
-          <a href="#rc-ledger">普查檔案</a>
-          <a class="rc-back" href="./"><span aria-hidden="true">↗</span> 探索三維地圖</a>
-        </nav>
-      </header>
 
       <section class="rc-hero" aria-labelledby="rc-page-title">
         <div>
@@ -180,7 +163,7 @@
           拍攝位置與建築位置分開保存。建築位置由你點選輪廓或手動確認，舊照片不自動套用現在的裝置座標。
         </p></details>
       </section>
-      <footer class="rc-page-footer"><span>澳門立體誌 <i>·</i> 為城市留下記憶</span><a href="./">回到三維地圖 <span aria-hidden="true">↗</span></a></footer>
+      <footer class="rc-page-footer"><span>途見 <i>·</i> 為城市留下記憶</span><a href="./">回到三維地圖 <span aria-hidden="true">↗</span></a></footer>
     </div>
 
     <!-- 三維模型檢視器（沿用主站 src/viewer.js 與 .viewer 樣式） -->

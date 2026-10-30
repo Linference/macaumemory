@@ -6,8 +6,8 @@
   "description": "途见 · 基于3DGS与GMVR的澳门文旅记忆系统：三维高斯实景、地理感知多视角识别与建筑记忆档案",
   "scripts": {
     "data:osm": "node scripts/fetch-osm.mjs",
-    "data:dem": "node scripts/fetch-terrain.mjs && node scripts/clean-dem.mjs",
-    "data:poi": "node scripts/build-attractions.mjs",
+    "data:dem": "node scripts/fetch-terrain.mjs && node scripts/clean-dem.mjs && node scripts/dem-webp.mjs",
+    "data:poi": "node scripts/build-attractions.mjs && node scripts/sync-place-coords.mjs",
     "data": "npm run data:overture && npm run data:dem && npm run data:cop30 && npm run data:geocode && npm run data:poi && npm run data:merge",
     "models": "node scripts/optimize-models.mjs",
     "dev": "vite",
@@ -20,7 +20,9 @@
     "data:geocode": "node scripts/geocode-attractions.mjs",
     "verify": "node scripts/verify-positions.mjs",
     "data:bus": "node scripts/fetch-bus.mjs",
-    "guide:server": "node server/guide.mjs"
+    "guide:server": "node server/guide.mjs",
+    "memory:server": "node server/memory.mjs",
+    "data:dem-webp": "node scripts/dem-webp.mjs"
   },
   "dependencies": {
     "@gltf-transform/cli": "^4.5.0",

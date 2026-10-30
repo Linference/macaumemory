@@ -748,16 +748,16 @@
     "photoCount": 10,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.555202,
-    "lat": 22.148866,
+    "lon": 113.555199,
+    "lat": 22.148899,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.555202,
-     22.148866
+     113.555199,
+     22.148899
     ]
    }
   },
@@ -1217,16 +1217,16 @@
     "photoCount": 10,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.54977,
-    "lat": 22.19651,
+    "lon": 113.549719,
+    "lat": 22.196456,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.54977,
-     22.19651
+     113.549719,
+     22.196456
     ]
    }
   },
@@ -1382,16 +1382,16 @@
     "photoCount": 10,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.55214,
-    "lat": 22.185784,
+    "lon": 113.552141,
+    "lat": 22.185783,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.55214,
-     22.185784
+     113.552141,
+     22.185783
     ]
    }
   },
@@ -1499,9 +1499,9 @@
    "type": "Feature",
    "properties": {
     "id": "MM-0015",
-    "zh": "民政總署大樓",
+    "zh": "市政署大樓",
     "nearId": "leal-senado",
-    "nearZh": "民政總署大樓",
+    "nearZh": "市政署大樓",
     "cls": "civic",
     "clsZh": "公共建築",
     "color": "#6f9bbf",
@@ -1673,16 +1673,16 @@
     "photoCount": 12,
     "firstSeen": "2008-06-29",
     "lastSeen": "2015-02-07",
-    "lon": 113.539773,
-    "lat": 22.193502,
+    "lon": 113.539382,
+    "lat": 22.193327,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.539773,
-     22.193502
+     113.539382,
+     22.193327
     ]
    }
   },
@@ -1812,16 +1812,16 @@
     "photoCount": 8,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.564652,
-    "lat": 22.14595,
+    "lon": 113.564639,
+    "lat": 22.145924,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.564652,
-     22.14595
+     113.564639,
+     22.145924
     ]
    }
   },
@@ -1951,7 +1951,7 @@
     "photoCount": 8,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.555478,
+    "lon": 113.555498,
     "lat": 22.188866,
     "geoSource": "building-catalog",
     "needsReview": false
@@ -1959,7 +1959,7 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.555478,
+     113.555498,
      22.188866
     ]
    }
@@ -2183,16 +2183,16 @@
     "photoCount": 9,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.556965,
-    "lat": 22.186193,
+    "lon": 113.556899,
+    "lat": 22.186199,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.556965,
-     22.186193
+     113.556899,
+     22.186199
     ]
    }
   },
@@ -2419,16 +2419,16 @@
     "photoCount": 15,
     "firstSeen": "2003-12-29",
     "lastSeen": "2010-08-10",
-    "lon": 113.5368,
-    "lat": 22.179819,
+    "lon": 113.536794,
+    "lat": 22.179822,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.5368,
-     22.179819
+     113.536794,
+     22.179822
     ]
    }
   },
@@ -2623,16 +2623,16 @@
     "photoCount": 13,
     "firstSeen": "2011-09-26",
     "lastSeen": "2023-02-24",
-    "lon": 113.534876,
-    "lat": 22.188705,
+    "lon": 113.534756,
+    "lat": 22.188657,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.534876,
-     22.188705
+     113.534756,
+     22.188657
     ]
    }
   },
@@ -2775,16 +2775,16 @@
     "photoCount": 9,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.548271,
-    "lat": 22.185582,
+    "lon": 113.548286,
+    "lat": 22.18558,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.548271,
-     22.185582
+     113.548286,
+     22.18558
     ]
    }
   },
@@ -3415,16 +3415,16 @@
     "photoCount": 9,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.549123,
-    "lat": 22.215933,
+    "lon": 113.549148,
+    "lat": 22.21596,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.549123,
-     22.215933
+     113.549148,
+     22.21596
     ]
    }
   },
@@ -3751,7 +3751,7 @@
     "photoCount": 15,
     "firstSeen": "2016-05-18",
     "lastSeen": "2016-05-18",
-    "lon": 113.540839,
+    "lon": 113.54084,
     "lat": 22.197458,
     "geoSource": "building-catalog",
     "needsReview": false
@@ -3759,7 +3759,7 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.540839,
+     113.54084,
      22.197458
     ]
    }
@@ -4055,16 +4055,16 @@
     "photoCount": 13,
     "firstSeen": "2007-11-10",
     "lastSeen": "2012-03-11",
-    "lon": 113.54037,
-    "lat": 22.194838,
+    "lon": 113.540371,
+    "lat": 22.194847,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.54037,
-     22.194838
+     113.540371,
+     22.194847
     ]
    }
   },
@@ -4307,16 +4307,16 @@
     "photoCount": 4,
     "firstSeen": "2014-11-15",
     "lastSeen": "2019-11-14",
-    "lon": 113.536765,
-    "lat": 22.190665,
+    "lon": 113.536762,
+    "lat": 22.190666,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.536765,
-     22.190665
+     113.536762,
+     22.190666
     ]
    }
   },
@@ -4871,16 +4871,16 @@
     "photoCount": 13,
     "firstSeen": "2007-11-29",
     "lastSeen": "2007-12-23",
-    "lon": 113.559655,
-    "lat": 22.149291,
+    "lon": 113.559726,
+    "lat": 22.149233,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.559655,
-     22.149291
+     113.559726,
+     22.149233
     ]
    }
   },
@@ -5149,16 +5149,16 @@
     "photoCount": 8,
     "firstSeen": null,
     "lastSeen": null,
-    "lon": 113.57162,
-    "lat": 22.148326,
+    "lon": 113.571602,
+    "lat": 22.148332,
     "geoSource": "building-catalog",
     "needsReview": false
    },
    "geometry": {
     "type": "Point",
     "coordinates": [
-     113.57162,
-     22.148326
+     113.571602,
+     22.148332
     ]
    }
   }

@@ -51,23 +51,26 @@ export const BUILDING_COLOR_BY_HEIGHT = [
 export function buildStyle() {
   return {
     version: 8,
-    name: "澳門立體誌",
+    name: "途見",
+    // DEM 用無損 WebP（scripts/dem-webp.mjs，比 PNG 小 45%），maxzoom 14：
+    // 來源約 30 m，z15 只是 z14 的內插（平均差 0.06 m），交給 MapLibre overzoom，
+    // 啟動時的高程圖磚從約 8.4 MB／128 張降到約 1/5
     sources: {
       dem: {
         type: "raster-dem",
-        tiles: ["dem/{z}/{x}/{y}.png"],
+        tiles: ["dem/{z}/{x}/{y}.webp"],
         encoding: "terrarium",
         tileSize: 256,
         minzoom: 10,
-        maxzoom: 15,
+        maxzoom: 14,
       },
       "dem-hillshade": {
         type: "raster-dem",
-        tiles: ["dem/{z}/{x}/{y}.png"],
+        tiles: ["dem/{z}/{x}/{y}.webp"],
         encoding: "terrarium",
         tileSize: 256,
         minzoom: 10,
-        maxzoom: 15,
+        maxzoom: 14,
       },
       buildings: { type: "geojson", data: "data/macau-buildings.geojson", promoteId: "bid", maxzoom: 19, tolerance: 0.1 },
       roads: { type: "geojson", data: "data/macau-roads.geojson" },
@@ -78,7 +81,9 @@ export function buildStyle() {
       coastline: { type: "geojson", data: "data/macau-coastline.geojson" },
       boundary: { type: "geojson", data: "data/macau-boundary.geojson" },
       bus: { type: "geojson", data: "data/macau-bus.geojson" },
+      "place-labels": { type: "geojson", data: "data/macau-labels.geojson" },
     },
+    // 刻意不設 glyphs：MapLibre v6 沒有字型伺服器時，會用本機字型繪製所有標籤文字（中文、葡文、數字），離線可用
     sky: {
       "sky-color": "#0a141f",
       "horizon-color": "#243c50",
@@ -150,8 +155,52 @@ export function buildStyle() {
       } },
       { id: "boundary-fill", type: "fill", source: "boundary", filter: ["==", ["get", "k"], "sar"], paint: { "fill-color": COLORS.gold, "fill-opacity": 0.045 } },
       { id: "boundary-line", type: "line", source: "boundary", filter: ["==", ["get", "k"], "sar"], paint: { "line-color": COLORS.gold, "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.8, 16, 2.2], "line-opacity": 0.75, "line-dasharray": [3, 1.6] } },
+      ...labelLayers(),
     ],
   };
+}
+
+// ---------------------------------------------------------------- 地名與街道名
+// 原生標籤：彼此自動避讓（不再疊字）、沿街排列；樣式沒有 glyphs，字形由本機字型繪製。
+// 道路標籤用 zh 欄位（scripts/road-labels.mjs 取雙語路名的中文部分），隧道不標。
+const SANS = ["Noto Sans TC", "PingFang TC", "Microsoft JhengHei"];
+const SERIF = ["Noto Serif TC", "Songti TC", "PMingLiU"];
+const HALO = { "text-halo-color": "#0b1117", "text-halo-width": 1.6, "text-halo-blur": 0.3 };
+const MAJOR_ROADS = ["motorway", "trunk", "primary", "secondary", "tertiary"];
+const MINOR_ROADS = ["residential", "unclassified", "living_street", "pedestrian", "service", "footway", "path", "steps"];
+export const PLACE_LABEL_LAYERS = ["place-label-region", "place-label-district", "place-label-park"];
+export const LABEL_LAYERS = [...PLACE_LABEL_LAYERS, "road-label-major", "road-label-minor"];
+
+function roadLabel(id, classes, minzoom, size, color) {
+  return {
+    id, type: "symbol", source: "roads", minzoom,
+    filter: ["all", ["has", "zh"], ["!=", ["get", "b"], 2], ["in", ["get", "c"], ["literal", classes]]],
+    layout: {
+      "symbol-placement": "line", "symbol-spacing": 320, "text-field": ["get", "zh"], "text-font": SANS,
+      "text-size": size, "text-letter-spacing": 0.08, "text-max-angle": 35, "text-padding": 6, "text-keep-upright": true,
+    },
+    paint: { "text-color": color, ...HALO },
+  };
+}
+
+function placeLabel(kind, minzoom, layout, color) {
+  return {
+    id: `place-label-${kind}`, type: "symbol", source: "place-labels", minzoom,
+    filter: ["==", ["get", "k"], kind],
+    // p 愈大愈重要，先放置
+    layout: { "text-field": ["get", "t"], "symbol-sort-key": ["-", 0, ["coalesce", ["get", "p"], 1]], "text-padding": 8, ...layout },
+    paint: { "text-color": color, ...HALO },
+  };
+}
+
+function labelLayers() {
+  return [
+    roadLabel("road-label-minor", MINOR_ROADS, 15.8, ["interpolate", ["linear"], ["zoom"], 15.8, 10.5, 18, 13], "#c9c2b4"),
+    roadLabel("road-label-major", MAJOR_ROADS, 14, ["interpolate", ["linear"], ["zoom"], 14, 11, 18, 14.5], "#ede6d6"),
+    placeLabel("park", 13.8, { "text-font": SANS, "text-size": 11.5 }, "#8fbf94"),
+    placeLabel("district", 12.4, { "text-font": SANS, "text-size": 12, "text-letter-spacing": 0.22 }, "#b3c1cd"),
+    placeLabel("region", 11.4, { "text-font": SERIF, "text-size": ["interpolate", ["linear"], ["zoom"], 11, 14, 14, 17], "text-letter-spacing": 0.34 }, "#e8e2d6"),
+  ];
 }
 
 

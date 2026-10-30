@@ -7,7 +7,7 @@ document.querySelector('#hero-photo').src = catalog.places.find(p => p.id === 't
 function render(query = '') {
   const places = catalog.places.filter(p => `${p.name} ${p.categoryName}`.includes(query.trim()));
   document.querySelector('#empty').hidden = places.length !== 0;
-  document.querySelector('#cards').innerHTML = places.map(p => `<a class="place-card" href="${esc(p.mapPath)}"><img src="${esc(p.cover)}" loading="lazy" alt="${esc(p.name)}實拍"><div><span>${esc(p.categoryName)} · ${p.photoCount} 張照片</span><h3>${esc(p.name)}</h3><p>${esc(p.summary)}</p><small>探索記憶 ↗</small></div></a>`).join('');
+  document.querySelector('#cards').innerHTML = places.map(p => `<a class="place-card" href="./memory.html?place=${encodeURIComponent(p.id)}"><img src="${esc(p.cover)}" loading="lazy" alt="${esc(p.name)}實拍"><div><span>${esc(p.categoryName)} · ${p.photoCount} 張照片</span><h3>${esc(p.name)}</h3><p>${esc(p.summary)}</p><small>查看相冊、故事與記憶拼圖</small></div></a>`).join('');
 }
 render();
 document.querySelector('#search').addEventListener('input', e => render(e.target.value));

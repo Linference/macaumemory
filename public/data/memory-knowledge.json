@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    { "id": "stpaul-fire-1835", "type": "event", "title": "1835 年聖保祿教堂與學院火災", "text": "澳門政府的導賞服務資料記載，天主之母教堂與聖保祿學院毀於 1835 年大火。今日的大三巴牌坊是教堂前壁遺存。可比較現存立面與原有建築用途。", "era": "1835 年", "keywords": "大三巴 火災 教堂 聖保祿 遺存 建築", "placeIds": ["ruins-st-paul"], "sourceTitle": "澳門政府：大三巴牌坊團體導賞服務", "sourceUrl": "https://www.gov.mo/zh-hant/services/ps-1635/ps-1635b/" },
+    { "id": "zheng-guanying-memory", "type": "person", "title": "鄭觀應與《盛世危言》", "text": "文化局的鄭觀應環境劇場資料介紹其在鄭家大屋輯著《盛世危言》的經歷。這條線索可用於探索住宅空間、人物生活與思想著作之間的關係。", "era": "十九世紀", "keywords": "鄭觀應 鄭家大屋 盛世危言 思想 住宅", "placeIds": ["mandarins-house"], "sourceTitle": "澳門文化局：鄭觀應環境劇場場刊", "sourceUrl": "https://edocs.icm.gov.mo/pec/2020/InterEnviTheater/leafletC.pdf" },
+    { "id": "taipa-family-life", "type": "theme", "title": "龍環葡韻與土生葡人住宅生活", "text": "文化局介紹龍環葡韻的五座葡式住宅於 1921 年落成，曾作高級官員官邸，也是具代表性的土生葡人住宅。可從住宅外觀與生活資料探索澳門家庭文化。", "era": "1921 年起", "keywords": "龍環葡韻 氹仔 家庭 住宅 土生葡人 葡式", "placeIds": ["taipa-houses"], "sourceTitle": "澳門文化局：龍環葡韻", "sourceUrl": "https://www.icm.gov.mo/cn/housesmuseum/" }
+  ]
+}

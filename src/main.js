@@ -1,8 +1,7 @@
 import * as maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./styles.css";
-import { buildStyle, addContourLayers } from "./map-style.js";
-import { LabelLayer } from "./labels.js";
+import { buildStyle, addContourLayers, LABEL_LAYERS, PLACE_LABEL_LAYERS } from "./map-style.js";
 import { PoiLayer, POI_GROUPS, POI_DEFAULT_OFF } from "./pois.js";
 import { MyLocation, distanceMeters, bearingLabel, formatDistance } from "./geolocate.js";
 import { NavigationController } from "./navigation.js";
@@ -16,6 +15,8 @@ import { ModelViewer } from "./viewer.js";
 import { setLang, getLang, T } from "./i18n.js";
 import { parseMapQuery } from "./map-link.js";
 import { DigitalGuide } from "./digital-guide.js";
+import { installCommunityMemory } from "./memory-map.js";
+import { nearbyArrival, ArrivalGate } from "./nearby-arrival.js";
 
 // 明確指定 MapLibre worker 位址：使用 .js 版本（避免 .mjs 被伺服器給錯 MIME 而無法載入）
 try {
@@ -100,6 +101,9 @@ const attractions = data.attractions.map((a) => {
 });
 for (const a of attractions) if (coordFixes[a.id]) { a.coords = coordFixes[a.id]; a.geoSource = "manual"; }
 const byId = new Map(attractions.map((a) => [a.id, a]));
+const arrivalGate = new ArrivalGate();
+let autoSelectedKey = null;
+let autoMemoryPopup = null;
 
 const markerLayer = new MarkerLayer(map, {
   categories: state.categories,
@@ -227,12 +231,13 @@ const GEO_SRC_LABEL = {
 const geoSourceLabel = (a) => GEO_SRC_LABEL[a.geoSource] ?? null;
 
 // ---------------------------------------------------------------- 詳情面板
-function select(a, { fly = false } = {}) {
+function select(a, { fly = false, auto = false, nearbyMemory = false } = {}) {
   if (!a) return;
+  if (!auto) { arrivalGate.markSeen(a.id); autoSelectedKey = null; }
   state.selected = a;
   markerLayer.setActive(a.id);
   openDetail(a);
-  digitalGuide.show(a);
+  digitalGuide.show(nearbyMemory ? { ...a, nearbyMemory: true } : a, { arrival: auto });
   if (fly) {
     map.flyTo({ center: a.coords, zoom: Math.max(map.getZoom(), 15.6), pitch: 58, duration: 1500, essential: true });
   }
@@ -299,7 +304,7 @@ function openDetail(a) {
     ${nearPlaces.length ? `<div class="d-section"><h3>${T("澳門記憶 · 記憶點")} · ${nearPlaces.length}</h3>
       <div class="d-photos">${nearPlaces.map((x) => `<img src="${x.p.coverThumb}" alt="${x.p.id}" title="${x.p.id} ${x.p.zh ?? ""}｜${x.p.photoCount} 張｜${Math.round(x.distM)}m" data-place="${x.p.id}" />`).join("")}</div>
     </div>` : ""}
-    <div class="d-actions">${actions.join("")}</div>`;
+    <div class="d-actions">${actions.join("")}<a class="ghost-btn" href="./memory.html?place=${encodeURIComponent(a.id)}">在地聲音 · 共創記憶</a></div>`;
 
   $("#detail").classList.add("open");
   $("#detail").setAttribute("aria-hidden", "false");
@@ -350,6 +355,7 @@ $("#detail-close").addEventListener("click", () => {
   $("#detail").setAttribute("aria-hidden", "true");
   markerLayer.setActive(null);
   state.selected = null;
+  autoSelectedKey = null;
   writeHash();
   renderList();
 });
@@ -493,7 +499,7 @@ $("#tg-contours").addEventListener("change", async (e) => {
 });
 
 // 地名標籤開關
-$("#tg-labels").addEventListener("change", (e) => labelLayer?.setEnabled(e.target.checked));
+$("#tg-labels").addEventListener("change", (e) => setLabelsVisible(e.target.checked));
 // 周邊設施開關
 $("#tg-pois").addEventListener("change", async (e) => {
   const chips = $("#poi-chips");
@@ -635,6 +641,7 @@ window.addEventListener("resize", () => { applyCameraLimits(); });
 
 // ---------------------------------------------------------------- 澳門記憶 · 記憶點
 const photoLayer = new PhotoLayer(map, { onOpen: (p, i) => openLightbox(p, i) });
+installCommunityMemory(map, $("#tg-photos"));
 let photosReady = false;
 let photosLoading = null;
 async function ensurePhotos() {
@@ -649,15 +656,14 @@ async function loadPhotos() {
     photosReady = true;
     $("#lb-photos").textContent = `記憶點 (${photoLayer.count})`;
     renderPhotoChips();
-    // 把記憶點掛到對應的景點標記上（DOM 標記會蓋住地圖點，這是主要入口）
-    const byNear = new Map();
-    for (const f of photoLayer.places) {
-      const nid = f.properties?.nearId;
-      if (nid) byNear.set(nid, (byNear.get(nid) ?? 0) + 1);
-    }
-    for (const a of attractions) a.photoCount = byNear.get(a.id) ?? 0;
+    // 記憶點與景點同一位置時，由景點標記代表（徽章顯示照片張數），地圖上不再另畫記憶點圓圈；
+    // 有實拍照片的景點一律常駐顯示，原本由記憶點圓圈呈現的內容在任何縮放都看得到
+    const withPhotos = new Set(photoLayer.places.map((f) => f.properties?.nearId).filter((id) => byId.has(id)));
+    for (const a of attractions) if (withPhotos.has(a.id)) a.tier = 0;
+    photoLayer.setLinked(withPhotos);
     markerLayer.setData(attractions);
     markerLayer.setActive(state.selected?.id ?? null);
+    syncPhotoBadges();
   } catch (e) {
     console.warn("places:", e);
     toast(T("目前沒有記憶點（請用 tools/photo-archive 產線加入照片）"));
@@ -674,8 +680,19 @@ function renderPhotoChips() {
     return `<button class="poi-chip" data-cls="${cls}"><span class="poi-dot" style="background:${t.color}"></span>${T(t.zh)} ${n}</button>`;
   }).join("");
   for (const el of box.querySelectorAll(".poi-chip")) {
-    el.addEventListener("click", () => { el.classList.toggle("off"); photoLayer.setFilter(el.dataset.cls); });
+    el.addEventListener("click", () => { el.classList.toggle("off"); photoLayer.setFilter(el.dataset.cls); syncPhotoBadges(); });
   }
+}
+/** 景點標記上的照片張數徽章，跟著「記憶點」開關與類型篩選 */
+function syncPhotoBadges() {
+  const counts = new Map();
+  if (photosReady && $("#tg-photos").checked) {
+    for (const f of photoLayer.visiblePlaces()) {
+      const id = f.properties?.nearId;
+      if (byId.has(id)) counts.set(id, (counts.get(id) ?? 0) + (f.properties.photoCount ?? 0));
+    }
+  }
+  markerLayer.setPhotoCounts(counts);
 }
 /** 記憶點卡片：大圖 + 照片時間軸 + 建築解讀 + 完整檔案 */
 function openLightbox(p, idx = 0) {
@@ -693,6 +710,7 @@ function openLightbox(p, idx = 0) {
     <h3>${p.zh ?? T("未命名建築")}</h3>
     <div class="lb-cls">${T(clsZh)}${p.conf ? ` · 信心 ${Math.round(p.conf * 100)}%` : ""}${p.clsSource === "manual" ? T(" · 手動標註") : ""}</div>
     <div class="memory-current">實拍照片 · ${idx + 1} / ${photos.length} · ${memoryDate(cur.taken)}</div>
+    <a class="ghost-btn" href="./memory.html?place=${encodeURIComponent(p.id)}">這個地方的故事 · 留下我的記憶</a>
     ${p.caption ? `<p>${p.caption}</p>` : `<p style="color:var(--ink-dim)">${T("尚未產生建築解讀")}</p>`}
     ${(p.tags ?? []).length ? `<div class="photo-tags">${p.tags.map((t) => `<span>${t}</span>`).join("")}</div>` : ""}
     ${strip}
@@ -720,6 +738,7 @@ window.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("#lightb
 $("#tg-photos").addEventListener("change", async (e) => {
   if (e.target.checked) await ensurePhotos();
   photoLayer.setVisible(e.target.checked);
+  syncPhotoBadges();
 });
 
 // ---------------------------------------------------------------- 語音（朗讀與語音輸入）
@@ -791,7 +810,7 @@ function addAiMsg(role, text) {
   if (role === "ai") {
     const av = document.createElement("img");
     av.className = "ai-msg-avatar";
-    av.src = "mascot/ashih-avatar.jpg";
+    av.src = "mascot/ashih-avatar.webp";
     av.alt = "阿獅";
     row.appendChild(av);
   }
@@ -952,6 +971,42 @@ for (const el of $("#nav-modes").querySelectorAll(".nav-mode")) {
 }
 
 // ---------------------------------------------------------------- 個人定位
+function introduceNearbyPlace(pos) {
+  if (!myLocation.active || !$("#tg-auto-guide").checked || document.hidden || editMode || $("#lightbox").classList.contains("on") || $("#viewer").classList.contains("open")) {
+    arrivalGate.resetPending(); return;
+  }
+  if (digitalGuide.busy || digitalGuide.recorder.recording || (state.selected && !autoSelectedKey)) {
+    arrivalGate.resetPending(); return;
+  }
+  const places = photosReady && $("#tg-photos").checked ? photoLayer.places : [];
+  const candidate = nearbyArrival(pos, attractions, places);
+  const arrived = arrivalGate.observe(candidate, Date.now(), pos.time);
+  if (!arrived) return;
+  autoMemoryPopup?.remove(); autoMemoryPopup = null;
+  autoSelectedKey = arrived.key;
+  if (arrived.kind === "attraction") {
+    const nearbyMemory = places.some((place) => place.properties?.nearId === arrived.attraction.id
+      && !place.properties.needsReview
+      && Array.isArray(place.geometry?.coordinates)
+      && distanceMeters(pos.coords, place.geometry.coordinates) <= 32);
+    select(arrived.attraction, { auto: true, nearbyMemory });
+    toast(`已到達 ${arrived.attraction.zh}，小澳正在為你介紹`);
+    return;
+  }
+  // Independent memory points do not need to be part of the scenic catalog.
+  if (state.selected) {
+    $("#detail").classList.remove("open");
+    $("#detail").setAttribute("aria-hidden", "true");
+    markerLayer.setActive(null);
+    state.selected = null;
+    writeHash(); renderList();
+  }
+  const p = arrived.place.properties;
+  autoMemoryPopup = photoLayer.popup(arrived.place);
+  digitalGuide.show({ id: p.id, kind: "memory", zh: p.zh || "這個記憶點", brief: p.caption || "這裡留下了真實照片與在地記憶，歡迎一起探索。" }, { arrival: true });
+  toast(`已到達 ${p.zh || "記憶點"}，小澳正在為你介紹`);
+}
+
 const myLocation = new MyLocation(map, {
   onStateChange: (active, following) => {
     const btn = $("#btn-locate");
@@ -974,6 +1029,7 @@ const myLocation = new MyLocation(map, {
     }
     if (state.selected) openDetail(state.selected);
     if (state.nearMode) renderList();
+    introduceNearbyPlace(pos);
   },
   onError: (e) => { toast(T(e.message)); },
 });
@@ -983,8 +1039,10 @@ $("#btn-locate").addEventListener("click", () => {
   if (!myLocation.follow) { myLocation.setFollow(true); toast(T("跟隨模式：地圖會跟著你移動（再點一下停止定位）")); return; }
   myLocation.setFollow(false);
   myLocation.stop();
+  arrivalGate.resetPending();
   toast(T("已停止定位"));
 });
+$("#tg-auto-guide").addEventListener("change", () => arrivalGate.resetPending());
 map.on("click", () => { if (myLocation.follow) myLocation.setFollow(false); });
 $("#btn-lang").addEventListener("click", async () => {
   const next = getLang() === "zh-Hant" ? "zh-Hans" : "zh-Hant";
@@ -1030,7 +1088,7 @@ $("#btn-clear-fixes").addEventListener("click", () => {
 });
 $("#btn-export-fixes").addEventListener("click", async () => {
   const payload = {
-    note: "澳門立體誌 · 手動位置校正",
+    note: "途見 · 手動位置校正",
     generated: new Date().toISOString(),
     fixes: Object.fromEntries(Object.entries(coordFixes).map(([id, coords]) => [id, { coords, zh: byId.get(id)?.zh ?? null }])),
   };
@@ -1050,22 +1108,26 @@ $("#credits-toggle").addEventListener("click", () => $(".credits").classList.tog
 if (window.innerWidth > 1180) $("#sidebar").classList.add("open");
 
 // ---------------------------------------------------------------- 地名標籤 / 周邊設施
-let labelLayer = null;
+// 地名與街道名是樣式裡的原生標籤（map-style.js 的 LABEL_LAYERS），這裡只接點擊與開關
 let poiLayer = null;
-async function setupLabelsAndPois() {
+function setupLabelsAndPois() {
   poiLayer = new PoiLayer(map, {});
   if (!$("#tg-pois").checked) poiLayer.enabled.clear();
   renderPoiChips();
   void poiLayer.setVisible($("#tg-pois").checked).catch((e) => console.warn("poi:", e));
-  labelLayer = new LabelLayer(map, {
-    onClick: (p, coords) => {
-      map.flyTo({ center: coords, zoom: Math.max(map.getZoom(), p.k === "region" ? 12.5 : 15.2), duration: 1200 });
-    },
-  });
-  try {
-    const labels = await fetch("data/macau-labels.geojson").then((r) => r.json());
-    labelLayer.setData(labels.features ?? []);
-  } catch (e) { console.warn("labels:", e); }
+  for (const id of PLACE_LABEL_LAYERS) {
+    map.on("click", id, (e) => {
+      const f = e.features?.[0];
+      if (!f) return;
+      map.flyTo({ center: f.geometry.coordinates, zoom: Math.max(map.getZoom(), f.properties.k === "region" ? 12.5 : 15.2), duration: 1200 });
+    });
+    map.on("mouseenter", id, () => { map.getCanvas().style.cursor = "pointer"; });
+    map.on("mouseleave", id, () => { map.getCanvas().style.cursor = ""; });
+  }
+  setLabelsVisible($("#tg-labels").checked);
+}
+function setLabelsVisible(on) {
+  for (const id of LABEL_LAYERS) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none");
 }
 
 function renderPoiChips() {
@@ -1161,7 +1223,7 @@ function showHelp() {
   $("#detail-body").innerHTML = `
     <div class="d-hero">${iconSvg("model", 46)}</div>
     <div class="d-cat">${T("操作說明 · 關於本圖")}</div>
-    <h2 class="d-title">${T("澳門立體誌")}</h2>
+    <h2 class="d-title">${T("途見")}</h2>
     <div class="d-sub">${T("以開放資料建構的 3D 立體澳門地圖")}</div>
     <div class="d-detail">
       <p>${T("· AI 對話框中：按 🎤 用說的問問題（語音識別），按 🔊 開啟自動朗讀（語音合成），回答會逐句唸出。")}</p>
@@ -1172,6 +1234,7 @@ function showHelp() {
       <p>${T("· 右上角可切換三維建築、地勢起伏、等高線、道路與底圖，並調整地形起伏倍率。")}</p>
       <p>${T("· 按右上角的全螢幕圖示（或鍵盤 F 鍵）可切換全站全螢幕，按 Esc 或再按一次 F 返回。")}</p>
       <p>${T("· 右上角定位圖示可開啟個人定位（需在瀏覽器允許位置權限）：藍點代表你的位置、外圈是 GPS 精度範圍；再點一次進入「跟隨模式」，地圖會跟著你移動；雙擊圖示可停止定位。")}</p>
+      <p>${T("· 開啟定位後，抵達景點或記憶點附近且定位讀數穩定時，系統會自動打開介紹並請小澳講解；可在圖層選單關閉自動講解。")}</p>
       <p>${T("· 側欄的「📍 附近」可依距離排序景點；景點詳情會顯示「距離你 X 公尺（方位）」。")}</p>
       <p>${T("· 有「3D 模型」標籤的景點（澳門旅遊塔、科學館、巴黎人、倫敦人、銀河、兩間博物館）點進去即可開啟三維檢視器：左邊是模型，右邊是介紹文字。")}</p>
     </div>
@@ -1218,6 +1281,8 @@ function refreshStaticText() {
 }
 refreshStaticText();
 
+}
+
 // ---------------------------------------------------------------- 小工具
 let toastTimer;
 function toast(msg) {
@@ -1231,5 +1296,4 @@ function boot(text, pct) {
   const s = $("#boot-status"), b = $(".boot-bar i");
   if (s) s.textContent = text;
   if (b) b.style.width = `${pct}%`;
-}
 }

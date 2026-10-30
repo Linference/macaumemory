@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="途見建築檔案：澳門記憶點的實拍相冊與故事，以及你在本機建立的建築普查檔案。" />
+    <meta name="theme-color" content="#0a0e13" />
+    <title>建築檔案 · 途見</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Cpath d='M4 21l7-11 4.5 6.5L19 12l9 9z' fill='%23d8b45a'/%3E%3C/svg%3E" />
+  </head>
+  <body class="rc archive">
+    <site-nav current="archive"></site-nav>
+    <div class="rc-wrap">
+      <section class="rc-hero archive-hero" aria-labelledby="archive-title">
+        <div>
+          <p class="rc-eyebrow"><span></span> CITY ARCHIVE</p>
+          <h1 id="archive-title">建築檔案</h1>
+          <p class="archive-lead">記憶點的實拍相冊與故事，以及你在普查中建立的每一份建築檔案，都在這裡。</p>
+        </div>
+        <nav class="archive-tabs" aria-label="檔案類型">
+          <a href="#places">記憶點檔案 <b id="archive-place-count">—</b></a>
+          <a href="#rc-ledger">我的普查檔案 <b id="archive-survey-count">—</b></a>
+          <a class="archive-new" href="./recognize.html">＋ 拍照建立新檔案</a>
+        </nav>
+      </section>
+
+      <section class="panel archive-places" id="places" aria-labelledby="places-title">
+        <div class="archive-section-head">
+          <div>
+            <span class="rc-section-kicker">MEMORY PLACES</span>
+            <h2 id="places-title">記憶點檔案</h2>
+            <p class="hint">已整理的澳門記憶點：實拍照片、地點解讀與在地故事。</p>
+          </div>
+          <input id="archive-search" type="search" placeholder="搜尋建築名稱或類型" aria-label="搜尋記憶點檔案" />
+        </div>
+        <div id="archive-cards" class="archive-cards" aria-live="polite"></div>
+        <p id="archive-empty" class="archive-empty" hidden>沒有符合條件的建築。</p>
+      </section>
+
+      <section class="panel rc-ledger" id="rc-ledger"></section>
+    </div>
+    <div id="rc-toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/archive/main.js"></script>
+  </body>
+</html>

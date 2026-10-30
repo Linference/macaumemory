@@ -1,0 +1,63 @@
+/* 全站共用導覽（src/site-nav.js）：各頁主題深淺不同，導覽列自帶深色配色，任何頁面看起來都一樣。
+   各頁 CSS 有 .capture header{…}、.capture nav{…}、body.rc a{…} 之類的規則，
+   這裡的選擇器一律從 .site-nav.site-nav／.site-nav … 起頭，確保權重高於那些頁面規則，不必用 !important。 */
+.site-nav, .site-dock {
+  --sn-bg: #0d151d;
+  --sn-panel: rgba(13, 18, 24, 0.92);
+  --sn-line: rgba(216, 180, 90, 0.24);
+  --sn-gold: #d8b45a;
+  --sn-ink: #ece6da;
+  --sn-dim: #a3adb7;
+  font-family: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Microsoft YaHei", system-ui, sans-serif;
+  font-size: 14px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+.site-nav *, .site-dock * { box-sizing: border-box; }
+.site-nav a:focus-visible, .site-nav button:focus-visible, .site-dock a:focus-visible { outline: 2px solid var(--sn-gold); outline-offset: 2px; }
+
+.site-nav.site-nav {
+  position: sticky; top: 0; z-index: 60;
+  display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 22px;
+  width: auto; max-width: none; min-height: 60px; margin: 0;
+  padding: 0 max(24px, env(safe-area-inset-right)) 0 max(24px, env(safe-area-inset-left));
+  background: var(--sn-bg); border: 0; border-bottom: 1px solid var(--sn-line); color: var(--sn-ink);
+}
+.site-nav.site-nav--overlay { position: absolute; inset: 0 0 auto; padding-top: env(safe-area-inset-top); background: linear-gradient(#0c1318f0, #0c131800); border-bottom: 0; }
+
+.site-nav .site-brand { display: flex; align-items: center; gap: 10px; flex: none; color: var(--sn-gold); text-decoration: none; }
+.site-nav .site-brand > span { display: grid; line-height: 1.15; }
+.site-nav .site-brand strong { font-size: 18px; font-weight: 700; letter-spacing: .1em; color: var(--sn-gold); }
+.site-nav .site-brand small { display: block; font-size: 9px; font-weight: 500; letter-spacing: .24em; color: var(--sn-dim); }
+.site-nav .site-mark { flex: none; }
+
+.site-nav .site-links { display: flex; flex-wrap: nowrap; justify-content: flex-start; gap: 2px; flex: 1; min-width: 0; max-width: none; margin: 0; padding: 0; border: 0; background: none; font-size: 14px; overflow-x: auto; scrollbar-width: none; }
+.site-nav .site-links::-webkit-scrollbar { display: none; }
+.site-nav .site-links a { padding: 8px 11px; border-radius: 8px; font-size: 14px; color: var(--sn-dim); text-decoration: none; white-space: nowrap; transition: color .15s, background .15s; }
+.site-nav .site-links a:hover { color: var(--sn-ink); background: #ffffff0f; }
+.site-nav .site-links a[aria-current="page"] { color: var(--sn-gold); background: rgba(216, 180, 90, 0.13); }
+
+.site-nav .site-nav-extra { display: flex; gap: 8px; flex: none; }
+.site-nav .site-nav-extra a, .site-nav .site-nav-extra button {
+  font: inherit; font-size: 13px; padding: 8px 12px; border: 1px solid var(--sn-line); border-radius: 8px;
+  background: transparent; color: var(--sn-gold); text-decoration: none; white-space: nowrap; cursor: pointer;
+}
+.site-nav .site-nav-extra a:hover, .site-nav .site-nav-extra button:hover { background: rgba(216, 180, 90, 0.1); }
+
+@media (max-width: 760px) {
+  .site-nav.site-nav { flex-wrap: wrap; gap: 4px 12px; padding-top: max(10px, env(safe-area-inset-top)); padding-bottom: 6px; }
+  .site-nav .site-nav-extra { margin-left: auto; }
+  .site-nav .site-links { order: 3; flex-basis: 100%; margin: 0 -8px; }
+  .site-nav .site-links a { font-size: 13px; padding: 7px 9px; }
+  .site-nav .site-brand small { display: none; }
+}
+
+/* 地圖首頁底部的浮動入口 */
+.site-dock.site-dock {
+  position: fixed; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); z-index: 24; transform: translateX(-50%);
+  display: flex; gap: 2px; width: max-content; max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none;
+  margin: 0; padding: 4px; border: 1px solid var(--sn-line); border-radius: 999px; background: var(--sn-panel); backdrop-filter: blur(14px);
+}
+.site-dock::-webkit-scrollbar { display: none; }
+.site-dock a { padding: 9px 14px; border-radius: 999px; font-size: 13px; color: var(--sn-gold); text-decoration: none; white-space: nowrap; }
+.site-dock a:hover { background: rgba(216, 180, 90, 0.12); }

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-21T15:31:44.282Z",
+ "generated": "2026-10-30T01:44:27.965Z",
  "attribution": [
   "地圖資料 © OpenStreetMap 貢獻者（ODbL 1.0）· Overture Maps Foundation",
   "海拔資料 Copernicus DEM GLO-30 © DLR e.V. / Airbus DS，經 OpenTopography 提供",
@@ -54,7 +54,7 @@
    "id": "ruins-st-paul",
    "cat": "heritage",
    "coords": [
-    113.540839,
+    113.54084,
     22.197458
    ],
    "zh": "大三巴牌坊",
@@ -119,7 +119,7 @@
    "pt": "Largo do Senado",
    "tag": "世界遺產",
    "brief": "澳門歷史城區的核心廣場，葡式波浪碎石地面的起點。",
-   "detail": "議事亭前地俗稱「噴水池」，自 16 世紀以來就是澳門的市政與商業中心。地面鋪砌葡萄牙傳統的波浪形碎石，四周環繞民政總署大樓、仁慈堂大樓、玫瑰聖母堂與新古典主義的郵政總局。每年聖誕、農曆新年與葡國節慶，這裡都是澳門最重要的公共活動場地。",
+   "detail": "議事亭前地俗稱「噴水池」，自 16 世紀以來就是澳門的市政與商業中心。地面鋪砌葡萄牙傳統的波浪形碎石，四周環繞市政署大樓、仁慈堂大樓、玫瑰聖母堂與新古典主義的郵政總局。每年聖誕、農曆新年與葡國節慶，這裡都是澳門最重要的公共活動場地。",
    "geoSource": "poi-near",
    "geoRef": "Largo De Senado",
    "wikidata": "Q837935",
@@ -130,8 +130,8 @@
    "id": "st-dominic",
    "cat": "heritage",
    "coords": [
-    113.54037,
-    22.194838
+    113.540371,
+    22.194847
    ],
    "zh": "玫瑰聖母堂",
    "en": "St. Dominic's Church",
@@ -142,27 +142,28 @@
    "geoSource": "building",
    "geoRef": "玫瑰聖母堂",
    "wikidata": null,
-   "coordMovedMeters": 123,
+   "coordMovedMeters": 124,
    "geoEvidence": "building:玫瑰聖母堂(16.4) > poi-exact:St. Dominic's (15.3) > wikidata-search:Q4130614(9.3)"
   },
   {
    "id": "leal-senado",
+   "buildingId": "ca6d9224-b1f6-4937-8d62-40d26f24e076",
    "cat": "heritage",
    "coords": [
-    113.539773,
-    22.193502
+    113.539382,
+    22.193327
    ],
-   "zh": "民政總署大樓",
+   "zh": "市政署大樓",
    "en": "Leal Senado Building",
    "pt": "Edifício do Leal Senado",
    "tag": "世界遺產",
-   "brief": "建於 1784 年的葡萄牙殖民時期市政廳，現為市政署大樓。",
+   "brief": "建於 1784 年的葡萄牙殖民時期市政廳，舊稱民政總署大樓，2019 年起為市政署大樓。",
    "detail": "大樓曾是澳門葡萄牙管治時期的市政議事機構所在地，門楣上仍可見葡萄牙王室的徽記。內有典型的葡式花園、圖書館與議事堂，地面鋪砌葡式碎石，是議事亭前地的標誌性建築，2005 年納入世界遺產名錄。",
-   "geoSource": "poi-exact",
-   "geoRef": "民政總署大樓",
+   "geoSource": "building-id",
+   "geoRef": "市政署大樓 Edifício do Leal Senado",
    "wikidata": "Q3181816",
-   "coordMovedMeters": 31,
-   "geoEvidence": "poi-exact:民政總署大樓(16.9) > poi-exact:Leal Senado Bu(16.9) > building:市政署大樓 Edifício(14.8)"
+   "coordMovedMeters": 20,
+   "geoEvidence": "building-id:市政署大樓 Edifício · building:市政署大樓 Edifício(17.6) > poi-exact:Leal Senado Bu(16.9) > area:市政署大樓內庭花園 Átri(15.6)"
   },
   {
    "id": "cathedral",
@@ -204,10 +205,11 @@
   },
   {
    "id": "mandarins-house",
+   "buildingId": "b70e942c-af60-40b0-a5da-dfacdeedaa46",
    "cat": "heritage",
    "coords": [
-    113.534876,
-    22.188705
+    113.534756,
+    22.188657
    ],
    "zh": "鄭家大屋",
    "en": "Mandarin's House",
@@ -215,14 +217,15 @@
    "tag": "世界遺產",
    "brief": "中國近代思想家鄭觀應的故居，佔地約 4,000 平方米。",
    "detail": "鄭家大屋約建於 1869 年，是澳門現存規模最大的中式民居建築群，由多座院落、月門、天井與灰塑、木雕裝飾組成，並融入西式的鑄鐵欄杆、百葉窗與天花線。鄭觀應在此完成名著《盛世危言》，提出變法圖強的主張，對晚清與近代中國影響深遠。2010 年完成修復後對外開放。",
-   "geoSource": "poi-exact",
-   "geoRef": "Mandarin's House",
+   "geoSource": "building-id",
+   "geoRef": "鄭家大屋",
    "wikidata": "Q6757684",
-   "coordMovedMeters": 150,
-   "geoEvidence": "poi-exact:Mandarin's Hou(15.3) > building:鄭家大屋(14.8) > wikipedia-en:Mandarin's Hou(7.7)"
+   "coordMovedMeters": 149,
+   "geoEvidence": "building-id:鄭家大屋 · poi-exact:Mandarin's Hou(15.3) > building:鄭家大屋(14.8) > wikipedia-en:Mandarin's Hou(7.7)"
   },
   {
    "id": "lilau-square",
+   "site": "area",
    "cat": "heritage",
    "coords": [
     113.535027,
@@ -282,8 +285,8 @@
    "id": "st-lawrence",
    "cat": "temple",
    "coords": [
-    113.536765,
-    22.190665
+    113.536762,
+    22.190666
    ],
    "zh": "聖老楞佐堂",
    "en": "St. Lawrence's Church",
@@ -317,6 +320,7 @@
   },
   {
    "id": "camoes-garden",
+   "site": "area",
    "cat": "temple",
    "coords": [
     113.539466,
@@ -335,28 +339,29 @@
   },
   {
    "id": "tam-kung-temple",
+   "buildingId": "a50a5f72-bef8-40d4-b3f2-03d048e01ef5",
    "cat": "temple",
    "coords": [
-    113.550122,
-    22.114362
+    113.550148,
+    22.114249
    ],
    "zh": "路環譚公廟",
    "en": "Tam Kung Temple",
    "pt": "Templo de Tam Kung",
    "brief": "路環最古老的廟宇，據傳建於清同治年間。",
    "detail": "譚公廟供奉譚公仙聖，是路環漁民的重要信仰中心。廟宇位於路環市區海旁，規模不大，卻保存著不少匾額、楹聯與牌匾。每年農曆四月初八譚公誕，路環居民會舉行慶祝活動，是路環小鎮最熱鬧的日子。",
-   "geoSource": "poi-exact",
-   "geoRef": "譚公廟",
+   "geoSource": "building-id",
+   "geoRef": "譚僊聖廟 (譚公廟) Templo de Tam Kong",
    "wikidata": "Q27618690",
-   "coordMovedMeters": 0,
-   "geoEvidence": "poi-exact:譚公廟(13.7) > wikidata:路環譚公廟(7.7) > curated(5.2)"
+   "coordMovedMeters": 13,
+   "geoEvidence": "building-id:譚僊聖廟 (譚公廟) Tem · poi-exact:譚公廟(13.7) > wikidata:路環譚公廟(7.7) > curated(5.2)"
   },
   {
    "id": "st-francis-xavier",
    "cat": "temple",
    "coords": [
-    113.551489,
-    22.1169
+    113.551494,
+    22.116904
    ],
    "zh": "路環聖方濟各聖堂",
    "en": "Chapel of St. Francis Xavier",
@@ -427,8 +432,8 @@
    "id": "handover-gifts",
    "cat": "museum",
    "coords": [
-    113.554096,
-    22.190087
+    113.554125,
+    22.190064
    ],
    "zh": "澳門回歸賀禮陳列館",
    "en": "Handover Gifts Museum of Macao",
@@ -446,8 +451,8 @@
    "cat": "landmark",
    "model": "macau-tower",
    "coords": [
-    113.5368,
-    22.179819
+    113.536794,
+    22.179822
    ],
    "zh": "澳門旅遊塔",
    "en": "Macau Tower",
@@ -480,10 +485,11 @@
   },
   {
    "id": "guia-fortress",
+   "buildingId": "80d4711f-5184-4baa-93b9-7731b8f54a4d",
    "cat": "landmark",
    "coords": [
-    113.54977,
-    22.19651
+    113.549719,
+    22.196456
    ],
    "zh": "東望洋炮台及燈塔",
    "en": "Guia Fortress & Lighthouse",
@@ -491,32 +497,34 @@
    "tag": "世界遺產",
    "brief": "中國沿海第一座現代燈塔，與聖母雪地殿教堂同處山頂。",
    "detail": "東望洋炮台建於 1622–1638 年間，用以防禦來自海上的攻擊。燈塔於 1865 年落成，高 15 米，是中國沿海第一座現代燈塔，至今仍在運作。旁邊的聖母雪地殿教堂建於 1626 年，內部的壁畫融合中西繪畫技法，是澳門罕見的藝術珍品。2005 年納入世界遺產名錄。",
-   "geoSource": "wikipedia-search",
-   "geoRef": "東望洋燈塔",
+   "geoSource": "building-id",
+   "geoRef": "東望洋燈塔 Farol da Guia",
    "wikidata": "Q3313058",
-   "coordMovedMeters": 236,
-   "geoEvidence": "wikipedia-search:東望洋燈塔(4.5) > curated(2.0)"
+   "coordMovedMeters": 241,
+   "geoEvidence": "building-id:東望洋燈塔 Farol da · wikipedia-search:東望洋燈塔(4.5) > curated(2.0)"
   },
   {
    "id": "guia-cable-car",
+   "buildingId": "8a5245e4-4a82-4f27-be25-a52aecc5983a",
    "cat": "landmark",
    "coords": [
-    113.551092,
-    22.200411
+    113.55084,
+    22.200405
    ],
    "zh": "松山纜車（二龍喉公園）",
    "en": "Guia Hill Cable Car",
    "pt": "Teleférico da Guia",
    "brief": "全球最短的纜車之一，兩分鐘登上東望洋山。",
    "detail": "松山纜車 1997 年啟用，連接二龍喉公園與東望洋山頂，全長僅約 186 米，是世界上最短的纜車系統之一。車程約一分鐘，遊客可由此直上東望洋炮台、燈塔與環山步道，俯瞰澳門半島。",
-   "geoSource": "area",
-   "geoRef": "二龍喉公園 Jardim da Flora",
+   "geoSource": "building-id",
+   "geoRef": "山下纜車站 Estação Inferior do Teleférico",
    "wikidata": null,
-   "coordMovedMeters": 352,
-   "geoEvidence": "area:二龍喉公園 Jardim d(10.9) > poi-far:Jardim Da Flor(3.1) > curated(2.0)"
+   "coordMovedMeters": 339,
+   "geoEvidence": "building-id:山下纜車站 Estação  · area:二龍喉公園 Jardim d(10.9) > poi-far:Jardim Da Flor(3.1) > curated(2.0)"
   },
   {
    "id": "macau-tower-note",
+   "site": "area",
    "cat": "landmark",
    "coords": [
     113.55344,
@@ -535,6 +543,7 @@
   },
   {
    "id": "fisherman-wharf",
+   "site": "area",
    "cat": "landmark",
    "coords": [
     113.555725,
@@ -556,8 +565,8 @@
    "cat": "landmark",
    "model": "macau-science-center",
    "coords": [
-    113.556965,
-    22.186193
+    113.556899,
+    22.186199
    ],
    "zh": "澳門科學館",
    "en": "Macao Science Center",
@@ -567,15 +576,15 @@
    "geoSource": "building",
    "geoRef": "澳門科學館 Centro de Ciência de Macau",
    "wikidata": "Q3084238",
-   "coordMovedMeters": 35,
+   "coordMovedMeters": 33,
    "geoEvidence": "building:澳門科學館 Centro d(16.0) > poi-exact:澳門科學館(15.3) > wikipedia-zh:澳門科學館(9.3)"
   },
   {
    "id": "kun-iam-statue",
    "cat": "landmark",
    "coords": [
-    113.55214,
-    22.185784
+    113.552141,
+    22.185783
    ],
    "zh": "觀音蓮花苑",
    "en": "Kun Iam Statue",
@@ -585,14 +594,14 @@
    "geoSource": "building",
    "geoRef": "觀音蓮花苑 Centro de Ecuménico Kun Iam",
    "wikidata": "Q15928533",
-   "coordMovedMeters": 13,
+   "coordMovedMeters": 14,
    "geoEvidence": "building:觀音蓮花苑 Centro d(17.6) > poi-exact:觀音蓮花苑(16.9) > poi-exact:觀音蓮花苑 (觀音像) Ce(14.4)"
   },
   {
    "id": "centro-cultural",
    "cat": "landmark",
    "coords": [
-    113.555478,
+    113.555498,
     22.188866
    ],
    "zh": "澳門文化中心",
@@ -603,11 +612,12 @@
    "geoSource": "building",
    "geoRef": "澳門文化中心 Centro Cultural de Macau",
    "wikidata": "Q15921899",
-   "coordMovedMeters": 313,
+   "coordMovedMeters": 315,
    "geoEvidence": "building:澳門文化中心 Centro (14.4) > poi-exact:Macao Cultural(13.7) > wikidata:澳門文化中心(7.7)"
   },
   {
    "id": "louvou-lim-ieoc",
+   "site": "area",
    "cat": "landmark",
    "coords": [
     113.54814,
@@ -644,6 +654,7 @@
   },
   {
    "id": "tap-seac-square",
+   "site": "area",
    "cat": "landmark",
    "coords": [
     113.547091,
@@ -662,21 +673,22 @@
   },
   {
    "id": "venetian",
+   "buildingId": "282500a7-c7f9-411a-85df-ab336b3e076b",
    "cat": "resort",
    "coords": [
-    113.559655,
-    22.149291
+    113.559726,
+    22.149233
    ],
    "zh": "澳門威尼斯人",
    "en": "The Venetian Macao",
    "pt": "The Venetian Macao",
    "brief": "2007 年開幕的巨型綜合度假村，設有人工運河與貢多拉。",
    "detail": "澳門威尼斯人於 2007 年開幕，擁有約 3,000 間套房，是亞洲最具規模的綜合度假村之一。室內以威尼斯為主題：三條人工運河、貢多拉船、聖馬可廣場與文藝復興風格的壁畫，天花以電腦繪製的天空營造黃昏效果。度假村內另有會展中心、劇院與大型購物中心。",
-   "geoSource": "poi-exact",
-   "geoRef": "威尼斯人御匾會",
+   "geoSource": "building-id",
+   "geoRef": "Overture 282500a7",
    "wikidata": "Q1156708",
-   "coordMovedMeters": 156,
-   "geoEvidence": "poi-exact:威尼斯人御匾會(9.6) > poi-exact:The Venetian M(8.5) > wikipedia-en:The Venetian M(7.7)"
+   "coordMovedMeters": 146,
+   "geoEvidence": "building-id:Overture 28250 · poi-exact:威尼斯人御匾會(9.6) > poi-exact:The Venetian M(8.5) > wikipedia-en:The Venetian M(7.7)"
   },
   {
    "id": "parisian",
@@ -702,8 +714,8 @@
    "cat": "resort",
    "model": "londoner-macao",
    "coords": [
-    113.564652,
-    22.14595
+    113.564639,
+    22.145924
    ],
    "zh": "澳門倫敦人",
    "en": "The Londoner Macao",
@@ -713,7 +725,7 @@
    "geoSource": "building",
    "geoRef": "澳門倫敦人 The Londoner",
    "wikidata": "Q7416895",
-   "coordMovedMeters": 367,
+   "coordMovedMeters": 370,
    "geoEvidence": "building:澳門倫敦人 The Lond(12.8) > wikidata:澳門倫敦人(6.1) > curated(2.0)"
   },
   {
@@ -721,8 +733,8 @@
    "cat": "resort",
    "model": "galaxy-macau",
    "coords": [
-    113.555202,
-    22.148866
+    113.555199,
+    22.148899
    ],
    "zh": "澳門銀河",
    "en": "Galaxy Macau",
@@ -732,7 +744,7 @@
    "geoSource": "building",
    "geoRef": "澳門銀河萊佛士",
    "wikidata": "Q995639",
-   "coordMovedMeters": 52,
+   "coordMovedMeters": 51,
    "geoEvidence": "building:澳門銀河萊佛士(8.4) > wikidata:澳門銀河(6.1) > poi-far:Diamond Lobby (5.1)"
   },
   {
@@ -757,8 +769,8 @@
    "id": "studio-city",
    "cat": "resort",
    "coords": [
-    113.560053,
-    22.140926
+    113.560108,
+    22.140997
    ],
    "zh": "新濠影滙",
    "en": "Studio City Macao",
@@ -768,15 +780,15 @@
    "geoSource": "building",
    "geoRef": "Studio City",
    "wikidata": "Q6722530",
-   "coordMovedMeters": 1100,
+   "coordMovedMeters": 1092,
    "geoEvidence": "building:Studio City(9.8) > wikidata:新濠影滙(6.1) > curated(2.0)"
   },
   {
    "id": "wynn-palace",
    "cat": "resort",
    "coords": [
-    113.57162,
-    22.148326
+    113.571602,
+    22.148332
    ],
    "zh": "永利皇宮",
    "en": "Wynn Palace",
@@ -786,7 +798,7 @@
    "geoSource": "building",
    "geoRef": "永利皇宮 Palácio Wynn",
    "wikidata": "Q16925204",
-   "coordMovedMeters": 176,
+   "coordMovedMeters": 175,
    "geoEvidence": "building:永利皇宮 Palácio W(10.8) > building:Wynn Palace En(7.8) > building:永利皇宮活動中心 Wynn (6.8)"
   },
   {
@@ -811,8 +823,8 @@
    "id": "mgm-macau",
    "cat": "resort",
    "coords": [
-    113.548271,
-    22.185582
+    113.548286,
+    22.18558
    ],
    "zh": "澳門美高梅",
    "en": "MGM Macau",
@@ -822,7 +834,7 @@
    "geoSource": "building",
    "geoRef": "澳門美高梅 MGM Macau",
    "wikidata": "Q995564",
-   "coordMovedMeters": 90,
+   "coordMovedMeters": 91,
    "geoEvidence": "building:澳門美高梅 MGM Maca(16.0) > building:澳門美高梅 MGM Maca(16.0) > wikipedia-zh:澳門美高梅(9.3)"
   },
   {
@@ -1061,46 +1073,48 @@
   },
   {
    "id": "portas-do-cerco",
+   "buildingId": "65032b65-ec08-4e26-87d1-8d048dd22cc2",
    "cat": "transport",
    "coords": [
-    113.549123,
-    22.215933
+    113.549148,
+    22.21596
    ],
    "zh": "關閘",
    "en": "Portas do Cerco",
    "pt": "Portas do Cerco",
    "brief": "澳門與內地之間的主要陸路口岸，拱門建於 1870 年。",
    "detail": "關閘是澳門與珠海之間最主要的陸路通道，每日有數以萬計的旅客與居民在此過境。現存的凱旋門式拱門建於 1870 年，是澳門與內地邊界的象徵。關閘廣場設有大型公共運輸交匯處，是進入澳門半島的北面門戶。",
-   "geoSource": "poi-exact",
-   "geoRef": "Portas do Cerco",
+   "geoSource": "building-id",
+   "geoRef": "關閘拱門 Portas do Cerco",
    "wikidata": "Q3272047",
-   "coordMovedMeters": 299,
-   "geoEvidence": "poi-exact:Portas do Cerc(13.7) > building:關閘拱門 Portas do(12.0) > poi-exact:關閘M記(8.5)"
+   "coordMovedMeters": 303,
+   "geoEvidence": "building-id:關閘拱門 Portas do · poi-exact:Portas do Cerc(13.7) > building:關閘拱門 Portas do(12.0) > poi-exact:關閘M記(8.5)"
   },
   {
    "id": "hzmb-port",
+   "buildingId": "3eedbde3-a595-4d17-ac27-eb6422cd210b",
    "cat": "transport",
    "coords": [
-    113.576999,
-    22.200501
+    113.576693,
+    22.200727
    ],
    "zh": "港珠澳大橋澳門口岸",
    "en": "HZMB Macau Port",
    "pt": "Porto de Macau da POM",
    "brief": "2018 年通車，連接香港、珠海與澳門的跨海大橋口岸。",
    "detail": "港珠澳大橋全長 55 公里，是世界最長的跨海大橋，2018 年 10 月 24 日正式通車。澳門口岸位於珠澳口岸人工島，設有旅檢大樓與跨境巴士、私家車通道，前往香港約需 40 分鐘，是粵港澳大灣區的重要交通樞紐。",
-   "geoSource": "poi-exact",
-   "geoRef": "港珠澳大橋澳門口岸",
+   "geoSource": "building-id",
+   "geoRef": "港珠澳大橋澳門邊檢大樓 Edifício do Posto Fronteiriço da Ponte Hong Kong-Zhuhai-Macau",
    "wikidata": "Q28796013",
-   "coordMovedMeters": 56,
-   "geoEvidence": "poi-exact:港珠澳大橋澳門口岸(10.1) > curated(3.6) > wikidata:港珠澳大橋珠澳口岸(1.2)"
+   "coordMovedMeters": 37,
+   "geoEvidence": "building-id:港珠澳大橋澳門邊檢大樓 Ed · poi-exact:港珠澳大橋澳門口岸(10.1) > curated(3.6) > wikidata:港珠澳大橋珠澳口岸(1.2)"
   },
   {
    "id": "macau-airport",
    "cat": "transport",
    "coords": [
-    113.5743,
-    22.157591
+    113.574307,
+    22.157625
    ],
    "zh": "澳門國際機場",
    "en": "Macau International Airport",
@@ -1110,15 +1124,15 @@
    "geoSource": "building",
    "geoRef": "澳門國際機場客運大樓 Edifício do Terminal de Passageiros do Aeroporto Internacional de Macau",
    "wikidata": "Q525486",
-   "coordMovedMeters": 55,
+   "coordMovedMeters": 52,
    "geoEvidence": "building:澳門國際機場客運大樓 Edi(8.4) > curated(3.6) > wikipedia-zh:澳門國際機場(1.2)"
   },
   {
    "id": "macau-university",
    "cat": "transport",
    "coords": [
-    113.544386,
-    22.124396
+    113.5444,
+    22.124373
    ],
    "zh": "澳門大學（橫琴校區）",
    "en": "University of Macau",
@@ -1128,7 +1142,7 @@
    "geoSource": "building",
    "geoRef": "薈萃坊 Centro Comercial da Universidade de Macau (S8)",
    "wikidata": "Q1563050",
-   "coordMovedMeters": 570,
+   "coordMovedMeters": 572,
    "geoEvidence": "building:薈萃坊 Centro Com(6.4) > building:聚賢樓 Pousada da(6.4) > building:澳大運動場 Estádio (6.4)"
   },
   {

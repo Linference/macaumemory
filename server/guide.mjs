@@ -9,6 +9,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 try { process.loadEnvFile(path.join(root, ".env.local")); } catch (error) { if (error.code !== "ENOENT") throw error; }
 const attractions = JSON.parse(readFileSync(path.join(root, "public/data/attractions.json"), "utf8")).attractions;
 const byId = new Map(attractions.map((a) => [a.id, a]));
+const memoryPlaces = JSON.parse(readFileSync(path.join(root, "public/data/places.geojson"), "utf8")).features;
+for (const feature of memoryPlaces) {
+  const place = feature.properties;
+  if (place?.id && !byId.has(place.id)) byId.set(place.id, {
+    zh: place.zh || "澳門記憶點",
+    brief: place.caption || "這個地點收藏了建築實拍照片。",
+    detail: place.caption || "",
+  });
+}
 let aiKey = process.env.DEEPSEEK_API_KEY, aiModel = process.env.DEEPSEEK_MODEL || "deepseek-chat";
 if (!aiKey) {
   try { const local = JSON.parse(readFileSync(path.join(root, "public/ai-local.json"), "utf8")); aiKey = local.key; aiModel = local.model || aiModel; } catch { /* optional local configuration */ }

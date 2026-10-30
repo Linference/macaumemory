@@ -1,0 +1,32 @@
+{
+  "stpaulRef": "node_t709ep7f4c",
+  "canvasId": "9d2f4891-b815-4c4c-b6ef-93b73217d2c6",
+  "rokidRef": "node_6fdbf0y3f7",
+  "items": [
+    {
+      "duration": 6,
+      "nodeId": "node_tmj7vztaxp",
+      "key": "opening",
+      "submitId": "b273f714-4813-40ea-8ef3-51fc4196eb76",
+      "resourceId": "f79b784e-fe96-4f58-9f1b-b1fe231a65d7"
+    },
+    {
+      "duration": 4,
+      "nodeId": "node_dgp24f3pyg",
+      "key": "rokid-hero",
+      "submitId": "c046a276-4770-4fe1-af36-9e48c0a822e3",
+      "resourceId": "0bb3a2f6-f1fb-4dab-b97b-75da5bed3eef"
+    },
+    {
+      "duration": 8,
+      "nodeId": "node_vtecavbvpc",
+      "key": "rokid-experience",
+      "submitId": "a8432c23-068b-4918-b1b0-e0eff5e02dd0",
+      "resourceId": "c0acbd94-0b42-4a2a-9ad7-33b67acb976f"
+    }
+  ],
+  "authorizedCreditCeiling": 594,
+  "language": "mandarin",
+  "finalOutput": "output/video/tujian-promo-60s/途見_60秒宣傳片_普通話_2K.mp4",
+  "status": "complete"
+}
