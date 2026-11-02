@@ -312,10 +312,12 @@ if ext_f.exists():
         ax = fig.add_subplot(gs[1, 0]); label(ax, "c")
         for rows_, col, nm, e in ((ext["calib"]["bins_raw"], OI["grey"], "原始相似度", ext["calib"]["ece_raw"]),
                                   (ext["calib"]["bins_isotonic"], OI["blue"], "保序回歸校準（5 折）", ext["calib"]["ece_isotonic_cv"])):
-            ax.plot([r["conf"] for r in rows_], [r["acc"] for r in rows_], "o-", color=col, ms=2.6, lw=0.9, label=f"{nm}  ECE {e:.3f}")
+            rr = [r for r in rows_ if r["n"] >= 5]                     # 少於 5 次查詢的區間不畫（比例不穩）
+            ax.plot([r["conf"] for r in rr], [r["acc"] for r in rr], "-", color=col, lw=0.9, label=f"{nm}  ECE {e:.3f}")
+            ax.scatter([r["conf"] for r in rr], [r["acc"] for r in rr], s=[4 + r["n"] * 0.35 for r in rr], color=col, edgecolor="white", lw=0.4, zorder=3)
         ax.plot([0, 1], [0, 1], color="#BBBBBB", lw=0.5, ls=(0, (2, 2)))
         ax.set_xlim(0, 1); ax.set_ylim(0, 1.02); ax.set_xlabel("預測的正確機率"); ax.set_ylabel("實際正確比例")
-        ax.legend(loc="upper left")
+        ax.legend(loc="lower right"); ax.text(0.02, 0.97, "點的大小＝該區間查詢數；n < 5 的區間不畫", transform=ax.transAxes, fontsize=4.6, va="top", color="#555")
         ax.set_title("信心校準：對角線代表「說 80% 就真的 80% 對」", loc="left", pad=6)
 
     # d 庫外偵測

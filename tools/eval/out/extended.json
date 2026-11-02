@@ -1202,5 +1202,266 @@
    "p": 1.0
   },
   "vector_cosine_int8_vs_fp32": 0.9855
+ },
+ "robust": {
+  "torch_onnx_cosine": 1.0,
+  "levels": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "curves": {
+   "dark": [
+    {
+     "level": 0,
+     "top1": 0.8896,
+     "ci": [
+      0.8515,
+      0.9188
+     ],
+     "confident_rate": 0.5552,
+     "confident_precision": 0.9785
+    },
+    {
+     "level": 1,
+     "top1": 0.8866,
+     "ci": [
+      0.8481,
+      0.9162
+     ],
+     "confident_rate": 0.5642,
+     "confident_precision": 0.9788
+    },
+    {
+     "level": 2,
+     "top1": 0.8866,
+     "ci": [
+      0.8481,
+      0.9162
+     ],
+     "confident_rate": 0.5522,
+     "confident_precision": 0.9838
+    },
+    {
+     "level": 3,
+     "top1": 0.8896,
+     "ci": [
+      0.8515,
+      0.9188
+     ],
+     "confident_rate": 0.4866,
+     "confident_precision": 0.9816
+    },
+    {
+     "level": 4,
+     "top1": 0.8836,
+     "ci": [
+      0.8448,
+      0.9137
+     ],
+     "confident_rate": 0.3313,
+     "confident_precision": 1.0
+    },
+    {
+     "level": 5,
+     "top1": 0.8716,
+     "ci": [
+      0.8316,
+      0.9033
+     ],
+     "confident_rate": 0.1612,
+     "confident_precision": 1.0
+    }
+   ],
+   "blur": [
+    {
+     "level": 0,
+     "top1": 0.8896,
+     "ci": [
+      0.8515,
+      0.9188
+     ],
+     "confident_rate": 0.5552,
+     "confident_precision": 0.9785
+    },
+    {
+     "level": 1,
+     "top1": 0.8776,
+     "ci": [
+      0.8382,
+      0.9085
+     ],
+     "confident_rate": 0.5373,
+     "confident_precision": 0.9889
+    },
+    {
+     "level": 2,
+     "top1": 0.8746,
+     "ci": [
+      0.8349,
+      0.9059
+     ],
+     "confident_rate": 0.2925,
+     "confident_precision": 0.9898
+    },
+    {
+     "level": 3,
+     "top1": 0.8507,
+     "ci": [
+      0.8086,
+      0.8849
+     ],
+     "confident_rate": 0.0269,
+     "confident_precision": 1.0
+    },
+    {
+     "level": 4,
+     "top1": 0.7731,
+     "ci": [
+      0.7253,
+      0.8147
+     ],
+     "confident_rate": 0.0,
+     "confident_precision": null
+    },
+    {
+     "level": 5,
+     "top1": 0.6537,
+     "ci": [
+      0.6013,
+      0.7027
+     ],
+     "confident_rate": 0.0,
+     "confident_precision": null
+    }
+   ],
+   "occlude": [
+    {
+     "level": 0,
+     "top1": 0.8896,
+     "ci": [
+      0.8515,
+      0.9188
+     ],
+     "confident_rate": 0.5552,
+     "confident_precision": 0.9785
+    },
+    {
+     "level": 1,
+     "top1": 0.8866,
+     "ci": [
+      0.8481,
+      0.9162
+     ],
+     "confident_rate": 0.4866,
+     "confident_precision": 0.9755
+    },
+    {
+     "level": 2,
+     "top1": 0.8776,
+     "ci": [
+      0.8382,
+      0.9085
+     ],
+     "confident_rate": 0.4119,
+     "confident_precision": 0.9783
+    },
+    {
+     "level": 3,
+     "top1": 0.8746,
+     "ci": [
+      0.8349,
+      0.9059
+     ],
+     "confident_rate": 0.3493,
+     "confident_precision": 0.9829
+    },
+    {
+     "level": 4,
+     "top1": 0.8657,
+     "ci": [
+      0.825,
+      0.8981
+     ],
+     "confident_rate": 0.2985,
+     "confident_precision": 0.98
+    },
+    {
+     "level": 5,
+     "top1": 0.8478,
+     "ci": [
+      0.8054,
+      0.8823
+     ],
+     "confident_rate": 0.2448,
+     "confident_precision": 0.9878
+    }
+   ],
+   "haze": [
+    {
+     "level": 0,
+     "top1": 0.8896,
+     "ci": [
+      0.8515,
+      0.9188
+     ],
+     "confident_rate": 0.5552,
+     "confident_precision": 0.9785
+    },
+    {
+     "level": 1,
+     "top1": 0.8866,
+     "ci": [
+      0.8481,
+      0.9162
+     ],
+     "confident_rate": 0.5522,
+     "confident_precision": 0.9784
+    },
+    {
+     "level": 2,
+     "top1": 0.8866,
+     "ci": [
+      0.8481,
+      0.9162
+     ],
+     "confident_rate": 0.5433,
+     "confident_precision": 0.978
+    },
+    {
+     "level": 3,
+     "top1": 0.8866,
+     "ci": [
+      0.8481,
+      0.9162
+     ],
+     "confident_rate": 0.5343,
+     "confident_precision": 0.9832
+    },
+    {
+     "level": 4,
+     "top1": 0.8836,
+     "ci": [
+      0.8448,
+      0.9137
+     ],
+     "confident_rate": 0.5045,
+     "confident_precision": 0.9882
+    },
+    {
+     "level": 5,
+     "top1": 0.8716,
+     "ci": [
+      0.8316,
+      0.9033
+     ],
+     "confident_rate": 0.4269,
+     "confident_precision": 0.993
+    }
+   ]
+  }
  }
 }
