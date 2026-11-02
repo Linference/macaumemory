@@ -240,36 +240,90 @@ ax.spines["left"].set_visible(False); ax.tick_params(axis="y", length=0)
 ax.set_title("按建築類別", loc="left", pad=6)
 save(fig, "fig2-reliability")
 
-# ════════════ 圖 3：混淆矩陣（整張圖口徑） ════════════
+# ════════════ 圖 3：混淆氣泡矩陣（整張圖口徑） ════════════
+# 對角線＝該建築被認對的比例（藍色圓面積）；非對角＝誤判次數（紅色圓面積＋數字）；
+# 底色區塊標出同類建築；右側為每棟建築的 Top-1；下方列出最常見的混淆。
+from matplotlib.patches import Rectangle, FancyBboxPatch
+CLS_COL = {"casino_hotel": "#E69F00", "church": "#56B4E9", "civic": "#009E73", "industrial": "#999999", "market": "#CC79A7",
+           "monument": "#D55E00", "portuguese": "#0072B2", "temple": "#B8860B", "tong_lau": "#882255", "village": "#44AA99",
+           "residential_tower": "#666666"}
 ordr = sorted(range(nb), key=lambda b: (cls[ids[b]], zh[ids[b]]))
+pos = {b: i for i, b in enumerate(ordr)}
 pred = sc_small.argmax(1)
 M = np.zeros((nb, nb))
 for t, p in zip(y[valid], pred[valid]):
-    M[t, p] += 1
-M = M[np.ix_(ordr, ordr)]
-Mn = M / M.sum(1, keepdims=True).clip(1)
-fig, ax = plt.subplots(figsize=(183 * MM, 150 * MM))
-im = ax.imshow(np.where(Mn > 0, Mn, np.nan), cmap="cividis_r", norm=LogNorm(vmin=0.02, vmax=1), interpolation="nearest")
-names = [zh[ids[b]] for b in ordr]
-ax.set_xticks(range(nb)); ax.set_xticklabels(names, rotation=90, fontsize=4.6)
-ax.set_yticks(range(nb)); ax.set_yticklabels(names, fontsize=4.6)
-# 類別分隔線與標籤
+    M[pos[t], pos[p]] += 1
+rowsum = M.sum(1)
+acc_row = np.divide(np.diag(M), rowsum, out=np.zeros(nb), where=rowsum > 0)
+names = [zh[ids[b]].split("（")[0] for b in ordr]
 cl = [cls[ids[b]] for b in ordr]
 starts = [0] + [i for i in range(1, nb) if cl[i] != cl[i - 1]] + [nb]
-for s_ in starts[1:-1]:
-    ax.axhline(s_ - 0.5, color="white", lw=0.8); ax.axvline(s_ - 0.5, color="white", lw=0.8)
+
+fig = plt.figure(figsize=(183 * MM, 172 * MM))
+gs = fig.add_gridspec(2, 2, width_ratios=[1, 0.17], height_ratios=[1, 0.13], wspace=0.04, hspace=0.62)
+ax = fig.add_subplot(gs[0, 0]); label(ax, "a", x=-0.17, y=1.035)
+# 同類建築的底色區塊
 for a_, b_ in zip(starts[:-1], starts[1:]):
-    ax.text(-9.5, (a_ + b_ - 1) / 2, CLS_ZH.get(cl[a_], cl[a_]), fontsize=5.2, fontweight="bold", va="center", ha="right")
+    c = CLS_COL.get(cl[a_], "#999")
+    ax.add_patch(Rectangle((a_ - 0.5, a_ - 0.5), b_ - a_, b_ - a_, facecolor=c, alpha=0.10, lw=0, zorder=0))
+    ax.add_patch(Rectangle((-1.05, a_ - 0.42), 0.38, b_ - a_ - 0.16, facecolor=c, lw=0, clip_on=False))   # 左側類別色條
+    ax.add_patch(Rectangle((a_ - 0.42, -1.05), b_ - a_ - 0.16, 0.38, facecolor=c, lw=0, clip_on=False))   # 上方類別色條
+    if b_ - a_ >= 2:
+        ax.text((a_ + b_ - 1) / 2, -1.45, CLS_ZH.get(cl[a_], cl[a_]), ha="center", va="bottom", fontsize=5.2, fontweight="bold", color=c)
+# 細格線
+for k in range(nb + 1):
+    ax.axhline(k - 0.5, color="#EEEEEE", lw=0.3, zorder=0.5); ax.axvline(k - 0.5, color="#EEEEEE", lw=0.3, zorder=0.5)
+R_MAX = 0.46
 for i in range(nb):
+    if rowsum[i]:
+        r = R_MAX * np.sqrt(acc_row[i])
+        ax.add_patch(plt.Circle((i, i), r, color=OI["blue"], alpha=0.9, lw=0, zorder=2))
     for j in range(nb):
-        if M[i, j] and i != j:
-            ax.text(j, i, int(M[i, j]), ha="center", va="center", fontsize=3.8, color="white" if Mn[i, j] > 0.15 else "black")
-ax.set_xlabel("預測建築"); ax.set_ylabel("真實建築", labelpad=26)
+        if i != j and M[i, j]:
+            r = 0.17 + 0.1 * (M[i, j] - 1)
+            ax.add_patch(plt.Circle((j, i), min(r, 0.48), color=OI["red"], lw=0, zorder=3))
+            if M[i, j] >= 2:
+                ax.text(j, i, int(M[i, j]), ha="center", va="center", fontsize=4.4, color="white", fontweight="bold", zorder=4)
+ax.set_xlim(-0.5, nb - 0.5); ax.set_ylim(nb - 0.5, -0.5); ax.set_aspect("equal")
+ax.set_xticks(range(nb)); ax.set_xticklabels(names, rotation=90, fontsize=4.6)
+ax.set_yticks(range(nb)); ax.set_yticklabels(names, fontsize=4.6)
+ax.tick_params(length=0, pad=6)
+for t_, c_ in zip(ax.get_yticklabels(), cl): t_.set_color("#333")
+ax.set_xlabel("預測建築", labelpad=4); ax.set_ylabel("真實建築", labelpad=4)
 for s in ("top", "right", "left", "bottom"):
     ax.spines[s].set_visible(False)
-ax.tick_params(length=0)
-cb = fig.colorbar(im, ax=ax, fraction=0.025, pad=0.01); cb.set_label("佔該建築查詢的比例（對數色階）"); cb.outline.set_linewidth(0.4)
-ax.set_title(f"留一法混淆矩陣（DINOv2-small，整張圖；n = {int(valid.sum())}；格內數字為誤判次數）", loc="left", pad=6)
+ax.set_title(f"留一法混淆氣泡矩陣（DINOv2-small，整張圖；n = {int(valid.sum())}）", loc="left", pad=22)
+
+# b 每棟 Top-1
+axb = fig.add_subplot(gs[0, 1], sharey=ax)
+cols_b = [OI["blue"] if a_ >= 0.85 else OI["orange"] if a_ >= 0.7 else OI["red"] for a_ in acc_row]
+axb.barh(range(nb), acc_row * 100, color=cols_b, height=0.62, lw=0)
+for i, (a_, n_) in enumerate(zip(acc_row, rowsum)):
+    axb.text(103, i, f"{int(M[i, i])}/{int(n_)}", va="center", fontsize=4.2, color="#555")
+axb.axvline(hit[valid].mean() * 100, color=OI["black"], lw=0.5, ls=(0, (2, 2)), zorder=0)
+axb.set_xlim(0, 135); axb.set_xticks([0, 50, 100]); axb.set_xlabel("Top-1 (%)")
+axb.tick_params(axis="y", left=False, labelleft=False); axb.spines["left"].set_visible(False)
+axb.set_title("b", loc="left", fontsize=8, fontweight="bold", pad=22)
+
+# c 最常見的混淆（雙向合計）
+pairs = {}
+for i in range(nb):
+    for j in range(nb):
+        if i != j and M[i, j]:
+            k = tuple(sorted((i, j))); pairs[k] = pairs.get(k, 0) + M[i, j]
+top = sorted(pairs.items(), key=lambda kv: -kv[1])[:6]
+axc = fig.add_subplot(gs[1, :]); axc.axis("off")
+axc.text(0, 1.12, "c", fontsize=8, fontweight="bold", transform=axc.transAxes)
+axc.text(0.03, 1.12, "最常見的混淆（雙向合計）", fontsize=6.5, transform=axc.transAxes)
+axc.text(1.0, 1.12, "a 圖例：藍圓面積＝該建築被認對的比例　紅圓＝誤判（數字為 ≥ 2 次）", fontsize=4.8, color="#555", ha="right", transform=axc.transAxes)
+for k, ((i, j), n_) in enumerate(top):
+    x0 = (k % 3) / 3; y0 = 0.5 - (k // 3) * 0.6
+    axc.add_patch(FancyBboxPatch((x0 + 0.005, y0 - 0.04), 0.31, 0.44, boxstyle="round,pad=0.01,rounding_size=0.02",
+                                 transform=axc.transAxes, facecolor="#F6F7F9", edgecolor="#DDDDDD", lw=0.5, clip_on=False))
+    axc.text(x0 + 0.02, y0 + 0.18, f"{int(n_)}", fontsize=10, fontweight="bold", color=OI["red"], transform=axc.transAxes, va="center")
+    same = "同類" if cl[i] == cl[j] else "跨類"
+    axc.text(x0 + 0.07, y0 + 0.26, f"{names[i]}  ↔  {names[j]}", fontsize=5.6, transform=axc.transAxes, va="center")
+    axc.text(x0 + 0.07, y0 + 0.08, f"{CLS_ZH.get(cl[i])}／{CLS_ZH.get(cl[j])} · {same}", fontsize=4.8, color="#666", transform=axc.transAxes, va="center")
 save(fig, "fig3-confusion")
 
 (OUT / "figures.json").write_text(json.dumps({"auc_pairs": aucs, "n_pairs": int(same_pair.size)}, ensure_ascii=False, indent=1), encoding="utf-8")
