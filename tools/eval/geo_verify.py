@@ -109,10 +109,12 @@ class DiskLightGlueMatcher:
     def verify(self, pa, pb) -> dict:
         la, da = self._feat(pa)
         lb, db = self._feat(pb)
-        if da is None or db is None or len(da) < 8 or len(db) < 8:
+        # 描述子帶批次維度 (1,N,D)：要看第 1 維的特徵點數；len(da) 恆為 1，曾讓所有配對都回傳 0 內點
+        if da is None or db is None or da.shape[1] < 8 or db.shape[1] < 8:
             return dict(inliers=0, ratio=0.0, ok=False)
         with self.torch.no_grad():
-            dist, idx = self.matcher(da, db, la, lb)      # 需批次維度：(B,N,D) 與 (B,N,2,3)
+            # kornia 0.8：描述子不帶批次維度 (N,D)，LAF 帶批次維度 (1,N,2,3)；傳 (1,N,D) 會靜默回傳 0 個匹配
+            dist, idx = self.matcher(da[0], db[0], la, lb)
         if idx is None or len(idx) < 8:
             return dict(inliers=0, ratio=0.0, ok=False, matches=0 if idx is None else len(idx))
         src = la[0][:, :2, 2][idx[:, 0]].cpu().numpy()

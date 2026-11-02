@@ -1,0 +1,109 @@
+{
+ "method": "DISK + LightGlue",
+ "rule": {
+  "margin": 0.08,
+  "min_inliers": 20,
+  "lead": 10
+ },
+ "n": 335,
+ "triggered": 46,
+ "top1_base": 0.8896,
+ "top1_rerank": 0.9015,
+ "triggered_base": 0.4783,
+ "triggered_rerank": 0.5652,
+ "mcnemar": {
+  "b01": 6,
+  "b10": 2,
+  "p": 0.2891
+ },
+ "changed": [
+  {
+   "query": "u04.jpg",
+   "truth": "fishermans-wharf",
+   "from": "the-venetian",
+   "to": "fishermans-wharf",
+   "inliers": [
+    5,
+    157,
+    17
+   ]
+  },
+  {
+   "query": "Kun_Iam_Temple_05.JPG",
+   "truth": "kun-iam-temple",
+   "from": "na-tcha-temple",
+   "to": "kun-iam-temple",
+   "inliers": [
+    0,
+    91,
+    0
+   ]
+  },
+  {
+   "query": "Kun_Iam_Temple_Macau_02.JPG",
+   "truth": "kun-iam-temple",
+   "from": "na-tcha-temple",
+   "to": "kun-iam-temple",
+   "inliers": [
+    9,
+    91,
+    4
+   ]
+  },
+  {
+   "query": "u01.jpg",
+   "truth": "macau-museum",
+   "from": "macau-museum",
+   "to": "fortress-monte",
+   "inliers": [
+    92,
+    292,
+    4
+   ]
+  },
+  {
+   "query": "u04.jpg",
+   "truth": "macau-museum",
+   "from": "macau-museum",
+   "to": "fortress-monte",
+   "inliers": [
+    92,
+    129,
+    4
+   ]
+  },
+  {
+   "query": "Igreja_de_São_Lourenço_2011c_8e668c.jpg",
+   "truth": "st-lawrence-church",
+   "from": "st-dominic-church",
+   "to": "st-lawrence-church",
+   "inliers": [
+    4,
+    117,
+    6
+   ]
+  },
+  {
+   "query": "u02.jpg",
+   "truth": "the-venetian",
+   "from": "londoner-macao",
+   "to": "the-venetian",
+   "inliers": [
+    30,
+    169,
+    10
+   ]
+  },
+  {
+   "query": "u03.jpg",
+   "truth": "the-venetian",
+   "from": "moorish-barracks",
+   "to": "the-venetian",
+   "inliers": [
+    0,
+    21,
+    0
+   ]
+  }
+ ]
+}

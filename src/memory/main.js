@@ -1,5 +1,6 @@
 import './memory.css';
 import { encodeWav, base64Audio } from '../guide-audio.js';
+import { timelineOf } from './timeline.js';
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 const safeLink = value => { try { const u = new URL(value, location.href); return ['http:', 'https:'].includes(u.protocol) ? u.href : '#'; } catch { return '#'; } };
@@ -29,7 +30,10 @@ function renderCurrent() {
   const p = current.place;
   $('place-heading').innerHTML = `<div class="place-title"><div><p class="eyebrow">${esc(p.memoryId || '地點記憶檔案')} · ${esc(p.categoryName || '城市記憶')}</p><h2>${esc(p.name)}</h2><p>${esc(p.summary || '這個地點的故事，等待你來補上。')}</p><div class="button-row"><a class="text-link" href="${esc(p.mapPath || './')}">在地圖中查看</a><span class="muted">${esc(p.provenance || '')}</span></div></div>${p.cover ? `<img src="${esc(p.cover)}" alt="${esc(p.name)}實拍">` : ''}</div>`;
   $('story-list').innerHTML = current.stories.length ? current.stories.map(s => `<article class="story-card" id="story-${esc(s.id)}"><span class="badge">${statusNames[s.status]}</span><h3>${esc(s.title)}</h3><p class="meta">${esc(s.author)} · ${esc(s.era)}</p><p class="story-text">${esc(s.text)}</p>${mediaMarkup(s.media)}${s.reviewNote ? `<p class="muted">審核意見：${esc(s.reviewNote)}</p>` : ''}<div class="button-row"><button class="secondary" data-story-card="${esc(s.id)}">加入拼圖</button>${s.owner === bootstrap.user.id ? `<button class="secondary" data-edit-story="${esc(s.id)}">編輯／撤回公開</button>` : ''}</div></article>`).join('') : '<div class="empty-state"><b>第一段記憶，可以從你開始。</b><p>照片、原聲和親身經歷，都能成為這個地點的一部分。</p></div>';
-  $('photo-list').innerHTML = (p.gallery ?? []).map(ph => `<article><a href="${esc(ph.file)}" target="_blank" rel="noopener"><img src="${esc(ph.thumb || ph.file)}" loading="lazy" alt="${esc(p.name)}真實照片"></a><p>${esc(ph.taken || '拍攝日期未記錄')}</p><small>${esc(ph.credit)}</small>${ph.sourcePage ? `<a href="${esc(safeLink(ph.sourcePage))}" target="_blank" rel="noopener">原始來源</a>` : ''}</article>`).join('') || '<p class="empty-state">尚未有既有相冊；可先透過記憶投稿保存照片。</p>';
+  // 按拍攝年份排列，呈現同一地點跨年代的變化（無日期者排在最後）
+  const tl = timelineOf(p.gallery ?? []);
+  $('photo-span').textContent = tl.dated >= 2 && tl.span > 0 ? `${tl.first}–${tl.last} · 跨 ${tl.span} 年 · ${tl.dated} 張有拍攝日期` : '';
+  $('photo-list').innerHTML = tl.photos.map(ph => `<article><a href="${esc(ph.file)}" target="_blank" rel="noopener"><img src="${esc(ph.thumb || ph.file)}" loading="lazy" alt="${esc(p.name)}真實照片${ph.year ? `（${ph.year} 年）` : ''}"></a>${ph.year ? `<span class="photo-year">${ph.year}</span>` : ''}<p>${esc(ph.taken || '拍攝日期未記錄')}</p><small>${esc(ph.credit)}</small>${ph.sourcePage ? `<a href="${esc(safeLink(ph.sourcePage))}" target="_blank" rel="noopener">原始來源</a>` : ''}</article>`).join('') || '<p class="empty-state">尚未有既有相冊；可先透過記憶投稿保存照片。</p>';
   $('puzzle-select').innerHTML = '<option value="">建立新拼圖</option>' + current.puzzles.map(p => `<option value="${esc(p.id)}">${esc(p.title)}</option>`).join('');
   $('story-tray').innerHTML = current.stories.map(s => `<button class="clue-card" data-story-card="${esc(s.id)}"><b>${esc(s.title)}</b><small>${esc(s.author)} · ${esc(s.era)}</small><span>加入拼圖</span></button>`).join('') || '<p class="muted">先保存自己的故事，或閱讀已公開記憶。</p>';
   renderPuzzle(); renderClues(current.knowledge); renderScenes();

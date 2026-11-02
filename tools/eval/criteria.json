@@ -1,0 +1,40 @@
+{
+  "note": "設計指標與限制條件。target 由研究者在實地測試前填寫並凍結（填寫日期寫進 frozen_on）；baseline 為目前可核對的實測值與其口徑。檢查：python tools/eval/check_criteria.py",
+  "frozen_on": null,
+  "criteria": [
+    {"id": "C1", "name": "實地照片 Top-1 準確率", "direction": ">=", "unit": "%", "target": null,
+     "measure": "獨立實地拍攝的庫內建築照片（測試組，按拍攝日期與校準組隔離），首位候選正確的比例，附 Wilson 95% 信賴區間",
+     "source": "tools/recognize/independent-eval.mjs 的 test 組",
+     "baseline": {"value": 88.96, "scope": "參考庫留一法（38 棟／335 張公開照片），非實地口徑", "evidence": "public/data/memory-embeddings.json eval.top1"}},
+    {"id": "C2", "name": "實地照片 Top-3 準確率", "direction": ">=", "unit": "%", "target": null,
+     "measure": "同 C1，正確建築出現在前三個候選的比例",
+     "source": "tools/recognize/independent-eval.mjs 的 test 組",
+     "baseline": {"value": 94.93, "scope": "參考庫留一法，非實地口徑", "evidence": "public/data/memory-embeddings.json eval.top3"}},
+    {"id": "C3", "name": "高信心結果精確率", "direction": ">=", "unit": "%", "target": null,
+     "measure": "相似度 ≥ 0.82（自動標為高信心）的查詢中，首位候選正確的比例",
+     "source": "實地 test 組",
+     "baseline": {"value": 97.8, "scope": "參考庫留一法", "evidence": "docs/report-isef/figs/stats.json hit_precision"}},
+    {"id": "C4", "name": "高信心覆蓋率", "direction": ">=", "unit": "%", "target": null,
+     "measure": "相似度 ≥ 0.82 的查詢佔全部庫內查詢的比例（越高代表越少需要人工確認）",
+     "source": "實地 test 組",
+     "baseline": {"value": 55.5, "scope": "參考庫留一法", "evidence": "docs/report-isef/figs/stats.json hit_cover"}},
+    {"id": "C5", "name": "庫外建築誤接受率", "direction": "<=", "unit": "%", "target": null,
+     "measure": "庫外建築照片被標為高信心（≥ 0.82）的比例",
+     "source": "實地 test 組中 buildingId 為 unknown:* 的照片",
+     "baseline": {"value": 1.19, "scope": "模擬：留一棟法（查詢時把該棟全部參考照片移出庫），4／335", "evidence": "public/data/memory-embeddings.json 重算"}},
+    {"id": "C6", "name": "手機瀏覽器識別耗時", "direction": "<=", "unit": "秒", "target": null,
+     "measure": "模型已快取後，從按下「開始辨識」到出結果的時間；至少 2 部不同檔次手機、每部 10 次取中位數",
+     "source": "識別頁診斷面板 totalMs",
+     "baseline": {"value": 2.54, "scope": "桌上型電腦 Chrome 單次實測，手機未測", "evidence": "docs/report-isef/shots/recognize.png（總耗時 2538 ms）"}},
+    {"id": "C7", "name": "首次下載的模型大小", "direction": "<=", "unit": "MB", "target": null,
+     "measure": "DINOv2 ONNX 與 YOLO ONNX 檔案大小合計",
+     "source": "public/models/",
+     "baseline": {"value": 125.2, "scope": "dinov2-vits14-336.onnx 87.2 MB + macau-buildings-yolo.onnx 38.0 MB", "evidence": "檔案大小"}}
+  ],
+  "constraints": [
+    {"id": "K1", "name": "識別時照片不上傳", "check": "開啟瀏覽器開發者工具的網路面板，完成一次識別，確認沒有任何含照片內容的請求", "status": null},
+    {"id": "K2", "name": "模型快取後可離線識別", "check": "載入一次後斷網，再完成一次識別", "status": null},
+    {"id": "K3", "name": "識別不需伺服器運算", "check": "識別流程只使用瀏覽器內 onnxruntime-web（src/recognize）", "status": null},
+    {"id": "K4", "name": "公開展示的照片均有授權", "check": "網站與展板上每張照片都有作者、授權與來源；僅限內部評測的照片不得公開", "status": null}
+  ]
+}

@@ -85,3 +85,6 @@ photos-src/_hold-wikimedia/
 /docs/video/_verify/
 /docs/video/stats*.txt
 /CAICP/
+
+# 評測向量快取（可由 tools/eval/ablation.py、extended.py 重算）
+/tools/eval/out/ablation-cache/

@@ -28,7 +28,10 @@ test("the archive is one click away from every page", () => {
 test("nav marks only the current page and keeps page-specific controls", () => {
   const html = injectSiteNav('<head></head><site-nav current="memory"><button id="export">匯出</button></site-nav>');
   assert.equal(html.match(/aria-current="page"/g).length, 1);
-  assert.match(html, /<a href="\.\/memory\.html" aria-current="page">/);
+  assert.match(html, /<a href="\.\/memory\.html" aria-current="page" data-zh="共創記憶" data-hans="共创记忆" data-en="Memories" data-pt="Memórias">/);
+  assert.match(html, /<details class="site-prefs">/, "language and accessibility panel");
+  for (const v of ["zh-Hant", "zh-Hans", "en", "pt"]) assert.match(html, new RegExp(`name="site-lang" value="${v}"`));
+  assert.equal(html.split("/src/site-prefs.js").length - 1, 1, "prefs script injected once");
   assert.match(html, /<div class="site-nav-extra"><button id="export">匯出<\/button><\/div>/);
   assert.match(injectSiteNav('<site-nav current="gaussian" overlay></site-nav>'), /site-nav--overlay/);
   assert.throws(() => siteNavHtml("typo"), /Unknown site page/);

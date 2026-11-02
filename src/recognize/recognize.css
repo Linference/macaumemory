@@ -458,3 +458,7 @@ body.rc :is(button, a, input, select, textarea, summary, [role=button]):focus-vi
 .rc-camera-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
 .rc-camera-buttons .btn { min-height: 44px; }
 @media (max-width: 480px) { .rc-camera-buttons .btn { width: 100%; } }
+
+/* 把握不足時引導多角度確認（消融實驗：三張照片 81.9% → 92.5%） */
+.rc-mv-nudge { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; padding: 8px 12px; border-radius: 10px;
+  border: 1px dashed color-mix(in srgb, var(--gold, #d8b45a) 60%, transparent); font-size: 13px; }
