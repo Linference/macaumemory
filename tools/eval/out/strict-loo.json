@@ -1,0 +1,506 @@
+{
+ "buildings": {
+  "a-ma-temple": {
+   "zh": "媽閣廟",
+   "photos": 13,
+   "photographers": 4,
+   "plain": [
+    12,
+    13
+   ],
+   "strict": [
+    12,
+    13
+   ]
+  },
+  "cathedral-macau": {
+   "zh": "主教座堂（大堂）",
+   "photos": 3,
+   "photographers": 2,
+   "plain": [
+    3,
+    3
+   ],
+   "strict": [
+    3,
+    3
+   ]
+  },
+  "coloane-village": {
+   "zh": "路環市區",
+   "photos": 5,
+   "photographers": 2,
+   "plain": [
+    4,
+    5
+   ],
+   "strict": [
+    0,
+    5
+   ]
+  },
+  "dom-pedro-v-theatre": {
+   "zh": "崗頂劇院（伯多祿五世劇院）",
+   "photos": 10,
+   "photographers": 1,
+   "plain": [
+    10,
+    10
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "fishermans-wharf": {
+   "zh": "澳門漁人碼頭",
+   "photos": 4,
+   "photographers": 1,
+   "plain": [
+    2,
+    4
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "fortress-monte": {
+   "zh": "大炮台（聖保祿炮台）",
+   "photos": 9,
+   "photographers": 1,
+   "plain": [
+    8,
+    9
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "galaxy-macau": {
+   "zh": "澳門銀河",
+   "photos": 10,
+   "photographers": 1,
+   "plain": [
+    10,
+    10
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "grand-lisboa": {
+   "zh": "葡京酒店（新葡京）",
+   "photos": 13,
+   "photographers": 3,
+   "plain": [
+    12,
+    13
+   ],
+   "strict": [
+    10,
+    13
+   ]
+  },
+  "grand-prix-museum": {
+   "zh": "澳門大賽車博物館",
+   "photos": 3,
+   "photographers": 1,
+   "plain": [
+    2,
+    3
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "guia-fortress": {
+   "zh": "東望洋炮台及燈塔",
+   "photos": 10,
+   "photographers": 1,
+   "plain": [
+    10,
+    10
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "guiuan-village": {
+   "zh": "氹仔舊城區",
+   "photos": 5,
+   "photographers": 4,
+   "plain": [
+    2,
+    5
+   ],
+   "strict": [
+    2,
+    5
+   ]
+  },
+  "kun-iam-statue": {
+   "zh": "觀音蓮花苑",
+   "photos": 10,
+   "photographers": 1,
+   "plain": [
+    10,
+    10
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "kun-iam-temple": {
+   "zh": "觀音堂（普濟禪院）",
+   "photos": 26,
+   "photographers": 8,
+   "plain": [
+    24,
+    26
+   ],
+   "strict": [
+    24,
+    26
+   ]
+  },
+  "lai-chi-vun": {
+   "zh": "荔枝碗船廠",
+   "photos": 4,
+   "photographers": 2,
+   "plain": [
+    4,
+    4
+   ],
+   "strict": [
+    1,
+    4
+   ]
+  },
+  "leal-senado": {
+   "zh": "市政署大樓",
+   "photos": 11,
+   "photographers": 4,
+   "plain": [
+    11,
+    11
+   ],
+   "strict": [
+    11,
+    11
+   ]
+  },
+  "londoner-macao": {
+   "zh": "澳門倫敦人",
+   "photos": 8,
+   "photographers": 1,
+   "plain": [
+    8,
+    8
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "lou-kau-house": {
+   "zh": "盧家大屋（金玉堂）",
+   "photos": 10,
+   "photographers": 1,
+   "plain": [
+    9,
+    10
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "macau-cultural-centre": {
+   "zh": "澳門文化中心",
+   "photos": 8,
+   "photographers": 1,
+   "plain": [
+    7,
+    8
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "macau-museum": {
+   "zh": "澳門博物館",
+   "photos": 3,
+   "photographers": 1,
+   "plain": [
+    3,
+    3
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "macau-science-center": {
+   "zh": "澳門科學館",
+   "photos": 10,
+   "photographers": 2,
+   "plain": [
+    10,
+    10
+   ],
+   "strict": [
+    1,
+    10
+   ]
+  },
+  "macau-tower": {
+   "zh": "澳門旅遊塔",
+   "photos": 17,
+   "photographers": 7,
+   "plain": [
+    16,
+    17
+   ],
+   "strict": [
+    13,
+    17
+   ]
+  },
+  "mandarins-house": {
+   "zh": "鄭家大屋",
+   "photos": 12,
+   "photographers": 3,
+   "plain": [
+    11,
+    12
+   ],
+   "strict": [
+    9,
+    12
+   ]
+  },
+  "mgm-macau": {
+   "zh": "澳門美高梅",
+   "photos": 9,
+   "photographers": 1,
+   "plain": [
+    9,
+    9
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "moorish-barracks": {
+   "zh": "港務局大樓",
+   "photos": 13,
+   "photographers": 4,
+   "plain": [
+    13,
+    13
+   ],
+   "strict": [
+    13,
+    13
+   ]
+  },
+  "na-tcha-temple": {
+   "zh": "大三巴哪吒廟",
+   "photos": 9,
+   "photographers": 1,
+   "plain": [
+    9,
+    9
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "parisian": {
+   "zh": "澳門巴黎人",
+   "photos": 10,
+   "photographers": 2,
+   "plain": [
+    9,
+    10
+   ],
+   "strict": [
+    5,
+    10
+   ]
+  },
+  "portas-do-cerco": {
+   "zh": "關閘（關閘拱門）",
+   "photos": 9,
+   "photographers": 1,
+   "plain": [
+    9,
+    9
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "red-market": {
+   "zh": "紅街市（提督街市）",
+   "photos": 5,
+   "photographers": 5,
+   "plain": [
+    3,
+    5
+   ],
+   "strict": [
+    3,
+    5
+   ]
+  },
+  "rua-da-felicidade": {
+   "zh": "福隆新街",
+   "photos": 5,
+   "photographers": 3,
+   "plain": [
+    4,
+    5
+   ],
+   "strict": [
+    4,
+    5
+   ]
+  },
+  "ruins-st-paul": {
+   "zh": "大三巴牌坊",
+   "photos": 17,
+   "photographers": 3,
+   "plain": [
+    17,
+    17
+   ],
+   "strict": [
+    15,
+    17
+   ]
+  },
+  "senado-square": {
+   "zh": "議事亭前地",
+   "photos": 4,
+   "photographers": 4,
+   "plain": [
+    4,
+    4
+   ],
+   "strict": [
+    4,
+    4
+   ]
+  },
+  "st-dominic-church": {
+   "zh": "玫瑰堂（聖多明我教堂）",
+   "photos": 13,
+   "photographers": 5,
+   "plain": [
+    11,
+    13
+   ],
+   "strict": [
+    11,
+    13
+   ]
+  },
+  "st-joseph-seminary": {
+   "zh": "聖若瑟修院及聖堂",
+   "photos": 10,
+   "photographers": 1,
+   "plain": [
+    8,
+    10
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "st-lawrence-church": {
+   "zh": "聖老楞佐堂",
+   "photos": 8,
+   "photographers": 3,
+   "plain": [
+    4,
+    8
+   ],
+   "strict": [
+    0,
+    8
+   ]
+  },
+  "taipa-houses": {
+   "zh": "龍環葡韻住宅式博物館",
+   "photos": 14,
+   "photographers": 3,
+   "plain": [
+    13,
+    14
+   ],
+   "strict": [
+    13,
+    14
+   ]
+  },
+  "the-venetian": {
+   "zh": "澳門威尼斯人",
+   "photos": 10,
+   "photographers": 3,
+   "plain": [
+    8,
+    10
+   ],
+   "strict": [
+    7,
+    10
+   ]
+  },
+  "wynn-macau": {
+   "zh": "永利澳門",
+   "photos": 8,
+   "photographers": 1,
+   "plain": [
+    5,
+    8
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  },
+  "wynn-palace": {
+   "zh": "永利皇宮",
+   "photos": 8,
+   "photographers": 1,
+   "plain": [
+    8,
+    8
+   ],
+   "strict": [
+    0,
+    0
+   ]
+  }
+ },
+ "plain": {
+  "top1": 0.9045,
+  "n": 356
+ },
+ "strict": {
+  "top1": 0.7385,
+  "n": 218
+ }
+}
