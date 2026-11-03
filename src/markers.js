@@ -82,8 +82,7 @@ export class MarkerLayer {
       el.innerHTML = `
         <span class="marker-pin">${iconSvg(cat.icon, 14)}</span>
         <span class="marker-label">${T(a.zh)}</span>
-        ${(a.modelCount ?? a.artifactCount) ? `<span class="marker-badge">3D</span>` : ""}
-        ${a.photoCount ? `<span class="marker-photo">📷${a.photoCount}</span>` : ""}`;
+        ${(a.modelCount ?? a.artifactCount) ? `<span class="marker-badge">3D</span>` : ""}`;
       el.addEventListener("click", (e) => {
         e.stopPropagation();
         if (this.dragging) return;
@@ -96,7 +95,24 @@ export class MarkerLayer {
         .addTo(this.map);
       this.markers.set(a.id, { marker, el, data: a });
     }
+    this.setPhotoCounts(this.photoCounts ?? new Map());
     this.refreshLabels();
+  }
+
+  /**
+   * 景點標記上的實拍照片張數（景點 id → 張數；不在表裡就不顯示）。
+   * 記憶點與景點同一位置時只畫這個徽章，不再另外疊一個記憶點圓圈。
+   */
+  setPhotoCounts(counts) {
+    this.photoCounts = counts;
+    for (const [id, { el }] of this.markers) {
+      const n = counts.get(id) ?? 0;
+      let badge = el.querySelector(".marker-photo");
+      if (!n) { badge?.remove(); continue; }
+      if (!badge) { badge = document.createElement("span"); badge.className = "marker-photo"; el.appendChild(badge); }
+      badge.textContent = `📷${n}`;
+      badge.title = `${n} 張實拍照片`;
+    }
   }
 
   /** 依縮放決定是否常駐顯示名稱，並依「重要度分層」隱藏次要標記（去雜亂） */

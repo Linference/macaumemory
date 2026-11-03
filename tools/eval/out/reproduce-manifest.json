@@ -1,0 +1,47 @@
+{
+ "started": "2026-11-02 16:54:39",
+ "python": "3.11.9",
+ "platform": "Windows-10-10.0.26300-SP0",
+ "packages": {
+  "numpy": "2.4.4",
+  "onnxruntime": "1.30.0",
+  "torch": "2.13.0+cu130",
+  "transformers": "5.14.1",
+  "ultralytics": "8.4.115",
+  "kornia": "0.8.3",
+  "scikit-learn": "1.9.0",
+  "matplotlib": "3.11.1",
+  "scipy": "1.17.1"
+ },
+ "inputs": {
+  "public/data/memory-embeddings.json": "6c41ed384789d4a39efc738056e2a8ab7ac89be26723efa4357d4a1ce3b7c0f1",
+  "public/models/dinov2-vits14-336.onnx": "039dd80090cb7f6a2ff946cd5692b6594e8531405c29186085b774edd98809e2",
+  "public/models/dinov2-vits14-336.int8.onnx": "7208e6874eff532c8b0a9394f0c0ae0fd4a2ea9dc4e6f1b84e661bf4d5964157",
+  "public/models/macau-buildings-yolo.onnx": "5cfb0cbccc5851db7280fd3ffbf21e7cb1d2d5d240df2113952e3749f0517361",
+  ".cache/models/yolo/macau-buildings-best.pt": "5de110f99111605ee1978eb4dfdbb8afacdd6a271c9dbd48d65e18932f4a7db6",
+  "photos-src/cc/ATTRIBUTION.csv": "0ae49da57a2d2314cde29715ccf7b23ff4c05d91b4db4cdf8088d3d5d2095431",
+  "tools/recognize/curation.json": "9f3be1a92d979875f20fd7ad43a3d380d185ed22f76baab3ad1c1d38e77449c8"
+ },
+ "steps": [
+  {
+   "step": "ablation",
+   "exit": 0,
+   "seconds": 1499.2
+  },
+  {
+   "step": "extended",
+   "exit": 0,
+   "seconds": 3324.3
+  },
+  {
+   "step": "rerank",
+   "exit": 0,
+   "seconds": 98.1
+  },
+  {
+   "step": "figures",
+   "exit": 0,
+   "seconds": 19.4
+  }
+ ]
+}

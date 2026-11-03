@@ -3,7 +3,7 @@
   "id": "ruins-st-paul",
   "zh": "大三巴牌坊",
   "coords": [
-   113.540839,
+   113.54084,
    22.197458
   ],
   "geoSource": "building",
@@ -55,27 +55,27 @@
   "id": "st-dominic",
   "zh": "玫瑰聖母堂",
   "coords": [
-   113.54037,
-   22.194838
+   113.540371,
+   22.194847
   ],
   "geoSource": "building",
   "geoRef": "玫瑰聖母堂",
   "wikidata": null,
-  "coordMovedMeters": 123,
+  "coordMovedMeters": 124,
   "geoEvidence": "building:玫瑰聖母堂(16.4) > poi-exact:St. Dominic's (15.3) > wikidata-search:Q4130614(9.3)"
  },
  {
   "id": "leal-senado",
-  "zh": "民政總署大樓",
+  "zh": "市政署大樓",
   "coords": [
-   113.539773,
-   22.193502
+   113.539382,
+   22.193327
   ],
-  "geoSource": "poi-exact",
-  "geoRef": "民政總署大樓",
+  "geoSource": "building-id",
+  "geoRef": "市政署大樓 Edifício do Leal Senado",
   "wikidata": "Q3181816",
-  "coordMovedMeters": 31,
-  "geoEvidence": "poi-exact:民政總署大樓(16.9) > poi-exact:Leal Senado Bu(16.9) > building:市政署大樓 Edifício(14.8)"
+  "coordMovedMeters": 20,
+  "geoEvidence": "building-id:市政署大樓 Edifício · building:市政署大樓 Edifício(17.6) > poi-exact:Leal Senado Bu(16.9) > area:市政署大樓內庭花園 Átri(15.6)"
  },
  {
   "id": "cathedral",
@@ -107,14 +107,14 @@
   "id": "mandarins-house",
   "zh": "鄭家大屋",
   "coords": [
-   113.534876,
-   22.188705
+   113.534756,
+   22.188657
   ],
-  "geoSource": "poi-exact",
-  "geoRef": "Mandarin's House",
+  "geoSource": "building-id",
+  "geoRef": "鄭家大屋",
   "wikidata": "Q6757684",
-  "coordMovedMeters": 150,
-  "geoEvidence": "poi-exact:Mandarin's Hou(15.3) > building:鄭家大屋(14.8) > wikipedia-en:Mandarin's Hou(7.7)"
+  "coordMovedMeters": 149,
+  "geoEvidence": "building-id:鄭家大屋 · poi-exact:Mandarin's Hou(15.3) > building:鄭家大屋(14.8) > wikipedia-en:Mandarin's Hou(7.7)"
  },
  {
   "id": "lilau-square",
@@ -159,8 +159,8 @@
   "id": "st-lawrence",
   "zh": "聖老楞佐堂",
   "coords": [
-   113.536765,
-   22.190665
+   113.536762,
+   22.190666
   ],
   "geoSource": "building",
   "geoRef": "聖老楞佐堂 Igreja de S. Lourenço",
@@ -198,21 +198,21 @@
   "id": "tam-kung-temple",
   "zh": "路環譚公廟",
   "coords": [
-   113.550122,
-   22.114362
+   113.550148,
+   22.114249
   ],
-  "geoSource": "poi-exact",
-  "geoRef": "譚公廟",
+  "geoSource": "building-id",
+  "geoRef": "譚僊聖廟 (譚公廟) Templo de Tam Kong",
   "wikidata": "Q27618690",
-  "coordMovedMeters": 0,
-  "geoEvidence": "poi-exact:譚公廟(13.7) > wikidata:路環譚公廟(7.7) > curated(5.2)"
+  "coordMovedMeters": 13,
+  "geoEvidence": "building-id:譚僊聖廟 (譚公廟) Tem · poi-exact:譚公廟(13.7) > wikidata:路環譚公廟(7.7) > curated(5.2)"
  },
  {
   "id": "st-francis-xavier",
   "zh": "路環聖方濟各聖堂",
   "coords": [
-   113.551489,
-   22.1169
+   113.551494,
+   22.116904
   ],
   "geoSource": "building",
   "geoRef": "路環聖方濟各聖堂 Igreja de São Francisco Xavier",
@@ -289,8 +289,8 @@
   "id": "handover-gifts",
   "zh": "澳門回歸賀禮陳列館",
   "coords": [
-   113.554096,
-   22.190087
+   113.554125,
+   22.190064
   ],
   "geoSource": "building",
   "geoRef": "澳門回歸賀禮陳列館 Museu das Ofertas sobre a Transferência de Soberania de Macau",
@@ -302,8 +302,8 @@
   "id": "macau-tower",
   "zh": "澳門旅遊塔",
   "coords": [
-   113.5368,
-   22.179819
+   113.536794,
+   22.179822
   ],
   "geoSource": "building",
   "geoRef": "澳門旅遊塔 Macau Tower",
@@ -328,27 +328,27 @@
   "id": "guia-fortress",
   "zh": "東望洋炮台及燈塔",
   "coords": [
-   113.54977,
-   22.19651
+   113.549719,
+   22.196456
   ],
-  "geoSource": "wikipedia-search",
-  "geoRef": "東望洋燈塔",
+  "geoSource": "building-id",
+  "geoRef": "東望洋燈塔 Farol da Guia",
   "wikidata": "Q3313058",
-  "coordMovedMeters": 236,
-  "geoEvidence": "wikipedia-search:東望洋燈塔(4.5) > curated(2.0)"
+  "coordMovedMeters": 241,
+  "geoEvidence": "building-id:東望洋燈塔 Farol da · wikipedia-search:東望洋燈塔(4.5) > curated(2.0)"
  },
  {
   "id": "guia-cable-car",
   "zh": "松山纜車（二龍喉公園）",
   "coords": [
-   113.551092,
-   22.200411
+   113.55084,
+   22.200405
   ],
-  "geoSource": "area",
-  "geoRef": "二龍喉公園 Jardim da Flora",
+  "geoSource": "building-id",
+  "geoRef": "山下纜車站 Estação Inferior do Teleférico",
   "wikidata": null,
-  "coordMovedMeters": 352,
-  "geoEvidence": "area:二龍喉公園 Jardim d(10.9) > poi-far:Jardim Da Flor(3.1) > curated(2.0)"
+  "coordMovedMeters": 339,
+  "geoEvidence": "building-id:山下纜車站 Estação  · area:二龍喉公園 Jardim d(10.9) > poi-far:Jardim Da Flor(3.1) > curated(2.0)"
  },
  {
   "id": "macau-tower-note",
@@ -380,39 +380,39 @@
   "id": "macau-science-center",
   "zh": "澳門科學館",
   "coords": [
-   113.556965,
-   22.186193
+   113.556899,
+   22.186199
   ],
   "geoSource": "building",
   "geoRef": "澳門科學館 Centro de Ciência de Macau",
   "wikidata": "Q3084238",
-  "coordMovedMeters": 35,
+  "coordMovedMeters": 33,
   "geoEvidence": "building:澳門科學館 Centro d(16.0) > poi-exact:澳門科學館(15.3) > wikipedia-zh:澳門科學館(9.3)"
  },
  {
   "id": "kun-iam-statue",
   "zh": "觀音蓮花苑",
   "coords": [
-   113.55214,
-   22.185784
+   113.552141,
+   22.185783
   ],
   "geoSource": "building",
   "geoRef": "觀音蓮花苑 Centro de Ecuménico Kun Iam",
   "wikidata": "Q15928533",
-  "coordMovedMeters": 13,
+  "coordMovedMeters": 14,
   "geoEvidence": "building:觀音蓮花苑 Centro d(17.6) > poi-exact:觀音蓮花苑(16.9) > poi-exact:觀音蓮花苑 (觀音像) Ce(14.4)"
  },
  {
   "id": "centro-cultural",
   "zh": "澳門文化中心",
   "coords": [
-   113.555478,
+   113.555498,
    22.188866
   ],
   "geoSource": "building",
   "geoRef": "澳門文化中心 Centro Cultural de Macau",
   "wikidata": "Q15921899",
-  "coordMovedMeters": 313,
+  "coordMovedMeters": 315,
   "geoEvidence": "building:澳門文化中心 Centro (14.4) > poi-exact:Macao Cultural(13.7) > wikidata:澳門文化中心(7.7)"
  },
  {
@@ -458,14 +458,14 @@
   "id": "venetian",
   "zh": "澳門威尼斯人",
   "coords": [
-   113.559655,
-   22.149291
+   113.559726,
+   22.149233
   ],
-  "geoSource": "poi-exact",
-  "geoRef": "威尼斯人御匾會",
+  "geoSource": "building-id",
+  "geoRef": "Overture 282500a7",
   "wikidata": "Q1156708",
-  "coordMovedMeters": 156,
-  "geoEvidence": "poi-exact:威尼斯人御匾會(9.6) > poi-exact:The Venetian M(8.5) > wikipedia-en:The Venetian M(7.7)"
+  "coordMovedMeters": 146,
+  "geoEvidence": "building-id:Overture 28250 · poi-exact:威尼斯人御匾會(9.6) > poi-exact:The Venetian M(8.5) > wikipedia-en:The Venetian M(7.7)"
  },
  {
   "id": "parisian",
@@ -484,26 +484,26 @@
   "id": "londoner",
   "zh": "澳門倫敦人",
   "coords": [
-   113.564652,
-   22.14595
+   113.564639,
+   22.145924
   ],
   "geoSource": "building",
   "geoRef": "澳門倫敦人 The Londoner",
   "wikidata": "Q7416895",
-  "coordMovedMeters": 367,
+  "coordMovedMeters": 370,
   "geoEvidence": "building:澳門倫敦人 The Lond(12.8) > wikidata:澳門倫敦人(6.1) > curated(2.0)"
  },
  {
   "id": "galaxy",
   "zh": "澳門銀河",
   "coords": [
-   113.555202,
-   22.148866
+   113.555199,
+   22.148899
   ],
   "geoSource": "building",
   "geoRef": "澳門銀河萊佛士",
   "wikidata": "Q995639",
-  "coordMovedMeters": 52,
+  "coordMovedMeters": 51,
   "geoEvidence": "building:澳門銀河萊佛士(8.4) > wikidata:澳門銀河(6.1) > poi-far:Diamond Lobby (5.1)"
  },
  {
@@ -523,26 +523,26 @@
   "id": "studio-city",
   "zh": "新濠影滙",
   "coords": [
-   113.560053,
-   22.140926
+   113.560108,
+   22.140997
   ],
   "geoSource": "building",
   "geoRef": "Studio City",
   "wikidata": "Q6722530",
-  "coordMovedMeters": 1100,
+  "coordMovedMeters": 1092,
   "geoEvidence": "building:Studio City(9.8) > wikidata:新濠影滙(6.1) > curated(2.0)"
  },
  {
   "id": "wynn-palace",
   "zh": "永利皇宮",
   "coords": [
-   113.57162,
-   22.148326
+   113.571602,
+   22.148332
   ],
   "geoSource": "building",
   "geoRef": "永利皇宮 Palácio Wynn",
   "wikidata": "Q16925204",
-  "coordMovedMeters": 176,
+  "coordMovedMeters": 175,
   "geoEvidence": "building:永利皇宮 Palácio W(10.8) > building:Wynn Palace En(7.8) > building:永利皇宮活動中心 Wynn (6.8)"
  },
  {
@@ -562,13 +562,13 @@
   "id": "mgm-macau",
   "zh": "澳門美高梅",
   "coords": [
-   113.548271,
-   22.185582
+   113.548286,
+   22.18558
   ],
   "geoSource": "building",
   "geoRef": "澳門美高梅 MGM Macau",
   "wikidata": "Q995564",
-  "coordMovedMeters": 90,
+  "coordMovedMeters": 91,
   "geoEvidence": "building:澳門美高梅 MGM Maca(16.0) > building:澳門美高梅 MGM Maca(16.0) > wikipedia-zh:澳門美高梅(9.3)"
  },
  {
@@ -744,52 +744,52 @@
   "id": "portas-do-cerco",
   "zh": "關閘",
   "coords": [
-   113.549123,
-   22.215933
+   113.549148,
+   22.21596
   ],
-  "geoSource": "poi-exact",
-  "geoRef": "Portas do Cerco",
+  "geoSource": "building-id",
+  "geoRef": "關閘拱門 Portas do Cerco",
   "wikidata": "Q3272047",
-  "coordMovedMeters": 299,
-  "geoEvidence": "poi-exact:Portas do Cerc(13.7) > building:關閘拱門 Portas do(12.0) > poi-exact:關閘M記(8.5)"
+  "coordMovedMeters": 303,
+  "geoEvidence": "building-id:關閘拱門 Portas do · poi-exact:Portas do Cerc(13.7) > building:關閘拱門 Portas do(12.0) > poi-exact:關閘M記(8.5)"
  },
  {
   "id": "hzmb-port",
   "zh": "港珠澳大橋澳門口岸",
   "coords": [
-   113.576999,
-   22.200501
+   113.576693,
+   22.200727
   ],
-  "geoSource": "poi-exact",
-  "geoRef": "港珠澳大橋澳門口岸",
+  "geoSource": "building-id",
+  "geoRef": "港珠澳大橋澳門邊檢大樓 Edifício do Posto Fronteiriço da Ponte Hong Kong-Zhuhai-Macau",
   "wikidata": "Q28796013",
-  "coordMovedMeters": 56,
-  "geoEvidence": "poi-exact:港珠澳大橋澳門口岸(10.1) > curated(3.6) > wikidata:港珠澳大橋珠澳口岸(1.2)"
+  "coordMovedMeters": 37,
+  "geoEvidence": "building-id:港珠澳大橋澳門邊檢大樓 Ed · poi-exact:港珠澳大橋澳門口岸(10.1) > curated(3.6) > wikidata:港珠澳大橋珠澳口岸(1.2)"
  },
  {
   "id": "macau-airport",
   "zh": "澳門國際機場",
   "coords": [
-   113.5743,
-   22.157591
+   113.574307,
+   22.157625
   ],
   "geoSource": "building",
   "geoRef": "澳門國際機場客運大樓 Edifício do Terminal de Passageiros do Aeroporto Internacional de Macau",
   "wikidata": "Q525486",
-  "coordMovedMeters": 55,
+  "coordMovedMeters": 52,
   "geoEvidence": "building:澳門國際機場客運大樓 Edi(8.4) > curated(3.6) > wikipedia-zh:澳門國際機場(1.2)"
  },
  {
   "id": "macau-university",
   "zh": "澳門大學（橫琴校區）",
   "coords": [
-   113.544386,
-   22.124396
+   113.5444,
+   22.124373
   ],
   "geoSource": "building",
   "geoRef": "薈萃坊 Centro Comercial da Universidade de Macau (S8)",
   "wikidata": "Q1563050",
-  "coordMovedMeters": 570,
+  "coordMovedMeters": 572,
   "geoEvidence": "building:薈萃坊 Centro Com(6.4) > building:聚賢樓 Pousada da(6.4) > building:澳大運動場 Estádio (6.4)"
  },
  {

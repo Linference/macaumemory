@@ -133,14 +133,6 @@ canvas:focus { outline: none; }
 /* ---------------- 地圖標記 ---------------- */
 /* 注意：MapLibre 依賴絕對定位來擺放標記，這裡務必使用 absolute，
    否則標記會依 DOM 順序在文件流中堆疊而整體偏移 */
-.label-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
-.map-label { position: absolute; top: 0; left: 0; white-space: nowrap; pointer-events: auto; cursor: default; transition: opacity .25s; will-change: transform; }
-.map-label.hidden { opacity: 0; }
-.map-label-region { font-family: var(--serif); font-size: 15px; letter-spacing: .34em; color: #e8e2d6; opacity: .82; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
-.map-label-district { font-size: 12px; letter-spacing: .22em; color: #b3c1cd; opacity: .8; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
-.map-label-park { font-size: 11.5px; color: #8fbf94; opacity: .85; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
-.map-label-beach { font-size: 11.5px; color: #d8c48a; opacity: .85; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
-.map-label-street { font-size: 11px; color: #98a5b1; letter-spacing: .05em; opacity: .8; text-shadow: 0 1px 4px rgba(0,0,0,.9); }
 .poi-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; padding-top: 8px; border-top: 1px solid var(--line-soft); }
 .poi-chip { font-size: 10.5px; padding: 3px 7px; border-radius: 999px; border: 1px solid var(--line-soft); background: transparent; color: var(--ink-dim); cursor: pointer; font-family: var(--sans); transition: all .15s; }
 .poi-chip:hover { border-color: var(--line); color: var(--ink); }
@@ -305,7 +297,7 @@ canvas:focus { outline: none; }
   box-shadow: 0 0 0 3px rgba(216,180,90,.12); }
 /* 吉祥物歡迎頁（未開始對話時顯示） */
 .ai-hero { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px 6px 8px; text-align: center; }
-.ai-hero img { width: min(190px, 58%); border-radius: 12px; filter: drop-shadow(0 14px 28px rgba(0,0,0,.5)); }
+.ai-hero img { width: min(190px, 58%); height: auto; border-radius: 12px; filter: drop-shadow(0 14px 28px rgba(0,0,0,.5)); }
 .ai-hero-say { font-size: 13px; line-height: 1.8; color: #dbe4ec; background: rgba(255,255,255,.05);
   border: 1px solid var(--line-soft); border-radius: 14px 14px 14px 4px; padding: 11px 14px; max-width: 94%; margin: 0; }
 .ai-hero-hint { font-size: 11px; color: var(--ink-dim); margin: 0; letter-spacing: .04em; }

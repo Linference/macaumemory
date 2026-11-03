@@ -1,0 +1,32 @@
+/* 建築檔案頁：版面沿用辨識頁（recognize.css 的 body.rc、.panel、.rc-ledger），這裡只補記憶點卡片 */
+.archive .rc-wrap { padding-top: 8px; }
+.archive-hero { align-items: flex-end; flex-wrap: wrap; }
+.archive-lead { margin: 0; max-width: 560px; color: var(--ink-dim); font-size: 14px; line-height: 1.8; }
+
+.archive-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.archive-tabs a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); text-decoration: none; font-size: 13px; }
+.archive-tabs a:hover { background: var(--panel-2); }
+.archive-tabs b { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; }
+.archive-tabs .archive-new { border-color: var(--gold); color: var(--gold); }
+
+.archive-places, .archive .rc-ledger { scroll-margin-top: 76px; }
+.archive-section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.archive-section-head h2 { margin: 4px 0 0; font-size: 22px; font-weight: 600; }
+.archive-section-head input { width: min(320px, 100%); padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); color: var(--ink); }
+.archive-section-head input::placeholder { color: var(--ink-dim); }
+
+.archive-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.archive-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line-soft); border-radius: 14px; background: var(--panel-2); color: var(--ink); text-decoration: none; transition: border-color .15s, transform .15s; }
+.archive-card:hover { border-color: var(--line); transform: translateY(-2px); }
+.archive-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #0d141b; }
+.archive-card-body { display: grid; gap: 4px; padding: 12px 14px 15px; }
+.archive-card-body small { font-size: 11px; color: var(--gold); }
+.archive-card-body strong { font-size: 16px; font-weight: 600; }
+.archive-card-body span { font-size: 12px; line-height: 1.7; color: var(--ink-dim); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.archive-empty { color: var(--ink-dim); font-size: 13px; text-align: center; padding: 24px 0; }
+
+@media (max-width: 720px) {
+  .archive-tabs { width: 100%; }
+  .archive-tabs a { flex: 1 1 auto; justify-content: center; }
+  .archive-cards { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+}

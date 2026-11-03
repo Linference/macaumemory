@@ -2,6 +2,7 @@
 // 策略：切成小塊逐塊抓取（可續傳、可重跑補齊），避免大型查詢被伺服器拒絕
 import path from "node:path";
 import { overpass, overpassTiled, bboxStr, MACAU_BBOX, SAMPLING_BBOX, geomOf, q, featureCollection, writeJson, PUBLIC, ringAreaM2 } from "./lib.mjs";
+import { roadLabel } from "./road-labels.mjs";
 
 const DATA = path.join(PUBLIC, "data", "osm");
 
@@ -73,6 +74,7 @@ way["man_made"~"^(bridge|pier|breakwater|groyne)$"]({bbox});out geom qt;`,
       properties: clean({
         c: t.highway ?? t.railway ?? t.waterway ?? t.aeroway ?? t.man_made,
         n: nameOf(t),
+        zh: kind === "road" ? roadLabel(nameOf(t)) : undefined, // 沿街標籤用的中文名（scripts/road-labels.mjs）
         b: isTrue(t.bridge) ? 1 : isTrue(t.tunnel) ? 2 : undefined,
         l: t.lanes ? parseInt(t.lanes, 10) || undefined : undefined,
         o: isTrue(t.oneway) ? 1 : undefined,

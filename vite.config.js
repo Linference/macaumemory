@@ -1,7 +1,8 @@
 import { defineConfig } from "vite";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, statSync, rmSync, existsSync } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
+import { injectSiteNav } from "./src/site-nav.js";
 
 const MAPLIBRE_DIST = path.resolve("node_modules/maplibre-gl/dist");
 // MapLibre GL JS v6 會以 import.meta.url 的相對路徑載入 worker（module worker），
@@ -37,7 +38,7 @@ function maplibreWorkerPlugin() {
       server.middlewares.use(async (req, res, next) => {
         const url = (req.url || "").split("?")[0];
         if (!/^\/(tiles|dem)\//.test(url)) return next();
-        const file = path.join("dist", url.replace(/^\//, ""));
+        const file = path.join(path.resolve(server.config.root, server.config.build.outDir), url.replace(/^\//, ""));
         try { readFileSync(file); return next(); } catch { /* 缺圖磚：回傳替代內容 */ }
         res.setHeader("Content-Type", "image/png");
         res.setHeader("Cache-Control", "no-store");
@@ -60,12 +61,47 @@ function maplibreWorkerPlugin() {
   };
 }
 
+// 全站共用導覽：把各頁 HTML 裡的 <site-nav> / <site-dock> 標記換成同一份導覽（src/site-nav.js）。
+// order: "pre" 讓插入的 <link> 也交給 Vite 處理（開發時熱更新、建置時打包）。
+function siteNavPlugin() {
+  return { name: "site-nav", transformIndexHtml: { order: "pre", handler: (html) => injectSiteNav(html) } };
+}
+
+// 網頁的 DEM 已改用無損 WebP（scripts/dem-webp.mjs，maxzoom 14），PNG 只留在 public/ 給資料腳本重建用。
+// public/ 會被整包複製進輸出目錄，這裡在建置結束後把輸出裡的 dem/**/*.png 移除（約 26 MB），原始檔不動。
+function demPngPrunePlugin() {
+  let outDir = "";
+  return {
+    name: "dem-png-prune",
+    apply: "build",
+    configResolved(config) { outDir = path.resolve(config.root, config.build.outDir); },
+    closeBundle() {
+      const demDir = path.join(outDir, "dem");
+      if (!existsSync(demDir)) return;
+      let n = 0, bytes = 0;
+      for (const entry of readdirSync(demDir, { recursive: true })) {
+        if (!entry.endsWith(".png")) continue;
+        const file = path.join(demDir, entry);
+        bytes += statSync(file).size;
+        rmSync(file);
+        n++;
+      }
+      // 移除 z15 等只剩空資料夾的層級
+      for (const entry of readdirSync(demDir, { recursive: true }).sort((a, b) => b.length - a.length)) {
+        const dir = path.join(demDir, entry);
+        if (statSync(dir).isDirectory() && !readdirSync(dir).length) rmSync(dir, { recursive: true });
+      }
+      this.info?.(`已從輸出移除 ${n} 張 DEM PNG（${(bytes / 1e6).toFixed(1)} MB），網頁只載入 WebP`);
+    },
+  };
+}
+
 export default defineConfig({
   base: "./",
   worker: { format: "es" },
   server: {
     host: "127.0.0.1",
-    proxy: { "/api/guide": "http://127.0.0.1:8787" },
+    proxy: { "/api/guide": "http://127.0.0.1:8787", "/api/memory": "http://127.0.0.1:8790" },
     port: 5173,
     strictPort: false,
     // Vite 預設會監視整個專案目錄，但這個專案有大量「與前端無關」的內容：
@@ -88,13 +124,13 @@ export default defineConfig({
       ],
     },
   },
-  preview: { host: "127.0.0.1", port: 4173, strictPort: false, proxy: { "/api/guide": "http://127.0.0.1:8787" } },
+  preview: { host: "127.0.0.1", port: 4173, strictPort: false, proxy: { "/api/guide": "http://127.0.0.1:8787", "/api/memory": "http://127.0.0.1:8790" } },
   // 這兩個套件都必須「排除預打包」：
   //   · maplibre-gl 自己用 import.meta.url 找 worker
   //   · @sqlite.org/sqlite-wasm 的 ESM 外殼也用 import.meta.url 推導 sqlite3.wasm 的位置，
   //     被 optimizeDeps 併進 .vite/deps 之後相對路徑就斷了（官方 README 明講要 exclude）
   optimizeDeps: { exclude: ["maplibre-gl", "@sqlite.org/sqlite-wasm"] },
-  plugins: [maplibreWorkerPlugin()],
+  plugins: [siteNavPlugin(), maplibreWorkerPlugin(), demPngPrunePlugin()],
   build: {
     target: "es2022",
     outDir: "dist",
@@ -109,6 +145,8 @@ export default defineConfig({
         system: path.resolve("system.html"),
         capture: path.resolve("capture.html"),
         gaussian: path.resolve("gaussian.html"),
+        memory: path.resolve("memory.html"),
+        archive: path.resolve("archive.html"),
       },
     },
   },

@@ -69,7 +69,7 @@ BUILDINGS: dict[str, dict] = {
                             "accept_cls": ["portuguese", "village"]},
     "taipa-houses":        {"zh": "龍環葡韻住宅式博物館", "en": "Taipa Houses–Museum",     "cls": "portuguese",        "spot": "taipa-houses"},
     "moorish-barracks":    {"zh": "港務局大樓",       "en": "Moorish Barracks",           "cls": "portuguese",        "spot": "moorish-barracks"},
-    "leal-senado":         {"zh": "民政總署大樓",     "en": "Leal Senado Building",       "cls": "civic",             "spot": "leal-senado"},
+    "leal-senado":         {"zh": "市政署大樓",       "en": "Leal Senado Building",       "cls": "civic",             "spot": "leal-senado"},
     "senado-square":       {"zh": "議事亭前地",       "en": "Senado Square",              "cls": "civic",             "spot": "senado-square"},
     "rua-da-felicidade":   {"zh": "福隆新街",         "en": "Rua da Felicidade",          "cls": "tong_lau",          "spot": None},
     "red-market":          {"zh": "紅街市（提督街市）", "en": "Red Market",                "cls": "market",            "spot": "red-market"},

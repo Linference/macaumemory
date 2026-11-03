@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { rankCandidates, marginOf, verdict } from "../src/recognize/compare.js";
 import { dedupVerdict, dedupThresholds } from "../src/recognize/dedup.js";
 import { locationQuality, GEO_POLICY } from "../src/recognize/geo-ranking.js";
-import { evaluateQueries, proportion } from "../tools/recognize/independent-eval.mjs";
+import { evaluateQueries, evaluateViewGroups, mcnemar, proportion } from "../tools/recognize/independent-eval.mjs";
 
 const now = Date.parse("2026-09-30T00:00:00Z");
 const location = { lng: 113.55, lat: 22.18, accuracyM: 20, capturedAt: new Date(now).toISOString(), source: "gps" };
@@ -81,4 +81,39 @@ test("independent metrics exclude calibration and count confidently accepted unk
   assert.equal(result.confidentPrecision.value, .5); assert.equal(result.unknownFalseAcceptance.value, 1);
   assert.equal(proportion(0, 0).value, null);
   assert.ok(proportion(26, 26).interval95[0] < .9);
+});
+
+test("exact McNemar test matches the binomial tail and stays finite for large samples", () => {
+  assert.equal(mcnemar(0, 0).p, null);
+  assert.equal(mcnemar(0, 5).p, 2 / 32);
+  assert.equal(mcnemar(3, 3).p, 1);
+  assert.ok(Math.abs(mcnemar(0, 10).p - 2 / 1024) < 1e-12);
+  const big = mcnemar(500, 560).p;
+  assert.ok(big > 0 && big < 1);
+});
+
+test("multi-photo ablation compares first photo and agreement rule on the same groups", () => {
+  const lib = { eval: { suggested: { hit: .82, maybe: .57 } }, buildings: [
+    { id: "A", zh: "A", vectors: [[1, 0, 0]], files: ["a.jpg"] },
+    { id: "B", zh: "B", vectors: [[0, 1, 0]], files: ["b.jpg"] },
+  ] };
+  let n = 0;
+  const shot = (group, buildingId, vector, split = "test") => ({ id: `q${++n}`, viewGroup: group, buildingId, split, vector,
+    sha256: String(n % 10).repeat(64), capturedAt: `2026-11-0${n % 9 + 1}T10:00:00Z` });
+  const queries = [
+    shot("known-agree", "A", [.95, .312, 0]), shot("known-agree", "A", [.9, 0, .436]),
+    // First photo alone confidently matches A, but the building is not in the library; the second angle disagrees.
+    shot("unknown-conflict", "unknown:x", [.95, .312, 0]), shot("unknown-conflict", "unknown:x", [.312, .95, 0]),
+    shot("known-weak", "B", [.6, .8, 0]), shot("known-weak", "B", [0, .95, .312]),
+    shot("calibration-only", "A", [1, 0, 0], "calibration"),
+  ];
+  const r = evaluateViewGroups(lib, queries);
+  assert.deepEqual(r.counts, { groups: 3, known: 2, unknown: 1, photos: 6 });
+  assert.equal(r.first.unknownFalseAcceptance.value, 1);
+  assert.equal(r.multi.unknownFalseAcceptance.value, 0);
+  assert.deepEqual([r.paired.unknownFalseAcceptance.b, r.paired.unknownFalseAcceptance.c], [1, 0]);
+  assert.equal(r.first.knownCorrectAcceptance.value, .5);
+  assert.equal(r.multi.knownCorrectAcceptance.value, .5);
+  assert.deepEqual(r.rows.map((row) => row.multi.state), ["agreement", "conflict", "review"]);
+  assert.throws(() => evaluateViewGroups(lib, [shot("solo", "A", [1, 0, 0])]), /2–3 photos/);
 });

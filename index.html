@@ -3,25 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="以 OpenStreetMap、開放海拔資料與博物館文物三維模型建構的澳門 3D 立體地圖" />
-    <title>澳門立體誌 · 3D 立體澳門地圖</title>
+    <meta name="description" content="途見：基於3DGS與GMVR的澳門文旅記憶系統，連接三維實景、建築識別、真實照片與共創故事。" />
+    <title>途見 · 澳門文旅記憶系統</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Cpath d='M4 21l7-11 4.5 6.5L19 12l9 9z' fill='%23d8b45a'/%3E%3Ccircle cx='24' cy='8' r='3' fill='%23e8e2d6'/%3E%3C/svg%3E" />
   </head>
   <body>
-    <a href="./system.html" style="position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:12;padding:9px 15px;border:1px solid #d8b45a66;border-radius:20px;background:#10161de8;color:#d8b45a;font-size:12px;text-decoration:none">澳門記憶 · 文化探索系統 ↗</a>
+    <site-dock current="map"></site-dock>
     <div id="map"></div>
 
     <!-- 載入畫面 -->
     <div id="boot">
       <div class="boot-card">
         <div class="boot-mark">
-          <svg viewBox="0 0 32 32" width="40" height="40" aria-hidden="true">
-            <path d="M4 21l7-11 4.5 6.5L19 12l9 9z" fill="currentColor" />
-            <circle cx="24" cy="8" r="3" fill="currentColor" opacity=".8" />
-          </svg>
+          <site-mark size="40"></site-mark>
         </div>
-        <h1>澳門立體誌</h1>
-        <p class="boot-sub">3D 立體澳門地圖 · 開放資料 × 博物館文物</p>
+        <h1>途見</h1>
+        <p class="boot-sub">三維澳門 · 建築實景與城市記憶</p>
         <div class="boot-bar"><i></i></div>
         <p class="boot-status" id="boot-status">正在載入地理資料…</p>
       </div>
@@ -32,14 +29,11 @@
       <div class="topbar-identity">
       <div class="brand">
         <span class="brand-mark">
-          <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
-            <path d="M4 21l7-11 4.5 6.5L19 12l9 9z" fill="currentColor" />
-            <circle cx="24" cy="8" r="3" fill="currentColor" opacity=".75" />
-          </svg>
+          <site-mark size="22"></site-mark>
         </span>
         <span class="brand-text">
-          <strong>澳門立體誌</strong>
-          <small>3D Macau Atlas</small>
+          <strong>途見</strong>
+          <small>TUJIAN · 澳門文旅記憶</small>
         </span>
       </div>
       <a class="gaussian-entry" id="btn-gaussian" href="./gaussian.html?scene=ruins-st-paul" title="開啟大三巴三維高斯實景" aria-label="3DGS 實景：開啟大三巴高斯模型">
@@ -97,6 +91,7 @@
       <label class="sw"><input type="checkbox" id="tg-pois" /><span>周邊設施</span></label>
       <label class="sw"><input type="checkbox" id="tg-bus" /><span>巴士站（OSM）</span></label>
       <label class="sw"><input type="checkbox" id="tg-photos" checked /><span id="lb-photos">記憶點</span></label>
+      <label class="sw"><input type="checkbox" id="tg-auto-guide" checked /><span>到達景點或記憶點時自動講解</span></label>
       <div class="poi-chips" id="photo-chips"></div>
       <button class="ghost-btn" id="btn-bus-api" style="margin-top:6px">🚌 設定即時報站 API</button>
       <div class="poi-chips" id="poi-chips"></div>
@@ -216,8 +211,8 @@
       <div class="nav-steps" id="nav-steps"></div>
     </section>
     <section class="digital-guide" id="digital-guide" hidden aria-label="小澳數字人建築導覽">
-      <header class="guide-header"><div><span class="guide-kicker">MACAU MEMORY · VIRTUAL GUIDE</span><strong>小澳 · 建築導覽員</strong></div><button class="guide-close" type="button" data-guide-close aria-label="關閉數字人導覽">×</button></header>
-      <div class="guide-portrait"><img src="guide/xiaoao.webp" alt="身穿深藍金邊制服的虛擬導覽員小澳"><img class="guide-talking" src="guide/xiaoao-speaking.webp" alt="" aria-hidden="true"><span class="guide-badge">AI 虛擬導覽</span><span class="guide-presence" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+      <header class="guide-header"><div><span class="guide-kicker">TUJIAN · VIRTUAL GUIDE</span><strong>小澳 · 建築導覽員</strong></div><button class="guide-close" type="button" data-guide-close aria-label="關閉數字人導覽">×</button></header>
+      <div class="guide-portrait"><img src="guide/xiaoao.webp" alt="身穿深藍金邊制服的虛擬導覽員小澳" loading="lazy" decoding="async"><img class="guide-talking" src="guide/xiaoao-speaking.webp" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="guide-badge">AI 虛擬導覽</span><span class="guide-presence" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
       <div class="guide-context"><small>正在一起探索</small><strong data-guide-building></strong></div>
       <p class="guide-status" data-guide-status role="status">你的建築導覽員</p>
       <div class="guide-messages" data-guide-messages role="log" aria-label="與小澳的對話" aria-live="polite"></div>
@@ -228,12 +223,12 @@
     </section>
     <!-- AI 導覽助理 -->
     <button class="ai-fab" id="ai-fab" title="問阿獅（AI 導覽）">
-      <img class="ai-fab-avatar" src="mascot/ashih-avatar.jpg" alt="阿獅">
+      <img class="ai-fab-avatar" src="mascot/ashih-avatar.webp" alt="阿獅" width="26" height="26">
       <span>問阿獅</span>
     </button>
     <section class="ai-panel" id="ai-panel" aria-hidden="true">
       <header class="ai-head">
-        <img class="ai-head-avatar" src="mascot/ashih-avatar.jpg" alt="阿獅">
+        <img class="ai-head-avatar" src="mascot/ashih-avatar.webp" alt="阿獅" width="40" height="40" loading="lazy">
         <div class="ai-title">
           <strong>阿獅</strong>
           <small id="ai-sub">大三巴石獅寶寶 · 帶你認澳門建築</small>
@@ -250,7 +245,7 @@
       </header>
       <div class="ai-msgs" id="ai-msgs">
         <div class="ai-hero" id="ai-hero">
-          <img src="mascot/ashih-front.jpg" alt="阿獅">
+          <img src="mascot/ashih-front.webp" alt="阿獅" width="400" height="572" loading="lazy" decoding="async">
           <p class="ai-hero-say">我係阿獅，大三巴石獅寶寶。<br>問我澳門嘅建築、路線、美食，或者影張相我幫你認下係邊棟！</p>
           <p class="ai-hero-hint">由 DeepSeek 驅動 · 可語音對話</p>
         </div>

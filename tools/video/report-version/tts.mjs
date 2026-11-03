@@ -1,0 +1,3 @@
+import fs from 'node:fs';import path from 'node:path';import {randomUUID} from 'node:crypto';import {callTencent} from '../../../server/tencent.js';
+process.loadEnvFile('.env.local');const dir=path.resolve('output/video/tujian-report-version/audio');fs.mkdirSync(dir,{recursive:true});
+for(const s of JSON.parse(fs.readFileSync('tools/video/report-version/script.json','utf8')).scenes){const p=path.join(dir,s.id+'.wav');if(fs.existsSync(p))continue;const r=await callTencent('tts','TextToVoice','2019-08-23',{Text:s.text,SessionId:randomUUID(),ModelType:1,VoiceType:403007,Codec:'wav',SampleRate:24000,Speed:0,EnableSubtitle:true});fs.writeFileSync(p,Buffer.from(r.Audio,'base64'));console.log(s.id+' ready');}

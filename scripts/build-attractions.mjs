@@ -229,9 +229,66 @@ function resolve(item, geoRecord) {
   };
 }
 
+// ---------------- 綁定建築輪廓 ----------------
+// attractions.data.mjs 可為景點指定 buildingId（Overture 建築輪廓的 bid，與 landmarks.json 同一套 ID）。
+// 投票得到的座標若不在該輪廓內，移到「輪廓內離它最近的點」（距邊約 3 公尺），
+// 盡量保留原本定位到的入口／立面位置，而不是跳到建築中心。
+const footprints = new Map(buildings.map((f) => [f.properties.bid, f]));
+const polygonsOf = (g) => (g.type === "MultiPolygon" ? g.coordinates : [g.coordinates]);
+const inRing = (ring, [x, y]) => {
+  let hit = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [xi, yi] = ring[i], [xj, yj] = ring[j];
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+  }
+  return hit;
+};
+const insideFootprint = (polygons, p) => polygons.some((poly) => poly.reduce((acc, ring) => acc ^ (inRing(ring, p) ? 1 : 0), 0) === 1);
+
+function snapInsideFootprint(polygons, p, minClearM = 1.5) {
+  if (insideFootprint(polygons, p)) return p;
+  const mx = 111320 * Math.cos((p[1] * Math.PI) / 180), my = 110540;
+  const toXY = (q) => [(q[0] - p[0]) * mx, (q[1] - p[1]) * my];
+  const toLonLat = ([x, y]) => [+(p[0] + x / mx).toFixed(6), +(p[1] + y / my).toFixed(6)];
+  const segs = [];
+  for (const poly of polygons) for (const ring of poly) for (let i = 1; i < ring.length; i++) segs.push([toXY(ring[i - 1]), toXY(ring[i])]);
+  const closest = ([a, b], o) => {
+    const dx = b[0] - a[0], dy = b[1] - a[1], len2 = dx * dx + dy * dy || 1;
+    const t = Math.max(0, Math.min(1, ((o[0] - a[0]) * dx + (o[1] - a[1]) * dy) / len2));
+    return [a[0] + t * dx, a[1] + t * dy];
+  };
+  const clearance = (o) => Math.min(...segs.map((s) => Math.hypot(...closest(s, o).map((v, i) => v - o[i]))));
+  // 輪廓上離原定位最近的點 q，在它周圍一圈圈取樣（轉角也適用：沿單一邊的法線推進，在轉角會貼著另一條邊）。
+  // 檢查的是四捨五入後的實際座標：取「在輪廓內、離每條邊至少 minClearM」且最接近原定位的點；
+  // 拱門之類很窄的輪廓到處都不到 minClearM，就取離邊最遠的點
+  const q = segs.map((s) => closest(s, [0, 0])).sort((a, b) => Math.hypot(...a) - Math.hypot(...b))[0];
+  let best = null, widest = null;
+  for (const r of [1, 2, 3, 4, 6, 8, 12, 16]) {
+    for (let deg = 0; deg < 360; deg += 15) {
+      const c = toLonLat([q[0] + r * Math.cos((deg * Math.PI) / 180), q[1] + r * Math.sin((deg * Math.PI) / 180)]);
+      if (!insideFootprint(polygons, c)) continue;
+      const xy = toXY(c), clear = clearance(xy), d = Math.hypot(...xy);
+      if (clear >= minClearM && (!best || d < best.d)) best = { c, d };
+      if (!widest || clear > widest.clear) widest = { c, clear };
+    }
+  }
+  if (best ?? widest) return (best ?? widest).c;
+  throw new Error(`無法在建築輪廓內找到落點：${p}`);
+}
+
+function pinToBuilding(item, r) {
+  if (!item.buildingId) return r;
+  const f = footprints.get(item.buildingId);
+  if (!f) throw new Error(`${item.id}：找不到 buildingId ${item.buildingId}（建築資料更新後請重新指定）`);
+  const coords = snapInsideFootprint(polygonsOf(f.geometry), r.coords);
+  const name = f.properties.n ?? `Overture ${item.buildingId.slice(0, 8)}`;
+  return { ...r, coords, geoSource: "building-id", geoRef: name, coordMovedMeters: Math.round(dist(coords, item.coords)),
+    geoEvidence: `building-id:${String(name).slice(0, 14)} · ${r.geoEvidence}` };
+}
+
 const report = [];
 const attractions = ATTRACTIONS.map((a) => {
-  const r = resolve(a, geocode.attractions?.[a.id]);
+  const r = pinToBuilding(a, resolve(a, geocode.attractions?.[a.id]));
   report.push({ id: a.id, zh: a.zh, ...r });
   return { ...a, coords: r.coords, geoSource: r.geoSource, geoRef: r.geoRef, wikidata: r.wikidata, coordMovedMeters: r.coordMovedMeters, geoEvidence: r.geoEvidence };
 });

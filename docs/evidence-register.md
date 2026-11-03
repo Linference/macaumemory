@@ -33,7 +33,7 @@ node tools/recognize/independent-eval.mjs tools/recognize/out/independent/querie
 
 每個 query 包含：`id`、`path`（相對專案根目錄或本機絕對路徑）、`buildingId`、`split`、`independentCapture:true`、`captureGroup`、`photographer`、`capturedAt`（ISO 日期）、`source`。庫外建築用 `unknown:<獨立名稱>`；庫內名稱必須在選定參考集內。`calibration` 和 `test` 的攝影者及批次亦須隔離，報告僅計 test，門檻保持凍結版本而非按測試集尋優。
 
-有照片對應的位置才填 `location:{lng,lat,accuracyM,capturedAt,source}` 與 `confirmedPhotoLocation:true`；歷史照片不填評測電腦的目前 GPS。手動建築座標填 `source:"manual"`，GPS 填讀數精度與採樣時間。報告比較純影像與位置輔助，附 Top-1/3、接受精確率、庫內正確接受率、庫外誤接受率、人工確認比例與 Wilson 區間。
+有照片對應的位置才填 `location:{lng,lat,accuracyM,capturedAt,source}` 與 `confirmedPhotoLocation:true`；歷史照片不填評測電腦的目前 GPS。手動建築座標填 `source:"manual"`，GPS 填讀數精度與採樣時間。報告比較純影像與位置輔助，以及同一批 `viewGroup`（同次到訪 2–3 張）上「首張單拍」與「多照片一致」的配對結果（McNemar 精確檢定）；採集量與預先登記見 [field-capture-plan.md](field-capture-plan.md)。各表附 Top-1/3、接受精確率、庫內正確接受率、庫外誤接受率、人工確認比例與 Wilson 區間。
 
 缺照片、來源或隔離紀錄時，審核退出碼為 2，不產生准确率。建議分夜景、遮挡、相似酒店、远距离拍摄及库外建筑采集；报告建筑与拍摄批次数，并检查同组照片的统计相关性。
 

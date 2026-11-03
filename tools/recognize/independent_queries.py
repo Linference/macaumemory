@@ -108,6 +108,22 @@ def audit_manifest(manifest, library, root=ROOT):
                 errors.append(f"query {qid}: {label} spans calibration and test")
         if query.get("location") and query.get("confirmedPhotoLocation") is not True:
             errors.append(f"query {qid}: location must correspond to this photo, not an unrelated GPS reading")
+    # Optional multi-photo groups: 2-3 photos of one building taken on one visit by one photographer.
+    view_groups = {}
+    for query in queries:
+        group = query.get("viewGroup")
+        if group is None:
+            continue
+        if not isinstance(group, str) or not group.strip():
+            errors.append(f"query {query.get('id')}: viewGroup must be a non-empty string")
+            continue
+        view_groups.setdefault(group, []).append(query)
+    for group, members in view_groups.items():
+        if not 2 <= len(members) <= 3:
+            errors.append(f"viewGroup {group}: needs 2-3 photos, got {len(members)}")
+        for name in ("buildingId", "split", "captureGroup", "photographer"):
+            if len({str(m.get(name, "")).strip().casefold() for m in members}) > 1:
+                errors.append(f"viewGroup {group}: photos differ in {name}")
     if not any(q.get("split") == "test" for q in queries):
         errors.append("No test queries supplied.")
     return {"ok": not errors, "status": "audited" if not errors else "pending", "errors": errors,

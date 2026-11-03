@@ -544,11 +544,11 @@ async function run() {
       setStage(!yoloReady ? "偵測模型未就緒，改用整張圖比對" : "已略過偵測，用整張圖比對", 32);
     }
 
-    const regions = detections.length
-      ? detections.slice(0, 4).map((d, i) => ({
-          index: i, box: { x: d.x, y: d.y, w: d.w, h: d.h },
-          cls: d.cls, clsZh: clsZh(d.cls), score: d.score, source: "yolo",
-        }))
+    // 消融實驗（tools/eval/ablation.py）：查詢用 YOLO 裁切比用整張圖低約 4 個百分點（84.8% vs 89.0%，McNemar p < 0.001），
+    // 因為參考庫是整張圖編碼的。故一律用整張圖檢索；YOLO 只提供類別提示，信心最高的框僅用於顯示。
+    const top = detections[0];
+    const regions = top
+      ? [{ index: 0, box: { x: top.x, y: top.y, w: top.w, h: top.h }, cls: top.cls, clsZh: clsZh(top.cls), score: top.score, source: "yolo" }]
       : [{ index: 0, box: { x: 0, y: 0, w: bitmap.width, h: bitmap.height }, cls: null, clsZh: "未偵測到建築", score: null, source: "fallback" }];
 
     // ---- ②③ 每個區域：裁切 → DINOv2 → 比對
@@ -560,8 +560,8 @@ async function run() {
       try {
         await new Promise((r2) => setTimeout(r2, 20));
         const tta = !$("#rc-notta")?.checked;
-        const crops = r.source === "fallback" ? multiCrops(bitmap.width, bitmap.height, enc.size, tta ? 3 : 1) : null;
-        const vec = await enc.embed(bitmap, r.source === "fallback" ? null : r.box, { crops, tta });
+        const crops = multiCrops(bitmap.width, bitmap.height, enc.size, tta ? 3 : 1);
+        const vec = await enc.embed(bitmap, null, { crops, tta });
         embedMsTotal += performance.now() - t1;
         const ranked = rankTop(vec, { topK: 3, clsHint: r.cls ?? null });
         results.push({ ...r, queryVector: vec, topK: ranked.top, totalCompared: ranked.total,
@@ -663,8 +663,8 @@ function renderResults() {
   // ① 標註：大字顯示「偵測到的類別」，不是建築名
   const headline = r.source === "yolo" ? `偵測到：${r.clsZh}` : "整張照片比對";
   const headlineSub = r.source === "yolo"
-    ? `信心 <b>${(r.score * 100).toFixed(1)}%</b> · 框 <b>${Math.round(r.box.w)}×${Math.round(r.box.h)} px</b> · 與 <b>${r.totalCompared}</b> 棟已記錄建築比對`
-    : `YOLO 沒有框出建築，退回整張圖取特徵 · 與 <b>${r.totalCompared}</b> 棟已記錄建築比對`;
+    ? `信心 <b>${(r.score * 100).toFixed(1)}%</b> · 以整張照片比對，類別作為提示 · 與 <b>${r.totalCompared}</b> 棟已記錄建築比對`
+    : `YOLO 沒有框出建築，以整張照片比對 · 與 <b>${r.totalCompared}</b> 棟已記錄建築比對`;
 
   // ② 查重結論
   const knownLine = matched
@@ -681,17 +681,19 @@ function renderResults() {
           <b>${escapeHtml(dd.text)}</b>
           <span>${escapeHtml(dd.hint)}</span>
         </div>
+        ${v.key !== "confident" ? `<div class="rc-mv-nudge">把握不足時，再拍兩個角度能明顯提高準確率。<button class="btn sec sm" type="button" data-goto-multi>多角度確認 ↓</button></div>` : ""}
       </div>
       ${matched ? `<div class="rc-verdict-actions">
         ${matched.model ? `<button class="btn gold" data-model="${escapeHtml(matched.model)}" data-title="${escapeHtml(matched.zh)}" data-sub="${escapeHtml(matched.en ?? "")}">看三維模型</button>` : ""}
         ${matched.spot ? `<a class="btn sec" href="${escapeHtml(mapLink(matched))}">在地圖上開啟</a>` : ""}
+        <a class="btn sec" href="./memory.html?place=${encodeURIComponent(matched.spot || matched.id)}">確認後查看地點記憶</a>
         ${!matched.model && !matched.spot ? `<span class="rc-nomodel">最相似的記憶點尚無三維模型與地圖連結</span>` : ""}
       </div>` : ""}
     </div>`;
 
   const boxLine = `<div class="rc-meta">${r.source === "yolo"
-    ? `YOLO 判定類別：<b>${escapeHtml(r.clsZh)}</b> · 信心 ${(r.score * 100).toFixed(1)}%`
-    : `YOLO：<b>未偵測到建築</b>（退回整張圖比對）`} · 框 ${Math.round(r.box.w)}×${Math.round(r.box.h)} px · 與 ${r.totalCompared} 棟已記錄建築比對</div>`;
+    ? `YOLO 判定類別：<b>${escapeHtml(r.clsZh)}</b> · 信心 ${(r.score * 100).toFixed(1)}%（僅作類別提示，影像比對用整張照片）`
+    : `YOLO：<b>未偵測到建築</b>`} · 與 ${r.totalCompared} 棟已記錄建築比對</div>`;
 
   // ② 已記錄的相似建築（查重）
   const maxSim = Math.max(0.001, ...top.map((c) => c.sim));
@@ -750,6 +752,7 @@ function renderResults() {
     renderResults();
   });
 
+  $("#rc-results").querySelector("[data-goto-multi]")?.addEventListener("click", () => $("#rc-multi")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   for (const b of $("#rc-results").querySelectorAll("[data-model]")) {
     b.addEventListener("click", () => openModel(b.dataset.model, b.dataset.title, b.dataset.sub));
   }

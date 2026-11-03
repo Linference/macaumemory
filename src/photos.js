@@ -105,11 +105,12 @@ export class PhotoLayer {
           <button class="btn sec place-more">查看 ${p.photoCount} 張照片與完整檔案</button>
         </div>
       </div>`;
-    new Popup({ closeButton: true, offset: 18, maxWidth: "280px" })
+    const popup = new Popup({ closeButton: true, offset: 18, maxWidth: "280px" })
       .setLngLat(place.geometry.coordinates).setHTML(html).addTo(this.map);
     setTimeout(() => {
-      document.querySelector(".place-more")?.addEventListener("click", () => this.onOpen(p, 0));
+      popup.getElement()?.querySelector(".place-more")?.addEventListener("click", () => this.onOpen(p, 0));
     }, 60);
+    return popup;
   }
 
   setVisible(on) { this.visible = on; this.applyFilter(); }
@@ -119,9 +120,20 @@ export class PhotoLayer {
     this.applyFilter();
   }
 
+  /** 已掛在景點標記上的記憶點（nearId 屬於這些景點）不再畫圓圈，避免與景點標記疊在同一點 */
+  setLinked(attractionIds) { this.linked = new Set(attractionIds); this.applyFilter(); }
+
+  /** 依類型篩選後應顯示的記憶點（含已掛在景點上的） */
+  visiblePlaces() {
+    return this.filters.size ? this.places.filter((f) => this.filters.has(f.properties.cls)) : this.places;
+  }
+
   applyFilter() {
     if (!this.loaded) return;
-    const filter = this.filters.size ? ["in", ["get", "cls"], ["literal", [...this.filters]]] : null;
+    const parts = [];
+    if (this.filters.size) parts.push(["in", ["get", "cls"], ["literal", [...this.filters]]]);
+    if (this.linked?.size) parts.push(["!", ["in", ["coalesce", ["get", "nearId"], ""], ["literal", [...this.linked]]]]);
+    const filter = parts.length ? ["all", ...parts] : null;
     for (const id of ["place-dot", "place-count"]) {
       if (!this.map.getLayer(id)) continue;
       this.map.setLayoutProperty(id, "visibility", this.visible ? "visible" : "none");

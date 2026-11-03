@@ -50,6 +50,17 @@ class IndependentAuditTests(unittest.TestCase):
         self.manifest["queries"][0]["confirmedPhotoLocation"] = True
         self.assertTrue(self.audit()["ok"])
 
+    def test_view_groups_hold_two_to_three_photos_of_one_visit(self):
+        (self.root / "query2.jpg").write_bytes(b"second angle")
+        self.manifest["queries"][0]["viewGroup"] = "visit-1"
+        self.assertIn("needs 2-3 photos", " ".join(self.audit()["errors"]))
+        self.manifest["queries"].append({**self.manifest["queries"][0], "id": "q2", "path": "query2.jpg"})
+        self.assertTrue(self.audit()["ok"])
+        for key, value in [("buildingId", "unknown:other"), ("photographer", "Carol")]:
+            manifest = copy.deepcopy(self.manifest)
+            manifest["queries"][1][key] = value
+            self.assertIn(f"differ in {key}", " ".join(self.audit(manifest)["errors"]), key)
+
 
 if __name__ == "__main__":
     unittest.main()
