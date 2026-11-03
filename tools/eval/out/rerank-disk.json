@@ -5,49 +5,60 @@
   "min_inliers": 20,
   "lead": 10
  },
- "n": 335,
- "triggered": 46,
- "top1_base": 0.8896,
- "top1_rerank": 0.9015,
- "triggered_base": 0.4783,
- "triggered_rerank": 0.5652,
+ "n": 845,
+ "triggered": 150,
+ "top1_base": 0.9077,
+ "top1_rerank": 0.9124,
+ "triggered_base": 0.6333,
+ "triggered_rerank": 0.66,
  "mcnemar": {
-  "b01": 6,
-  "b10": 2,
-  "p": 0.2891
+  "b01": 9,
+  "b10": 5,
+  "p": 0.424
  },
  "changed": [
   {
-   "query": "u04.jpg",
-   "truth": "fishermans-wharf",
-   "from": "the-venetian",
-   "to": "fishermans-wharf",
+   "query": "cm_-_panoramio_6.jpg",
+   "truth": "grand-lisboa",
+   "from": "grand-lisboa",
+   "to": "wynn-macau",
    "inliers": [
-    5,
-    157,
-    17
+    201,
+    17,
+    363
    ]
   },
   {
-   "query": "Kun_Iam_Temple_05.JPG",
-   "truth": "kun-iam-temple",
-   "from": "na-tcha-temple",
-   "to": "kun-iam-temple",
+   "query": "cm_Macau_Skyline_3777497332.jpg",
+   "truth": "grand-lisboa",
+   "from": "mgm-macau",
+   "to": "grand-lisboa",
+   "inliers": [
+    11,
+    172,
+    11
+   ]
+  },
+  {
+   "query": "u22.jpg",
+   "truth": "grand-lisboa",
+   "from": "the-venetian",
+   "to": "wynn-macau",
    "inliers": [
     0,
-    91,
-    0
+    4,
+    34
    ]
   },
   {
-   "query": "Kun_Iam_Temple_Macau_02.JPG",
-   "truth": "kun-iam-temple",
-   "from": "na-tcha-temple",
-   "to": "kun-iam-temple",
+   "query": "cm_Macau_55117178686.jpg",
+   "truth": "londoner-macao",
+   "from": "galaxy-macau",
+   "to": "londoner-macao",
    "inliers": [
-    9,
-    91,
-    4
+    5,
+    6,
+    81
    ]
   },
   {
@@ -73,6 +84,28 @@
    ]
   },
   {
+   "query": "cm_Casa_da_Cheang_25-10-2024_3.jpg",
+   "truth": "mandarins-house",
+   "from": "kun-iam-temple",
+   "to": "mandarins-house",
+   "inliers": [
+    0,
+    92,
+    0
+   ]
+  },
+  {
+   "query": "cm_Largo_do_Senado_21-09-2023_3.jpg",
+   "truth": "senado-square",
+   "from": "senado-square",
+   "to": "leal-senado",
+   "inliers": [
+    4,
+    97,
+    0
+   ]
+  },
+  {
    "query": "Igreja_de_São_Lourenço_2011c_8e668c.jpg",
    "truth": "st-lawrence-church",
    "from": "st-dominic-church",
@@ -81,6 +114,17 @@
     4,
     117,
     6
+   ]
+  },
+  {
+   "query": "cm_MC_Macau_Peninsula_casino_bus_tour_view_from_Taipa_Ferry_Pie.jpg",
+   "truth": "the-venetian",
+   "from": "parisian",
+   "to": "the-venetian",
+   "inliers": [
+    11,
+    47,
+    0
    ]
   },
   {
@@ -98,10 +142,54 @@
    "query": "u03.jpg",
    "truth": "the-venetian",
    "from": "moorish-barracks",
-   "to": "the-venetian",
+   "to": "senado-square",
    "inliers": [
     0,
     21,
+    41
+   ]
+  },
+  {
+   "query": "cm_Wynn_Hotel_-_panoramio.jpg",
+   "truth": "wynn-macau",
+   "from": "mgm-macau",
+   "to": "wynn-macau",
+   "inliers": [
+    13,
+    93,
+    0
+   ]
+  },
+  {
+   "query": "u07.jpg",
+   "truth": "wynn-macau",
+   "from": "wynn-macau",
+   "to": "wynn-palace",
+   "inliers": [
+    37,
+    5,
+    47
+   ]
+  },
+  {
+   "query": "cm_Macau_MGM_and_Macau_Light_Rapid_Transit_Taipa_Line_viaduct_2.jpg",
+   "truth": "wynn-palace",
+   "from": "mgm-macau",
+   "to": "wynn-palace",
+   "inliers": [
+    6,
+    100,
+    0
+   ]
+  },
+  {
+   "query": "cm_Wynn_Palace_Night_2016.jpg",
+   "truth": "wynn-palace",
+   "from": "grand-lisboa",
+   "to": "wynn-palace",
+   "inliers": [
+    8,
+    33,
     0
    ]
   }

@@ -2,505 +2,505 @@
  "buildings": {
   "a-ma-temple": {
    "zh": "媽閣廟",
-   "photos": 13,
-   "photographers": 4,
+   "photos": 30,
+   "photographers": 15,
    "plain": [
-    12,
-    13
+    28,
+    30
    ],
    "strict": [
-    12,
-    13
+    28,
+    30
    ]
   },
   "cathedral-macau": {
    "zh": "主教座堂（大堂）",
-   "photos": 3,
-   "photographers": 2,
+   "photos": 21,
+   "photographers": 13,
    "plain": [
-    3,
-    3
+    21,
+    21
    ],
    "strict": [
-    3,
-    3
+    21,
+    21
    ]
   },
   "coloane-village": {
    "zh": "路環市區",
-   "photos": 5,
-   "photographers": 2,
+   "photos": 11,
+   "photographers": 3,
    "plain": [
-    4,
-    5
+    7,
+    11
    ],
    "strict": [
     0,
-    5
+    11
    ]
   },
   "dom-pedro-v-theatre": {
    "zh": "崗頂劇院（伯多祿五世劇院）",
-   "photos": 10,
-   "photographers": 1,
+   "photos": 28,
+   "photographers": 12,
    "plain": [
-    10,
-    10
+    27,
+    28
    ],
    "strict": [
-    0,
-    0
+    27,
+    28
    ]
   },
   "fishermans-wharf": {
    "zh": "澳門漁人碼頭",
-   "photos": 4,
-   "photographers": 1,
+   "photos": 18,
+   "photographers": 12,
    "plain": [
-    2,
-    4
+    14,
+    18
    ],
    "strict": [
-    0,
-    0
+    14,
+    18
    ]
   },
   "fortress-monte": {
    "zh": "大炮台（聖保祿炮台）",
-   "photos": 9,
-   "photographers": 1,
+   "photos": 23,
+   "photographers": 12,
    "plain": [
-    8,
-    9
+    20,
+    23
    ],
    "strict": [
-    0,
-    0
+    19,
+    23
    ]
   },
   "galaxy-macau": {
    "zh": "澳門銀河",
-   "photos": 10,
-   "photographers": 1,
+   "photos": 14,
+   "photographers": 4,
    "plain": [
-    10,
-    10
+    13,
+    14
    ],
    "strict": [
-    0,
-    0
+    6,
+    14
    ]
   },
   "grand-lisboa": {
    "zh": "葡京酒店（新葡京）",
-   "photos": 13,
-   "photographers": 3,
+   "photos": 33,
+   "photographers": 17,
    "plain": [
-    12,
-    13
+    29,
+    33
    ],
    "strict": [
-    10,
-    13
+    29,
+    33
    ]
   },
   "grand-prix-museum": {
    "zh": "澳門大賽車博物館",
-   "photos": 3,
-   "photographers": 1,
+   "photos": 5,
+   "photographers": 3,
    "plain": [
-    2,
-    3
+    5,
+    5
    ],
    "strict": [
-    0,
-    0
+    3,
+    5
    ]
   },
   "guia-fortress": {
    "zh": "東望洋炮台及燈塔",
-   "photos": 10,
-   "photographers": 1,
+   "photos": 27,
+   "photographers": 12,
    "plain": [
-    10,
-    10
+    27,
+    27
    ],
    "strict": [
-    0,
-    0
+    27,
+    27
    ]
   },
   "guiuan-village": {
    "zh": "氹仔舊城區",
-   "photos": 5,
-   "photographers": 4,
+   "photos": 13,
+   "photographers": 6,
    "plain": [
-    2,
-    5
+    9,
+    13
    ],
    "strict": [
-    2,
-    5
+    7,
+    13
    ]
   },
   "kun-iam-statue": {
    "zh": "觀音蓮花苑",
-   "photos": 10,
-   "photographers": 1,
+   "photos": 11,
+   "photographers": 2,
    "plain": [
-    10,
-    10
+    11,
+    11
    ],
    "strict": [
-    0,
-    0
+    9,
+    11
    ]
   },
   "kun-iam-temple": {
    "zh": "觀音堂（普濟禪院）",
-   "photos": 26,
+   "photos": 34,
    "photographers": 8,
    "plain": [
-    24,
-    26
+    31,
+    34
    ],
    "strict": [
-    24,
-    26
+    29,
+    34
    ]
   },
   "lai-chi-vun": {
    "zh": "荔枝碗船廠",
-   "photos": 4,
+   "photos": 9,
    "photographers": 2,
    "plain": [
-    4,
-    4
+    9,
+    9
    ],
    "strict": [
     1,
-    4
+    9
    ]
   },
   "leal-senado": {
    "zh": "市政署大樓",
-   "photos": 11,
-   "photographers": 4,
+   "photos": 29,
+   "photographers": 20,
    "plain": [
-    11,
-    11
+    29,
+    29
    ],
    "strict": [
-    11,
-    11
+    29,
+    29
    ]
   },
   "londoner-macao": {
    "zh": "澳門倫敦人",
-   "photos": 8,
-   "photographers": 1,
+   "photos": 21,
+   "photographers": 8,
    "plain": [
-    8,
-    8
+    20,
+    21
    ],
    "strict": [
-    0,
-    0
+    16,
+    21
    ]
   },
   "lou-kau-house": {
    "zh": "盧家大屋（金玉堂）",
-   "photos": 10,
-   "photographers": 1,
+   "photos": 19,
+   "photographers": 4,
    "plain": [
-    9,
-    10
+    18,
+    19
    ],
    "strict": [
-    0,
-    0
+    18,
+    19
    ]
   },
   "macau-cultural-centre": {
    "zh": "澳門文化中心",
-   "photos": 8,
-   "photographers": 1,
+   "photos": 14,
+   "photographers": 5,
    "plain": [
-    7,
-    8
+    13,
+    14
    ],
    "strict": [
-    0,
-    0
+    13,
+    14
    ]
   },
   "macau-museum": {
    "zh": "澳門博物館",
-   "photos": 3,
-   "photographers": 1,
+   "photos": 4,
+   "photographers": 2,
    "plain": [
     3,
-    3
+    4
    ],
    "strict": [
     0,
-    0
+    4
    ]
   },
   "macau-science-center": {
    "zh": "澳門科學館",
-   "photos": 10,
-   "photographers": 2,
+   "photos": 30,
+   "photographers": 11,
    "plain": [
-    10,
-    10
+    30,
+    30
    ],
    "strict": [
-    1,
-    10
+    30,
+    30
    ]
   },
   "macau-tower": {
    "zh": "澳門旅遊塔",
-   "photos": 17,
-   "photographers": 7,
+   "photos": 35,
+   "photographers": 19,
    "plain": [
-    16,
-    17
+    33,
+    35
    ],
    "strict": [
-    13,
-    17
+    31,
+    35
    ]
   },
   "mandarins-house": {
    "zh": "鄭家大屋",
-   "photos": 12,
-   "photographers": 3,
+   "photos": 32,
+   "photographers": 8,
    "plain": [
-    11,
-    12
+    28,
+    32
    ],
    "strict": [
-    9,
-    12
+    27,
+    32
    ]
   },
   "mgm-macau": {
    "zh": "澳門美高梅",
-   "photos": 9,
-   "photographers": 1,
+   "photos": 28,
+   "photographers": 13,
    "plain": [
-    9,
-    9
+    23,
+    28
    ],
    "strict": [
-    0,
-    0
+    18,
+    28
    ]
   },
   "moorish-barracks": {
    "zh": "港務局大樓",
-   "photos": 13,
-   "photographers": 4,
+   "photos": 22,
+   "photographers": 7,
    "plain": [
-    13,
-    13
+    22,
+    22
    ],
    "strict": [
-    13,
-    13
+    22,
+    22
    ]
   },
   "na-tcha-temple": {
    "zh": "大三巴哪吒廟",
-   "photos": 9,
-   "photographers": 1,
+   "photos": 28,
+   "photographers": 14,
    "plain": [
-    9,
-    9
+    28,
+    28
    ],
    "strict": [
-    0,
-    0
+    28,
+    28
    ]
   },
   "parisian": {
    "zh": "澳門巴黎人",
-   "photos": 10,
-   "photographers": 2,
+   "photos": 24,
+   "photographers": 9,
    "plain": [
-    9,
-    10
+    22,
+    24
    ],
    "strict": [
-    5,
-    10
+    19,
+    24
    ]
   },
   "portas-do-cerco": {
    "zh": "關閘（關閘拱門）",
-   "photos": 9,
-   "photographers": 1,
+   "photos": 24,
+   "photographers": 11,
    "plain": [
-    9,
-    9
+    24,
+    24
    ],
    "strict": [
-    0,
-    0
+    24,
+    24
    ]
   },
   "red-market": {
    "zh": "紅街市（提督街市）",
-   "photos": 5,
-   "photographers": 5,
+   "photos": 15,
+   "photographers": 9,
    "plain": [
-    3,
-    5
+    12,
+    15
    ],
    "strict": [
-    3,
-    5
+    12,
+    15
    ]
   },
   "rua-da-felicidade": {
    "zh": "福隆新街",
-   "photos": 5,
-   "photographers": 3,
+   "photos": 25,
+   "photographers": 11,
    "plain": [
-    4,
-    5
+    24,
+    25
    ],
    "strict": [
-    4,
-    5
+    23,
+    25
    ]
   },
   "ruins-st-paul": {
    "zh": "大三巴牌坊",
-   "photos": 17,
-   "photographers": 3,
+   "photos": 34,
+   "photographers": 17,
    "plain": [
-    17,
-    17
+    34,
+    34
    ],
    "strict": [
-    15,
-    17
+    32,
+    34
    ]
   },
   "senado-square": {
    "zh": "議事亭前地",
-   "photos": 4,
-   "photographers": 4,
+   "photos": 23,
+   "photographers": 18,
    "plain": [
-    4,
-    4
+    19,
+    23
    ],
    "strict": [
-    4,
-    4
+    19,
+    23
    ]
   },
   "st-dominic-church": {
    "zh": "玫瑰堂（聖多明我教堂）",
-   "photos": 13,
-   "photographers": 5,
+   "photos": 32,
+   "photographers": 19,
    "plain": [
-    11,
-    13
+    29,
+    32
    ],
    "strict": [
-    11,
-    13
+    29,
+    32
    ]
   },
   "st-joseph-seminary": {
    "zh": "聖若瑟修院及聖堂",
-   "photos": 10,
-   "photographers": 1,
+   "photos": 14,
+   "photographers": 4,
    "plain": [
-    8,
-    10
+    12,
+    14
    ],
    "strict": [
-    0,
-    0
+    4,
+    14
    ]
   },
   "st-lawrence-church": {
    "zh": "聖老楞佐堂",
-   "photos": 8,
-   "photographers": 3,
+   "photos": 20,
+   "photographers": 5,
    "plain": [
-    4,
-    8
+    16,
+    20
    ],
    "strict": [
-    0,
-    8
+    7,
+    20
    ]
   },
   "taipa-houses": {
    "zh": "龍環葡韻住宅式博物館",
-   "photos": 14,
-   "photographers": 3,
+   "photos": 32,
+   "photographers": 9,
    "plain": [
-    13,
-    14
+    30,
+    32
    ],
    "strict": [
-    13,
-    14
+    30,
+    32
    ]
   },
   "the-venetian": {
    "zh": "澳門威尼斯人",
-   "photos": 10,
-   "photographers": 3,
+   "photos": 16,
+   "photographers": 8,
    "plain": [
-    8,
-    10
+    12,
+    16
    ],
    "strict": [
-    7,
-    10
+    11,
+    16
    ]
   },
   "wynn-macau": {
    "zh": "永利澳門",
-   "photos": 8,
-   "photographers": 1,
+   "photos": 25,
+   "photographers": 11,
    "plain": [
-    5,
-    8
+    16,
+    25
    ],
    "strict": [
-    0,
-    0
+    15,
+    25
    ]
   },
   "wynn-palace": {
    "zh": "永利皇宮",
-   "photos": 8,
-   "photographers": 1,
+   "photos": 22,
+   "photographers": 10,
    "plain": [
-    8,
-    8
+    19,
+    22
    ],
    "strict": [
-    0,
-    0
+    15,
+    22
    ]
   }
  },
  "plain": {
-  "top1": 0.9045,
-  "n": 356
+  "top1": 0.9077,
+  "n": 845
  },
  "strict": {
-  "top1": 0.7385,
-  "n": 218
+  "top1": 0.8189,
+  "n": 845
  }
 }

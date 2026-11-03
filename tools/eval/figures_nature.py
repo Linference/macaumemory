@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import font_manager
 from matplotlib.colors import LogNorm
+from matplotlib.patches import Rectangle
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "recognize"))
@@ -240,90 +241,96 @@ ax.spines["left"].set_visible(False); ax.tick_params(axis="y", length=0)
 ax.set_title("按建築類別", loc="left", pad=6)
 save(fig, "fig2-reliability")
 
-# ════════════ 圖 3：混淆氣泡矩陣（整張圖口徑） ════════════
-# 對角線＝該建築被認對的比例（藍色圓面積）；非對角＝誤判次數（紅色圓面積＋數字）；
-# 底色區塊標出同類建築；右側為每棟建築的 Top-1；下方列出最常見的混淆。
-from matplotlib.patches import Rectangle, FancyBboxPatch
+# ════════════ 圖 3：誤判弦圖（整張圖口徑） ════════════
+# 38 棟建築按類別排在圓環上；外弧＝類別色，內環細弧＝該建築 Top-1（深＝高）；
+# 緞帶連接被互相認錯的兩棟建築，寬度＝誤判次數（雙向合計），顏色＝真實建築的類別。
+from matplotlib.path import Path as MPath
+from matplotlib.patches import PathPatch, Wedge
 CLS_COL = {"casino_hotel": "#E69F00", "church": "#56B4E9", "civic": "#009E73", "industrial": "#999999", "market": "#CC79A7",
            "monument": "#D55E00", "portuguese": "#0072B2", "temple": "#B8860B", "tong_lau": "#882255", "village": "#44AA99",
            "residential_tower": "#666666"}
 ordr = sorted(range(nb), key=lambda b: (cls[ids[b]], zh[ids[b]]))
-pos = {b: i for i, b in enumerate(ordr)}
 pred = sc_small.argmax(1)
 M = np.zeros((nb, nb))
 for t, p in zip(y[valid], pred[valid]):
-    M[pos[t], pos[p]] += 1
-rowsum = M.sum(1)
-acc_row = np.divide(np.diag(M), rowsum, out=np.zeros(nb), where=rowsum > 0)
-names = [zh[ids[b]].split("（")[0] for b in ordr]
-cl = [cls[ids[b]] for b in ordr]
-starts = [0] + [i for i in range(1, nb) if cl[i] != cl[i - 1]] + [nb]
+    M[t, p] += 1
+rowsum = M.sum(1); acc_b = np.divide(np.diag(M), rowsum, out=np.zeros(nb), where=rowsum > 0)
+cl_of = {b: cls[ids[b]] for b in range(nb)}
+GAP, n_cls = 0.035, len({cl_of[b] for b in ordr})
+seg = (2 * np.pi - GAP * n_cls) / nb
+ang = {}; a = np.pi / 2
+prev = None
+for b in ordr:
+    if prev is not None and cl_of[b] != prev:
+        a -= GAP
+    ang[b] = (a - seg, a); a -= seg; prev = cl_of[b]
+mid = lambda b: sum(ang[b]) / 2
+pol = lambda r, t: (r * np.cos(t), r * np.sin(t))
 
-fig = plt.figure(figsize=(183 * MM, 172 * MM))
-gs = fig.add_gridspec(2, 2, width_ratios=[1, 0.17], height_ratios=[1, 0.13], wspace=0.04, hspace=0.62)
-ax = fig.add_subplot(gs[0, 0]); label(ax, "a", x=-0.17, y=1.035)
-# 同類建築的底色區塊
-for a_, b_ in zip(starts[:-1], starts[1:]):
-    c = CLS_COL.get(cl[a_], "#999")
-    ax.add_patch(Rectangle((a_ - 0.5, a_ - 0.5), b_ - a_, b_ - a_, facecolor=c, alpha=0.10, lw=0, zorder=0))
-    ax.add_patch(Rectangle((-1.05, a_ - 0.42), 0.38, b_ - a_ - 0.16, facecolor=c, lw=0, clip_on=False))   # 左側類別色條
-    ax.add_patch(Rectangle((a_ - 0.42, -1.05), b_ - a_ - 0.16, 0.38, facecolor=c, lw=0, clip_on=False))   # 上方類別色條
-    if b_ - a_ >= 2:
-        ax.text((a_ + b_ - 1) / 2, -1.45, CLS_ZH.get(cl[a_], cl[a_]), ha="center", va="bottom", fontsize=5.2, fontweight="bold", color=c)
-# 細格線
-for k in range(nb + 1):
-    ax.axhline(k - 0.5, color="#EEEEEE", lw=0.3, zorder=0.5); ax.axvline(k - 0.5, color="#EEEEEE", lw=0.3, zorder=0.5)
-R_MAX = 0.46
-for i in range(nb):
-    if rowsum[i]:
-        r = R_MAX * np.sqrt(acc_row[i])
-        ax.add_patch(plt.Circle((i, i), r, color=OI["blue"], alpha=0.9, lw=0, zorder=2))
-    for j in range(nb):
-        if i != j and M[i, j]:
-            r = 0.17 + 0.1 * (M[i, j] - 1)
-            ax.add_patch(plt.Circle((j, i), min(r, 0.48), color=OI["red"], lw=0, zorder=3))
-            if M[i, j] >= 2:
-                ax.text(j, i, int(M[i, j]), ha="center", va="center", fontsize=4.4, color="white", fontweight="bold", zorder=4)
-ax.set_xlim(-0.5, nb - 0.5); ax.set_ylim(nb - 0.5, -0.5); ax.set_aspect("equal")
-ax.set_xticks(range(nb)); ax.set_xticklabels(names, rotation=90, fontsize=4.6)
-ax.set_yticks(range(nb)); ax.set_yticklabels(names, fontsize=4.6)
-ax.tick_params(length=0, pad=6)
-for t_, c_ in zip(ax.get_yticklabels(), cl): t_.set_color("#333")
-ax.set_xlabel("預測建築", labelpad=4); ax.set_ylabel("真實建築", labelpad=4)
-for s in ("top", "right", "left", "bottom"):
-    ax.spines[s].set_visible(False)
-ax.set_title(f"留一法混淆氣泡矩陣（DINOv2-small，整張圖；n = {int(valid.sum())}）", loc="left", pad=22)
-
-# b 每棟 Top-1
-axb = fig.add_subplot(gs[0, 1], sharey=ax)
-cols_b = [OI["blue"] if a_ >= 0.85 else OI["orange"] if a_ >= 0.7 else OI["red"] for a_ in acc_row]
-axb.barh(range(nb), acc_row * 100, color=cols_b, height=0.62, lw=0)
-for i, (a_, n_) in enumerate(zip(acc_row, rowsum)):
-    axb.text(103, i, f"{int(M[i, i])}/{int(n_)}", va="center", fontsize=4.2, color="#555")
-axb.axvline(hit[valid].mean() * 100, color=OI["black"], lw=0.5, ls=(0, (2, 2)), zorder=0)
-axb.set_xlim(0, 135); axb.set_xticks([0, 50, 100]); axb.set_xlabel("Top-1 (%)")
-axb.tick_params(axis="y", left=False, labelleft=False); axb.spines["left"].set_visible(False)
-axb.set_title("b", loc="left", fontsize=8, fontweight="bold", pad=22)
-
-# c 最常見的混淆（雙向合計）
+fig = plt.figure(figsize=(183 * MM, 118 * MM))
+ax = fig.add_axes([0.0, 0.0, 0.62, 1.0]); ax.set_aspect("equal"); ax.axis("off")
+ax.set_xlim(-1.62, 1.62); ax.set_ylim(-1.62, 1.62)
+R0, R1 = 1.0, 1.07
+for b in ordr:                                                     # 外弧：類別；內細弧：準確率
+    t0, t1 = np.degrees(ang[b])
+    ax.add_patch(Wedge((0, 0), R1, t0 + 0.4, t1 - 0.4, width=R1 - R0, color=CLS_COL[cl_of[b]], lw=0))
+    ax.add_patch(Wedge((0, 0), 0.985, t0 + 0.4, t1 - 0.4, width=0.03, color=plt.cm.Blues(0.25 + 0.75 * acc_b[b]), lw=0))
+    th = mid(b); x, y_ = pol(1.11, th); deg = np.degrees(th)
+    flip = 90 < (deg % 360) < 270
+    ax.text(x, y_, zh[ids[b]].split("（")[0], rotation=deg + (180 if flip else 0), rotation_mode="anchor",
+            ha="right" if flip else "left", va="center", fontsize=4.6, color="#333")
+# 類別標籤
+groups = {}
+for b in ordr:
+    groups.setdefault(cl_of[b], []).append(b)
+for c, bs in groups.items():
+    th = (ang[bs[0]][1] + ang[bs[-1]][0]) / 2; x, y_ = pol(1.52, th)
+    if len(bs) >= 2:
+        ax.text(x, y_, CLS_ZH.get(c, c), ha="center", va="center", fontsize=6, fontweight="bold", color=CLS_COL[c])
+# 緞帶（雙向合計；端點寬度依次數分配在該建築的弧內）
 pairs = {}
 for i in range(nb):
     for j in range(nb):
         if i != j and M[i, j]:
-            k = tuple(sorted((i, j))); pairs[k] = pairs.get(k, 0) + M[i, j]
-top = sorted(pairs.items(), key=lambda kv: -kv[1])[:6]
-axc = fig.add_subplot(gs[1, :]); axc.axis("off")
-axc.text(0, 1.12, "c", fontsize=8, fontweight="bold", transform=axc.transAxes)
-axc.text(0.03, 1.12, "最常見的混淆（雙向合計）", fontsize=6.5, transform=axc.transAxes)
-axc.text(1.0, 1.12, "a 圖例：藍圓面積＝該建築被認對的比例　紅圓＝誤判（數字為 ≥ 2 次）", fontsize=4.8, color="#555", ha="right", transform=axc.transAxes)
-for k, ((i, j), n_) in enumerate(top):
-    x0 = (k % 3) / 3; y0 = 0.5 - (k // 3) * 0.6
-    axc.add_patch(FancyBboxPatch((x0 + 0.005, y0 - 0.04), 0.31, 0.44, boxstyle="round,pad=0.01,rounding_size=0.02",
-                                 transform=axc.transAxes, facecolor="#F6F7F9", edgecolor="#DDDDDD", lw=0.5, clip_on=False))
-    axc.text(x0 + 0.02, y0 + 0.18, f"{int(n_)}", fontsize=10, fontweight="bold", color=OI["red"], transform=axc.transAxes, va="center")
-    same = "同類" if cl[i] == cl[j] else "跨類"
-    axc.text(x0 + 0.07, y0 + 0.26, f"{names[i]}  ↔  {names[j]}", fontsize=5.6, transform=axc.transAxes, va="center")
-    axc.text(x0 + 0.07, y0 + 0.08, f"{CLS_ZH.get(cl[i])}／{CLS_ZH.get(cl[j])} · {same}", fontsize=4.8, color="#666", transform=axc.transAxes, va="center")
+            k = tuple(sorted((i, j))); pairs.setdefault(k, [0, 0])
+            pairs[k][0 if i == k[0] else 1] += M[i, j]
+used = {b: 0.0 for b in range(nb)}
+unit = seg * 0.22
+for (i, j), (nij, nji) in sorted(pairs.items(), key=lambda kv: -sum(kv[1])):
+    n_ = nij + nji; w = min(unit * n_, seg * 0.9)
+    def span(b):
+        a0, a1 = ang[b]; c = (a0 + a1) / 2 - seg * 0.45 + used[b]; used[b] += w
+        return c, c + w
+    ai, aj = span(i), span(j)
+    p = lambda t: pol(0.965, t)
+    verts = [p(ai[0])]
+    verts += [p(t) for t in np.linspace(ai[0], ai[1], 6)[1:]]
+    verts += [(0, 0), p(aj[0])]
+    verts += [p(t) for t in np.linspace(aj[0], aj[1], 6)[1:]]
+    verts += [(0, 0), p(ai[0])]
+    codes = [MPath.MOVETO] + [MPath.LINETO] * 5 + [MPath.CURVE3, MPath.CURVE3] + [MPath.LINETO] * 5 + [MPath.CURVE3, MPath.CURVE3]
+    src = i if nij >= nji else j
+    ax.add_patch(PathPatch(MPath(verts, codes), facecolor=CLS_COL[cl_of[src]], edgecolor="white", lw=0.3, alpha=0.62, zorder=2))
+tot_err = int(M.sum() - np.trace(M))
+ax.text(0, 0.07, f"{hit[valid].mean() * 100:.1f}%", ha="center", va="center", fontsize=13, fontweight="bold", color="#13233a")
+ax.text(0, -0.12, f"Top-1（n = {int(valid.sum())}）\n誤判 {tot_err} 次", ha="center", va="center", fontsize=5.4, color="#555", linespacing=1.4)
+ax.text(-1.6, 1.55, "a", fontsize=8, fontweight="bold")
+
+# b 最常見的誤判
+axr = fig.add_axes([0.66, 0.1, 0.32, 0.8]); axr.axis("off")
+axr.text(0, 1.0, "b", fontsize=8, fontweight="bold", transform=axr.transAxes, va="top")
+axr.text(0.07, 1.0, "最常見的誤判（雙向合計）", fontsize=6.5, transform=axr.transAxes, va="top")
+top = sorted(pairs.items(), key=lambda kv: -sum(kv[1]))[:8]
+for k, ((i, j), (a1, a2)) in enumerate(top):
+    yy = 0.88 - k * 0.105
+    n_ = int(a1 + a2)
+    axr.add_patch(Rectangle((0, yy - 0.035), 0.04 + 0.06 * n_, 0.06, transform=axr.transAxes, color=CLS_COL[cl_of[i]], alpha=0.75, lw=0))
+    axr.text(0.05 + 0.06 * n_, yy, f"{n_}", fontsize=6.5, fontweight="bold", transform=axr.transAxes, va="center", color="#13233a")
+    axr.text(0.36, yy + 0.012, f"{zh[ids[i]].split('（')[0]} ↔ {zh[ids[j]].split('（')[0]}", fontsize=5.6, transform=axr.transAxes, va="center")
+    axr.text(0.36, yy - 0.028, f"{CLS_ZH.get(cl_of[i])}／{CLS_ZH.get(cl_of[j])}" + ("（同類）" if cl_of[i] == cl_of[j] else "（跨類）"),
+             fontsize=4.6, color="#777", transform=axr.transAxes, va="center")
+axr.text(0, 0.0, "外弧顏色＝建築類別　內環深淺＝該建築 Top-1\n緞帶寬度＝誤判次數，顏色＝主要誤判方向的真實建築類別",
+         fontsize=4.6, color="#666", transform=axr.transAxes, va="bottom", linespacing=1.5)
 save(fig, "fig3-confusion")
 
 (OUT / "figures.json").write_text(json.dumps({"auc_pairs": aucs, "n_pairs": int(same_pair.size)}, ensure_ascii=False, indent=1), encoding="utf-8")
