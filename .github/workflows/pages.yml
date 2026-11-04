@@ -1,4 +1,4 @@
-﻿name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -19,6 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # public/gaussian/**/*.ply 由 Git LFS 管理；不開 lfs 會 checkout 到 pointer 檔，
+          # 線上就會出現「Invalid ply header」（2026-11 實際發生）
+          lfs: true
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -27,6 +31,15 @@ jobs:
         run: npm ci
       - name: 打包（Vite → dist，含 public/ 的圖資、地形與模型）
         run: npm run build
+      - name: 檢查 3DGS 模型是原始 PLY（不是 LFS pointer）
+        run: |
+          set -e
+          for f in dist/gaussian/stpaul/scene.ply dist/gaussian/stpaul/scene.compressed.ply; do
+            size=$(stat -c%s "$f")
+            head -c 3 "$f" | grep -q '^ply' || { echo "❌ $f 不是有效 PLY"; exit 1; }
+            [ "$size" -gt 1000000 ] || { echo "❌ $f 只有 $size bytes（疑似 LFS pointer）"; exit 1; }
+            echo "✅ $f $size bytes"
+          done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
