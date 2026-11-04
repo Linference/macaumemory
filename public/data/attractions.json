@@ -61,13 +61,14 @@
    "en": "Ruins of St. Paul's",
    "pt": "Ruínas de São Paulo",
    "tag": "世界遺產",
-   "brief": "聖保祿學院天主之母教堂的正面石壁，澳門最著名的地標。",
-   "detail": "教堂由耶穌會士始建於 1602 年，1637 年落成，曾是遠東最大的天主教教堂。1835 年一場大火後僅存前壁、石階與地基，因其形似中國牌坊而得名「大三巴牌坊」。石壁上雕刻著聖母、耶穌會聖人、天使、獅子與中式牡丹、菊花紋樣，是中西藝術融合的傑作，2005 年作為「澳門歷史城區」的一部分列入世界文化遺產。",
+   "brief": "聖保祿學院天主之母教堂的花崗石前壁，澳門最著名的地標。",
+   "detail": "教堂 1602 年動工、1637–1640 年竣工，1835 年大火後只剩前壁、地基與石階，因形似中國牌坊而稱「大三巴牌坊」。前壁屬巴洛克構圖，卻刻有中文警句與菊花等東方紋樣，文化局稱這種中西合璧在全世界天主教堂中獨一無二；2005 年作為「澳門歷史城區」一部分列入世界遺產。",
    "geoSource": "building",
    "geoRef": "大三巴牌坊 Ruínas de São Paulo",
    "wikidata": "Q1551411",
    "coordMovedMeters": 43,
-   "geoEvidence": "building:大三巴牌坊 Ruínas d(19.2) > poi-exact:大三巴牌坊(18.5) > poi-exact:Ruins of St Pa(16.0)"
+   "geoEvidence": "building:大三巴牌坊 Ruínas d(19.2) > poi-exact:大三巴牌坊(18.5) > poi-exact:Ruins of St Pa(16.0)",
+   "dossier": "ruins-st-paul"
   },
   {
    "id": "na-tcha-temple",
@@ -80,13 +81,14 @@
    "en": "Na Tcha Temple",
    "pt": "Templo de Na Tcha",
    "tag": "世界遺產",
-   "brief": "建成於 1888 年，小巧的中式廟宇與大三巴牌坊相鄰而立。",
-   "detail": "廟宇祭祀哪吒三太子，相傳建廟是為了驅除瘟疫。它是澳門現存兩座哪吒廟之一（另一座在柿山），建築風格樸實，只有一進，卻與西式教堂遺址同處一隅，成為澳門中西文化共存的著名畫面。",
+   "brief": "1888 年創建、1901 年改建的小廟，依附舊城牆、與大三巴同在一坡。",
+   "detail": "廟內供奉哪吒，這種信仰自 17 世紀後期起受澳門民間供奉，2014 年列入國家級非物質文化遺產名錄。廟為兩進式磚木建築，但中間沒有天井，在傳統中式廟宇中罕見；門廳三面不砌牆，只以黑色木柵圍繞。文化局形容它不與城牆和牌坊比雄偉，而以虛實對比顯得輕巧，像一個「建築小品」。",
    "geoSource": "building",
    "geoRef": "大三巴哪吒廟 Templo de Na Tcha, junto às Ruínas de S. Paulo",
    "wikidata": "Q709079",
    "coordMovedMeters": 31,
-   "geoEvidence": "building:大三巴哪吒廟 Templo (17.6) > poi-exact:Na Tcha Temple(16.9) > poi-exact:大三巴 Ruins Of S(14.4)"
+   "geoEvidence": "building:大三巴哪吒廟 Templo (17.6) > poi-exact:Na Tcha Temple(16.9) > poi-exact:大三巴 Ruins Of S(14.4)",
+   "dossier": "na-tcha-temple"
   },
   {
    "id": "fortress-monte",
@@ -99,13 +101,14 @@
    "en": "Fortaleza do Monte",
    "pt": "Fortaleza do Monte",
    "tag": "世界遺產",
-   "brief": "1617 年由耶穌會士建成的軍事要塞，澳門防禦體系的核心。",
-   "detail": "大炮台原名聖保祿炮台，1622 年荷蘭人入侵澳門時，守軍在此發炮擊中敵艦，成功守住城市。炮台呈不規則四邊形，設有數十門大炮，並配有地下隧道與彈藥庫。1965 年後曾作氣象台，1998 年澳門博物館在其平台上落成。",
+   "brief": "1617 年由耶穌會士動工、1626 年建成的聖保祿炮台，澳門防禦系統的核心。",
+   "detail": "炮台位於海拔 52 米的山頭，呈不規則四邊形，四角為棱堡，可架設多達 32 門大炮。牆身以夯土和蠔殼粉灰泥築成；面向中國大陸的西北牆不設炮口，文化局指這顯示其以海防為主，並對當時中國官方表示友好。1623–1740 年間是澳門總督住所；1965 年改建為氣象台，1998 年澳門博物館在此啟用。",
    "geoSource": "building",
    "geoRef": "大炮台 Fortaleza do Monte",
    "wikidata": "Q838085",
    "coordMovedMeters": 100,
-   "geoEvidence": "building:大炮台 Fortaleza (20.8) > poi-exact:大炮台(20.1) > poi-exact:Fortaleza do M(20.1)"
+   "geoEvidence": "building:大炮台 Fortaleza (20.8) > poi-exact:大炮台(20.1) > poi-exact:Fortaleza do M(20.1)",
+   "dossier": "fortress-monte"
   },
   {
    "id": "senado-square",
@@ -118,13 +121,14 @@
    "en": "Largo do Senado",
    "pt": "Largo do Senado",
    "tag": "世界遺產",
-   "brief": "澳門歷史城區的核心廣場，葡式波浪碎石地面的起點。",
-   "detail": "議事亭前地俗稱「噴水池」，自 16 世紀以來就是澳門的市政與商業中心。地面鋪砌葡萄牙傳統的波浪形碎石，四周環繞市政署大樓、仁慈堂大樓、玫瑰聖母堂與新古典主義的郵政總局。每年聖誕、農曆新年與葡國節慶，這裡都是澳門最重要的公共活動場地。",
+   "brief": "澳門市中心廣場，俗稱「噴水池」，黑白波浪紋碎石地面始鋪於 1993 年。",
+   "detail": "前地因位於議事亭（市政廳前身）前而得名，開埠至今一直是澳門市中心，20 世紀 70 年代建噴水池。廣場前寬後窄，兩側為 19 世紀末至 20 世紀初的建築：右側有郵政局大樓、新古典主義的仁慈堂大樓，左側是一列三層、帶行人走廊的新古典樓宇。",
    "geoSource": "poi-near",
    "geoRef": "Largo De Senado",
    "wikidata": "Q837935",
    "coordMovedMeters": 85,
-   "geoEvidence": "poi-near:Largo De Senad(8.4) > wikipedia-zh:議事亭前地(7.7) > curated(5.2)"
+   "geoEvidence": "poi-near:Largo De Senad(8.4) > wikipedia-zh:議事亭前地(7.7) > curated(5.2)",
+   "dossier": "senado-square"
   },
   {
    "id": "st-dominic",
@@ -137,13 +141,14 @@
    "en": "St. Dominic's Church",
    "pt": "Igreja de São Domingos",
    "tag": "世界遺產",
-   "brief": "建於 1587 年，巴洛克式教堂，內設天主教聖物寶庫。",
-   "detail": "由西班牙多明我會修士創建，是澳門最古老的天主教堂之一。教堂立面呈巴洛克風格，黃牆白線、綠色窗框，內部為三殿式巴西利卡格局。堂內的「聖母玫瑰堂聖物寶庫」收藏逾三百件澳門天主教文物，包括聖像、聖器、祭衣與十七世紀的油畫。",
+   "brief": "1587 年道明會創建，立面為古典式構圖，主祭壇為巴洛克風格。",
+   "detail": "由道明會創建，是該會在中國的第一所教堂；初以木板搭建，故稱「板樟堂」。立面由愛奧尼柱、科林斯柱到三角山花「由簡而繁」；主祭壇以麻花柱與斷山花構成巴洛克風格。堂內不用彩色玻璃而用大型百葉窗，體現南方建築特點。旁設聖物寶庫，藏三百多件天主教文物。",
    "geoSource": "building",
    "geoRef": "玫瑰聖母堂",
    "wikidata": null,
    "coordMovedMeters": 124,
-   "geoEvidence": "building:玫瑰聖母堂(16.4) > poi-exact:St. Dominic's (15.3) > wikidata-search:Q4130614(9.3)"
+   "geoEvidence": "building:玫瑰聖母堂(16.4) > poi-exact:St. Dominic's (15.3) > wikidata-search:Q4130614(9.3)",
+   "dossier": "st-dominic"
   },
   {
    "id": "leal-senado",
@@ -157,13 +162,14 @@
    "en": "Leal Senado Building",
    "pt": "Edifício do Leal Senado",
    "tag": "世界遺產",
-   "brief": "建於 1784 年的葡萄牙殖民時期市政廳，舊稱民政總署大樓，2019 年起為市政署大樓。",
-   "detail": "大樓曾是澳門葡萄牙管治時期的市政議事機構所在地，門楣上仍可見葡萄牙王室的徽記。內有典型的葡式花園、圖書館與議事堂，地面鋪砌葡式碎石，是議事亭前地的標誌性建築，2005 年納入世界遺產名錄。",
+   "brief": "1784 年建的原市政廳，1874 年重修形成今日規模，現為市政署大樓。",
+   "detail": "建築帶南歐特色：正立面為文藝復興簡約風格，高 14.5 米、寬 44 米，中央有三角山花；側立面門窗因內部功能而定，較為自由。門廳內牆貼藍白葡國瓷磚，二樓圖書館 1929 年啟用，以葡國瑪弗拉修道院圖書館為藍本，藏 17 世紀至 20 世紀 50 年代外文古籍。",
    "geoSource": "building-id",
    "geoRef": "市政署大樓 Edifício do Leal Senado",
    "wikidata": "Q3181816",
    "coordMovedMeters": 20,
-   "geoEvidence": "building-id:市政署大樓 Edifício · building:市政署大樓 Edifício(17.6) > poi-exact:Leal Senado Bu(16.9) > area:市政署大樓內庭花園 Átri(15.6)"
+   "geoEvidence": "building-id:市政署大樓 Edifício · building:市政署大樓 Edifício(17.6) > poi-exact:Leal Senado Bu(16.9) > area:市政署大樓內庭花園 Átri(15.6)",
+   "dossier": "leal-senado"
   },
   {
    "id": "cathedral",
@@ -176,13 +182,14 @@
    "en": "Cathedral (Sé)",
    "pt": "Sé Catedral",
    "tag": "世界遺產",
-   "brief": "澳門天主教區的主教座堂，位於大堂前地。",
-   "detail": "主教座堂始建於 16 世紀，現存建築於 1849 年重建，1937 年再經修葺。教堂為新古典主義風格，正立面設有一座鐘樓，內部主祭壇供奉聖母。澳門歷任主教都在此舉行重大禮儀，教堂前方的大堂前地設有十字架與噴泉。",
+   "brief": "澳門天主教區的主教座堂，經簡化的新古典主義風格。",
+   "detail": "約 1622 年以三合土建造，1836 年颱風損毀後於 1844–1850 年由土生建築師重建，1874 年再遭颶風破壞，1937 年以鋼筋混凝土重建，形成今日簡潔的新古典面貌。立面三段式構圖，兩旁各有一座鐘樓；大鐘為英國製造。昔日澳門總督上任時會到此把權杖放在聖母像旁。",
    "geoSource": "building",
    "geoRef": "主教座堂 (大堂/聖母誕辰主教座堂) Igreja da Sé (Sé Catedral da Natividade de Nossa Senhora)",
    "wikidata": "Q1106554",
    "coordMovedMeters": 191,
-   "geoEvidence": "building:主教座堂 (大堂/聖母誕辰主(12.8) > wikipedia-search:聖母誕辰主教座堂(6.1) > curated(2.0)"
+   "geoEvidence": "building:主教座堂 (大堂/聖母誕辰主(12.8) > wikipedia-search:聖母誕辰主教座堂(6.1) > curated(2.0)",
+   "dossier": "cathedral"
   },
   {
    "id": "st-joseph-seminary",
@@ -195,13 +202,14 @@
    "en": "St. Joseph's Seminary & Church",
    "pt": "Seminário e Igreja de São José",
    "tag": "世界遺產",
-   "brief": "俗稱「三巴仔」，18 世紀遠東培育傳教士的重要基地。",
-   "detail": "修院由耶穌會士於 1728 年創辦，聖堂則於 1758 年落成。聖堂以華麗的巴洛克風格著稱，穹頂與聖壇裝飾精美，曾被譽為遠東最雄偉的教堂之一。修院曾培育大批到中國、日本、東南亞傳教的修士，是澳門作為天主教遠東傳教中心的見證。",
+   "brief": "俗稱「三巴仔」，聖堂以華麗的巴洛克風格著稱。",
+   "detail": "修院 1728 年由耶穌會士創辦，培養中國及東南亞教會人才；聖堂 1746 年興建、1758 年落成，規模僅次於聖保祿教堂，故稱「三巴仔」。主堂為四個帆拱托起的羅馬式穹窿，祭壇以金葉旋柱、斷山花構成巴洛克設計；堂內存放聖方濟各．沙勿略的手肱骨聖髑。",
    "geoSource": "wikipedia-zh",
    "geoRef": "聖若瑟修院及聖堂",
    "wikidata": "Q4579079",
    "coordMovedMeters": 128,
-   "geoEvidence": "wikipedia-zh:聖若瑟修院及聖堂(6.1) > curated(3.6)"
+   "geoEvidence": "wikipedia-zh:聖若瑟修院及聖堂(6.1) > curated(3.6)",
+   "dossier": "st-joseph-seminary"
   },
   {
    "id": "mandarins-house",
@@ -215,13 +223,14 @@
    "en": "Mandarin's House",
    "pt": "Casa do Mandarim",
    "tag": "世界遺產",
-   "brief": "中國近代思想家鄭觀應的故居，佔地約 4,000 平方米。",
-   "detail": "鄭家大屋約建於 1869 年，是澳門現存規模最大的中式民居建築群，由多座院落、月門、天井與灰塑、木雕裝飾組成，並融入西式的鑄鐵欄杆、百葉窗與天花線。鄭觀應在此完成名著《盛世危言》，提出變法圖強的主張，對晚清與近代中國影響深遠。2010 年完成修復後對外開放。",
+   "brief": "近代思想家鄭觀應的故居，1869 年前由其父鄭文瑞籌建。",
+   "detail": "大屋佔地約 4,000 平方米，沿媽閣街縱深 120 多米，主房區為兩座兩進三開間的四合院。建築以中國形制為主（屋頂、樑架、青磚、泥塑、趟櫳門），又在天花、門楣窗楣、檐口線和外牆抹灰上吸收西方做法，體現中西結合。政府於 2001 年接管並按原貌維修。",
    "geoSource": "building-id",
    "geoRef": "鄭家大屋",
    "wikidata": "Q6757684",
    "coordMovedMeters": 149,
-   "geoEvidence": "building-id:鄭家大屋 · poi-exact:Mandarin's Hou(15.3) > building:鄭家大屋(14.8) > wikipedia-en:Mandarin's Hou(7.7)"
+   "geoEvidence": "building-id:鄭家大屋 · poi-exact:Mandarin's Hou(15.3) > building:鄭家大屋(14.8) > wikipedia-en:Mandarin's Hou(7.7)",
+   "dossier": "mandarins-house"
   },
   {
    "id": "lilau-square",
@@ -235,13 +244,14 @@
    "en": "Lilau Square",
    "pt": "Largo do Lilau",
    "tag": "世界遺產",
-   "brief": "澳門最古老的葡萄牙人社區所在，有「一飲亞婆井水，忘卻家鄉」之說。",
-   "detail": "亞婆井是葡萄牙人在澳門最早的聚居地之一，昔日有泉水自山間流出，供居民取用。葡人諺語說「喝了亞婆井的水，就會終老澳門」，可見此地對早期葡人家庭的意義。前地四周仍保留著葡式住宅與榕樹，氣氛寧靜。",
+   "brief": "葡人在澳門最早的聚居點之一，昔日是澳門主要水源。",
+   "detail": "「亞婆井」葡文 Lilau 意為山泉。葡人民謠說：喝了亞婆井水，便忘不掉澳門，要麼在澳門成家，要麼遠別重來。前地周圍有順山勢而建的葡式民居（白牆、綠百葉窗、紅瓦頂），以及 20 世紀初的裝飾藝術風格公寓。",
    "geoSource": "area",
    "geoRef": "亞婆井前地 Largo do Lilau",
    "wikidata": "Q10882742",
    "coordMovedMeters": 238,
-   "geoEvidence": "area:亞婆井前地 Largo do(14.5) > poi-exact:Largo Do Lilau(13.7) > wikidata:亞婆井前地(7.7)"
+   "geoEvidence": "area:亞婆井前地 Largo do(14.5) > poi-exact:Largo Do Lilau(13.7) > wikidata:亞婆井前地(7.7)",
+   "dossier": "lilau-square"
   },
   {
    "id": "a-ma-temple",
@@ -254,13 +264,14 @@
    "en": "A-Ma Temple",
    "pt": "Templo de A-Má",
    "tag": "世界遺產",
-   "brief": "澳門最古老的廟宇之一，澳門葡文名「Macau」的由來。",
-   "detail": "媽閣廟供奉媽祖（天后），相傳由福建商人建於明弘治元年（1488 年），是澳門最古老的宗教建築之一。廟宇依山面海，由山門、牌坊、正殿、弘仁殿、觀音閣等組成，石壁上留有歷代文人題刻。葡萄牙人登陸澳門時，以「媽閣」的音譯稱呼此地，最終演變成「Macau」這個名字。",
+   "brief": "澳門現存有實物可考最古老的廟宇，依山面海。",
+   "detail": "創建年份未有定論，但大部分學者肯定葡人定居前此處已有媽祖廟。神山第一殿創建於 1605 年，門口石橫樑仍存創建時石刻；弘仁殿相傳建於 1488 年。廟由大門、牌坊、正殿、弘仁殿、觀音閣和正覺禪林組成，以花崗石為主、配琉璃瓦飛檐，規模小而與山勢融合。山間有歷代摩崖石刻，洋船石、海覺石是著名奇石。",
    "geoSource": "building",
    "geoRef": "媽閣廟 Templo de A-Ma",
    "wikidata": "Q2149114",
    "coordMovedMeters": 18,
-   "geoEvidence": "building:媽閣廟 Templo de (16.0) > poi-exact:A-Ma Temple(15.3) > wikidata:媽祖閣(9.3)"
+   "geoEvidence": "building:媽閣廟 Templo de (16.0) > poi-exact:A-Ma Temple(15.3) > wikidata:媽祖閣(9.3)",
+   "dossier": "a-ma-temple"
   },
   {
    "id": "moorish-barracks",
@@ -273,13 +284,14 @@
    "en": "Moorish Barracks",
    "pt": "Quartel dos Mouros",
    "tag": "世界遺產",
-   "brief": "1874 年落成的摩爾式建築，原為印度籍警察營地。",
-   "detail": "大樓由意大利建築師設計，供印度籍警察住宿，建築帶有濃厚阿拉伯與哥德式混合風格：米黃色外牆、尖拱門窗、穹頂迴廊與精緻的雕花欄杆，是澳門少見的摩爾式建築，現為海事及水務局辦公地點。",
+   "brief": "1874 年建成的原摩爾兵營，受阿拉伯及哥特建築影響。",
+   "detail": "大樓原為由印度來澳警察的營地，可駐二百多名官兵，1905 年改為港務局與水警辦公地點。三面環繞寬 4 米的尖拱迴廊，文化局指這是建築對本地氣候的回應；長迴廊上連續 19 個伊斯蘭式尖拱。設計者的說法不一：文化局記為安東尼奧．梅洛，旅遊局記為意大利人卡蘇杜。",
    "geoSource": "building",
    "geoRef": "港務局大樓 Quartel dos Mouros",
    "wikidata": "Q6759727",
    "coordMovedMeters": 113,
-   "geoEvidence": "building:港務局大樓 Quartel (12.4) > poi-exact:Moorish Barrac(9.2) > curated(5.2)"
+   "geoEvidence": "building:港務局大樓 Quartel (12.4) > poi-exact:Moorish Barrac(9.2) > curated(5.2)",
+   "dossier": "moorish-barracks"
   },
   {
    "id": "st-lawrence",
@@ -293,12 +305,13 @@
    "pt": "Igreja de São Lourenço",
    "tag": "世界遺產",
    "brief": "澳門三大古教堂之一，俗稱「風順堂」。",
-   "detail": "教堂約建於 1568 年，是澳門最古老的三座教堂之一。昔日葡人航海經常在此祈求出海平安，「風順堂」之名由此而來。教堂為新古典主義風格，黃牆白柱、鐘樓高立，內部主祭壇供奉聖老楞佐，堂前石階與老榕樹構成典型的老澳門風景。",
+   "detail": "創建年代未有定論，學界一般認為在 1569 年以前，1618 年首次重修，1846 年改建完成今日規模。華人稱「風信堂」，粵語諧音為「風順堂」，昔日葡人家屬在此祈求船隻順風歸來。外觀在歐洲古典式基礎上帶巴洛克風格，兩座對稱鐘樓高約 21 米；中廳跨度 15 米、無柱阻隔。",
    "geoSource": "building",
    "geoRef": "聖老楞佐堂 Igreja de S. Lourenço",
    "wikidata": null,
    "coordMovedMeters": 250,
-   "geoEvidence": "building:聖老楞佐堂 Igreja d(10.8) > poi-far:Igreja De São (3.1) > curated(2.0)"
+   "geoEvidence": "building:聖老楞佐堂 Igreja d(10.8) > poi-far:Igreja De São (3.1) > curated(2.0)",
+   "dossier": "st-lawrence"
   },
   {
    "id": "st-anthony",
@@ -310,13 +323,14 @@
    "zh": "聖安多尼堂",
    "en": "St. Anthony's Church",
    "pt": "Igreja de Santo António",
-   "brief": "澳門三大古教堂中最古老的一座，俗稱「花王堂」。",
-   "detail": "教堂約建於 1558–1560 年間，與聖老楞佐堂、主教座堂並稱澳門三大古教堂。因聖安多尼是婚姻主保聖人，早年葡人在此舉行婚禮常以鮮花裝飾，故俗稱「花王堂」。教堂曾多次重建，現存建築為 1930 年代風格，門前的白鴿巢公園與其連成一片。",
+   "brief": "澳門三大古教堂之一，俗稱「花王堂」。",
+   "detail": "1558–1560 年間創建，與風順堂、望德堂並稱澳門三大古教堂。以往葡人婚禮多在此舉行，華人稱之為「花王堂」。教堂多次毀於火災，1874 年 9 月 22 日大火後每年有「天災節」巡遊。1930 年改建的立面為新古典風格，因遷就周圍街道只建一座鐘樓，所以不對稱；主祭壇為 1875 年的巴洛克式聖壇。",
    "geoSource": "building",
    "geoRef": "聖安多尼堂 (花王堂) Igreja de Santo António",
    "wikidata": null,
    "coordMovedMeters": 19,
-   "geoEvidence": "building:聖安多尼堂 (花王堂) Ig(14.0) > poi-exact:聖安多尼堂(13.3) > poi-exact:St Anthony's C(10.8)"
+   "geoEvidence": "building:聖安多尼堂 (花王堂) Ig(14.0) > poi-exact:聖安多尼堂(13.3) > poi-exact:St Anthony's C(10.8)",
+   "dossier": "st-anthony"
   },
   {
    "id": "camoes-garden",
@@ -329,13 +343,14 @@
    "zh": "白鴿巢公園與東方基金會",
    "en": "Camoes Garden & Casa Garden",
    "pt": "Jardim de Camões e Casa Garden",
-   "brief": "澳門最古老的公園之一，園旁是東印度公司大班故居。",
-   "detail": "白鴿巢公園因昔日園內飼養大量白鴿而得名，園中有葡萄牙詩人賈梅士的銅像與石洞，相傳他曾在此構思《葡國魂》。毗鄰的東方基金會會址建於 18 世紀末，原為英國東印度公司大班住宅，是澳門現存最典型的南歐花園別墅之一。",
+   "brief": "澳門最古老的公園之一，園內有賈梅士洞，旁邊是東方基金會會址與基督教墳場。",
+   "detail": "昔日富商在此飼養數百隻白鴿，遠觀若巢，故名「白鴿巢」。賈梅士洞由三塊大石疊成，相傳葡國詩人賈梅士在此寫成《葡國魂》，洞內銅像於 1866 年重鑄。東方基金會會址原是 18 世紀 70 年代富商俾利喇的別墅，後租給東印度公司，可能是澳門首幢花園式豪宅。旁邊的基督教墳場 1821 年啟用，葬有馬禮遜與畫家錢納利。",
    "geoSource": "poi-exact",
    "geoRef": "Camoes Garden",
    "wikidata": null,
    "coordMovedMeters": 109,
-   "geoEvidence": "poi-exact:Camoes Garden(7.6) > curated(3.6)"
+   "geoEvidence": "poi-exact:Camoes Garden(7.6) > curated(3.6)",
+   "dossier": "camoes-garden"
   },
   {
    "id": "tam-kung-temple",
@@ -348,13 +363,14 @@
    "zh": "路環譚公廟",
    "en": "Tam Kung Temple",
    "pt": "Templo de Tam Kung",
-   "brief": "路環最古老的廟宇，據傳建於清同治年間。",
-   "detail": "譚公廟供奉譚公仙聖，是路環漁民的重要信仰中心。廟宇位於路環市區海旁，規模不大，卻保存著不少匾額、楹聯與牌匾。每年農曆四月初八譚公誕，路環居民會舉行慶祝活動，是路環小鎮最熱鬧的日子。",
+   "brief": "1862 年建的路環譚公廟，漁家信仰中心。",
+   "detail": "譚公被視為漁家保護神，相傳常化身小童顯靈，出山時有一虎相隨，故廟內牆上畫虎。廟內有以鯨骨作舟身、長三米餘的龍舟模型，為漁民所贈；廟側有近二百年的「過路環勒石曉諭碑」。每年農曆四月初八譚公誕會搭棚演神功戲。",
    "geoSource": "building-id",
    "geoRef": "譚僊聖廟 (譚公廟) Templo de Tam Kong",
    "wikidata": "Q27618690",
    "coordMovedMeters": 13,
-   "geoEvidence": "building-id:譚僊聖廟 (譚公廟) Tem · poi-exact:譚公廟(13.7) > wikidata:路環譚公廟(7.7) > curated(5.2)"
+   "geoEvidence": "building-id:譚僊聖廟 (譚公廟) Tem · poi-exact:譚公廟(13.7) > wikidata:路環譚公廟(7.7) > curated(5.2)",
+   "dossier": "tam-kung-temple"
   },
   {
    "id": "st-francis-xavier",
@@ -366,13 +382,14 @@
    "zh": "路環聖方濟各聖堂",
    "en": "Chapel of St. Francis Xavier",
    "pt": "Capela de São Francisco Xavier",
-   "brief": "路環地標，巴洛克式小教堂，曾收藏聖方濟各的手骸聖髑。",
-   "detail": "教堂建於 1928 年，以紀念到東方傳教的聖方濟各．沙勿略。建築為巴洛克風格，鵝黃色外牆配白色線腳、橢圓形窗花，前地鋪砌葡式碎石。教堂曾存放聖方濟各的手骸聖髑（已移送聖若瑟修院），旁側的紀念碑紀念 1910 年路環居民擊退海盜的事蹟。",
+   "brief": "路環地標，1928 年由育嬰院改建的教堂。",
+   "detail": "原址為 1904 年嘉諾撒女修會管理的育嬰院，1928 年為紀念聖方濟各．沙勿略改建成教堂。奶黃色、兩層高，鐘樓位於第三層中間，文化局形容「頗具葡式建築風格」。側堂有華人相貌、懷抱嬰孩的聖母像，是中西文化交融的見證。",
    "geoSource": "building",
    "geoRef": "路環聖方濟各聖堂 Igreja de São Francisco Xavier",
    "wikidata": "Q11610891",
    "coordMovedMeters": 137,
-   "geoEvidence": "building:路環聖方濟各聖堂 Igrej(16.0) > poi-exact:Chapel of St. (15.3) > wikipedia-en:Chapel of St. (9.3)"
+   "geoEvidence": "building:路環聖方濟各聖堂 Igrej(16.0) > poi-exact:Chapel of St. (15.3) > wikipedia-en:Chapel of St. (9.3)",
+   "dossier": "st-francis-xavier"
   },
   {
    "id": "carmel-church",
@@ -385,12 +402,13 @@
    "en": "Our Lady of Carmel Church",
    "pt": "Igreja de Nossa Senhora do Carmo",
    "brief": "氹仔唯一的天主教堂，建於 1885 年。",
-   "detail": "嘉模聖母堂位於氹仔嘉模前地，是氹仔唯一一座天主教堂，1885 年由澳門教區興建。教堂立面簡潔，外牆為淺黃色，兩側設鐘樓，堂前有花園與石階，與附近的龍環葡韻住宅群構成氹仔最優美的歷史氛圍。",
+   "detail": "1885 年為方便氹仔教徒的宗教活動而建，是氹仔唯一的天主教堂。頂部為鐘樓，禮堂可容二百多人；聖壇上的聖母像據說從歐洲運來。教堂與周圍歐陸風格的花園、房屋融為一體，常用於舉行婚禮。",
    "geoSource": "building",
    "geoRef": "嘉模聖母堂 Igreja de Nossa Senhora do Carmo",
    "wikidata": "Q10924038",
    "coordMovedMeters": 158,
-   "geoEvidence": "building:嘉模聖母堂 Igreja d(14.4) > poi-exact:Our Lady of Ca(13.7) > wikipedia-search:嘉模聖母堂(7.7)"
+   "geoEvidence": "building:嘉模聖母堂 Igreja d(14.4) > poi-exact:Our Lady of Ca(13.7) > wikipedia-search:嘉模聖母堂(7.7)",
+   "dossier": "carmel-church"
   },
   {
    "id": "macau-museum-art",
@@ -402,13 +420,14 @@
    "zh": "澳門藝術博物館",
    "en": "Macao Museum of Art",
    "pt": "Museu de Arte de Macau",
-   "brief": "1999 年開幕，澳門規模最大的藝術博物館。",
-   "detail": "位於澳門文化中心旁，是澳門最大的藝術類博物館。館藏涵蓋中國書畫、陶瓷、版畫、攝影及澳門本土藝術家的作品，並經常與故宮博物院等機構合辦大型專題展覽。館內設有兒童藝術空間與圖書館。",
+   "brief": "1999 年成立，澳門規模最大的文物藝術類博物館。",
+   "detail": "藝術博物館總面積 10,192 平方米，展覽面積逾 4,000 平方米，樓高五層：四樓以中國傳統藝術為主，三樓展出館藏，二樓為大型專題展覽廳。毗鄰的澳門回歸賀禮陳列館亦由藝博館管理。",
    "geoSource": "poi-exact",
    "geoRef": "Museu de Arte de Macau",
    "wikidata": "Q15913647",
    "coordMovedMeters": 167,
-   "geoEvidence": "poi-exact:Museu de Arte (12.1) > building:澳門藝術博物館 Museu (10.8) > poi-exact:Macau Museum o(10.1)"
+   "geoEvidence": "poi-exact:Museu de Arte (12.1) > building:澳門藝術博物館 Museu (10.8) > poi-exact:Macau Museum o(10.1)",
+   "dossier": "macau-museum-art"
   },
   {
    "id": "grand-prix-museum",
@@ -420,13 +439,14 @@
    "zh": "澳門大賽車博物館",
    "en": "Macao Grand Prix Museum",
    "pt": "Museu do Grande Prémio",
-   "brief": "格蘭披治大賽車的殿堂，展示歷屆戰車與車手故事。",
-   "detail": "澳門格蘭披治大賽車自 1954 年創辦，是世界著名的街道賽事。大賽車博物館 1993 年開幕，經擴建後於 2021 年重開，展出多輛曾在東望洋賽道馳騁的賽車、電單車與珍貴影像，並設有模擬駕駛與互動遊戲。",
+   "brief": "2021 年擴建重開的大賽車博物館，展示澳門格蘭披治大賽車歷史。",
+   "detail": "擴建後的博物館樓高四層，建築面積約 16,000 平方米，獲 LEED 金級認證；各層分別介紹早期方程式賽車與三級方程式、格蘭披治電單車大賽、GT 盃及東望洋大賽，並設模擬器與 VR 體驗。",
    "geoSource": "poi-exact",
    "geoRef": "Macao Grand Prix Museum",
    "wikidata": "Q5594934",
    "coordMovedMeters": 433,
-   "geoEvidence": "poi-exact:Macao Grand Pr(12.1) > wikipedia-search:大賽車博物館(6.1) > curated(2.0)"
+   "geoEvidence": "poi-exact:Macao Grand Pr(12.1) > wikipedia-search:大賽車博物館(6.1) > curated(2.0)",
+   "dossier": "grand-prix-museum"
   },
   {
    "id": "handover-gifts",
@@ -438,13 +458,14 @@
    "zh": "澳門回歸賀禮陳列館",
    "en": "Handover Gifts Museum of Macao",
    "pt": "Museu dos Presentes",
-   "brief": "展出各省市贈送澳門回歸的賀禮。",
-   "detail": "1999 年 12 月 20 日澳門回歸祖國，全國各省、自治區、直轄市及香港特別行政區分別贈送賀禮。陳列館位於文化中心旁，展出這些融合各地工藝特色的珍貴禮品，是了解中國各地傳統工藝的窗口。",
+   "brief": "展出各地祝賀澳門特區成立的賀禮。",
+   "detail": "為祝賀澳門特別行政區成立，國務院及三十二個省、自治區、直轄市和香港特別行政區分別送上具地方特色的賀禮，陳列館集中展出，由澳門藝術博物館管理。",
    "geoSource": "building",
    "geoRef": "澳門回歸賀禮陳列館 Museu das Ofertas sobre a Transferência de Soberania de Macau",
    "wikidata": "Q15909554",
    "coordMovedMeters": 143,
-   "geoEvidence": "building:澳門回歸賀禮陳列館 Muse(17.6) > poi-exact:澳門回歸賀禮陳列館(16.9) > poi-exact:Handover Gifts(16.9)"
+   "geoEvidence": "building:澳門回歸賀禮陳列館 Muse(17.6) > poi-exact:澳門回歸賀禮陳列館(16.9) > poi-exact:Handover Gifts(16.9)",
+   "dossier": "handover-gifts"
   },
   {
    "id": "macau-tower",
@@ -457,13 +478,14 @@
    "zh": "澳門旅遊塔",
    "en": "Macau Tower",
    "pt": "Torre de Macau",
-   "brief": "2001 年啟用，總高 338 米，可俯瞰全澳與珠江口。",
-   "detail": "澳門旅遊塔由新西蘭建築師高登．莫勒設計，2001 年 12 月啟用，總高度 338 米，觀光層位於 223 米。塔上設有旋轉餐廳、觀景台、空中漫步與全球最高的商業蹦極跳（233 米）。天氣晴朗時可遠眺香港與珠海。",
+   "brief": "塔高 338 米的觀光塔，觀光層離地 223 米。",
+   "detail": "旅遊塔位於南灣新填海區，集觀光、會展、餐飲與娛樂於一體。觀光主層有玻璃地面，旋轉餐廳視野可達 55 公里；玻璃升降機約 45 秒到達觀光層，另有「笨豬跳」、「空中漫步」等冒險活動。",
    "geoSource": "building",
    "geoRef": "澳門旅遊塔 Macau Tower",
    "wikidata": "Q1568304",
    "coordMovedMeters": 37,
-   "geoEvidence": "building:澳門旅遊塔 Macau To(16.0) > poi-exact:Torre De Macau(15.3) > wikipedia-zh:澳門旅遊塔會展娛樂中心(9.3)"
+   "geoEvidence": "building:澳門旅遊塔 Macau To(16.0) > poi-exact:Torre De Macau(15.3) > wikipedia-zh:澳門旅遊塔會展娛樂中心(9.3)",
+   "dossier": "macau-tower"
   },
   {
    "id": "grand-lisboa",
@@ -495,13 +517,14 @@
    "en": "Guia Fortress & Lighthouse",
    "pt": "Fortaleza e Farol da Guia",
    "tag": "世界遺產",
-   "brief": "中國沿海第一座現代燈塔，與聖母雪地殿教堂同處山頂。",
-   "detail": "東望洋炮台建於 1622–1638 年間，用以防禦來自海上的攻擊。燈塔於 1865 年落成，高 15 米，是中國沿海第一座現代燈塔，至今仍在運作。旁邊的聖母雪地殿教堂建於 1626 年，內部的壁畫融合中西繪畫技法，是澳門罕見的藝術珍品。2005 年納入世界遺產名錄。",
+   "brief": "中國南海岸第一座現代燈塔，與聖母雪地殿教堂同處山頂。",
+   "detail": "炮台 1622 年修築、1637 年擴建，翌年完工；山頂的聖母雪地殿約建於 1622 年，1996 年修復時發現融合中國繪畫技法的壁畫。燈塔 1865 年啟用，總高 18.3 米，是中國南海岸第一座現代燈塔，1874 年風災受損後於 1910 年重新啟用。",
    "geoSource": "building-id",
    "geoRef": "東望洋燈塔 Farol da Guia",
    "wikidata": "Q3313058",
    "coordMovedMeters": 241,
-   "geoEvidence": "building-id:東望洋燈塔 Farol da · wikipedia-search:東望洋燈塔(4.5) > curated(2.0)"
+   "geoEvidence": "building-id:東望洋燈塔 Farol da · wikipedia-search:東望洋燈塔(4.5) > curated(2.0)",
+   "dossier": "guia-fortress"
   },
   {
    "id": "guia-cable-car",
@@ -514,13 +537,14 @@
    "zh": "松山纜車（二龍喉公園）",
    "en": "Guia Hill Cable Car",
    "pt": "Teleférico da Guia",
-   "brief": "全球最短的纜車之一，兩分鐘登上東望洋山。",
-   "detail": "松山纜車 1997 年啟用，連接二龍喉公園與東望洋山頂，全長僅約 186 米，是世界上最短的纜車系統之一。車程約一分鐘，遊客可由此直上東望洋炮台、燈塔與環山步道，俯瞰澳門半島。",
+   "brief": "二龍喉公園入口的觀光纜車，直達松山山頂。",
+   "detail": "二龍喉公園具歐陸特色，昔日的二龍喉宮是 20 世紀早期的澳督官邸，澳督遷出後改建為公園。園址部分原屬何東爵士物業，擴建時何東捐出毗連山地，所以又稱「何東花園」。",
    "geoSource": "building-id",
    "geoRef": "山下纜車站 Estação Inferior do Teleférico",
    "wikidata": null,
    "coordMovedMeters": 339,
-   "geoEvidence": "building-id:山下纜車站 Estação  · area:二龍喉公園 Jardim d(10.9) > poi-far:Jardim Da Flor(3.1) > curated(2.0)"
+   "geoEvidence": "building-id:山下纜車站 Estação  · area:二龍喉公園 Jardim d(10.9) > poi-far:Jardim Da Flor(3.1) > curated(2.0)",
+   "dossier": "guia-cable-car"
   },
   {
    "id": "macau-tower-note",
@@ -533,13 +557,14 @@
    "zh": "金蓮花廣場",
    "en": "Golden Lotus Square",
    "pt": "Praça da Flor de Lótus",
-   "brief": "回歸紀念廣場，「盛世蓮花」雕塑所在。",
-   "detail": "廣場位於澳門漁人碼頭對面，中央矗立著國務院贈送澳門的「盛世蓮花」雕塑，於 1999 年 12 月 20 日澳門回歸當天揭幕。雕塑以青銅鑄造、表面貼金，蓮花盛開的造型象徵澳門繁榮昌盛，是旅客必到的打卡地標。",
+   "brief": "「盛世蓮花」雕塑所在，1999 年 12 月 20 日回歸首日揭幕。",
+   "detail": "雕塑由國務院贈送，青銅鑄造、表面貼金，重 6.5 噸、總高 6 米；基座由 23 塊紅色花崗岩疊成，三層形似蓮葉，寓意澳門三島，蓮花盛開象徵繁榮。",
    "geoSource": "area",
    "geoRef": "金蓮花廣場 A Praça Flor de Lótus",
    "wikidata": "Q6685203",
    "coordMovedMeters": 144,
-   "geoEvidence": "area:金蓮花廣場 A Praça (19.3) > poi-exact:金蓮花廣場(18.5) > poi-exact:Macau Lotus Sq(16.0)"
+   "geoEvidence": "area:金蓮花廣場 A Praça (19.3) > poi-exact:金蓮花廣場(18.5) > poi-exact:Macau Lotus Sq(16.0)",
+   "dossier": "macau-tower-note"
   },
   {
    "id": "fisherman-wharf",
@@ -552,13 +577,14 @@
    "zh": "澳門漁人碼頭",
    "en": "Macau Fisherman's Wharf",
    "pt": "Doca dos Pescadores",
-   "brief": "海濱主題娛樂區，集酒店、會展、餐飲與購物於一身。",
-   "detail": "澳門漁人碼頭 2006 年開幕，佔地超過 11 萬平方米，是澳門首個大型主題式綜合娛樂區。區內分為唐城、東西匯聚、勵駿碼頭等主題區域，建築風格仿照羅馬鬥獸場、巴比倫與歐陸小鎮，並設有會展中心、酒店與海濱長廊。",
+   "brief": "澳門首個主題文化創意娛樂旅遊綜合體，位於外港新填海區。",
+   "detail": "漁人碼頭佔地超過 133,000 平方米，集美食、購物、娛樂、主題公園、住宿與會展於一體，結合不同建築特色與中西文化。",
    "geoSource": "poi-exact",
    "geoRef": "漁人碼頭",
    "wikidata": "Q3274095",
    "coordMovedMeters": 209,
-   "geoEvidence": "poi-exact:漁人碼頭(12.1) > poi-exact:Macau Fisherma(9.6) > wikidata:澳門漁人碼頭(7.7)"
+   "geoEvidence": "poi-exact:漁人碼頭(12.1) > poi-exact:Macau Fisherma(9.6) > wikidata:澳門漁人碼頭(7.7)",
+   "dossier": "fisherman-wharf"
   },
   {
    "id": "macau-science-center",
@@ -571,13 +597,14 @@
    "zh": "澳門科學館",
    "en": "Macao Science Center",
    "pt": "Centro de Ciência de Macau",
-   "brief": "貝聿銘事務所設計的弧形建築，設有天文館與互動展廳。",
-   "detail": "澳門科學館由建築師貝聿銘及其建築事務所設計，2010 年開幕。建築呈螺旋上升的弧形，象徵科學的探索精神；館內設有天文館、兒童科學館與多個主題展廳，涵蓋機械、電磁、生命科學與環保等領域，是親子遊的熱門去處。",
+   "brief": "貝聿銘及貝氏建築事務所設計的科學館。",
+   "detail": "建築面積約 20,000 平方米，由展覽中心、天文館、會議中心三部分組成；展覽以互動展品為主，天文館可播放立體天象節目。",
    "geoSource": "building",
    "geoRef": "澳門科學館 Centro de Ciência de Macau",
    "wikidata": "Q3084238",
    "coordMovedMeters": 33,
-   "geoEvidence": "building:澳門科學館 Centro d(16.0) > poi-exact:澳門科學館(15.3) > wikipedia-zh:澳門科學館(9.3)"
+   "geoEvidence": "building:澳門科學館 Centro d(16.0) > poi-exact:澳門科學館(15.3) > wikipedia-zh:澳門科學館(9.3)",
+   "dossier": "macau-science-center"
   },
   {
    "id": "kun-iam-statue",
@@ -589,13 +616,14 @@
    "zh": "觀音蓮花苑",
    "en": "Kun Iam Statue",
    "pt": "Estátua de Kun Iam",
-   "brief": "矗立於人工島上的觀音像，高約 20 米。",
-   "detail": "觀音蓮花苑 1999 年開幕，由葡萄牙雕塑家李潔蓮（Cristina Rocha Leiria）設計。觀音像高約 20 米，以青銅鑄造，面容慈祥，雙手合十，基座為蓮花造型的展覽館。塑像面向海面，與澳門旅遊塔隔水相望，是中葡文化交融的宗教藝術作品。",
+   "brief": "1999 年開幕的觀音蓮花苑，觀音像高約 20 米。",
+   "detail": "由葡萄牙建築師及雕塑家李潔蓮設計，獲 UNESCO 支持。觀音像由約 50 個青銅鑄件組成，重約 50 噸，面容刻意不帶任何特定民族或宗教特徵，以表達「大公」的普世理念。苑位於人工小島，以 60 米堤道相連。",
    "geoSource": "building",
    "geoRef": "觀音蓮花苑 Centro de Ecuménico Kun Iam",
    "wikidata": "Q15928533",
    "coordMovedMeters": 14,
-   "geoEvidence": "building:觀音蓮花苑 Centro d(17.6) > poi-exact:觀音蓮花苑(16.9) > poi-exact:觀音蓮花苑 (觀音像) Ce(14.4)"
+   "geoEvidence": "building:觀音蓮花苑 Centro d(17.6) > poi-exact:觀音蓮花苑(16.9) > poi-exact:觀音蓮花苑 (觀音像) Ce(14.4)",
+   "dossier": "kun-iam-statue"
   },
   {
    "id": "centro-cultural",
@@ -607,13 +635,14 @@
    "zh": "澳門文化中心",
    "en": "Macao Cultural Centre",
    "pt": "Centro Cultural de Macau",
-   "brief": "1999 年啟用，澳門最重要的表演藝術場地。",
-   "detail": "澳門文化中心 1999 年啟用，設有綜合劇院、小劇院、展覽廳與排練室，是澳門國際音樂節、藝術節與各類大型演出的主要場地。建築以簡潔的現代主義線條與白色外牆構成，面向海濱，與澳門藝術博物館相鄰。",
+   "brief": "提供國際級表演場地的文化中心。",
+   "detail": "每年舉辦音樂節、藝穗節等活動，也曾上演多齣著名音樂劇。",
    "geoSource": "building",
    "geoRef": "澳門文化中心 Centro Cultural de Macau",
    "wikidata": "Q15921899",
    "coordMovedMeters": 315,
-   "geoEvidence": "building:澳門文化中心 Centro (14.4) > poi-exact:Macao Cultural(13.7) > wikidata:澳門文化中心(7.7)"
+   "geoEvidence": "building:澳門文化中心 Centro (14.4) > poi-exact:Macao Cultural(13.7) > wikidata:澳門文化中心(7.7)",
+   "dossier": "centro-cultural"
   },
   {
    "id": "louvou-lim-ieoc",
@@ -626,13 +655,14 @@
    "zh": "盧廉若公園",
    "en": "Lou Lim Ieoc Garden",
    "pt": "Jardim de Lou Lim Ieoc",
-   "brief": "建於 1904 年，澳門唯一的蘇州園林式公園。",
-   "detail": "盧廉若公園原是澳門富商盧華紹家族的私人花園，建於 1904 年，1974 年闢為公園。園內以蘇州園林手法佈局：曲橋、迴廊、九曲橋、假山、竹林與涼亭層層疊疊，中央的荷塘在夏天滿開荷花，是澳門半島最雅緻的園林景觀。",
+   "brief": "澳門最具蘇州園林風韻的公園。",
+   "detail": "園址原為農田，富商盧華紹（盧九）購入，由長子盧廉若興建；盧家衰落後分段易手，70 年代初由政府收購，1974 年重新開放。園以「春草堂」為主體，池塘、曲橋、石山、竹林、迴廊圍繞中央涼亭佈局。",
    "geoSource": "area",
    "geoRef": "盧廉若公園 Jardim Lou Lim Ioc",
    "wikidata": "Q4569614",
    "coordMovedMeters": 490,
-   "geoEvidence": "area:盧廉若公園 Jardim L(14.5) > poi-exact:澳門盧廉若公園(13.7) > wikidata:盧廉若公園(7.7)"
+   "geoEvidence": "area:盧廉若公園 Jardim L(14.5) > poi-exact:澳門盧廉若公園(13.7) > wikidata:盧廉若公園(7.7)",
+   "dossier": "louvou-lim-ieoc"
   },
   {
    "id": "red-market",
@@ -663,13 +693,14 @@
    "zh": "塔石廣場與藝文館",
    "en": "Tap Seac Square",
    "pt": "Praça do Tap Seac",
-   "brief": "2005 年啟用的文化廣場，周邊聚集多座歷史建築。",
-   "detail": "塔石廣場於 2005 年啟用，地面鋪砌葡式碎石圖案，四周環繞著塔石藝文館、澳門中央圖書館、歷史檔案館、澳門茶文化館與多座新古典主義建築。廣場是澳門文化活動、市集與戶外展演的常見場地。",
+   "brief": "塔石藝文館所在的文化區。",
+   "detail": "塔石藝文館 2003 年 12 月啟用，前身為東方基金會當代藝術中心，室內有兩座古井，中央通天讓自然光照入。它與中央圖書館、歷史檔案館等連成一片，形成荷蘭園塔石區的文化景觀。",
    "geoSource": "poi-exact",
    "geoRef": "Tap Seac Square",
    "wikidata": null,
    "coordMovedMeters": 143,
-   "geoEvidence": "poi-exact:Tap Seac Squar(10.1) > curated(3.6)"
+   "geoEvidence": "poi-exact:Tap Seac Squar(10.1) > curated(3.6)",
+   "dossier": "tap-seac-square"
   },
   {
    "id": "venetian",
@@ -811,13 +842,14 @@
    "zh": "美獅美高梅",
    "en": "MGM Cotai",
    "pt": "MGM Cotai",
-   "brief": "2018 年開幕，以巨型玻璃幕牆與當代藝術收藏著稱。",
-   "detail": "美獅美高梅 2018 年開幕，建築以層疊的巨型玻璃盒為造型，內部設有亞洲最大的室內 LED 天幕與大型當代藝術收藏，包括著名的「獅子」雕塑與沉浸式藝術空間。度假村亦設有劇院、宴會廳與多間特色餐廳。",
+   "brief": "路氹城的綜合度假村，以視博廣場和藝術收藏著稱。",
+   "detail": "視博廣場樓高逾四層，天幕獲健力士紀錄，是最大型的自支撐懸跨網架式玻璃屋頂，四周設 25 個 LED 螢幕播放數碼藝術；酒店的藝術收藏超過 300 件，包括清朝御製地毯與當代亞洲藝術。",
    "geoSource": "wikidata",
    "geoRef": "美獅美高梅",
    "wikidata": "Q19853330",
    "coordMovedMeters": 233,
-   "geoEvidence": "wikidata:美獅美高梅(4.5) > curated(2.0)"
+   "geoEvidence": "wikidata:美獅美高梅(4.5) > curated(2.0)",
+   "dossier": "mgm-cotai"
   },
   {
    "id": "mgm-macau",
@@ -829,13 +861,14 @@
    "zh": "澳門美高梅",
    "en": "MGM Macau",
    "pt": "MGM Macau",
-   "brief": "2007 年開幕，新口岸的地標建築，內設保利美高梅博物館。",
-   "detail": "澳門美高梅 2007 年 12 月開幕，建築如三層疊起的金色海浪，位於新口岸填海區海濱。大堂的天幕廣場以巨型玻璃天花與熱帶花園著稱，是澳門著名的室內景觀。2024 年 11 月，由保利文化與美高梅合作的保利美高梅博物館在此開幕。",
+   "brief": "新口岸的綜合度假村，內設天幕廣場與保利美高梅博物館。",
+   "detail": "天幕廣場設計帶古歐陸風格，北面建築仿照里斯本中央火車站外牆，用以呼應澳門的葡萄牙文化遺產；圓拱形玻璃天幕讓日光灑入廣場。",
    "geoSource": "building",
    "geoRef": "澳門美高梅 MGM Macau",
    "wikidata": "Q995564",
    "coordMovedMeters": 91,
-   "geoEvidence": "building:澳門美高梅 MGM Maca(16.0) > building:澳門美高梅 MGM Maca(16.0) > wikipedia-zh:澳門美高梅(9.3)"
+   "geoEvidence": "building:澳門美高梅 MGM Maca(16.0) > building:澳門美高梅 MGM Maca(16.0) > wikipedia-zh:澳門美高梅(9.3)",
+   "dossier": "mgm-macau"
   },
   {
    "id": "wynn-macau",
@@ -865,13 +898,14 @@
    "zh": "疊石塘山與媽祖文化村",
    "en": "Coloane Peak & A-Ma Cultural Village",
    "pt": "Pico de Coloane",
-   "brief": "澳門最高峰（海拔約 172 米），山頂矗立 19.99 米高天后像。",
-   "detail": "疊石塘山位於路環中部，海拔約 172 米，是澳門的最高點（本項目的地形資料即由此測得）。山頂的媽祖文化村與天后宮於 2003 年落成，漢白玉天后像高 19.99 米，面向澳門半島。山腰設有環山步道與郊野公園，可俯瞰路氹城與珠江口。",
+   "brief": "疊石塘山山頂的漢白玉媽祖像高 19.99 米，旁有媽祖文化村天后宮。",
+   "detail": "媽祖像由 120 塊漢白玉雕成，高度寓意 1999 年回歸，旅遊局稱是全球最高的漢白玉媽祖像。天后宮依閩南古建築風格建造，佔地約 7,000 平方米，由甬道、亭式山門、祭壇、大殿和梳妝樓組成，金黃琉璃瓦配燕尾脊。",
    "geoSource": "curated",
    "geoRef": null,
    "wikidata": null,
    "coordMovedMeters": 0,
-   "geoEvidence": "curated(2.0)"
+   "geoEvidence": "curated(2.0)",
+   "dossier": "coloane-peak"
   },
   {
    "id": "hac-sa-beach",
@@ -919,13 +953,14 @@
    "zh": "石排灣郊野公園與大熊貓館",
    "en": "Seac Pai Van Park & Giant Panda Pavilion",
    "pt": "Parque de Seac Pai Van",
-   "brief": "澳門最大的郊野公園，內設大熊貓館與珍稀動物區。",
-   "detail": "石排灣郊野公園位於路環西北，佔地約 20 公頃，是澳門最大的郊野公園。園內設有大熊貓館（2011 年開放）、小熊貓館、靈長類動物區、雀鳥園與土地暨自然博物館，並有完善的步道與野餐區，是親子親近自然的首選。",
+   "brief": "路環西面的郊野公園，佔地約 198,000 平方米，設大熊貓館。",
+   "detail": "園內設有大熊貓館、大熊貓資訊中心、珍稀動物館、土地暨自然博物館、觀鳥園及藥用植物園等。大熊貓館依山而建、呈扇形，佔地約 3,000 平方米。",
    "geoSource": "area",
    "geoRef": "石排灣郊野公園 Parque de Seac Pai Van",
    "wikidata": null,
    "coordMovedMeters": 75,
-   "geoEvidence": "area:石排灣郊野公園 Parque(10.4) > area:石排灣郊野公園 Parque(10.4) > curated(5.2)"
+   "geoEvidence": "area:石排灣郊野公園 Parque(10.4) > area:石排灣郊野公園 Parque(10.4) > curated(5.2)",
+   "dossier": "seac-pai-van"
   },
   {
    "id": "lai-chi-vun",
@@ -937,13 +972,14 @@
    "zh": "荔枝碗船廠片區",
    "en": "Lai Chi Vun Shipyards",
    "pt": "Estaleiros de Lai Chi Vun",
-   "brief": "昔日澳門造船業遺址，保留木造船廠與海濱風貌。",
-   "detail": "荔枝碗位於路環東北岸，20 世紀中葉曾是澳門造船業的中心，全盛時期有數十間木船廠。隨造船業式微，船廠相繼結業，現存遺址保留著棚架、滑道與半沉沒的船塢。近年經修復活化為海濱文化休憩區，展示澳門造船業的歷史。",
+   "brief": "澳門造船業記憶所在，現為活化的船廠片區。",
+   "detail": "荔枝碗船廠片區是被評定的不動產，活化區佔地逾三千平方米，以本地造船業為主題，設展覽與市集。澳門口述歷史協會曾訪問一位 1972 年到路環當造船學徒的老師傅，記錄了船廠學徒生活和工業意外的親身經歷。",
    "geoSource": "curated",
    "geoRef": null,
    "wikidata": null,
    "coordMovedMeters": 0,
-   "geoEvidence": "curated(2.0)"
+   "geoEvidence": "curated(2.0)",
+   "dossier": "lai-chi-vun"
   },
   {
    "id": "coloane-trails",
@@ -973,13 +1009,14 @@
    "zh": "官也街",
    "en": "Rua do Cunha",
    "pt": "Rua do Cunha",
-   "brief": "氹仔舊城區的手信美食街，豬扒包與葡撻的香氣撲鼻。",
-   "detail": "官也街是氹仔最熱鬧的老街，長約 120 米，兩旁聚集著杏仁餅、肉乾、花生糖、葡撻與豬扒包等澳門特色店舖。街道保留了 20 世紀初的低層葡式建築與中式商舖，遊客可在此品嘗地道小食，再散步至龍環葡韻與嘉模聖母堂。",
+   "brief": "氹仔舊區的老街，1983 年成為澳門首個行人專用區。",
+   "detail": "街內不少手信店、甜品店在闢為行人專用區後逐漸開業；19 世紀的舊街市在遷出後於 2003 年改建為廣場，現時有定期舉辦的氹仔市集。",
    "geoSource": "wikidata",
    "geoRef": "官也街",
    "wikidata": "Q7375637",
    "coordMovedMeters": 185,
-   "geoEvidence": "wikidata:官也街(4.5) > curated(2.0)"
+   "geoEvidence": "wikidata:官也街(4.5) > curated(2.0)",
+   "dossier": "rua-do-cunha"
   },
   {
    "id": "taipa-houses",
@@ -991,13 +1028,14 @@
    "zh": "龍環葡韻住宅式博物館",
    "en": "Taipa Houses–Museum",
    "pt": "Casas-Museu da Taipa",
-   "brief": "五幢 1921 年落成的葡式住宅，展示土生葡人生活。",
-   "detail": "龍環葡韻由五幢建於 1921 年的葡式別墅組成，原是澳門政府高級官員的官邸。建築為薄荷綠色外牆配白色線腳，面向人工湖與紅樹林。1999 年後闢為住宅式博物館，復原了土生葡人家庭的客廳、臥室與廚房擺設，是澳門最具代表性的葡式生活場景。",
+   "brief": "五座 1921 年落成的土生葡人住宅，現為住宅式博物館。",
+   "detail": "「龍環」是氹仔舊稱，「葡韻」指葡萄牙建築風韻。五座建築曾為高級官員官邸，1992 年評為具建築價值的建築群，1999 年底起開放；2016 年重新整合為葡韻生活館、匯藝廊、創薈館、風貌館與迎賓館。",
    "geoSource": "poi-exact",
    "geoRef": "龍環葡韻住宅式博物館 Casas - Museu da Taipa",
    "wikidata": "Q15216026",
    "coordMovedMeters": 119,
-   "geoEvidence": "poi-exact:龍環葡韻住宅式博物館 Cas(11.2) > wikipedia-zh:龍環葡韻住宅式博物館(7.7) > curated(5.2)"
+   "geoEvidence": "poi-exact:龍環葡韻住宅式博物館 Cas(11.2) > wikipedia-zh:龍環葡韻住宅式博物館(7.7) > curated(5.2)",
+   "dossier": "taipa-houses"
   },
   {
    "id": "lord-stows",
@@ -1045,13 +1083,14 @@
    "zh": "望德堂坊與瘋堂斜巷",
    "en": "St. Lazarus District",
    "pt": "Bairro de São Lázaro",
-   "brief": "澳門的創意藝術街區，葡式建築與文創小店交織。",
-   "detail": "望德堂坊是澳門最早的華人天主教社區，葡萄牙人社區則在 20 世紀初遷入，留下大片南歐風格住宅。今日的瘋堂斜巷、聖祿杞街一帶聚集了畫廊、手作店與咖啡館，每年舉辦的「瘋堂天地」市集與藝穗節，是澳門文創活力的據點。",
+   "brief": "望德聖母堂所在的老區，教堂是澳門三大古教堂之一。",
+   "detail": "望德聖母堂建於 1557–1560 年間，1576 年起是澳門教區第一座主教座堂；昔日教堂後側設痲瘋院，故又稱「瘋堂」。新任主教就職前必先到此領取法杖。教堂現為新古典主義風格（重建年份文化局記為 1886 年、旅遊局記為 1885 年）。",
    "geoSource": "curated",
    "geoRef": null,
    "wikidata": null,
    "coordMovedMeters": 0,
-   "geoEvidence": "curated(2.0)"
+   "geoEvidence": "curated(2.0)",
+   "dossier": "st-lazarus"
   },
   {
    "id": "st-paul-district",
@@ -1063,13 +1102,14 @@
    "zh": "大三巴街與手信街",
    "en": "Rua de São Paulo",
    "pt": "Rua de São Paulo",
-   "brief": "由議事亭前地通往大三巴的購物街，手信店林立。",
-   "detail": "大三巴街（包括賣草地街、板樟堂街至大三巴一帶）是澳門最熱鬧的步行購物區，杏仁餅、肉乾、花生糖、蛋卷等手信店一家接一家，店員在門口熱情招呼遊客試食。街道兩旁亦有不少葡式與中式老建築，漫步其中可感受澳門新舊交融的城市肌理。",
+   "brief": "由議事亭前地通往大三巴的步行街區，旁有戀愛巷與舊城牆遺跡。",
+   "detail": "葡人建城牆可追溯至 1569 年，大三巴旁現存一段夯土城牆，以泥沙、稻草摻蠔殼粉築成。戀愛巷葡文 Travessa da Paixão 原意是信徒對天主的熱愛，因翻譯上的美麗誤會成了「戀愛巷」。",
    "geoSource": "wikipedia-search",
    "geoRef": "大三巴牌坊",
    "wikidata": "Q1551411",
    "coordMovedMeters": 46,
-   "geoEvidence": "wikipedia-search:大三巴牌坊(6.1) > curated(3.6)"
+   "geoEvidence": "wikipedia-search:大三巴牌坊(6.1) > curated(3.6)",
+   "dossier": "st-paul-district"
   },
   {
    "id": "portas-do-cerco",
@@ -1082,13 +1122,14 @@
    "zh": "關閘",
    "en": "Portas do Cerco",
    "pt": "Portas do Cerco",
-   "brief": "澳門與內地之間的主要陸路口岸，拱門建於 1870 年。",
-   "detail": "關閘是澳門與珠海之間最主要的陸路通道，每日有數以萬計的旅客與居民在此過境。現存的凱旋門式拱門建於 1870 年，是澳門與內地邊界的象徵。關閘廣場設有大型公共運輸交匯處，是進入澳門半島的北面門戶。",
+   "brief": "澳門與珠海之間的陸路口岸，凱旋門式拱門 1871 年完成。",
+   "detail": "1574 年明政府在今關閘馬路中段建古關閘，是一座中式城樓，定時開放；1870 年澳葡當局動工建新關閘，1871 年完成，古關閘於 1874 年拆除。",
    "geoSource": "building-id",
    "geoRef": "關閘拱門 Portas do Cerco",
    "wikidata": "Q3272047",
    "coordMovedMeters": 303,
-   "geoEvidence": "building-id:關閘拱門 Portas do · poi-exact:Portas do Cerc(13.7) > building:關閘拱門 Portas do(12.0) > poi-exact:關閘M記(8.5)"
+   "geoEvidence": "building-id:關閘拱門 Portas do · poi-exact:Portas do Cerc(13.7) > building:關閘拱門 Portas do(12.0) > poi-exact:關閘M記(8.5)",
+   "dossier": "portas-do-cerco"
   },
   {
    "id": "hzmb-port",
@@ -1157,13 +1198,14 @@
    "pt": "Museu Poly MGM",
    "museumId": "poly-mgm",
    "tag": "博物館文物",
-   "brief": "保利文化與美高梅於 2024 年合作設立的博物館，以海上絲綢之路與中西文化交流為主題。",
-   "detail": "保利美高梅博物館由保利文化與美高梅合作設立，2024 年 11 月於澳門美高梅開幕。博物館以「海上絲綢之路」為策展主軸，透過青銅器、陶瓷、金銀器與外銷藝術品，講述澳門作為中西文化交匯點的歷史角色。\n本頁的兩件文物三維模型（唐三彩雙峰駱駝俑、明永樂青花輪花紋綬帶耳葫蘆扁瓶）皆以高精度掃描建檔，可直接旋轉、縮放觀看細節。",
+   "brief": "位於澳門美高梅的博物館，以沉浸式展示為特色。",
+   "detail": "博物館佔地近 2,000 平方米，以可移動 LED 屏、活動展板和定向音響營造全感官的沉浸式展覽。\n本頁的兩件文物三維模型（唐三彩雙峰駱駝俑、明永樂青花輪花紋綬帶耳葫蘆扁瓶）皆以高精度掃描建檔，可直接旋轉、縮放觀看細節。",
    "website": "https://www.mgm.mo/",
    "geoSource": "wikipedia-zh",
    "geoRef": "澳門美高梅",
    "coordMovedMeters": 49,
-   "geoEvidence": "wikipedia-zh:澳門美高梅(6.1) > curated(3.6)"
+   "geoEvidence": "wikipedia-zh:澳門美高梅(6.1) > curated(3.6)",
+   "dossier": "museum-poly-mgm"
   },
   {
    "id": "museum-macau-museum",
@@ -1177,13 +1219,14 @@
    "pt": "Museu de Macau",
    "museumId": "macau-museum",
    "tag": "博物館文物",
-   "brief": "1998 年開幕，位於大炮台上，是了解澳門歷史、民俗與城市發展的必訪博物館。",
-   "detail": "澳門博物館於 1998 年 4 月開幕，由建築師馬若龍（Carlos Marreiros）設計，坐落於擁有三百多年歷史的大炮台之上。常設展覽分三層：一樓「澳門地區的原始文明」、二樓「澳門的民俗與傳統」、三樓「澳門的現代化」，以實景復原、互動裝置與文物，完整呈現澳門由史前漁村到國際城市的演變。\n館內亦保留了十七世紀炮台的城牆與地下隧道，登臨大炮台平台可俯瞰澳門半島全景。",
+   "brief": "1998 年在大炮台上開幕，展示澳門歷史與多元文化。",
+   "detail": "博物館樓高三層，其中兩層建在大炮台平台之下，只有最上一層由原氣象台改建，以最大限度保留炮台原有風格與地貌。一樓講中西文化相遇與澳門早期歷史，二樓講傳統文化與民間藝術，三樓講今日澳門的城市面貌。",
    "website": "https://www.macaumuseum.gov.mo/",
    "geoSource": "building",
    "geoRef": "澳門博物館行政大樓 Edifício da Administrativo do Museu de Macau",
    "coordMovedMeters": 55,
-   "geoEvidence": "building:澳門博物館行政大樓 Edif(13.6) > building:澳門博物館 Museu de(12.4) > wikipedia-search:澳門博物館(7.7)"
+   "geoEvidence": "building:澳門博物館行政大樓 Edif(13.6) > building:澳門博物館 Museu de(12.4) > wikipedia-search:澳門博物館(7.7)",
+   "dossier": "museum-macau-museum"
   }
  ],
  "museums": [

@@ -88,3 +88,6 @@ photos-src/_hold-wikimedia/
 
 # 評測向量快取（可由 tools/eval/ablation.py、extended.py 重算）
 /tools/eval/out/ablation-cache/
+
+# 介紹視頻生成的中間檔（照片副本、旁白音檔、分鏡）
+/tools/video/portfolio/public/memory/

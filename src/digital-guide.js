@@ -1,3 +1,5 @@
+import { getPrefs } from "./site-prefs.js";
+const currentPersona = () => { try { return getPrefs().persona; } catch { return undefined; } };
 import "./digital-guide.css";
 import { splitSpeech, base64Audio, GuideRecorder, GuidePlayer } from "./guide-audio.js";
 
@@ -80,7 +82,7 @@ export class DigitalGuide {
     this.setBusy(true); this.mode("thinking", "正在思考你的問題…");
     this.$("textarea").value = ""; this.addMessage("user", clean);
     try {
-      const { text: answer } = await this.request("chat", { buildingId, text: clean, history: this.history });
+      const { text: answer } = await this.request("chat", { buildingId, text: clean, history: this.history, persona: currentPersona() });
       if (token !== this.generation) return;
       this.history.push({ role: "user", content: clean }, { role: "assistant", content: answer });
       this.history = this.history.slice(-8); this.addMessage("assistant", answer); this.lastSpoken = answer;

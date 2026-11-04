@@ -6,7 +6,7 @@ import { once } from 'node:events';
 import { startMemoryServer } from '../server/memory.mjs';
 test('HTTP community workflow: consent, isolation, review, attachments, map and teacher report', async t => {
  const base=path.resolve('output');fs.mkdirSync(base,{recursive:true});const directory=fs.mkdtempSync(path.join(base,'test-memory-http-'));
- const {server}=startMemoryServer({directory,port:0});await once(server,'listening');const url=`http://127.0.0.1:${server.address().port}/api/memory`;
+ const {server}=startMemoryServer({directory,port:0,checker:async()=>({decision:'allow',rule:'none',reasons:[],images:[],claims:[],notes:'',model:'test',version:'test'})});await once(server,'listening');const url=`http://127.0.0.1:${server.address().port}/api/memory`;
  t.after(async()=>{await new Promise(resolve=>server.close(resolve));if(path.dirname(directory)!==base||!path.basename(directory).startsWith('test-memory-http-'))throw new Error('Unsafe test cleanup');fs.rmSync(directory,{recursive:true});});
  const makeClient=()=>{let cookie='';return async(route,data,method='POST',headers={})=>{const r=await fetch(url+route,{method:data===undefined?'GET':method,headers:{...(cookie?{Cookie:cookie}:{}),...(data===undefined?{}:{'Content-Type':'application/json','X-Memory-Client':'tujian'}),...headers},...(data===undefined?{}:{body:JSON.stringify(data)})});const set=r.headers.get('set-cookie');if(set)cookie=set.split(';')[0];return{status:r.status,data:await r.json(),cookie};};};
  const admin=makeClient(),student=makeClient(),outsider=makeClient();

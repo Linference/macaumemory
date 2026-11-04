@@ -6,14 +6,18 @@ import { randomUUID, createHash } from 'node:crypto';
 import { Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { createMemoryStore, fault, text } from './memory-store.mjs';
+import { createDeepSeekChecker, mediaFiles } from './memory-check.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 try { process.loadEnvFile(path.join(root, '.env.local')); } catch (e) { if (e.code !== 'ENOENT') throw e; }
 const read = file => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
-export function startMemoryServer({ directory = path.join(root, 'output/memory-store'), port = Number(process.env.MEMORY_PORT || 8790) } = {}) {
+export function startMemoryServer({ directory = path.join(root, 'output/memory-store'), port = Number(process.env.MEMORY_PORT || 8790), checker = createDeepSeekChecker() } = {}) {
   const store = createMemoryStore(directory, read('public/data/system-catalog.json'), read('public/data/gaussian-scenes.json'), read('public/data/attractions.json').attractions);
   const originalAlbums = new Map(read('public/data/places.geojson').features.map(f => [f.properties.id, f.properties.photos]));
   for (const k of read('public/data/memory-knowledge.json').items) if (!store.get('knowledge', k.id)) store.put('knowledge', k.id, 'catalog', { ...k, placeIds: k.placeIds.map(id => store.place(id)?.id).filter(Boolean) });
+  // 建築資料檔案轉成「已核實資料」，供投稿檢查比對。
+  const dossierFacts = new Map(read('public/data/building-dossiers.json').dossiers.map(d => [d.id, [d.style, ...d.timeline, ...d.features, ...d.names].filter(c => c.kind !== 'inference').map(c => ({ title: d.name, text: c.text, era: '', sourceTitle: c.sources.map(k => d.sources[k].publisher).join('、') }))]));
+  for (const c of read('public/data/cold-facts.json').items) if (c.placeId) dossierFacts.set(c.placeId, [...(dossierFacts.get(c.placeId) ?? []), { title: c.title, text: c.text, era: '', sourceTitle: c.sources.map(x => x.publisher).join('、') }]);
   const mediaDir = path.join(directory, 'media'); fs.mkdirSync(mediaDir, { recursive: true });
   const limits = new Map();
   const json = (res, status, data) => { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }); res.end(JSON.stringify(data)); };
@@ -89,8 +93,19 @@ export function startMemoryServer({ directory = path.join(root, 'output/memory-s
       }
       const b = req.method === 'POST' || req.method === 'PATCH' ? await body(req) : null;
       if (req.method === 'POST' && route === '/places') return json(res, 201, store.createPlace(b, user));
-      if (req.method === 'POST' && route === '/stories') return json(res, 201, store.saveStory(b, user));
-      if (req.method === 'PATCH' && route.startsWith('/stories/')) return json(res, 200, store.saveStory(b, user, route.slice(9)));
+      if ((req.method === 'POST' && route === '/stories') || (req.method === 'PATCH' && route.startsWith('/stories/'))) {
+        const id = req.method === 'PATCH' ? route.slice(9) : undefined;
+        let aiCheck = null;
+        if (b.status === 'pending') {
+          // 公開投稿先過內容檢查；不合理直接拒絕，不寫入資料庫。
+          const p = store.place(b.placeId); if (!p) throw fault('請先選擇或建立地點。');
+          const old = id ? store.get('story', id) : null;
+          const ids = (Array.isArray(b.mediaIds) ? b.mediaIds : []).filter(m => store.media(m)?.owner === user.id || old?.mediaIds?.includes(m)).slice(0, 6);
+          aiCheck = await checker({ story: { title: String(b.title ?? ''), text: String(b.text ?? ''), era: String(b.era ?? '') }, place: p, facts: [...store.list('knowledge').filter(k => k.placeIds.includes(p.id)), ...(dossierFacts.get(p.spotId) ?? dossierFacts.get(p.id) ?? [])], images: mediaFiles(store, mediaDir, ids, path) });
+          if (aiCheck.decision === 'reject') return json(res, 422, { error: '內容未通過檢查，未能提交公開：' + (aiCheck.reasons.join(' ') || '與此地點的記憶不符。'), check: aiCheck });
+        }
+        return json(res, id ? 200 : 201, store.saveStory(b, user, id, { aiCheck }));
+      }
       if (req.method === 'POST' && route.startsWith('/review/')) return json(res, 200, store.review(route.slice(8), b, user));
       if (req.method === 'POST' && route === '/puzzles') return json(res, 201, store.savePuzzle(b, user));
       if (req.method === 'PATCH' && route.startsWith('/puzzles/')) return json(res, 200, store.savePuzzle(b, user, route.slice(9)));

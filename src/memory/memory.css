@@ -14,3 +14,9 @@ dialog{width:min(680px,calc(100vw - 30px));max-height:90vh;padding:28px;border:1
 .photo-year { position: absolute; left: 8px; top: 8px; padding: 1px 8px; border-radius: 999px; background: rgba(19,35,58,.82); color: #f3dc9a; font: 600 12px/1.6 system-ui, sans-serif; }
 .photo-span { margin: -4px 0 12px; color: #8a6418; font-weight: 600; }
 .photo-span:empty { display: none; }
+
+/* AI 內容檢查結果 */
+.ai-check { margin: .5rem 0; font-size: .85rem; }
+.ai-check summary { cursor: pointer; color: var(--muted, #666); }
+.ai-check ul { margin: .4rem 0 .2rem 1.1rem; padding: 0; }
+.ai-check li { margin: .15rem 0; }
