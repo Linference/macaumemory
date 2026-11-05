@@ -117,6 +117,14 @@ canvas:focus { outline: none; }
 .btn.sec:hover { border-color: var(--line); color: var(--gold); }
 .d-museum-note { margin-top: 18px; padding: 12px 13px; border-radius: 10px; background: rgba(111,178,210,.08); border: 1px solid rgba(111,178,210,.22); font-size: 12px; line-height: 1.7; color: #bcd4e4; }
 .d-section { margin-top: 20px; }
+/* 官方資源 · 延伸閱讀 */
+.o-section .o-row { display: grid; grid-template-columns: 64px 1fr; gap: 8px; padding: 7px 0; border-top: 1px solid var(--line-soft); font-size: 12.5px; line-height: 1.6; }
+.o-section .o-label { color: var(--ink-dim); letter-spacing: .06em; }
+.o-section .o-links { display: flex; flex-direction: column; gap: 2px; }
+.o-section .o-links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; width: fit-content; }
+.o-section .o-links a:hover { color: var(--gold); border-color: var(--gold); }
+.o-section .o-conflict { margin-top: 8px; padding: 8px 10px; font-size: 12px; line-height: 1.6; color: var(--gold); background: rgba(216,180,90,.08); border-left: 2px solid var(--gold); }
+.o-section .o-foot { margin: 8px 0 0; font-size: 11px; color: var(--ink-dim); }
 .d-section h3 { font-size: 12px; letter-spacing: .16em; color: var(--gold); text-transform: uppercase; margin: 0 0 10px; font-weight: 600; }
 .artifact { display: flex; gap: 12px; padding: 11px; border-radius: 11px; border: 1px solid var(--line-soft); background: rgba(255,255,255,.035); cursor: pointer; margin-bottom: 9px; transition: all .18s; }
 .artifact:hover { border-color: var(--line); background: rgba(216,180,90,.08); transform: translateY(-1px); }

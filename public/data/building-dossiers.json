@@ -1,0 +1,3371 @@
+{
+ "version": 2,
+ "accessed": "2026-11-04",
+ "note": "每條資料均附出處；kind=inference 為推論；conflicts 為官方資料互相矛盾之處；unverified 為未找到出處的常見說法。由 AI 程式助手協助整理，須作者覆核。",
+ "noOfficialSource": {
+  "grand-lisboa": "新葡京酒店",
+  "venetian": "澳門威尼斯人",
+  "parisian": "澳門巴黎人",
+  "londoner": "澳門倫敦人",
+  "galaxy": "澳門銀河",
+  "city-of-dreams": "新濠天地",
+  "studio-city": "新濠影滙",
+  "wynn-palace": "永利皇宮",
+  "wynn-macau": "永利澳門",
+  "hac-sa-beach": "黑沙海灘",
+  "cheoc-van-beach": "竹灣海灘",
+  "coloane-trails": "路環步行徑",
+  "lord-stows": "安德魯餅店",
+  "red-market": "紅街市",
+  "red-market-food": "三盞燈",
+  "hzmb-port": "港珠澳大橋澳門口岸",
+  "macau-airport": "澳門國際機場",
+  "macau-university": "澳門大學"
+ },
+ "dossiers": [
+  {
+   "id": "ruins-st-paul",
+   "name": "聖保祿學院天主之母教堂遺址（大三巴牌坊）",
+   "heritage": "MM008；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "聖保祿學院天主之母教堂遺址",
+     "url": "https://www.wh.mo/cn/site/detail/18",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM008 大三巴牌坊",
+     "url": "https://www.culturalheritage.mo/detail/99968",
+     "accessed": "2026-11-04"
+    },
+    "unesco": {
+     "publisher": "UNESCO World Heritage Centre",
+     "title": "Historic Centre of Macao (1110)",
+     "url": "https://whc.unesco.org/en/list/1110/",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "巴洛克式石砌前壁，糅合東方裝飾；UNESCO 稱之為「巴洛克—手法主義」教堂立面。",
+    "sources": [
+     "wh",
+     "unesco"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1594 年：聖保祿學院成立，被視為遠東第一所西式大學，1762 年結束。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1602 年：教堂動工，牌坊左側仍存奠基石。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1637–1640 年：全部工程竣工，現存前壁是最後落成的部分。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1835 年：大火燒毀學院與教堂，只剩前壁、大部分地基和石階。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1837–1854 年：教堂後部遺址用作教士墓地。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1990–1996 年：考古、修復與再利用工程，1996 年 10 月建成博物館。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "前壁整體是巴洛克構圖，但部分雕刻帶明顯東方色彩，例如中文字和菊花圖案；文化局指這種中西合璧在全世界天主教堂中獨一無二。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "UNESCO 以「在巴洛克—手法主義立面上用漢字作裝飾」作為澳門東西方建築互相吸收的例子。",
+     "sources": [
+      "unesco"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "這種融合和澳門作為中西交匯的貿易港、傳教士由此進入中國的歷史背景一致。",
+     "sources": [
+      "unesco"
+     ],
+     "kind": "inference"
+    }
+   ],
+   "features": [
+    {
+     "text": "花崗石建成，寬 23 米、高 25.5 米，分五層，第三層起逐步收窄，頂部為三角形山花。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "第一層：三個入口、十枝愛奧尼柱；正門刻「MATER DEI」（天主之母），小門楣有耶穌會徽 IHS。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "第二層：十枝科林斯柱，壁龕內有四位耶穌會聖人銅像。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "第三層：裝飾最豐富，中央供奉聖母；浮雕有七頭怪獸並刻「聖母踏龍頭」、西式帆船，以及「念死者無為罪」「鬼是誘人為惡」等中文警句；兩端有中國舞獅造型的滴水獸。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "第四層：耶穌聖龕與受難刑具浮雕；第五層：三角山花中有銅鴿，頂部十字架。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "「三巴」是 São Paulo（聖保祿）的譯音，加「大」字以區別「小三巴」；又因前壁形似中國牌坊而稱「牌坊」。",
+     "sources": [
+      "ch",
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [
+    "設計者與工匠（常見說法：意大利耶穌會士設計、日本教徒與本地工匠參與）——官方網頁未載，需找學術出處。",
+    "「曾是遠東最大的天主教堂」——官方網頁未載。",
+    "牡丹紋樣——官方網頁只提到菊花。"
+   ],
+   "related": "文化局另有官方 VR 導覽：https://vr.icm.gov.mo/wh/dashanbapaifang/",
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-dominic",
+   "name": "玫瑰聖母堂（板樟堂）",
+   "heritage": "MM003；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "玫瑰聖母堂（板樟堂）",
+     "url": "https://www.wh.mo/cn/site/detail/17",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM003 玫瑰聖母堂",
+     "url": "https://www.culturalheritage.mo/detail/99971",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "立面為對稱的古典式構圖；主祭壇為巴洛克風格。注意：巴洛克的是祭壇，不是立面。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1587 年：由聖多明我會（道明會）創建，是該會在中國的第一所教堂。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1822 年：道明會士在此刊印《蜜蜂華報》，是澳門、也是中國第一份葡文報紙。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1929 年起：成為傳播花地瑪聖母崇拜的重要基地，每年 5 月 13 日舉行聖像巡遊。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "立面由下而上依次是愛奧尼柱、科林斯柱、三角山花，「由簡而繁」，水平線條為主，體現嚴謹的結構邏輯。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "教堂沒有彩色玻璃窗，改用大型百葉窗，文化局指這體現南方建築特點，令室內非常明亮。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "用百葉窗而非彩色玻璃，可理解為適應澳門濕熱氣候、加強通風。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "inference"
+    }
+   ],
+   "features": [
+    {
+     "text": "立面總高約 24 米，第三層正中為道明會會徽；黃牆白線。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "巴西利卡式平面：中廳寬 8 米、側廊寬 3 米，室內為平吊頂；唱詩席挑廊幾乎環繞整個中廳。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "主祭壇以扭曲的麻花柱、斷山花構成巴洛克風格，文化局稱為澳門最美麗的祭壇之一。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "旁設「聖物寶庫」，收藏三百多件澳門天主教文物。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "初時用木板搭建，華人稱「板障廟」，後稱「板樟廟」；因供奉玫瑰聖母，又稱「玫瑰堂」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [
+    "創建者為「西班牙」道明會士——官方網頁只寫道明會。",
+    "綠色窗框、十七世紀油畫——官方網頁未載。"
+   ],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 15,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "cathedral",
+   "name": "主教座堂（大堂）",
+   "heritage": "MM006；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "主教座堂（大堂）",
+     "url": "https://www.wh.mo/cn/site/detail/15",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM006 主教座堂",
+     "url": "https://www.culturalheritage.mo/detail/99932",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "大堂前地",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/cathedral-square",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "經簡化處理的新古典主義風格。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "約 1622 年：以三合土（taipa）建造，入口朝東、祭壇朝西。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1836 年：受颱風嚴重損毀；1844–1850 年由澳門土生建築師設計重建，正立面改朝西北，與主教府圍合成前地。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1874 年：再遭颶風破壞，多次修繕後於 1937 年以鋼筋混凝土重建。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "室內裝飾基本上是 1937 年重建時的古典細部與線腳，天花為平頂、裝飾簡潔，文化局指這表現了新古典手法。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "現在的外觀主要來自 1937 年的鋼筋混凝土重建，所以風格簡潔，而不是早期教堂的樣子。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "inference"
+    }
+   ],
+   "features": [
+    {
+     "text": "立面對稱，三段式構圖：三扇門、三扇窗、三角形山花，以橫線條為主；正面用石材。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "兩旁各有一座三層鐘樓，高約 13 米；大鐘為英國製造，紀念葡王伯多祿五世登基。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "主祭壇下埋有 16、17 世紀主教和聖徒遺骨；最古老的耳堂用木拱頂，供奉貞節聖母。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "昔日澳門總督上任時，會到此把權杖放在聖母像旁。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "大堂前地相傳是澳門首場彌撒的舉行地。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [
+    "「始建於 16 世紀」——官方寫約 1622 年。",
+    "前地的十字架與噴泉——官方網頁未載。"
+   ],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-joseph-seminary",
+   "name": "聖若瑟修院及聖堂（三巴仔）",
+   "heritage": "MM007；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "聖若瑟修院大樓、聖若瑟修院教堂、前地及石階",
+     "url": "https://www.wh.mo/cn/site/detail/6",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM007 聖若瑟修院教堂",
+     "url": "https://www.culturalheritage.mo/detail/99911",
+     "accessed": "2026-11-04"
+    },
+    "gov": {
+     "publisher": "澳門特區政府入口網站（文化局新聞）",
+     "title": "聖若瑟修院藏珍館9月17日起停止對外開放",
+     "url": "https://www.gov.mo/zh-hant/news/1171801/",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "聖堂為華麗的巴洛克風格；相連的修院大樓則樸素簡潔。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1728 年：耶穌會士創辦修院，培養中國及東南亞教會人才，老一輩稱之為澳門天主教的「少林寺」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1746 年：聖堂興建，1758 年落成；奠基銅牌背面刻「乾隆壹拾壹年捌月貳拾陸日」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1953 年：再次修葺，形成今日規模。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "2016 年 10 月 7 日：文化局與天主教澳門教區在修院內設「聖若瑟修院藏珍館」；2025 年 9 月 17 日起停止對外開放，展覽改為在教區歷史檔案及文物處網頁以虛擬實境瀏覽。",
+     "sources": [
+      "gov"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "主堂是由四個帆拱托起的羅馬式穹窿，直徑 12.5 米、高 19 米；祭壇以腰纏金葉的旋柱、斷山花收結，屬巴洛克式設計。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "聖堂是耶穌會建造、規模僅次於聖保祿教堂的教堂，所以採用當時耶穌會常用、強調氣勢的巴洛克手法。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "inference"
+    }
+   ],
+   "features": [
+    {
+     "text": "修院入口與聖堂入口成一軸線，以 54 級花崗石階相連。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "正立面寬 24.6 米，左右對稱鐘塔，山花中有耶穌會會徽。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "堂內存放聖方濟各．沙勿略的手肱骨聖髑。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "修院大樓不對外開放；聖堂仍可參觀。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "規模僅次於聖保祿教堂（大三巴前身），故本地人稱「三巴仔」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [
+    "「曾被譽為遠東最雄偉的教堂之一」——官方網頁未載。"
+   ],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-lawrence",
+   "name": "聖老楞佐堂（風順堂）",
+   "heritage": "MM005；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "聖老楞佐堂及前地（風順堂）",
+     "url": "https://www.wh.mo/cn/site/detail/5",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM005 聖老楞佐堂",
+     "url": "https://www.culturalheritage.mo/detail/99914",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "在歐洲古典式基礎上帶有巴洛克風格。注意：不是新古典主義。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "創建年代未有定論：文德泉神父認為是 1558–1560 年由耶穌會士所建的木製小教堂；學界一般認為建於 1569 年以前。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1618 年：第一次重修，有聖母七苦祭台下的石刻可證。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1844 年：改建，兩年後（1846 年）竣工，形成今日規模；1954 年內部裝修；2002 年由政府出資維修。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "立面兩個對稱鐘樓高約 21 米，中間山花層疊；因唱詩席屋頂低於中廳，形成古典基礎上帶巴洛克特徵的外觀。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "主祭壇以彩色玻璃窗為背景、密集的科林斯壁柱裝飾，營造幽暗神秘的氣氛。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "拉丁十字平面，中廳跨度 15 米、無柱廊阻隔，木製拱頂，垂下多盞枝形大吊燈。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "藍色頂棚、黃色牆面、白色線腳；堂側石十字架底座刻「INRI 1627 e 1811」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "華人稱「風信堂」，粵語諧音為「風順堂」，寓意風調雨順；《澳門記略》記載葡人家屬在此祈求風信、盼船歸來。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [
+    "「約建於 1568 年」——官方只說建於 1569 年以前、另有 1558–1560 年之說。",
+    "主祭壇供奉聖老楞佐、老榕樹——官方網頁未載。"
+   ],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-anthony",
+   "name": "聖安多尼堂（花王堂）",
+   "heritage": "MM002；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "聖安多尼堂及前地（花王堂）",
+     "url": "https://www.wh.mo/cn/site/detail/22",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM002 聖安多尼堂",
+     "url": "https://www.culturalheritage.mo/detail/99964",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "立面為 1930 年改建的水刷石飾面，體現新古典主義；室內主祭壇是 1875 年的巴洛克式聖壇。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1558–1560 年：創建，初為茅草覆蓋的小教堂，是澳門三大古老教堂之一。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "門前石碑記載：1638 年建、1809 年毀、1810 年重建、1874 年再毀、1875 年重修。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1874 年 9 月 22 日大火後，每年這天稱「天災節」，市民抬聖安多尼像巡遊紀念。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1930 年：改建鐘樓和主立面；1951、1953 年兩度裝修內部。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "教堂因地制宜、遷就周圍道路，空間局促，只能建一座鐘樓（在左側），所以立面不對稱。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "外觀現代、簡潔，是因為 1930 年改建時採用了當時的水刷石飾面。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "長方形中廳，高約 15 米、無柱廊，木拱頂與枝形大吊燈；鐘樓三層，高約 22 米。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "主祭壇以斷山花和雙柱構成，中有十字架上的耶穌像及耶穌會標誌 IHS。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "以往葡人婚禮多在此舉行，華人因此稱之為「花王堂」；《澳門記略》記載男女在此盟誓成婚，稱「花王廟」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [
+    "「三大古教堂中最古老」——官方只說是三大古教堂之一。",
+    "「聖安多尼是婚姻主保聖人、婚禮以鮮花裝飾，故稱花王堂」——官方解釋是葡人在此舉行婚禮。"
+   ],
+   "correction": "澳門三大古教堂是花王堂、風順堂、望德堂；主教座堂約建於 1622 年，不在其中。",
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-francis-xavier",
+   "name": "路環聖方濟各堂",
+   "heritage": "MC001",
+   "sources": {
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MC001 聖方濟各堂",
+     "url": "https://www.culturalheritage.mo/detail/100019",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "路環聖方濟各聖堂",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/chapel-of-st-francis-xavier",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "文化局形容為「頗具葡式建築風格」，奶黃色、兩層高。注意：官方沒有說是巴洛克。",
+    "sources": [
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1904 年：原址為嘉諾撒女修會管理的育嬰院。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1928 年：為紀念聖方濟各．沙勿略改建成教堂。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "原址本是育嬰院，1928 年才改建為教堂，規模不大，形制比市區古教堂簡單。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "inference"
+    }
+   ],
+   "features": [
+    {
+     "text": "鐘樓位於第三層中間；正堂左右各有一間側室；堂內有聖方濟各．沙勿略雕像。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "側堂掛有華人相貌、懷抱嬰孩的聖母像，是中西文化交融的見證。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "曾收藏聖方濟各．沙勿略的遺髑，以及 1835 年大三巴火災後遺下的 59 位日本籍、14 位越南籍死者部分骸骨（據文化局記載）。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "教堂前有紀念碑，紀念 1910 年路環戰勝海盜一役。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "銀色骨箱自 1978 年起存放於此，盛有聖方濟各手骸聖髑，現已送往聖若瑟修院收藏。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [
+    {
+     "topic": "建築風格",
+     "values": [
+      {
+       "value": "頗具葡式建築風格",
+       "source": "ch"
+      },
+      {
+       "value": "類似澳門一般教堂的巴洛克式",
+       "source": "mg"
+      }
+     ]
+    },
+    {
+     "topic": "外牆顏色",
+     "values": [
+      {
+       "value": "奶黃色",
+       "source": "ch"
+      },
+      {
+       "value": "白色",
+       "source": "mg"
+      }
+     ]
+    }
+   ],
+   "oral": [],
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "carmel-church",
+   "name": "嘉模聖母堂",
+   "heritage": "MT001",
+   "sources": {
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MT001 嘉模聖母堂",
+     "url": "https://www.culturalheritage.mo/detail/100015",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "嘉模聖母堂",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/our-lady-of-carmel-church",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "文化局網頁沒有標明建築風格，需另找出處。",
+    "sources": [
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1885 年：為方便氹仔教徒的宗教活動而建，也象徵葡萄牙人來到氹仔；是氹仔唯一的天主教堂。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1985 年重修。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "佔地二千餘平方呎，頂部為鐘樓；禮堂可容二百多人。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "聖壇上的聖母像據說從歐洲運來；兩側天使像為紀念建堂百週年而置。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "與周圍歐陸風格的花園、房屋融為一體，常用於舉行婚禮。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [
+    "「兩側設鐘樓」——官方寫頂部為鐘樓。",
+    "「由澳門教區興建」、外牆顏色——官方未載。"
+   ],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "guia-fortress",
+   "name": "東望洋炮台、聖母雪地殿教堂及燈塔",
+   "heritage": "MM011；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "東望洋炮台、聖母雪地殿教堂及燈塔",
+     "url": "https://www.wh.mo/cn/site/detail/25",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM011 東望洋炮台",
+     "url": "https://www.culturalheritage.mo/detail/100024",
+     "accessed": "2026-11-04"
+    },
+    "unesco": {
+     "publisher": "UNESCO World Heritage Centre",
+     "title": "Historic Centre of Macao (1110)",
+     "url": "https://whc.unesco.org/en/list/1110/",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "東望洋炮台",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/guia-fortress-including-guia-chapel-and-lighthouse",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "聖母雪地殿：立面簡單，壁柱加三角形山花；室內壁畫融合中西繪畫技法。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1622 年：炮台修築，1637 年擴建，翌年完工。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "約 1622 年：聖母雪地殿建成。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1865 年 9 月 24 日：燈塔啟用；1874 年 9 月風災受損，1910 年 6 月 29 日重新啟用。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1976 年：葡國軍隊撤出後闢為旅遊點。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1996 年：修復時發現壁畫，1998–2001 年修復完成。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "壁畫中的聖經故事和人物用了中國繪畫技法，文化局指這在本地教堂中獨一無二。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "小教堂兩側牆身厚大並有扶壁，用來承托筒拱屋頂。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "燈塔為圓柱形，底部直徑 7 米、往上收為 5 米，總高 18.3 米，是中國南海岸第一座現代燈塔。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "小教堂主堂長 16 米、寬 4.7 米，紅瓦坡屋頂。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [
+    "「燈塔高 15 米」——官方為 18.3 米。",
+    "「聖母雪地殿建於 1626 年」——官方為約 1622 年。"
+   ],
+   "conflicts": [
+    {
+     "topic": "燈塔年份",
+     "values": [
+      {
+       "value": "1865 年 9 月 24 日建成啟用",
+       "source": "wh"
+      },
+      {
+       "value": "建於 1864 年",
+       "source": "mg"
+      }
+     ]
+    }
+   ],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-augustine",
+   "name": "聖奧斯定堂（龍嵩廟）",
+   "heritage": "MM001；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "聖奧斯定堂",
+     "url": "https://www.wh.mo/cn/site/detail/10",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM001 聖奧斯定堂",
+     "url": "https://www.culturalheritage.mo/detail/99902",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "立面簡樸，採用歐洲文藝復興時代的古典式構圖；主祭壇裝飾為巴洛克風格。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1591 年：由西班牙奧斯定會修士創建，早期為手法主義建築。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1874 年：重修時大幅改動，形成今日模樣。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "今日的古典式立面來自 1874 年的大幅重修，早期的手法主義面貌已改變。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "立面高約 17 米，入口為石製羅馬塔司干式雙柱，頂部三角山花的神龕供奉聖母像。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "內部由兩排柱分為寬 7 米的中廳和兩條 4 米的側廊；主祭壇供奉「苦難耶穌像」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "早期屋頂用蒲葵葉覆蓋，大風吹起時像龍鬚豎起，華人稱「龍鬚廟」，後粵音轉為「龍嵩廟」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [],
+   "conflicts": [],
+   "oral": []
+  },
+  {
+   "id": "na-tcha-temple",
+   "name": "哪咤廟（大三巴）",
+   "heritage": "MM026；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "哪咤廟（大三巴）",
+     "url": "https://www.wh.mo/cn/site/detail/19",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM026 哪咤廟",
+     "url": "https://www.culturalheritage.mo/detail/99966",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "大三巴哪咤展館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/the-na-tcha-exhibition-room",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "傳統中式兩進磚木小廟，裝飾簡約、風格內斂平實。",
+    "sources": [
+     "wh",
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1888 年創建，1901 年改建；1995、2000 年政府維修。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "2012 年：文化局籌建的「大三巴哪咤展館」開幕；澳門哪吒信俗 2014 年列入國家級非物質文化遺產名錄。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "廟依附舊城牆、與大三巴同在一坡，文化局指它刻意不與城牆和牌坊比厚重雄偉，而以虛實對比顯得輕巧，像一個「建築小品」。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "兩進之間沒有天井，在傳統中式廟宇中罕見；門廳三面不砌牆，只用黑色木柵圍繞。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "建築深 8.4 米、寬 4.51 米；正殿為硬山頂，門廳為歇山頂，正脊有鰲魚與寶珠。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "哪吒自 17 世紀後期起受澳門民間供奉，是富地方色彩的民間信仰。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "展館內展出原址考古出土的石砌牆基，專家推斷屬聖保祿教堂西翼。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "fortress-monte",
+   "name": "大炮台（聖保祿炮台）",
+   "heritage": "MM012；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "大炮台（中央炮台）",
+     "url": "https://www.wh.mo/cn/site/detail/21",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM012 大炮台",
+     "url": "https://www.culturalheritage.mo/detail/100025",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "大炮台（中央炮台）",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/mount-fortress",
+     "accessed": "2026-11-04"
+    },
+    "oh": {
+     "publisher": "澳門口述歷史協會",
+     "title": "口述協倡藉古炮推廣本土史",
+     "url": "http://oralhistory.mo/?p=1106",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "歐式棱堡式炮台：不規則四邊形，四角外突為棱堡。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1617 年由耶穌會士開始修建，1626 年完成，名為聖保祿炮台。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1623–1740 年：一直是城防司令和澳門總督的住所。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1965 年原營房改建為氣象台；1996 年起改建為澳門博物館，1998 年啟用。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "面向中國大陸的西北牆主要用花崗石、子牆較矮且不設炮口，文化局指這顯示炮台以對外海防為主，並對當時中國官方表示友好姿態。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "牆身以夯土建造、用蠔殼粉作灰泥，牆高約 9 米，堅實非常；軍需庫足以應付兩年圍困。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "位於海拔 52 米的小山上，可架設多達 32 門大炮，與其他炮台構成覆蓋東西海岸的火力網。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [
+    {
+     "topic": "開放為遊覽區的年份",
+     "values": [
+      {
+       "value": "1966 年（氣象台遷入後）",
+       "source": "wh"
+      },
+      {
+       "value": "1976 年",
+       "source": "ch"
+      }
+     ]
+    },
+    {
+     "topic": "佔地面積",
+     "values": [
+      {
+       "value": "約 8,000 平方米",
+       "source": "wh"
+      },
+      {
+       "value": "約 8,000 平方米",
+       "source": "ch"
+      },
+      {
+       "value": "約一萬平方米",
+       "source": "mg"
+      }
+     ]
+    }
+   ],
+   "oral": [
+    {
+     "text": "口述歷史協會訪談的老街坊憶述：早年颱風或火災警報以鳴炮和懸掛信號旗通知；重要人物去世時大炮台會鳴炮致哀。",
+     "sources": [
+      "oh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "senado-square",
+   "name": "議事亭前地",
+   "heritage": "澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "議事亭前地",
+     "url": "https://www.wh.mo/cn/site/detail/12",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "議事亭前地",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/senado-square",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "南歐風情的城市廣場，兩側為 19 世紀末至 20 世紀初的新古典主義建築。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "因位於議事亭（市政廳前身）前而得名；開埠至今一直是澳門市中心。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "20 世紀 70 年代建噴水池，故俗稱「噴水池」；1993 年起鋪設黑白波浪紋碎石地面。",
+     "sources": [
+      "wh",
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "前地呈前寬後窄的漏斗形；黑白碎石地面襯托四周顏色鮮艷的建築，形成南歐風情。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "右側有郵政局大樓、新古典主義的仁慈堂大樓；左側為三層、帶行人走廊的新古典樓宇。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "leal-senado",
+   "name": "市政署大樓（原市政廳）",
+   "heritage": "MM018；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "市政署大樓（原市政廳舊址）",
+     "url": "https://www.wh.mo/cn/site/detail/11",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM018 市政署大樓",
+     "url": "https://www.culturalheritage.mo/detail/99988",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "南歐建築特色；正立面屬文藝復興簡約（新古典）風格，側立面則較自由，帶巴洛克斷山花窗楣。",
+    "sources": [
+     "wh",
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1784 年建，多次重修，1874 年重修時形成今日規模。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1929 年：二樓圖書館啟用，以葡國瑪弗拉修道院圖書館為藍本。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "文化局指建築經多次改動，所以風格多樣，反映不同時期的建築思想。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "側立面的門窗因內部功能而定，間距、尺寸不一，所以沒有跟隨正立面的新古典形式。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "正立面高 14.5 米、寬 44 米，中間三角山花高 17 米，大門兩側為花崗石多立克壁柱。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "門廳內牆貼藍白葡國瓷磚，是典型葡式裝飾；圖書館藏 17 世紀至 20 世紀 50 年代外文古籍。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "mandarins-house",
+   "name": "鄭家大屋",
+   "heritage": "澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "鄭家大屋",
+     "url": "https://www.wh.mo/cn/site/detail/4",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "鄭家大屋",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/mandarins-house",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "中國嶺南院落式大宅，處處體現中西結合。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1869 年前由鄭文瑞籌建，是近代思想家鄭觀應的故居。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "2001 年 7 月政府接管，按原貌維修。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "中式手法見於屋頂、樑架、青磚、泥塑淺浮雕、趟櫳門及入口自檐口內凹的做法；西方影響見於部分天花、門楣窗楣、檐口線和外牆抹灰。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "與傳統民居不同，主廳堂設在二樓，各房區入口也不與大宅入口同向。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "佔地約 4,000 平方米，沿媽閣街縱深達 120 多米；主房區為兩座兩進三開間的四合院。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "lilau-square",
+   "name": "亞婆井前地",
+   "heritage": "澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "亞婆井前地",
+     "url": "https://www.wh.mo/cn/site/detail/3",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "亞婆井前地",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/lilau-square",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "葡式民居與 20 世紀初裝飾藝術（Art Deco）公寓並存。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "昔日澳門主要水源，靠近內港，是葡人最早的聚居點之一。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "龍頭里的葡式民居順山勢而建，白牆、綠百葉窗、紅瓦坡頂，帶南歐風韻；7、9、27 號為 20 世紀初的裝飾藝術風格公寓。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [],
+   "names": [
+    {
+     "text": "「亞婆井」葡文 Lilau 意為山泉；葡人民謠說喝了亞婆井水便忘不掉澳門。",
+     "sources": [
+      "wh",
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "a-ma-temple",
+   "name": "媽閣廟（媽祖閣）",
+   "heritage": "MM020；澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "媽祖閣（媽閣廟）",
+     "url": "https://www.wh.mo/cn/site/detail/1",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM020 媽祖閣",
+     "url": "https://www.culturalheritage.mo/detail/99908",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "媽祖閣（媽閣廟）",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/a-ma-temple",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "中國傳統廟宇建築群，依山而建，規模小而簡樸、佈局錯落。",
+    "sources": [
+     "wh",
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "創建年份未有定論，但大部分學者肯定葡人定居前此處已有媽祖廟。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "神山第一殿創建於 1605 年，門口石橫樑仍存創建時石刻，是廟內有實物可考最古老的建築。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "弘仁殿相傳建於 1488 年，現存殿門與石龕為 1828 年重修。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1828 年大修；1874、1875 年兩遭颶風破壞，重修後奠定今貌；1988 年正覺禪林火警後按原貌重修。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "正殿柱、樑、牆身以至屋頂都以花崗石為主，再鋪琉璃瓦、配誇張飛檐；文化局指各殿雖小卻能充分融合自然。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "由大門、牌坊、正殿、弘仁殿、觀音閣、正覺禪林組成；弘仁殿只有約 3 平方米，以山岩為後牆。",
+     "sources": [
+      "wh",
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "山間有歷代摩崖石刻，洋船石、海覺石是澳門著名兩大奇石。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "早期稱娘媽廟、天妃廟或海覺寺，後定名媽祖閣，俗稱媽閣廟。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [],
+   "conflicts": [
+    {
+     "topic": "創建年份",
+     "values": [
+      {
+       "value": "未有定論；神山第一殿 1605 年，弘仁殿相傳 1488 年",
+       "source": "wh"
+      },
+      {
+       "value": "一說 1488 年，一說 1605 年",
+       "source": "ch"
+      }
+     ]
+    }
+   ],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 90,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "moorish-barracks",
+   "name": "港務局大樓（原摩爾兵營）",
+   "heritage": "澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "海事及水務局大樓（原摩爾兵營舊址）",
+     "url": "https://www.wh.mo/cn/site/detail/2",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "海事及水務局大樓",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/moorish-barracks",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "受阿拉伯（伊斯蘭）及哥特建築影響的磚石建築。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1874 年建成，原為由印度來澳警察的營地，可駐二百多名官兵；1905 年改為港務局和水警辦公地點。",
+     "sources": [
+      "wh",
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "三面環繞寬 4 米、帶尖拱券的迴廊，文化局指這既便於觀景，也是建築對本地氣候的回應。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "伊斯蘭式尖拱與其駐軍來自印度的背景相關。",
+     "sources": [
+      "wh",
+      "mg"
+     ],
+     "kind": "inference"
+    }
+   ],
+   "features": [
+    {
+     "text": "長 67.5 米、寬 37 米；長迴廊連續 19 個伊斯蘭式尖拱，拱間以三葉飾點綴；黃牆白紋。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "原稱摩爾兵營，俗稱水師廠。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [],
+   "conflicts": [
+    {
+     "topic": "設計者",
+     "values": [
+      {
+       "value": "塞卡爾男爵安東尼奧．梅洛（António Alexandrino de Melo）",
+       "source": "wh"
+      },
+      {
+       "value": "意大利人卡蘇杜（Cassuto）",
+       "source": "mg"
+      }
+     ]
+    }
+   ],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "camoes-garden",
+   "name": "白鴿巢公園、賈梅士洞與東方基金會會址",
+   "heritage": "澳門歷史城區（東方基金會會址、基督教墳場）",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "東方基金會會址",
+     "url": "https://www.wh.mo/cn/site/detail/23",
+     "accessed": "2026-11-04"
+    },
+    "wh2": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "基督教墳場",
+     "url": "https://www.wh.mo/cn/site/detail/24",
+     "accessed": "2026-11-04"
+    },
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM034 賈梅士洞",
+     "url": "https://www.culturalheritage.mo/detail/99962",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "白鴿巢公園",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/luis-de-camoes-park",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "東方基金會會址為南歐風格的花園式住宅；旁邊的馬禮遜小教堂仿羅馬風（Romanesque）。",
+    "sources": [
+     "wh",
+     "wh2"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "18 世紀 70 年代：富商俾利喇（Manuel Pereira）的別墅建成，可能是澳門首幢花園式豪宅；後租給東印度公司。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1821 年：基督教墳場啟用，是澳門第一座新教墳場；1857 年關閉。",
+     "sources": [
+      "wh2"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1849 年：馬忌士為紀念詩人賈梅士在洞內放置半身像；1866 年改為重鑄的銅像。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "20 世紀 60 年代後曾為賈梅士博物館，現為東方基金會會址。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "文化局指這座住宅的佈局開創了澳門花園式住宅的先河。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "墳場葬有英國畫家錢納利和第一位來華新教傳教士馬禮遜。",
+     "sources": [
+      "wh2"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "賈梅士洞以三塊大石疊成，相傳詩人在此完成史詩《葡國魂》。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "昔日葡籍富商在此飼養數百隻白鴿，遠觀若巢，故名「白鴿巢」。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [
+    "賈梅士曾在澳門居住並在洞中寫作——官方用「相傳」，屬傳說。"
+   ],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "tam-kung-temple",
+   "name": "路環譚公廟",
+   "heritage": "MC002",
+   "sources": {
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MC002 譚公廟",
+     "url": "https://www.culturalheritage.mo/detail/100021",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "譚公廟",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/temples/tam-kong-temple",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "中式廟宇，廟堂橫連三間，左右加設涼亭。",
+    "sources": [
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1862 年（清同治元年）建；過去一百三十五年間大規模重修三次。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "譚公被視為漁家保護神，與路環漁村的生活直接相關。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "廟內有以鯨骨作舟身、長三米餘的龍舟模型，為漁民所贈；牆上畫虎，因傳說譚公出山時有一虎隨行。",
+     "sources": [
+      "ch",
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "廟側有近二百年的「過路環勒石曉諭碑」；每年農曆四月初八譚公誕演神功戲。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [
+    {
+     "topic": "建廟年份",
+     "values": [
+      {
+       "value": "1862 年（同治元年）",
+       "source": "ch"
+      },
+      {
+       "value": "清同治年間",
+       "source": "mg"
+      }
+     ]
+    }
+   ],
+   "oral": [],
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "guia-cable-car",
+   "name": "松山纜車與二龍喉公園",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "二龍喉公園",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/flora-park",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "具歐陸特色的公園。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "昔日二龍喉宮是 20 世紀早期的澳督官邸，澳督遷出後改建為公園。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "入口處有觀光纜車直達松山山頂。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "園址部分原屬何東爵士物業，擴建時何東捐出毗連山地，所以又稱「何東花園」。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "macau-tower-note",
+   "name": "金蓮花廣場",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "金蓮花廣場",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/lotus-square",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "現代紀念雕塑廣場。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1999 年 12 月 20 日回歸首日，國務院贈送的「盛世蓮花」雕塑揭幕。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "三層紅色花崗岩基座形似蓮葉，寓意澳門三島；蓮花盛開象徵繁榮。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "雕塑青銅鑄造、表面貼金，重 6.5 噸、總高 6 米；基座由 23 塊紅色花崗岩組成。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "macau-tower",
+   "name": "澳門旅遊塔",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門旅遊塔會展娛樂中心",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/macau-tower-convention-and-entertainment-centre",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "現代觀光塔。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "塔高 338 米，觀光層離地 223 米，有玻璃地面；旋轉餐廳視野 55 公里；玻璃升降機約 45 秒到達觀光主層。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "fisherman-wharf",
+   "name": "澳門漁人碼頭",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門漁人碼頭",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/macau-fishermans-wharf",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "主題式綜合旅遊區，結合不同建築特色及中西文化。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "澳門首個主題文化創意娛樂旅遊綜合體，位於外港新填海區，佔地超過 133,000 平方米。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "macau-science-center",
+   "name": "澳門科學館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門科學館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-science-center",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "現代建築，由貝聿銘及貝氏建築事務所設計。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "建築面積約 20,000 平方米，由展覽中心、天文館、會議中心組成。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "kun-iam-statue",
+   "name": "觀音蓮花苑",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "觀音蓮花苑",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/kun-iam-ecumenical-centre",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "現代雕塑，由葡萄牙建築師及雕塑家李潔蓮設計。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1999 年 3 月 21 日開幕，獲 UNESCO 支持。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "觀音面容刻意沒有任何特定民族或宗教特徵，以表達「大公」的普世理念，促進不同文明互相尊重。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "位於人工小島，以 60 米堤道相連；觀音像由約 50 個青銅鑄件組成，高約 20 米、重約 50 噸。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "centro-cultural",
+   "name": "澳門文化中心",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門文化中心",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/macao-cultural-centre",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "提供國際級表演場地，每年舉辦音樂節、藝穗節等。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "louvou-lim-ieoc",
+   "name": "盧廉若公園",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "盧廉若公園",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/lou-lim-ioc-park",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "澳門最具蘇州園林風韻的中式園林。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "原為農田，富商盧華紹（盧九）購入，由長子盧廉若興建；盧家衰落後分段易手；70 年代初政府收購，1974 年重新開放。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "以「春草堂」為主體，池塘、曲橋、石山、竹林、迴廊圍繞中央涼亭佈局，營造江南園林景致。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "tap-seac-square",
+   "name": "塔石廣場與藝文館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "塔石藝文館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/tap-seac-gallery",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "2003 年 12 月 5 日塔石藝文館啟用，前身為東方基金會當代藝術中心。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "室內有兩座古井，中央為通天，自然光照入形成獨特展示空間；與中央圖書館、歷史檔案館連成文化區。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "macau-museum-art",
+   "name": "澳門藝術博物館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門藝術博物館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-museum-of-art",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1999 年 3 月 19 日成立。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "總面積 10,192 平方米，展覽面積逾 4,000 平方米，是澳門規模最大的文物藝術類博物館；樓高五層。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "grand-prix-museum",
+   "name": "澳門大賽車博物館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門大賽車博物館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-grand-prix-museum",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "擴建後於 2021 年 6 月 1 日開幕，建築面積增至約 16,000 平方米，獲 LEED 金級認證。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "handover-gifts",
+   "name": "澳門回歸賀禮陳列館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門回歸賀禮陳列館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/handover-gifts-museum-of-macao",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "展出國務院及各省、自治區、直轄市和香港特區為祝賀澳門特區成立送贈的賀禮；由藝術博物館管理。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "museum-macau-museum",
+   "name": "澳門博物館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門博物館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-museum",
+     "accessed": "2026-11-04"
+    },
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "大炮台（中央炮台）",
+     "url": "https://www.wh.mo/cn/site/detail/21",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1998 年 4 月 18 日開幕。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [
+    {
+     "text": "三層中有兩層建在大炮台平台之下，只有最上一層由原氣象台改建，以最大限度保留炮台原有風格和地貌。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [
+    {
+     "text": "一樓講中西文化相遇與澳門早期歷史，二樓講傳統文化與民間藝術，三樓講今日城市面貌。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "museum-poly-mgm",
+   "name": "保利美高梅博物館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "保利美高梅博物館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/poly-mgm-museum",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "佔地近 2,000 平方米，以可移動 LED 屏、活動展板和定向音響營造沉浸式展覽。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "mgm-cotai",
+   "name": "美獅美高梅",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "美獅美高梅視博廣場",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/the-spectacle-at-mgm-cotai",
+     "accessed": "2026-11-04"
+    },
+    "mg2": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "美獅美高梅藝術收藏",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/mgm-cotai-art-collection",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "視博廣場的天幕獲健力士紀錄，為最大型的自支撐懸跨網架式玻璃屋頂；四周有 25 個 LED 螢幕。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "酒店藝術收藏超過 300 件，包括清朝御製地毯及當代亞洲藝術。",
+     "sources": [
+      "mg2"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "mgm-macau",
+   "name": "澳門美高梅",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門美高梅天幕廣場",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/the-grande-praca-at-mgm-macau",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [
+    {
+     "text": "天幕廣場北面建築仿照里斯本中央火車站外牆，以呼應澳門的葡萄牙文化遺產。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "features": [],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "coloane-peak",
+   "name": "疊石塘山、媽祖像與媽祖文化村",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "路環山頂公園和媽祖像",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/coloane-height-park-and-statue-of-a-ma",
+     "accessed": "2026-11-04"
+    },
+    "mg2": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "媽祖文化村",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/a-ma-cultural-village",
+     "accessed": "2026-11-04"
+    },
+    "oh": {
+     "publisher": "澳門口述歷史協會",
+     "title": "九澳高塔原爲防山火",
+     "url": "http://oralhistory.mo/?p=1121",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "天后宮按中國古建築規制、以閩南建築風格建造（燕尾脊、琉璃瓦、石雕龍柱）。",
+    "sources": [
+     "mg2"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "媽祖像由 120 塊漢白玉雕成，高 19.99 米，寓意 1999 年回歸，是全球最高的漢白玉媽祖像。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "天后宮佔地約 7,000 平方米，由甬道、亭式山門、祭壇、大殿和梳妝樓組成。",
+     "sources": [
+      "mg2"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [
+    {
+     "text": "據口述歷史協會報道，路環曾有兩座防山火瞭望塔，其中路環一座因修建媽祖像而拆除，九澳一座約建於 20 世紀 70 年代。",
+     "sources": [
+      "oh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "seac-pai-van",
+   "name": "石排灣郊野公園與大熊貓館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "石排灣郊野公園",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/seac-pai-van-park",
+     "accessed": "2026-11-04"
+    },
+    "mg2": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "澳門大熊貓館",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/macao-giant-panda-pavilion",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "公園佔地約 198,000 平方米，設大熊貓館、珍稀動物館、土地暨自然博物館等。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "大熊貓館依山而建、呈扇形，佔地約 3,000 平方米。",
+     "sources": [
+      "mg2"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 120,
+    "max": 240,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "lai-chi-vun",
+   "name": "荔枝碗船廠片區",
+   "heritage": "被評定的不動產",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "荔枝碗船廠片區",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/lai-chi-vun-shipyards",
+     "accessed": "2026-11-04"
+    },
+    "oh": {
+     "publisher": "澳門口述歷史協會",
+     "title": "荔枝碗，熱奶茶",
+     "url": "http://oralhistory.mo/?p=966",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "活化片區佔地逾三千平方米，以本地造船業為主題，設展覽與市集。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [
+    {
+     "text": "口述歷史協會訪問了一位 1972 年到路環、在荔枝碗船廠當學徒的造船工人：他講述學徒每天工資約五毫、船廠沒有安全保障、曾三次遭遇工業意外，後來在路環開設柴火咖啡檔。",
+     "sources": [
+      "oh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "note": "這是現時找到最貼近「大眾記憶」的官方以外資料，可作為深度案例的起點。",
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "rua-do-cunha",
+   "name": "官也街",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "官也街",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/rua-do-cunha",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1983 年闢為行人專用區，是當時澳門首個行人專用區。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "19 世紀的舊街市在街市遷出後，於 2003 年改建為廣場。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [],
+   "names": [],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 30,
+    "max": 45,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "taipa-houses",
+   "name": "龍環葡韻住宅式博物館",
+   "heritage": "",
+   "sources": {
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "龍環葡韻",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/taipa-houses",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "具代表性的土生葡人住宅（葡式建築）。",
+    "sources": [
+     "mg"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "五座建築 1921 年落成，曾為高級官員官邸；1992 年評為具建築價值的建築群；1999 年底起作為博物館開放。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [],
+   "names": [
+    {
+     "text": "「龍環」是氹仔舊稱，「葡韻」指葡萄牙建築風韻。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-lazarus",
+   "name": "望德堂區（含望德聖母堂、瘋堂斜巷）",
+   "heritage": "MM004（教堂）",
+   "sources": {
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM004 望德聖母堂及前地",
+     "url": "https://www.culturalheritage.mo/detail/99975",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "望德聖母堂",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/st-lazarus-church",
+     "accessed": "2026-11-04"
+    },
+    "oh": {
+     "publisher": "澳門口述歷史協會",
+     "title": "澳門故事系列 之 細說瘋堂",
+     "url": "http://oralhistory.mo/?p=223",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "望德聖母堂為新古典主義風格。",
+    "sources": [
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "教堂建於 1557–1560 年間，是澳門三大古教堂之一；1576 年起為澳門教區第一座主教座堂。",
+     "sources": [
+      "ch",
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "昔日教堂後側設有痲瘋院，故教堂又被稱為「瘋堂廟」。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "新任主教到澳就職，必先到望德堂領取法杖。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "聖堂門前的石米批盪是 1957 年重修時鋪上的。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [],
+   "unverified": [],
+   "conflicts": [
+    {
+     "topic": "教堂重建年份",
+     "values": [
+      {
+       "value": "1886 年",
+       "source": "ch"
+      },
+      {
+       "value": "1885 年",
+       "source": "mg"
+      }
+     ]
+    }
+   ],
+   "oral": [
+    {
+     "text": "口述歷史協會 2012 年曾舉辦「澳門故事系列之細說瘋堂」及望德堂區定點導賞，並開設澳門故事館。",
+     "sources": [
+      "oh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "st-paul-district",
+   "name": "大三巴街、戀愛巷與舊城牆",
+   "heritage": "城牆遺跡屬澳門歷史城區",
+   "sources": {
+    "wh": {
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）",
+     "title": "城牆遺跡（聖方濟各斜巷一段）",
+     "url": "https://www.wh.mo/cn/site/detail/20",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "戀愛巷",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/travessa-da-paixao",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "官方資料未標明建築風格。",
+    "sources": [
+     "wh"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "葡人建城牆最早可追溯至 1569 年，因中國方面反對多次被拆；1632 年北部城牆與炮台復建完成。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [
+    {
+     "text": "現存城牆以泥沙、細石、稻草摻蠔殼粉夯實而成，長 18.5 米、高 5.6 米。",
+     "sources": [
+      "wh"
+     ],
+     "kind": "source"
+    }
+   ],
+   "names": [
+    {
+     "text": "戀愛巷葡文 Travessa da Paixão 原意是信徒對天主的熱愛（Passion），因翻譯上的美麗誤會成了「戀愛巷」。",
+     "sources": [
+      "mg"
+     ],
+     "kind": "source"
+    }
+   ],
+   "unverified": [],
+   "conflicts": [],
+   "oral": [],
+   "stay": {
+    "min": 15,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   }
+  },
+  {
+   "id": "portas-do-cerco",
+   "name": "關閘",
+   "heritage": "MM016（關閘拱門）",
+   "sources": {
+    "ch": {
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）",
+     "title": "MM016 關閘拱門",
+     "url": "https://www.culturalheritage.mo/detail/100023",
+     "accessed": "2026-11-04"
+    },
+    "mg": {
+     "publisher": "澳門特區政府旅遊局",
+     "title": "關閘",
+     "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/border-gate-portas-do-cerco",
+     "accessed": "2026-11-04"
+    }
+   },
+   "style": {
+    "text": "關閘拱門為凱旋門式。",
+    "sources": [
+     "ch"
+    ],
+    "kind": "source"
+   },
+   "timeline": [
+    {
+     "text": "1574 年明政府在今關閘馬路中段建古關閘，為中式城樓，定時開放。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    },
+    {
+     "text": "1849 年澳葡當局修路至古關閘；1870 年動工建新關閘，1871 年完成；古關閘 1874 年拆除。",
+     "sources": [
+      "ch"
+     ],
+     "kind": "source"
+    }
+   ],
+   "whyStyle": [],
+   "features": [],
+   "names": [],
+   "unverified": [],
+   "conflicts": [
+    {
+     "topic": "關閘拱門年份",
+     "values": [
+      {
+       "value": "1870 年動工、1871 年完成",
+       "source": "ch"
+      },
+      {
+       "value": "建於 1870 年",
+       "source": "mg"
+      }
+     ]
+    }
+   ],
+   "oral": [],
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   }
+  }
+ ]
+}

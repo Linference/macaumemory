@@ -1,11 +1,15 @@
 import './memory.css';
 import { encodeWav, base64Audio } from '../guide-audio.js';
 import { timelineOf } from './timeline.js';
+import { initFilms, renderFilms } from './films.js';
+import { renderRecords } from './records.js';
 const $ = id => document.getElementById(id);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 const safeLink = value => { try { const u = new URL(value, location.href); return ['http:', 'https:'].includes(u.protocol) ? u.href : '#'; } catch { return '#'; } };
 let bootstrap, current, tab = 'stories', loadVersion = 0, editedStory, media = [], pendingFiles = [], recorder, recordingStream, recordingParts, recordingStarted, recordingTimer, audioBlob, localUrls = [], recordGeneration = 0;
 let puzzle = { cards: [] }, clues = [], activity, importedBundle;
+const claimNames = { supported: '有出處支持', conflict: '與資料矛盾', unverifiable: '個人記憶，未核實' };
+const checkMarkup = c => { if (!c) return ''; const n = k => c.claims.filter(x => x.status === k).length; return `<details class="ai-check"><summary>AI 內容檢查：已通過 · 有出處 ${n('supported')} 條 · 未核實 ${n('unverifiable')} 條</summary><ul>${c.claims.map(x => `<li><b>${claimNames[x.status]}</b>：${esc(x.text)}${x.evidence ? `（依據：${esc(x.evidence)}）` : ''}</li>`).join('')}${c.images.map(i => `<li><b>照片 ${i.index + 1}</b>：${esc(i.description)}</li>`).join('')}</ul><p class="muted">由 ${esc(c.model)} 依本站規則檢查，僅供參考，最終由人工審核。</p></details>`; };
 const statusNames = { private: '私人記憶', pending: '等待審核', approved: '已公開', rejected: '待作者修改' };
 const stages = { before: '游前 · 預習', during: '游中 · 觀察', after: '游後 · 反思' };
 function message(value) { $('status').textContent = value; }
@@ -29,13 +33,14 @@ function mediaMarkup(items) { return items.map(m => m.mime.startsWith('audio/') 
 function renderCurrent() {
   const p = current.place;
   $('place-heading').innerHTML = `<div class="place-title"><div><p class="eyebrow">${esc(p.memoryId || '地點記憶檔案')} · ${esc(p.categoryName || '城市記憶')}</p><h2>${esc(p.name)}</h2><p>${esc(p.summary || '這個地點的故事，等待你來補上。')}</p><div class="button-row"><a class="text-link" href="${esc(p.mapPath || './')}">在地圖中查看</a><span class="muted">${esc(p.provenance || '')}</span></div></div>${p.cover ? `<img src="${esc(p.cover)}" alt="${esc(p.name)}實拍">` : ''}</div>`;
-  $('story-list').innerHTML = current.stories.length ? current.stories.map(s => `<article class="story-card" id="story-${esc(s.id)}"><span class="badge">${statusNames[s.status]}</span><h3>${esc(s.title)}</h3><p class="meta">${esc(s.author)} · ${esc(s.era)}</p><p class="story-text">${esc(s.text)}</p>${mediaMarkup(s.media)}${s.reviewNote ? `<p class="muted">審核意見：${esc(s.reviewNote)}</p>` : ''}<div class="button-row"><button class="secondary" data-story-card="${esc(s.id)}">加入拼圖</button>${s.owner === bootstrap.user.id ? `<button class="secondary" data-edit-story="${esc(s.id)}">編輯／撤回公開</button>` : ''}</div></article>`).join('') : '<div class="empty-state"><b>第一段記憶，可以從你開始。</b><p>照片、原聲和親身經歷，都能成為這個地點的一部分。</p></div>';
+  $('story-list').innerHTML = current.stories.length ? current.stories.map(s => `<article class="story-card" id="story-${esc(s.id)}"><span class="badge">${statusNames[s.status]}</span><h3>${esc(s.title)}</h3><p class="meta">${esc(s.author)} · ${esc(s.era)}</p><p class="story-text">${esc(s.text)}</p>${mediaMarkup(s.media)}${s.reviewNote ? `<p class="muted">審核意見：${esc(s.reviewNote)}</p>` : ''}${checkMarkup(s.aiCheck)}<div class="button-row"><button class="secondary" data-story-card="${esc(s.id)}">加入拼圖</button>${s.owner === bootstrap.user.id ? `<button class="secondary" data-edit-story="${esc(s.id)}">編輯／撤回公開</button>` : ''}</div></article>`).join('') : '<div class="empty-state"><b>第一段記憶，可以從你開始。</b><p>照片、原聲和親身經歷，都能成為這個地點的一部分。</p></div>';
   // 按拍攝年份排列，呈現同一地點跨年代的變化（無日期者排在最後）
   const tl = timelineOf(p.gallery ?? []);
   $('photo-span').textContent = tl.dated >= 2 && tl.span > 0 ? `${tl.first}–${tl.last} · 跨 ${tl.span} 年 · ${tl.dated} 張有拍攝日期` : '';
   $('photo-list').innerHTML = tl.photos.map(ph => `<article><a href="${esc(ph.file)}" target="_blank" rel="noopener"><img src="${esc(ph.thumb || ph.file)}" loading="lazy" alt="${esc(p.name)}真實照片${ph.year ? `（${ph.year} 年）` : ''}"></a>${ph.year ? `<span class="photo-year">${ph.year}</span>` : ''}<p>${esc(ph.taken || '拍攝日期未記錄')}</p><small>${esc(ph.credit)}</small>${ph.sourcePage ? `<a href="${esc(safeLink(ph.sourcePage))}" target="_blank" rel="noopener">原始來源</a>` : ''}</article>`).join('') || '<p class="empty-state">尚未有既有相冊；可先透過記憶投稿保存照片。</p>';
   $('puzzle-select').innerHTML = '<option value="">建立新拼圖</option>' + current.puzzles.map(p => `<option value="${esc(p.id)}">${esc(p.title)}</option>`).join('');
   $('story-tray').innerHTML = current.stories.map(s => `<button class="clue-card" data-story-card="${esc(s.id)}"><b>${esc(s.title)}</b><small>${esc(s.author)} · ${esc(s.era)}</small><span>加入拼圖</span></button>`).join('') || '<p class="muted">先保存自己的故事，或閱讀已公開記憶。</p>';
+  $('records').innerHTML = ''; renderRecords(p, esc).then(html => { if (current.place.id === p.id) $('records').innerHTML = html; }).catch(() => {});
   renderPuzzle(); renderClues(current.knowledge); renderScenes();
   const options = bootstrap.places.map(p => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join(''); $('class-places').innerHTML = options;
   for (const id of ['a-ma-temple','mandarins-house','senado-square','ruins-st-paul']) { const p = bootstrap.places.find(p => p.id === id || p.spotId === id); const o = [...$('class-places').options].find(o => o.value === p?.id); if (o) o.selected = true; }
@@ -45,6 +50,7 @@ function renderCurrent() {
 function showTab(value) {
   tab = value; document.querySelectorAll('.tab-panel').forEach(p => p.hidden = p.id !== 'panel-' + value);
   document.querySelectorAll('[data-tab]').forEach(b => { b.classList.toggle('active', b.dataset.tab === value); b.setAttribute('aria-pressed', String(b.dataset.tab === value)); });
+  if (value === 'films' && current) renderFilms().catch(e => message(e.message));
   if (value === 'review' && bootstrap?.user.curator) renderReview().catch(e => message(e.message));
 }
 function renderClues(items) {
@@ -100,6 +106,7 @@ async function connect() {
   try { bootstrap = await api('/bootstrap'); $('service-error').hidden = true; $('review-tab').hidden = !bootstrap.user.curator; renderActivities(); renderPlaces(); await selectPlace(new URLSearchParams(location.search).get('place') || 'ruins-st-paul'); }
   catch (e) { if(bootstrap && e.status===404){$('service-error').hidden=true;await selectPlace('ruins-st-paul');message('此建築尚未有共創檔案。可點「記錄一棟普通建築」，或从左側選擇地點。');}else{$('service-error').hidden = false; message(e.message);} }
 }
+initFilms({ $, esc, api, act, message, current: () => current, user: () => bootstrap.user, tab: () => tab });
 $('retry').onclick = connect; $('place-search').oninput = () => bootstrap && renderPlaces();
 document.addEventListener('click', act(async e => {
   const target = e.target.closest('button'); if (!target) return;
@@ -148,8 +155,9 @@ $('story-form').onsubmit = act(async e => {
   const values = Object.fromEntries(new FormData(e.target)); values.consent = e.target.elements.consent.checked;
   message('正在保存附件…');
   while (pendingFiles.length) { const m = await upload(pendingFiles[0]); media.push(m); pendingFiles.shift(); URL.revokeObjectURL(localUrls.shift()); }
+  if (values.status === 'pending') message('正在由 AI 檢查文字與照片是否合理…');
   const saved = await api(editedStory ? '/stories/' + editedStory.id : '/stories', { ...values, placeId: current.place.id, mediaIds: media.map(m => m.id), version: editedStory?.version }, editedStory ? 'PATCH' : 'POST');
-  $('story-dialog').close(); clearStoryMedia(); await selectPlace(current.place.id); message(saved.status === 'pending' ? '記憶已保存，等待本機審核。' : '私人記憶已保存。');
+  $('story-dialog').close(); clearStoryMedia(); await selectPlace(current.place.id); message(saved.status === 'pending' ? '已通過 AI 內容檢查，等待本機人工審核。' : '私人記憶已保存。');
 });
 $('puzzle-cards').addEventListener('input', e => { if (e.target.dataset.cardNote !== undefined) puzzle.cards[Number(e.target.dataset.cardNote)].note = e.target.value; });
 $('puzzle-cards').addEventListener('change', e => { if (e.target.dataset.cardConfirm !== undefined) puzzle.cards[Number(e.target.dataset.cardConfirm)].confirmed = e.target.checked; });

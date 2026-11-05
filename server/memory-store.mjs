@@ -75,14 +75,14 @@ export function createMemoryStore(directory, catalog, sceneCatalog, attractions 
     for (const id of ids) if (get('media', id)?.owner !== user.id && !old?.mediaIds?.includes(id)) throw fault('媒體不屬於目前使用者。', 403);
     return ids;
   }
-  function saveStory(body, user, id) {
+  function saveStory(body, user, id, extra = {}) {
     const old = id ? own(get('story', id), user) : null;
     const p = place(body.placeId); if (!p) throw fault('請先選擇或建立地點。');
     const content = text(body.text ?? '', 10000), ids = mediaIds(body, user, old);
     if (!content && !ids.length) throw fault('請填寫故事或加入照片／錄音。');
     if (!['private', 'pending'].includes(body.status)) throw fault('請選擇私人保存或提交審核。');
     if (body.status === 'pending' && body.consent !== true) throw fault('公開投稿須確認素材使用權及被錄音者同意。');
-    return put('story', old?.id ?? randomUUID(), user.id, { placeId: p.id, title: text(body.title, 120, true), text: content, author: text(body.author ?? '匿名', 80, true), era: text(body.era ?? '年代不詳', 80), tags: text(body.tags ?? '', 300), status: body.status, consent: body.consent === true, mediaIds: ids, relationNote: text(body.relationNote ?? '', 1500) }, body.version);
+    return put('story', old?.id ?? randomUUID(), user.id, { placeId: p.id, title: text(body.title, 120, true), text: content, author: text(body.author ?? '匿名', 80, true), era: text(body.era ?? '年代不詳', 80), tags: text(body.tags ?? '', 300), status: body.status, consent: body.consent === true, mediaIds: ids, relationNote: text(body.relationNote ?? '', 1500), aiCheck: body.status === 'pending' ? extra.aiCheck ?? null : null }, body.version);
   }
   function review(id, body, user) {
     if (!user.curator) throw fault('本機管理員才能審核。', 403);

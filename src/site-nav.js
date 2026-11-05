@@ -1,3 +1,4 @@
+import { PERSONAS, AGES, GENDERS } from "./personas.js";
 // 全站共用導覽：純字串、不碰 DOM，讓 vite.config.js 在開發與建置時直接寫進每個 HTML
 // （頁面打開就有導覽，不會先空白再由 JS 補上）。
 // 各頁 HTML 用標記指定位置：
@@ -33,11 +34,17 @@ export const FAVICON_LINK = `<link rel="icon" type="image/svg+xml" href="./brand
 const links = (current, pages) => pages.map((p) =>
   `<a href="${p.href}"${p.id === current ? ' aria-current="page"' : ""} data-zh="${p.zh}" data-hans="${p.hans}" data-en="${p.en}" data-pt="${p.pt}">${p.zh}</a>`).join("");
 
+// 訪客身份（數字人據此選擇講解方式），定義在 src/personas.js
+const PERSONA_OPTIONS = Object.entries(PERSONAS).map(([v, p]) => `<label><input type="radio" name="site-persona" value="${v}"> ${p.label}</label>`).join("");
 // 語言與無障礙設定（導覽列右側）：純 HTML，由 src/site-prefs.js 套用並記住選擇
 const PREFS = `<details class="site-prefs"><summary aria-label="語言與無障礙設定 Language and accessibility">文A</summary><div class="site-prefs-panel">`
   + `<fieldset><legend>語言 Language</legend>`
   + [["zh-Hant", "繁體中文"], ["zh-Hans", "简体中文"], ["en", "English"], ["pt", "Português"]]
     .map(([v, l]) => `<label><input type="radio" name="site-lang" value="${v}"> ${l}</label>`).join("")
+  + `</fieldset><fieldset><legend>我的身份 Identity</legend>`
+  + PERSONA_OPTIONS
+  + `</fieldset><fieldset><legend>年齡 Age</legend>` + Object.entries(AGES).map(([v, a]) => `<label><input type="radio" name="site-age" value="${v}"> ${a.label}</label>`).join("")
+  + `</fieldset><fieldset><legend>性別（只用於稱呼）</legend>` + Object.entries(GENDERS).map(([v, g]) => `<label><input type="radio" name="site-gender" value="${v}"> ${g.label}</label>`).join("")
   + `</fieldset><fieldset><legend>閱讀 Reading</legend>`
   + `<label><input type="checkbox" data-pref="largeText"> 放大文字 Larger text</label>`
   + `<label><input type="checkbox" data-pref="reduceMotion"> 減少動態 Reduce motion</label>`
