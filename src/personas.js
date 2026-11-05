@@ -57,10 +57,29 @@ export const PERSONAS = {
 export const DEFAULT_PERSONA = "tourist";
 export const personaOf = (id) => PERSONAS[id] ? id : DEFAULT_PERSONA;
 
-/** 後端用：把身份策略轉成提示詞的一段。 */
-export function personaPrompt(id) {
+// 年齡：影響用詞深淺、句長、篇幅與語速（依據：兒童與長者的可讀性、聽力理解研究；長者語音放慢）。
+export const AGES = {
+  child: { label: "12 歲以下", style: "用小朋友聽得懂的短句，每句不超過 15 字，不用艱深名詞，必要時用身邊的東西比喻。", scale: 0.7, slow: false },
+  teen: { label: "13–17 歲", style: "用中學生熟悉的詞彙，專有名詞第一次出現要用一句話解釋。", scale: 1, slow: false },
+  adult: { label: "18–59 歲", style: "", scale: 1, slow: false },
+  senior: { label: "60 歲以上", style: "句子放慢、分短段，先講結論再講細節，避免英文縮寫和網絡用語；可多連結舊日生活。", scale: 0.85, slow: true },
+};
+// 性別：只決定稱呼，不改變講解內容。避免按性別給不同內容造成刻板印象，事實不因人而變。
+export const GENDERS = { unspecified: { label: "不透露", address: "" }, female: { label: "女", address: "" }, male: { label: "男", address: "" } };
+export const ageOf = (a) => (AGES[a] ? a : null);
+export const genderOf = (g) => (GENDERS[g] ? g : "unspecified");
+
+/** 後端用：把身份（及可選的年齡、性別）轉成提示詞的一段。 */
+export function personaPrompt(id, { age, gender } = {}) {
   // "generic"：未分身份的原始講法，只供對比實驗使用
   if (id === "generic") return "以親切自然的口語回答，通常不超過180字，解釋風格成因時可到300字。";
-  const p = PERSONAS[personaOf(id)];
-  return `對象是「${p.label}」（${p.hint}）。講解方式：${p.style}控制在約 ${p.maxChars} 字內。身份只改變講法，不得因此增加資料以外的事實：不要為了生動加入資料沒有的細節、比較或自創稱呼，不要把「獨一無二」等說法加強成「唯一」「最」「全部」；現場指引只能指向資料提到的部位。`;
+  const p = PERSONAS[personaOf(id)], a = AGES[ageOf(age)];
+  const chars = Math.round(p.maxChars * (a?.scale ?? 1));
+  const ageLine = a?.style ? `對方年齡：${a.label}。${a.style}` : "";
+  // 性別不影響內容；稱呼一律用「你」，不按性別假設興趣或改變講解深淺
+  const genderLine = gender && gender !== "unspecified" ? "稱呼對方用「你」即可；不要因性別假設對方的興趣，也不要改變內容深淺。" : "";
+  return `對象是「${p.label}」（${p.hint}）。講解方式：${p.style}${ageLine}${genderLine}控制在約 ${chars} 字內。身份只改變講法，不得因此增加資料以外的事實：不要為了生動加入資料沒有的細節、比較或自創稱呼，不要把「獨一無二」等說法加強成「唯一」「最」「全部」；現場指引只能指向資料提到的部位。`;
 }
+
+/** 長者是否放慢語音 */
+export const slowSpeech = (age) => !!AGES[ageOf(age)]?.slow;

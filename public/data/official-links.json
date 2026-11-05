@@ -1,0 +1,1278 @@
+{
+ "accessed": "2026-11-05",
+ "note": "官方資源連結；實時人流與語音介紹在旅遊局頁面上。",
+ "items": {
+  "a-ma-temple": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/a-ma-temple",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 90,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/aMaTemple/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "媽祖閣（媽閣廟）",
+     "url": "https://www.wh.mo/cn/site/detail/1",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM020 媽祖閣",
+     "url": "https://www.culturalheritage.mo/detail/99908",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "媽祖閣略歷",
+     "url": "https://www.macaumemory.mo/entries_441b1af10bd241bcb90e1556942d3472",
+     "author": "王文達"
+    },
+    {
+     "title": "媽祖閣景致",
+     "url": "https://www.macaumemory.mo/entries_de80edb07777440e98d2cf6aa9e506c5",
+     "author": "王文達"
+    },
+    {
+     "title": "閩潮商人於媽祖閣正覺禪林內立碑",
+     "url": "https://www.macaumemory.mo/entries_b845f51a976346c29a279c98fa4d20cb",
+     "author": ""
+    }
+   ]
+  },
+  "camoes-garden": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/luis-de-camoes-park",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "東方基金會會址",
+     "url": "https://www.wh.mo/cn/site/detail/23",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "基督教墳場",
+     "url": "https://www.wh.mo/cn/site/detail/24",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM034 賈梅士洞",
+     "url": "https://www.culturalheritage.mo/detail/99962",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門世界遺產：白鴿巢前地",
+     "url": "https://www.macaumemory.mo/specialtopic_2e4c69e5b1054b6aa0b500d3f62ec695",
+     "author": "朱蓉、吳堯"
+    },
+    {
+     "title": "名園和聲：乾嘉時期詩文中的白鴿巢",
+     "url": "https://www.macaumemory.mo/specialtopic_affaaa102a0549b6a0d1d3f2ee21c6fb",
+     "author": "關俊雄"
+    },
+    {
+     "title": "名園和聲：魏源詩文中的白鴿巢",
+     "url": "https://www.macaumemory.mo/specialtopic_09a1b496837644d698808622a428a581",
+     "author": "關俊雄"
+    }
+   ]
+  },
+  "carmel-church": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/our-lady-of-carmel-church",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "MT001 嘉模聖母堂",
+     "url": "https://www.culturalheritage.mo/detail/100015",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "氹仔嘉謨聖母教堂竣工",
+     "url": "https://www.macaumemory.mo/entries_0edeeff70a4e463cbebe7c1c4eb8f122",
+     "author": ""
+    }
+   ]
+  },
+  "cathedral": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/cathedral",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "主教座堂（大堂）",
+     "url": "https://www.wh.mo/cn/site/detail/15",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM006 主教座堂",
+     "url": "https://www.culturalheritage.mo/detail/99932",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "大廟—大堂",
+     "url": "https://www.macaumemory.mo/entries_293f59002a5a477e9c4cb788517902ab",
+     "author": "王文達"
+    },
+    {
+     "title": "新主教座堂大堂建成",
+     "url": "https://www.macaumemory.mo/entries_b100c7e7d8ee4abb9620fd6186b77809",
+     "author": ""
+    },
+    {
+     "title": "主教座堂重修",
+     "url": "https://www.macaumemory.mo/entries_f14ee5ff8be8407b93692b4dcc6931e8",
+     "author": ""
+    }
+   ]
+  },
+  "centro-cultural": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/macao-cultural-centre",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "澳門文化中心建築",
+     "url": "https://www.macaumemory.mo/entries_bf1c3b7ea42e4ca6a7f2c425b02fd3d1",
+     "author": "唐思"
+    }
+   ]
+  },
+  "coloane-peak": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/coloane-height-park-and-statue-of-a-ma",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "fisherman-wharf": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/macau-fishermans-wharf",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "fortress-monte": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/mount-fortress",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/Fortress/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "大炮台（中央炮台）",
+     "url": "https://www.wh.mo/cn/site/detail/21",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM012 大炮台",
+     "url": "https://www.culturalheritage.mo/detail/100025",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門大三巴炮台經過10年的修建正式竣工",
+     "url": "https://www.macaumemory.mo/entries_ddd86324654844a39ef03c11fc68583e",
+     "author": ""
+    }
+   ]
+  },
+  "grand-prix-museum": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-grand-prix-museum",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "旅遊局虛擬實境",
+     "url": "https://vrtours.macaotourism.gov.mo/index.html?m=1175_1"
+    }
+   ],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "guia-cable-car": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/flora-park",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "二龍喉花園",
+     "url": "https://www.macaumemory.mo/entries_0e0392e9b2b24a5ba679bb665ee5c177",
+     "author": "王文達"
+    }
+   ]
+  },
+  "guia-fortress": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/guia-fortress-including-guia-chapel-and-lighthouse",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/guia/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "東望洋炮台、聖母雪地殿教堂及燈塔",
+     "url": "https://www.wh.mo/cn/site/detail/25",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM011 東望洋炮台",
+     "url": "https://www.culturalheritage.mo/detail/100024",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門世界遺產：聖母雪地殿教堂、東望洋炮台及燈塔",
+     "url": "https://www.macaumemory.mo/specialtopic_ff563b856b7b40e8b0f790bfec79027c",
+     "author": "鄧思平"
+    },
+    {
+     "title": "東望洋雪地殿",
+     "url": "https://www.macaumemory.mo/entries_a874010a9257449ab04fffc9177af439",
+     "author": "王文達"
+    },
+    {
+     "title": "東望洋山的三座20世紀初大宅",
+     "url": "https://www.macaumemory.mo/specialtopic_e2414f5e4a7c40df87aa143e28f00b58",
+     "author": "呂澤強"
+    }
+   ]
+  },
+  "hac-sa-beach": {
+   "mgto": null,
+   "stay": null,
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "黑沙灣",
+     "url": "https://www.macaumemory.mo/entries_f3f85fd51c07461dabfad9d74cfd4cd4",
+     "author": "王文達"
+    },
+    {
+     "title": "譚根在黑沙灣上空作飛行表演",
+     "url": "https://www.macaumemory.mo/entries_eb1e719361bb458b9df86bcc59dccf94",
+     "author": ""
+    }
+   ]
+  },
+  "handover-gifts": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/handover-gifts-museum-of-macao",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "kun-iam-statue": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/kun-iam-ecumenical-centre",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "lai-chi-vun": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/lai-chi-vun-shipyards",
+    "crowd": false
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "逐海而居：漁民上岸去",
+     "url": "https://www.macaumemory.mo/specialtopic_ad2f13d305f94859a260edcf22166d79",
+     "author": "路家、陳逸鋒"
+    },
+    {
+     "title": "逐海而居：一切從造船說起",
+     "url": "https://www.macaumemory.mo/specialtopic_7dbf479421734e928fb8956c660e27bc",
+     "author": "路家、陳逸鋒"
+    }
+   ]
+  },
+  "leal-senado": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/leal-senado-building",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/IAM/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "市政署大樓（原市政廳舊址）",
+     "url": "https://www.wh.mo/cn/site/detail/11",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM018 市政署大樓",
+     "url": "https://www.culturalheritage.mo/detail/99988",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "議事局：居澳葡人自治的因由",
+     "url": "https://www.macaumemory.mo/entries_4033efb8e6ef4f9aaf623cd8301e861f",
+     "author": "王文達"
+    },
+    {
+     "title": "薩主教主持居澳葡人選舉成立議事會",
+     "url": "https://www.macaumemory.mo/entries_5647ac24a51741c8b407e6d90244d17f",
+     "author": ""
+    }
+   ]
+  },
+  "lilau-square": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/lilau-square",
+    "crowd": true
+   },
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/square/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "亞婆井前地",
+     "url": "https://www.wh.mo/cn/site/detail/3",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "從中外歷史文獻重考「Lilao/Nilao」與「亞婆井」的歷史",
+     "url": "https://www.macaumemory.mo/specialtopic_da0d6cab50334562ad0a0330d9913a49",
+     "author": "金國平"
+    },
+    {
+     "title": "山泉往事：澳門名泉的故事",
+     "url": "https://www.macaumemory.mo/specialtopic_ac352d00df6e4075b67a66ab026c7d7f",
+     "author": "勞加裕"
+    }
+   ]
+  },
+  "louvou-lim-ieoc": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/lou-lim-ioc-park",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "娛園",
+     "url": "https://www.macaumemory.mo/entries_81d74f3a6a554f74a2f7a143f9dc017c",
+     "author": "王文達"
+    },
+    {
+     "title": "前清遺老在盧園為清廢帝溥儀舉行「萬壽節」慶典",
+     "url": "https://www.macaumemory.mo/entries_918f5ea1bc0145119713c7b46b64c9a7",
+     "author": ""
+    }
+   ]
+  },
+  "macau-airport": {
+   "mgto": null,
+   "stay": null,
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "讓澳門「起飛」——澳門國際機場25年",
+     "url": "https://www.macaumemory.mo/specialtopic_0691ce60db1c4e6c90d6744200d05ade",
+     "author": "Dickson Lau"
+    },
+    {
+     "title": "澳門國際機場舉行動工典禮",
+     "url": "https://www.macaumemory.mo/entries_1b7bea9608334aa4a33ab84999a09c90",
+     "author": ""
+    }
+   ]
+  },
+  "macau-museum-art": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-museum-of-art",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "藝博館虛擬展場",
+     "url": "https://vr.icm.gov.mo/dm/bmzh/"
+    }
+   ],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "澳門藝術博物館",
+     "url": "https://www.macaumemory.mo/entries_a802ca9f2beb48bdab3af68edf05b840",
+     "author": "唐思"
+    }
+   ]
+  },
+  "macau-science-center": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-science-center",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "科學館 720° 線上展廳",
+     "url": "https://720yun.com/t/c3vkcmreOpy?scene_id=69195540"
+    }
+   ],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "macau-tower": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/macau-tower-convention-and-entertainment-centre",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "澳門旅遊塔揭幕",
+     "url": "https://www.macaumemory.mo/entries_baa4fba4670a4a3080232b2404250e0b",
+     "author": ""
+    }
+   ]
+  },
+  "macau-tower-note": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/lotus-square",
+    "crowd": true
+   },
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "蓮花公園紀念回歸",
+     "url": "https://www.macaumemory.mo/entries_f5a4c7f69fb94709b1fa96bd5add4304",
+     "author": "唐思"
+    }
+   ]
+  },
+  "macau-university": {
+   "mgto": null,
+   "stay": null,
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "澳門東亞大學成立",
+     "url": "https://www.macaumemory.mo/entries_d0f44fff691140c4b20787735ebb2b25",
+     "author": ""
+    },
+    {
+     "title": "東亞大學正式更名為澳門大學",
+     "url": "https://www.macaumemory.mo/entries_81d71db4b8704363b7e029df67240bda",
+     "author": ""
+    }
+   ]
+  },
+  "mandarins-house": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/mandarins-house",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/mandarinhouse/"
+    },
+    {
+     "title": "鄭家大屋數字孿生",
+     "url": "https://www.mh-smartdt.com/"
+    },
+    {
+     "title": "鄭家大屋專題網頁",
+     "url": "https://www.wh.mo/mandarinhouse"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "鄭家大屋",
+     "url": "https://www.wh.mo/cn/site/detail/4",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門世界遺產：鄭家大屋",
+     "url": "https://www.macaumemory.mo/specialtopic_bd65f5e803064a7183fe08798b34dcfb",
+     "author": "鄧思平"
+    }
+   ]
+  },
+  "mgm-cotai": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/the-spectacle-at-mgm-cotai",
+    "crowd": false
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "mgm-macau": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/the-grande-praca-at-mgm-macau",
+    "crowd": false
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "moorish-barracks": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/moorish-barracks",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/marineAndWaterBureau/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "海事及水務局大樓（原摩爾兵營舊址）",
+     "url": "https://www.wh.mo/cn/site/detail/2",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門世界遺產：摩爾兵營（港務局大樓）",
+     "url": "https://www.macaumemory.mo/specialtopic_92c91d9af050490296b0716b83fec53e",
+     "author": "鄧思平"
+    }
+   ]
+  },
+  "museum-macau-museum": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/macao-museum",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "澳門博物館 VR/AR 應用（iOS）",
+     "url": "https://apps.apple.com/hk/app/macao-museum-vr-ar/id1332930326"
+    },
+    {
+     "title": "澳門博物館 VR/AR 應用（Android）",
+     "url": "https://play.google.com/store/apps/details?id=mo.gov.macaumuseum.vrApp"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "大炮台（中央炮台）",
+     "url": "https://www.wh.mo/cn/site/detail/21",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門博物館落成開放",
+     "url": "https://www.macaumemory.mo/entries_1f2a33f5c7a44987afde91eac7f0ed5d",
+     "author": ""
+    },
+    {
+     "title": "澳門博物館",
+     "url": "https://www.macaumemory.mo/entries_cd826402923349d3bfa1ae443d2cf50d",
+     "author": ""
+    }
+   ]
+  },
+  "museum-poly-mgm": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/poly-mgm-museum",
+    "crowd": false
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": []
+  },
+  "na-tcha-temple": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/na-tcha-temple",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/nezhamiao/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "哪咤廟（大三巴）",
+     "url": "https://www.wh.mo/cn/site/detail/19",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM026 哪咤廟",
+     "url": "https://www.culturalheritage.mo/detail/99966",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": []
+  },
+  "portas-do-cerco": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/border-gate-portas-do-cerco",
+    "crowd": false
+   },
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "MM016 關閘拱門",
+     "url": "https://www.culturalheritage.mo/detail/100023",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門政府興建的關閘拱門落成",
+     "url": "https://www.macaumemory.mo/entries_93196b6a4e9d4f02a29747a2c1c9f59e",
+     "author": ""
+    }
+   ]
+  },
+  "red-market": {
+   "mgto": null,
+   "stay": null,
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "澳門街市：紅街市",
+     "url": "https://www.macaumemory.mo/specialtopic_71278b4c3223400781271ada4e892e1e",
+     "author": "葉農"
+    }
+   ]
+  },
+  "red-market-food": {
+   "mgto": null,
+   "stay": null,
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "「三盞燈」百年老街",
+     "url": "https://www.macaumemory.mo/entries_b6d4e9cf22324ff28a6928b02a6d0949",
+     "author": "唐思"
+    }
+   ]
+  },
+  "rua-do-cunha": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/rua-do-cunha",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 45,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "第一個行人專用區－官也街",
+     "url": "https://www.macaumemory.mo/entries_ee218faf9f7446768576c08a1acd1d5a",
+     "author": "唐思"
+    }
+   ]
+  },
+  "ruins-st-paul": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/ruins-of-st-pauls",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/dashanbapaifang/"
+    },
+    {
+     "title": "「時空穿梭‧遊歷三巴」沉浸式數字體驗",
+     "url": "https://www.wh.mo/stpaulvr/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "聖保祿學院天主之母教堂遺址",
+     "url": "https://www.wh.mo/cn/site/detail/18",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM008 大三巴牌坊",
+     "url": "https://www.culturalheritage.mo/detail/99968",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門世界遺產：大三巴牌坊",
+     "url": "https://www.macaumemory.mo/specialtopic_58087f0776b642e096b54cb1889cb66b",
+     "author": "鄧思平"
+    },
+    {
+     "title": "大三巴牌坊建築藝術之構成",
+     "url": "https://www.macaumemory.mo/entries_3acb720491d648b68e4b2c64948b5f6b",
+     "author": "王文達"
+    },
+    {
+     "title": "大三巴牌坊宗教彫刻之表現",
+     "url": "https://www.macaumemory.mo/entries_41913dbc973f4c14a1ae22549b8a0a12",
+     "author": "王文達"
+    }
+   ]
+  },
+  "seac-pai-van": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/gardens/seac-pai-van-park",
+    "crowd": true
+   },
+   "stay": {
+    "min": 120,
+    "max": 240,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "石排灣郊野公園",
+     "url": "https://www.macaumemory.mo/entries_862490a9f78c4c768a711a6723ffbdf4",
+     "author": "唐思"
+    }
+   ]
+  },
+  "senado-square": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/senado-square",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "文化局 VR 導覽",
+     "url": "https://vr.icm.gov.mo/wh/square/"
+    }
+   ],
+   "heritage": [
+    {
+     "title": "議事亭前地",
+     "url": "https://www.wh.mo/cn/site/detail/12",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "澳門世界遺產：議事亭前地",
+     "url": "https://www.macaumemory.mo/specialtopic_6be7c5cc6e5448a5908a4f1645360712",
+     "author": "朱蓉、吳堯"
+    },
+    {
+     "title": "議事亭前地上的風景——澳門市中心的百年演變",
+     "url": "https://www.macaumemory.mo/specialtopic_a7367524f4e04051b33014bed187bf1d",
+     "author": "勞加裕"
+    }
+   ]
+  },
+  "st-anthony": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/st-anthonys-church",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "聖安多尼堂及前地（花王堂）",
+     "url": "https://www.wh.mo/cn/site/detail/22",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM002 聖安多尼堂",
+     "url": "https://www.culturalheritage.mo/detail/99964",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "花王廟—聖安多尼教堂",
+     "url": "https://www.macaumemory.mo/entries_f5b39050d4b34b85b7cad068f3a23071",
+     "author": "王文達"
+    },
+    {
+     "title": "聖安東尼奧堂（花王堂）被大火焚毀",
+     "url": "https://www.macaumemory.mo/entries_3c955eaebbac49c1be58e3fc0a4463f1",
+     "author": ""
+    }
+   ]
+  },
+  "st-dominic": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/st-dominics-church",
+    "crowd": true
+   },
+   "stay": {
+    "min": 15,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "玫瑰聖母堂（板樟堂）",
+     "url": "https://www.wh.mo/cn/site/detail/17",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM003 玫瑰聖母堂",
+     "url": "https://www.culturalheritage.mo/detail/99971",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "多明我會在建聖母玫瑰堂",
+     "url": "https://www.macaumemory.mo/entries_7a2d5a11806d46879216aa976e9ebfe7",
+     "author": ""
+    },
+    {
+     "title": "澳門政府修繕聖母玫瑰堂（板樟堂）",
+     "url": "https://www.macaumemory.mo/entries_21bd1159eff94374953b89f9b366ef90",
+     "author": ""
+    },
+    {
+     "title": "葡萄牙批准重開聖母玫瑰堂給公眾使用",
+     "url": "https://www.macaumemory.mo/entries_88427fed83a04f2bb259ead3a3a19e7c",
+     "author": ""
+    }
+   ]
+  },
+  "st-francis-xavier": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/chapel-of-st-francis-xavier",
+    "crowd": true
+   },
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "MC001 聖方濟各堂",
+     "url": "https://www.culturalheritage.mo/detail/100019",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "路環聖方濟各教堂及附屬建築聖方濟各學校建成",
+     "url": "https://www.macaumemory.mo/entries_0346a7494a8543caa394ce5fdb1d6159",
+     "author": ""
+    }
+   ]
+  },
+  "st-joseph-seminary": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/macao-world-heritage/st-josephs-seminary-and-church",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "聖若瑟修院大樓、聖若瑟修院教堂、前地及石階",
+     "url": "https://www.wh.mo/cn/site/detail/6",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM007 聖若瑟修院教堂",
+     "url": "https://www.culturalheritage.mo/detail/99911",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": []
+  },
+  "st-lawrence": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/st-lawrences-church",
+    "crowd": false
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "聖老楞佐堂及前地（風順堂）",
+     "url": "https://www.wh.mo/cn/site/detail/5",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    },
+    {
+     "title": "MM005 聖老楞佐堂",
+     "url": "https://www.culturalheritage.mo/detail/99914",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "風信廟—聖老楞佐堂",
+     "url": "https://www.macaumemory.mo/entries_111bc3c8c5b141f2b413ab1dad6eef05",
+     "author": "王文達"
+    },
+    {
+     "title": "葡人建聖老楞佐堂",
+     "url": "https://www.macaumemory.mo/entries_35d856f3e3ce40b0b7ca986973f1ca73",
+     "author": ""
+    }
+   ]
+  },
+  "st-lazarus": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/churches/st-lazarus-church",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "MM004 望德聖母堂及前地",
+     "url": "https://www.culturalheritage.mo/detail/99975",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "瘋堂廟—望德聖母堂",
+     "url": "https://www.macaumemory.mo/entries_09ce957b46cb4fc5a77fe66f8df2e84e",
+     "author": "王文達"
+    },
+    {
+     "title": "進教圍",
+     "url": "https://www.macaumemory.mo/entries_e24e90cefee64d2bbc51208ec380b882",
+     "author": "王文達"
+    }
+   ]
+  },
+  "st-paul-district": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/other-attractions/travessa-da-paixao",
+    "crowd": true
+   },
+   "stay": {
+    "min": 15,
+    "max": 120,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "城牆遺跡（聖方濟各斜巷一段）",
+     "url": "https://www.wh.mo/cn/site/detail/20",
+     "publisher": "澳門特區政府文化局（澳門世界遺產網）"
+    }
+   ],
+   "macauMemory": [
+    {
+     "title": "走進戀愛巷",
+     "url": "https://www.macaumemory.mo/specialtopic_55bcd86a77254e7c9e11887577b7e4f6",
+     "author": "陳昊禹"
+    },
+    {
+     "title": "澳門城牆與城門",
+     "url": "https://www.macaumemory.mo/specialtopic_c3df2429a9f54cb58f27159a924c52d8",
+     "author": "關俊雄"
+    }
+   ]
+  },
+  "taipa-houses": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/taipa-houses",
+    "crowd": true
+   },
+   "stay": {
+    "min": 60,
+    "max": 180,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [
+    {
+     "title": "龍環葡韻虛擬實境",
+     "url": "https://vr.icm.gov.mo/dm/4Dtour/index.html?m=1014_1"
+    }
+   ],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "龍環葡韻住宅式博物館",
+     "url": "https://www.macaumemory.mo/entries_207aa0081f224612941849755c7cd0a3",
+     "author": ""
+    }
+   ]
+  },
+  "tam-kung-temple": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/temples/tam-kong-temple",
+    "crowd": true
+   },
+   "stay": {
+    "min": 15,
+    "max": 30,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [
+    {
+     "title": "MC002 譚公廟",
+     "url": "https://www.culturalheritage.mo/detail/100021",
+     "publisher": "澳門特區政府文化局（澳門文化遺產網）"
+    }
+   ],
+   "macauMemory": []
+  },
+  "tap-seac-square": {
+   "mgto": {
+    "url": "https://www.macaotourism.gov.mo/zh-hant/sightseeing/museums-and-galleries/tap-seac-gallery",
+    "crowd": true
+   },
+   "stay": {
+    "min": 30,
+    "max": 60,
+    "source": "旅遊局建議停留時間"
+   },
+   "vr": [],
+   "heritage": [],
+   "macauMemory": [
+    {
+     "title": "塔石",
+     "url": "https://www.macaumemory.mo/entries_18aacacb9f3240c3bf0767c3e83ccc7c",
+     "author": "王文達"
+    }
+   ]
+  }
+ }
+}

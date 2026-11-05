@@ -44,3 +44,14 @@ test('verified cold facts keep their original sources and never include dropped 
   assert.ok(!items.some(c => c.n === 42), 'the unverifiable bronze-bell story is excluded');
   assert.doesNotMatch(items.find(c => c.n === 41).text, /15\s*米/, 'lighthouse height corrected to the official 18.3 m');
 });
+
+test('official resource links point to the official sites and known attractions', () => {
+  const { items } = read('public/data/official-links.json');
+  const ok = /^https:\/\/(www\.macaotourism\.gov\.mo|vr\.icm\.gov\.mo|vrtours\.macaotourism\.gov\.mo|www\.wh\.mo|www\.culturalheritage\.mo|www\.macaumemory\.mo|www\.mh-smartdt\.com|720yun\.com|apps\.apple\.com|play\.google\.com)\//;
+  assert.ok(Object.keys(items).length >= 40);
+  for (const [id, o] of Object.entries(items)) {
+    assert.ok(attractions.has(id), id);
+    for (const u of [o.mgto?.url, ...o.vr.map(v => v.url), ...o.heritage.map(h => h.url), ...o.macauMemory.map(m => m.url)].filter(Boolean)) assert.match(u, ok, `${id}: ${u}`);
+  }
+  assert.ok(items['ruins-st-paul'].vr.length >= 2 && items['ruins-st-paul'].macauMemory.length >= 1);
+});

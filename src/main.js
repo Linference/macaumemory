@@ -304,7 +304,9 @@ function openDetail(a) {
     ${nearPlaces.length ? `<div class="d-section"><h3>${T("澳門記憶 · 記憶點")} · ${nearPlaces.length}</h3>
       <div class="d-photos">${nearPlaces.map((x) => `<img src="${x.p.coverThumb}" alt="${x.p.id}" title="${x.p.id} ${x.p.zh ?? ""}｜${x.p.photoCount} 張｜${Math.round(x.distM)}m" data-place="${x.p.id}" />`).join("")}</div>
     </div>` : ""}
+    <div id="official-slot"></div>
     <div class="d-actions">${actions.join("")}<a class="ghost-btn" href="./memory.html?place=${encodeURIComponent(a.id)}">在地聲音 · 共創記憶</a></div>`;
+  officialSection(a).then((html) => { const slot = $("#detail-body #official-slot"); if (slot && $("#detail-body .d-title")?.textContent === T(a.zh)) slot.outerHTML = html; });
 
   $("#detail").classList.add("open");
   $("#detail").setAttribute("aria-hidden", "false");
@@ -436,6 +438,26 @@ function parseArrivals(data) {
     return { route: String(route), eta: eta == null ? "—" : String(eta) };
   });
 }
+// 官方資源（旅遊局、文化局 VR、世界遺產網、澳門記憶）與資料檔案中的出處矛盾；載入失敗時面板照常顯示
+const officialLinks = fetch("data/official-links.json").then((r) => (r.ok ? r.json() : { items: {} })).then((j) => j.items ?? {}).catch(() => ({}));
+const dossierIndex = fetch("data/building-dossiers.json").then((r) => (r.ok ? r.json() : { dossiers: [] })).then((j) => new Map(j.dossiers.map((d) => [d.id, d]))).catch(() => new Map());
+const linkRow = (label, items) => items.length ? `<div class="o-row"><span class="o-label">${label}</span><span class="o-links">${items.map((x) => `<a href="${x.url}" target="_blank" rel="noopener">${T(x.title)}</a>`).join("")}</span></div>` : "";
+async function officialSection(a) {
+  const [links, dossiers] = await Promise.all([officialLinks, dossierIndex]);
+  const o = links[a.id], d = dossiers.get(a.dossier ?? a.id);
+  if (!o && !d) return "";
+  const rows = [];
+  if (o?.mgto) rows.push(linkRow(T("旅遊局"), [{ title: o.mgto.crowd ? "景點介紹・實時人流" : "景點介紹", url: o.mgto.url }]));
+  if (o?.stay) rows.push(`<div class="o-row"><span class="o-label">${T("建議停留")}</span><span>${o.stay.min}–${o.stay.max} ${T("分鐘（旅遊局）")}</span></div>`);
+  if (o?.vr?.length) rows.push(linkRow(T("虛擬導覽"), o.vr));
+  if (o?.heritage?.length) rows.push(linkRow(T("文化局"), o.heritage.map((h) => ({ title: h.publisher.replace(/^.*（|）$/g, ""), url: h.url }))));
+  if (o?.macauMemory?.length) rows.push(linkRow(T("澳門記憶"), o.macauMemory.map((m) => ({ title: m.title + (m.author ? `（${m.author}）` : ""), url: m.url }))));
+  const conflicts = d?.conflicts ?? [];
+  const note = conflicts.length ? `<div class="o-conflict">⚠ ${T("官方資料之間有")} ${conflicts.length} ${T("處說法不同")}：${conflicts.map((c) => T(c.topic)).join("、")}。${T("問小澳可看到各方說法。")}</div>` : "";
+  const nSources = d ? Object.keys(d.sources).length : 0;
+  return `<div class="d-section o-section"><h3>${T("官方資源 · 延伸閱讀")}</h3>${rows.join("")}${note}${nSources ? `<p class="o-foot">${T("本頁介紹依")} ${nSources} ${T("個官方出處整理，每句可追溯。")}</p>` : ""}</div>`;
+}
+
 async function loadArrivals(stop) {
   const { url, key } = busApiConfig();
   if (!url) return null;
@@ -861,9 +883,10 @@ async function sendAi(text, { fromVoice = false } = {}) {
   });
   bubble.classList.remove("typing");
   $("#ai-send").disabled = false;
-  if (!res) {
+  if (!res || res.error || !(res.text || res.reasoning)) {
     bubble.classList.remove("typing");
-    bubble.innerHTML = `<div class="ai-answer">${renderAiText(T("（沒有回覆）請在設定中確認 API Key 與模型名稱是否正確。"))}</div>`;
+    const why = res?.error ? `連線失敗：${res.error}。` : "（沒有回覆）";
+    bubble.innerHTML = `<div class="ai-answer">${renderAiText(T(`${why}請在設定中確認 API Key 與模型名稱是否正確。`))}</div>`;
     return;
   }
   if (res.reasoning && !res.text) {

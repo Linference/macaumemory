@@ -1,4 +1,4 @@
-import { PERSONAS } from "./personas.js";
+import { PERSONAS, AGES, GENDERS } from "./personas.js";
 // 全站共用導覽：純字串、不碰 DOM，讓 vite.config.js 在開發與建置時直接寫進每個 HTML
 // （頁面打開就有導覽，不會先空白再由 JS 補上）。
 // 各頁 HTML 用標記指定位置：
@@ -43,6 +43,8 @@ const PREFS = `<details class="site-prefs"><summary aria-label="語言與無障�
     .map(([v, l]) => `<label><input type="radio" name="site-lang" value="${v}"> ${l}</label>`).join("")
   + `</fieldset><fieldset><legend>我的身份 Identity</legend>`
   + PERSONA_OPTIONS
+  + `</fieldset><fieldset><legend>年齡 Age</legend>` + Object.entries(AGES).map(([v, a]) => `<label><input type="radio" name="site-age" value="${v}"> ${a.label}</label>`).join("")
+  + `</fieldset><fieldset><legend>性別（只用於稱呼）</legend>` + Object.entries(GENDERS).map(([v, g]) => `<label><input type="radio" name="site-gender" value="${v}"> ${g.label}</label>`).join("")
   + `</fieldset><fieldset><legend>閱讀 Reading</legend>`
   + `<label><input type="checkbox" data-pref="largeText"> 放大文字 Larger text</label>`
   + `<label><input type="checkbox" data-pref="reduceMotion"> 減少動態 Reduce motion</label>`

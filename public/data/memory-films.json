@@ -1,0 +1,30 @@
+{
+ "note": "記憶短片。同一段口述記憶分別以 AI 視頻模型與程式繪製製作，用作對比。內容依澳門口述歷史協會訪談改編，受訪者不具名；正式公開前須取得協會同意。",
+ "films": [
+  {
+   "id": "lcv-ai", "story": "lcv", "title": "荔枝碗，熱奶茶", "kind": "ai", "tool": "MiniMax 海螺（Hailuo）圖文生視頻",
+   "src": "videos/lcv-ai.mp4", "poster": "videos/lcv-ai.jpg", "seconds": 11.6, "places": ["lai-chi-vun"],
+   "source": "澳門口述歷史協會〈荔枝碗，熱奶茶〉", "scope": "前兩個鏡頭（1972 初到、學徒五毫）",
+   "metrics": { "motion": 14.1, "colour": 26.2, "detail": 12.1, "contrast": 66.9 }
+  },
+  {
+   "id": "lcv-code", "story": "lcv", "title": "荔枝碗，熱奶茶", "kind": "code", "tool": "Remotion 程式繪製＋numpy 程式作曲",
+   "src": "videos/lcv-code.mp4", "poster": "videos/lcv-code.jpg", "seconds": 32.1, "places": ["lai-chi-vun"],
+   "source": "澳門口述歷史協會〈荔枝碗，熱奶茶〉", "scope": "完整六個鏡頭",
+   "metrics": { "motion": 2.8, "colour": 19.7, "detail": 2.7, "contrast": 24.4 }
+  },
+  {
+   "id": "kaho-ai", "story": "kaho", "title": "回九澳吃盆菜", "kind": "ai", "tool": "MiniMax 海螺（Hailuo）圖文生視頻",
+   "src": "videos/kaho-ai.mp4", "poster": "videos/kaho-ai.jpg", "seconds": 30.1, "places": ["coloane-peak", "hac-sa-beach"],
+   "source": "澳門口述歷史協會〈溫馨九澳情〉", "scope": "完整六個鏡頭",
+   "metrics": { "motion": 14.2, "colour": 39.6, "detail": 12.2, "contrast": 57.2 }
+  },
+  {
+   "id": "kaho-code", "story": "kaho", "title": "回九澳吃盆菜", "kind": "code", "tool": "Remotion 程式繪製＋numpy 程式作曲",
+   "src": "videos/kaho-code.mp4", "poster": "videos/kaho-code.jpg", "seconds": 28.7, "places": ["coloane-peak", "hac-sa-beach"],
+   "source": "澳門口述歷史協會〈溫馨九澳情〉", "scope": "完整六個鏡頭",
+   "metrics": { "motion": 2.0, "colour": 15.7, "detail": 2.8, "contrast": 16.0 }
+  }
+ ],
+ "metricsNote": "每秒取 6 幀、縮至 480×270 計算：畫面運動＝相鄰幀亮度平均差；色彩豐富度＝Hasler–Süsstrunk 指標；細節＝平均邊緣強度；對比＝亮度標準差。數值越高代表越生動，但不代表越準確。"
+}

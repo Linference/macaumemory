@@ -23,3 +23,23 @@ test('the settings panel lets visitors change identity later', () => {
   const html = injectSiteNav('<head></head><site-nav current="memory"></site-nav>');
   for (const id of Object.keys(PERSONAS)) assert.match(html, new RegExp(`name="site-persona" value="${id}"`));
 });
+
+test('age changes length and wording; gender never changes content', async () => {
+  const { personaPrompt, AGES, slowSpeech } = await import('../src/personas.js');
+  assert.match(personaPrompt('tourist', { age: 'child' }), /12 歲以下.*約 112 字/s, 'children get shorter answers');
+  assert.match(personaPrompt('tourist', { age: 'senior' }), /60 歲以上/);
+  assert.equal(slowSpeech('senior'), true); assert.equal(slowSpeech('adult'), false);
+  const base = personaPrompt('student', {});
+  const female = personaPrompt('student', { gender: 'female' }), male = personaPrompt('student', { gender: 'male' });
+  assert.equal(female, male, 'female and male get exactly the same instructions');
+  assert.match(female, /不要因性別假設/);
+  assert.equal(personaPrompt('student', { gender: 'unspecified' }), base);
+  assert.equal(personaPrompt('student', { age: 'bogus' }), base, 'unknown age is ignored');
+  assert.ok(Object.keys(AGES).length === 4);
+});
+
+test('the settings panel offers age and gender', () => {
+  const html = injectSiteNav('<head></head><site-nav current="memory"></site-nav>');
+  for (const v of ['child', 'teen', 'adult', 'senior']) assert.match(html, new RegExp(`name="site-age" value="${v}"`));
+  for (const v of ['unspecified', 'female', 'male']) assert.match(html, new RegExp(`name="site-gender" value="${v}"`));
+});

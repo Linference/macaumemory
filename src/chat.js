@@ -154,7 +154,8 @@ export class AiChat {
     } catch (e) {
       this.busy = false;
       this.onError({ code: "api", message: e.message });
-      return null;
+      this.messages.pop(); // 這輪沒有成功，不要把問題留在對話歷史裡
+      return { error: e.message };
     }
     this.busy = false;
     // 若模型只吐思考內容（token 用完），至少把思考內容當作回覆，避免「什麼都沒有」

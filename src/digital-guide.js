@@ -1,5 +1,6 @@
 import { getPrefs } from "./site-prefs.js";
-const currentPersona = () => { try { return getPrefs().persona; } catch { return undefined; } };
+const prefsNow = () => { try { return getPrefs(); } catch { return {}; } };
+const currentPersona = () => prefsNow().persona;
 import "./digital-guide.css";
 import { splitSpeech, base64Audio, GuideRecorder, GuidePlayer } from "./guide-audio.js";
 
@@ -82,7 +83,7 @@ export class DigitalGuide {
     this.setBusy(true); this.mode("thinking", "正在思考你的問題…");
     this.$("textarea").value = ""; this.addMessage("user", clean);
     try {
-      const { text: answer } = await this.request("chat", { buildingId, text: clean, history: this.history, persona: currentPersona() });
+      const { text: answer } = await this.request("chat", { buildingId, text: clean, history: this.history, persona: currentPersona(), age: prefsNow().age, gender: prefsNow().gender });
       if (token !== this.generation) return;
       this.history.push({ role: "user", content: clean }, { role: "assistant", content: answer });
       this.history = this.history.slice(-8); this.addMessage("assistant", answer); this.lastSpoken = answer;
@@ -108,7 +109,7 @@ export class DigitalGuide {
       for (const chunk of chunks) { if (groups.length && [...(groups.at(-1) + chunk)].length <= 130) groups[groups.length - 1] += chunk; else groups.push(chunk); }
       for (const chunk of groups) {
         if (token !== this.speechToken || generation !== this.generation) return;
-        const out = await this.request("tts", { text: chunk });
+        const out = await this.request("tts", { text: chunk, slow: prefsNow().age === "senior" });
         if (token !== this.speechToken || generation !== this.generation) return;
         const bytes = Uint8Array.from(atob(out.audio), (c) => c.charCodeAt(0));
         await this.player.play(bytes.buffer);

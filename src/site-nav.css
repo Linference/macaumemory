@@ -106,4 +106,14 @@ html[data-reduce-motion] *, html[data-reduce-motion] *::before, html[data-reduce
   .pg-gist { grid-column: 2; grid-row: 2; }
   .pg-arrow { grid-column: 3; grid-row: 1; }
 }
+/* 年齡、性別（可選） */
+.pg-opts { display: grid; gap: 10px; margin: 0 0 22px; }
+.pg-opts fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pg-opts legend { float: left; width: 100%; margin-bottom: 6px; font-size: 12px; letter-spacing: .08em; color: #6f7a85; }
+.pg-opts label { cursor: pointer; }
+.pg-opts input { position: absolute; opacity: 0; pointer-events: none; }
+.pg-opts span { display: inline-block; padding: 6px 12px; border: 1px solid rgba(236,230,218,.16); font-size: 13px; color: #a3adb7; transition: border-color .2s, color .2s; }
+.pg-opts input:checked + span { border-color: #d8b45a; color: #d8b45a; }
+.pg-opts input:focus-visible + span { outline: 2px solid rgba(216,180,90,.5); outline-offset: 2px; }
+.pg-privacy { margin: 2px 0 0; font-size: 11px; color: #6f7a85; }
 html[data-reduce-motion] .pg-list button, html[data-reduce-motion] .pg-arrow { transition: none; }

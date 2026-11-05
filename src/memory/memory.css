@@ -20,3 +20,52 @@ dialog{width:min(680px,calc(100vw - 30px));max-height:90vh;padding:28px;border:1
 .ai-check summary { cursor: pointer; color: var(--muted, #666); }
 .ai-check ul { margin: .4rem 0 .2rem 1.1rem; padding: 0; }
 .ai-check li { margin: .15rem 0; }
+
+/* 記憶短片 */
+.fm-h { font-size: 17px; margin: 26px 0 12px; }
+.fm-story { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 18px; }
+.fm-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.fm-film { margin: 0; min-width: 0; }
+.fm-film video, .fm-wait { width: 100%; aspect-ratio: 16/9; background: #0d151b; border-radius: 10px; display: block; object-fit: contain; }
+.fm-wait { display: grid; place-items: center; color: #e1bd6c; font-size: 14px; }
+.fm-film figcaption { padding-top: 10px; line-height: 1.6; }
+.fm-film figcaption b { display: block; font-size: 16px; margin-top: 6px; }
+.fm-film figcaption small { display: block; color: var(--muted); font-size: 12px; }
+.fm-film details p { font-size: 13px; line-height: 1.7; white-space: pre-wrap; }
+.fm-badge { display: inline-block; font-size: 11px; padding: 3px 8px; border-radius: 4px; letter-spacing: .04em; }
+.fm-badge-ai { background: #20303a; color: #f0d48c; }
+.fm-badge-code { background: #f0eadc; color: #765718; }
+.fm-metrics { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+.fm-metrics th, .fm-metrics td { padding: 7px 8px; border-top: 1px solid var(--line); text-align: left; font-weight: 400; }
+.fm-metrics thead th { color: var(--muted); font-size: 12px; border-top: 0; }
+.fm-metrics td { white-space: nowrap; }
+.fm-metrics em { font-style: normal; font-variant-numeric: tabular-nums; margin-left: 8px; color: var(--muted); }
+.fm-bar { display: inline-block; vertical-align: middle; width: 110px; height: 6px; background: #ece9e1; border-radius: 3px; overflow: hidden; }
+.fm-bar i { display: block; height: 100%; background: var(--gold); }
+.fm-metrics td:nth-child(3) .fm-bar i { background: #9aa6ab; }
+.fm-x { font-weight: 600; color: var(--gold); font-variant-numeric: tabular-nums; }
+.fm-note { margin: 4px 0 10px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+.fm-note summary { cursor: pointer; }
+#film-basis ul { margin: 4px 0 0 18px; padding: 0; }
+@media (max-width: 650px) { .fm-pair { grid-template-columns: 1fr; } .fm-bar { width: 56px; } }
+
+/* 已有的記載與記憶 */
+.rc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 34px; }
+.rc-col { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; min-width: 0; }
+.rc-col h3 { font-family: "Songti TC", serif; font-size: 20px; margin: 4px 0 14px; }
+.rc-col h4 { font-size: 14px; color: var(--gold); margin: 18px 0 6px; letter-spacing: .04em; }
+.rc-col ul, .rc-col ol { margin: 0; padding-left: 20px; }
+.rc-col li { line-height: 1.8; margin: 4px 0; font-size: 14.5px; overflow-wrap: anywhere; }
+.rc-col li small { display: block; font-size: 12px; color: var(--muted); }
+.rc-flag { font-style: normal; font-size: 11px; margin-left: 6px; padding: 1px 6px; border-radius: 4px; background: #f0eadc; color: #765718; }
+.rc-unverified { color: var(--muted); }
+.rc-memory + .rc-memory { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 6px; }
+.rc-memory h4 { font-size: 17px; color: var(--ink); font-family: "Songti TC", serif; }
+.rc-note { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.text-button { background: none; border: 0; padding: 0; color: var(--gold); font-weight: 500; font-size: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.rc-after { margin-top: 8px; }
+.fm-memo { margin-bottom: 14px; font-size: 14px; line-height: 1.8; }
+.fm-memo summary { cursor: pointer; font-weight: 600; }
+.fm-memo ol { margin: 6px 0 0; padding-left: 20px; }
+@media (max-width: 950px) { .rc-grid { grid-template-columns: 1fr; } }
